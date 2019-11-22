@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	인덱스
+	<a href="home.do">가냐?</a>
 </body>
 </html>
