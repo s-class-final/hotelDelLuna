@@ -140,7 +140,7 @@ a{
 					$('.navbar').removeClass('sticky');
 				}
 			};
-
+ 
 			stickyNav();
 			// and run it again every time you scroll
 			$(window).scroll(function() {
