@@ -12,8 +12,6 @@
 	align: center;
 }
 
-
-
 .mini-logoimg{
 
  position : absolute;
@@ -85,77 +83,150 @@ a{
 </style>
 
 </head>
+		<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<!-- 		<script src="/resources/resource/front/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script> -->
+		<script src="resources/common/component/jquery-upload-file/js/file_handlers.js"></script>
+		<script src="resources/common/js/check.js"></script>
+		<script src="resources/common/js/form.js"></script>
+		<script src="resources/common/js/string.js"></script>
+		<script src="resources/common/js/common.js"></script>
+
+		<!-- S : 1-2 js -->	
+		<script type="text/javascript" src="resources/pcPub/static/js/common.js"></script>
+		<script src="resources/common/component/jquery-session/jquery.session.js"></script>
+		
+		<!-- S : 1-2 css -->
+		<link href="resources/pcPub/static/css/reset.css" rel="stylesheet" />	
+		<link href="resources/pcPub/static/css/common.css" rel="stylesheet" />
+		<link href="resources/pcPub/static/css/contents.css" rel="stylesheet" />
+		
+		<script type="text/javascript" src="resources/pcPub/static/js/ui.js"></script>
+		<script src="resources/front/js/front.js"></script>
+		
+	<!-- <link href="resources/pcPub/static/css/lib/swiper2.css" rel="stylesheet"/>  -->
 <body>
-	<div class="wrapper">
-		<div class="header">
-			<div id="logoimg">
-				<img src="resources/images/logo.png" height='80px'
-					width='180px'>
-			</div>
-		</div>
-		<div class="navbar">
-			<div class="mini-logoimg">
-				<img src="resources/images/logo_mk3.png"
-					height='50px' width='110px' id="mini-logoimg">
-			</div>
-			<div>
-			<ul class="mainList">
-				<li>
-				<a href="">Hotel Info</a>
-				</li>
-				<li>
-				<a href="">Reservation</a>
-				</li>
-				<li>
-				<a href="">Dining</a>
-				</li>
-				<li>
-				<a href="">reservation</a>
-				</li>
-				<li>
-				<a href="">고객센터</a>
-				</li>
-				<li>
-				<c:if test="${ empty sessionScope.loginUser }">
-					<a href="loginForm.do">Login</a>
-					</li>
-				</c:if>
-				<c:if test="${ !empty sessionScope.loginUser }">
-					<c:out value="${ loginUser.userName }"/>
-					<c:url var="logout" value="logout.do"/>
-					<button onclick="location.href='${logout}'">로그아웃</button>
-				</c:if>
+
+
+<header id="headerWrap">
+	<h1 style="margin-left:90px"><a href="#">HOTEL DELLUNA</a></h1>
+	<nav class="gnb">
+		<ul>
+			<li>
+				<a href="#">introduce</a>
+				<div class="gnbDepth2">
+					<div>
+						<h2><a href="#"><span>INTRODUCTION</span>소개</a></h2>
+						<ul>
+							<li><a href="#">호텔 소개</a></li>
+							<li><a href="#">오시는 길</a></li>
+						</ul>
+					</div>
+				</div>
+			</li>
+			<li>
+				<a href="#">hotels</a>
+				<div class="gnbDepth2">
+					<div>
+						<h2><a href="#"><span>DELLUNA</span>객실안내</a></h2>
+						<ul>
+							<li><a href="#">Overview</a></li>
+							<li class="on"><a href="#">디럭스</a></li>
+							<li><a href="#">슈페리어</a></li>
+							<li><a href="#">패밀리</a></li>
+						</ul>
+					</div>
+				</div>
+			</li>	
+			<li>
+				<a href="#">entertainment</a>
+				<div class="gnbDepth2">
+					<div>
+						<h2><a href="#"><span>entertainment</span>즐길거리</a></h2>
+						<ul>
+							<li><a href="#">Swimming Pool</a></li>
+							<li><a href="#">CASINO</a></li>
+							<li class="on"><a href="#">가격 및 이용안내</a></li>
+							<li><a href="#">주변 즐길거리</a></li>
+						</ul>
+					</div>
+				</div>
+			</li>
+			<li>
+				<a href="#">dine &amp; drink</a>
+				<div class="gnbDepth2">
+					<div>
+						<h2><a href=#><span>dine &amp; drink</span>다이닝</a></h2>
+						<ul>
+							<li><a href="#">RESTRAUNT</a></li>
+							<li><a href="#">DRINK &amp; BAR</a></li>
+						</ul>
+					</div>
+				</div>
+			</li>
+			<li>
+				<a href="#">service center</a>
+				<div class="gnbDepth2">
+					<div>
+						<h2><a href="#"><span>Service Center</span>고객센터</a></h2>
+						<ul>
+							<li><a href="#">공지사항</a></li>
+							<li><a href="#">1:1문의</a></li>
+						</ul>
+					</div>
+				</div>
+			</li>
+			<li>
+			</li>
+		</ul>
+	</nav>
+	
+	<div class="topLink">
+		<div class="more">
+			<a href="#" class="topMore">LANGUAGE</a>
+			<ul>
+				<li><a href="#">KR</a></li>
+				<li><a href="#">EN</a></li>
+
 			</ul>
-			</div>
 		</div>
+
+	<!------------------------ 언어 선택 부분 ------------------------>
+	
+	<!-- 		
+		<div class="language">
+			<a href="#">			
+		
+			KR
+
+			</a>
+		</div> 
+	-->
+	<!----------------------- //언어 선택 부분 ------------------------>
 	</div>
+	
+	<div class="bgDepth"></div>
+</header>
 
+<!-- quick Bar 퀵메뉴 퀵 메뉴 -->
+<aside class="quickBar view">
+	<div class="quickH">
+		<a href="#">
+			<h1><img src="resources/pcPub/static/images/common/Reservation_icon_100.png" />reservation</h1>
+			<p>호텔 델루나의 시설과 <br />상품을 한번에 예약하세요.</p>
+<!-- 			<span class="newCount">99</span> : PC는 갯수 불요-->
+		</a>
+	</div>
+	<div class="quickC">
+		<ul>
+			<li><a href="#"><em class="icon1"><i></i></em><p>Login</p></a></li>
+			<li><a href="#"><em class="icon2"><i></i></em><p><span>HOTEL</span>JOIN US</p></a></li>
+			<li><a href="#"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
+			<li><a href="#"><em class="icon4"><i></i></em><p><span>RESERVATION</span>MY RESERVATION</p></a></li>
+			<li><a href="#"><em class="icon5"><i></i></em><p><span>MAP</span>DELLUNA MAP</p></a></li>
+		</ul>
+	</div>
+</aside>
 
-
-	<script>
-		$(document).ready(function() {
-			// grab the initial top offset of the navigation 
-			var stickyNavTop = $('.navbar').offset().top;
-
-			// our function that decides weather the navigation bar should have "fixed" css position or not.
-			var stickyNav = function() {
-				var scrollTop = $(window).scrollTop(); // our current vertical position from the top
-
-				// if we've scrolled more than the navigation, change its position to fixed to stick to top,
-				// otherwise change it back to relative
-				if (scrollTop > stickyNavTop) {
-					$('.navbar').addClass('sticky');
-				} else {
-					$('.navbar').removeClass('sticky');
-				}
-			};
- 		
-			stickyNav();
-			// and run it again every time you scroll
-			$(window).scroll(function() {
-				stickyNav();
-			});
-		});
-	</script>
+<!-- //quick Bar -->
 </body>
 </html>
