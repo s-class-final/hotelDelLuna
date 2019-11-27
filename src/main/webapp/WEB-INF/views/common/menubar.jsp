@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,8 +31,10 @@
 	<!-- <link href="resources/pcPub/static/css/lib/swiper2.css" rel="stylesheet"/>  -->
 <body>
 
+<div id="main">
+
 <header id="headerWrap">
-	<h1 style="margin-left:90px"><a href="#">HOTEL DELLUNA</a></h1>
+	<h1 style="margin-left:90px"><a href="index.jsp">HOTEL DELLUNA</a></h1>
 	<nav class="gnb">
 		<ul>
 			<li>
@@ -140,6 +144,8 @@
 	</div>
 	<div class="quickC">
 		<ul>
+		<%-- 	<c:url var="entireResList" value="entireResList.do"/>
+		 --%>
 			<li><a href="#"><em class="icon1"><i></i></em><p>Login</p></a></li>
 			<li><a href="#"><em class="icon2"><i></i></em><p><span>HOTEL</span>JOIN US</p></a></li>
 			<li><a href="#"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
@@ -150,5 +156,7 @@
 </aside>
 
 <!-- //quick Bar -->
+
+</div>
 </body>
 </html>
