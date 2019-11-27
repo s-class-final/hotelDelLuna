@@ -8,9 +8,7 @@
 <head>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <title>Insert title here</title>
-<style>
 
-</style>
 
 </head>
 		<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -152,7 +150,12 @@
 		<ul>
 		<%-- 	<c:url var="entireResList" value="entireResList.do"/>
 		 --%>
-			<li><a href="#"><em class="icon1"><i></i></em><p>Login</p></a></li>
+		 	<c:if test="${ empty sessionScope.loginUser }">
+				<li><a href="loginForm.do"><em class="icon1"><i></i></em><p>Login</p></a></li>
+			</c:if>
+			<c:if test="${ !empty sessionScope.loginUser }">
+				<li><a href="logout.do"><em class="icon1"><i></i></em><p>Logout</p></a></li>
+			</c:if>
 			<li><a href="#"><em class="icon2"><i></i></em><p><span>HOTEL</span>JOIN US</p></a></li>
 			<li><a href="#"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
 			<li><a href="#"><em class="icon4"><i></i></em><p><span>RESERVATION</span>MY RESERVATION</p></a></li>
