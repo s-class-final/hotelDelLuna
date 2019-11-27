@@ -9,79 +9,7 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <title>Insert title here</title>
 <style>
-#logoimg {
 
-	align: center;
-}
-
-.mini-logoimg{
-
- position : absolute;
- 
-}
-
-body {
-	margin: 0;
-	padding: 0;
-}
-
-
-.header {
-	padding: 20px 0;
-	background: linear-gradient(90deg, rgba(42, 24, 61, 1) 0%,
-		rgba(30, 6, 52, 1) 24%, rgba(26, 8, 38, 1) 50%, rgba(44, 15, 66, 1)
-		75%, rgba(41, 5, 56, 1) 100%);
-		text-align: center;
-}
-
-.navbar {
-	padding: 15px 0;
-	width: 100%;
-	height : 65px;
-background: linear-gradient(90deg, rgba(25,23,28,1) 0%, rgba(25,10,62,1) 24%, rgba(15,7,47,1) 50%, rgba(34,16,68,1) 72%, rgba(30,6,40,1) 100%);
-	text-align: center;
-	position: -webkit-sticky;
-	color: #fff;
-	
-}
-.sticky {
-	position: fixed;
-	width: 100%;
-	height : 65px;
-	left: 0;
-	top: 0;
-	z-index: 100;
-	border-top: 0;
-}
-
-ul.mainList {
-	margin: auto;
-  	margin-top: 5px;
- 	 margin-bottom: 5px;
-	text-align : center;
-    list-style: none;\
-    padding: 0px;
-    max-width: 900px;
-    width: 100%;
-}
-ul.mainList li {
-	width : 100px;
- 	 margin-left : 5px;
-    display: inline-block;
-    padding: 10px;
-    font-size: 20px;
-     border: 1px #333333;
-    cursor: pointer;
-}
-
-a:hover{
-	 background:black;
-}
-
-a{
-	height : 50px;
-	color : white;
-}
 </style>
 
 </head>
