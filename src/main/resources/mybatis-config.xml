@@ -4,11 +4,11 @@
 	<settings>
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
-	
+
 	<!-- 클래스들을 미리 만들어 놔야 별칭 지정 한 것에서 에러가 발생 하지 않는다. -->
 	<typeAliases>
 		<typeAlias type="com.kh.hotelDelLuna.reservation.model.vo.Reservation" alias="Reservation"/>
-
+		<typeAlias type="com.kh.hotelDelLuna.member.model.vo.Member" alias="Member"/>
 	</typeAliases>
 	
 	<!-- sql문들을 지닌 mapper.xml들을 등록 -->
@@ -18,6 +18,5 @@
 	</mappers>
 	
 	<!-- 우선 member-mapper.xml만 만들고 로그인부터 하자 -->
-	
 	
 </configuration>
