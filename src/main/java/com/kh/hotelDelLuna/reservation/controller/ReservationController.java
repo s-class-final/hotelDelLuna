@@ -12,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.hotelDelLuna.reservation.model.service.ReservationService;
 import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
 
+import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
+
 @Controller
 public class ReservationController {
 
@@ -33,4 +35,5 @@ public class ReservationController {
 		
 		return "home";
 	}
+	
 }
