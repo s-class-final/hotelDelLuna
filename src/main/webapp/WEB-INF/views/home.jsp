@@ -7,6 +7,11 @@
 	<title>Home</title>
 </head>
 <body>
+
 	<jsp:include page="common/menubar.jsp"/>
+	<section class="container">
+	
+	</section>
+
 </body>
 </html>

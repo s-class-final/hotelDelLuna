@@ -4,12 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>hotel Delluna</title>
 
 
 </head>
 
-<body class="pc ko">
+<body>
 
 <!-- 메인 -->
  <div id="main">

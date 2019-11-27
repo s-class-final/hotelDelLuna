@@ -2,4 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="reservationMapper">
 	
+	<resultMap type="Reservation" id="EntireListResultSet">
+		<id property="res_no" column="RES_NO"/>
+		<result property="res_roomNo" column="RES_ROOMNO"/>
+		<result property="res_roomType" column="RES_ROOMTYPE"/>
+		<result property="res_userId" column="RES_USERID"/>
+		<result property="res_breakfast" column="RES_BREAKFAST"/> 
+		<result property="res_dinner" column="RES_DINNER"/>
+		<result property="res_adult" column="RES_ADULT"/>
+		<result property="res_child" column="RES_CHILD"/>
+		<result property="res_checkIn" column="RES_CHECKIN"/>
+		<result property="res_checkOut" column="RES_CHECKOUT"/>
+		<result property="res_status" column="RES_STATUS"/>
+		<result property="res_payStatus" column="RES_PAYSTATUS"/>
+	</resultMap>
+	
+	<select id="selectEntireResList" resultMap="EntireListResultSet">
+		SELECT *
+		FROM RESERVATION
+	</select>
 </mapper>

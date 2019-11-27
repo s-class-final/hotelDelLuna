@@ -8,82 +8,6 @@
 <head>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <title>Insert title here</title>
-<style>
-#logoimg {
-
-	align: center;
-}
-
-.mini-logoimg{
-
- position : absolute;
- 
-}
-
-body {
-	margin: 0;
-	padding: 0;
-}
-
-
-.header {
-	padding: 20px 0;
-	background: linear-gradient(90deg, rgba(42, 24, 61, 1) 0%,
-		rgba(30, 6, 52, 1) 24%, rgba(26, 8, 38, 1) 50%, rgba(44, 15, 66, 1)
-		75%, rgba(41, 5, 56, 1) 100%);
-		text-align: center;
-}
-
-.navbar {
-	padding: 15px 0;
-	width: 100%;
-	height : 65px;
-background: linear-gradient(90deg, rgba(25,23,28,1) 0%, rgba(25,10,62,1) 24%, rgba(15,7,47,1) 50%, rgba(34,16,68,1) 72%, rgba(30,6,40,1) 100%);
-	text-align: center;
-	position: -webkit-sticky;
-	color: #fff;
-	
-}
-.sticky {
-	position: fixed;
-	width: 100%;
-	height : 65px;
-	left: 0;
-	top: 0;
-	z-index: 100;
-	border-top: 0;
-}
-
-ul.mainList {
-	margin: auto;
-  	margin-top: 5px;
- 	 margin-bottom: 5px;
-	text-align : center;
-    list-style: none;\
-    padding: 0px;
-    max-width: 900px;
-    width: 100%;
-}
-ul.mainList li {
-	width : 100px;
- 	 margin-left : 5px;
-    display: inline-block;
-    padding: 10px;
-    font-size: 20px;
-     border: 1px #333333;
-    cursor: pointer;
-}
-
-a:hover{
-	 background:black;
-}
-
-a{
-	height : 50px;
-	color : white;
-}
-</style>
-
 </head>
 		<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <!-- 		<script src="/resources/resource/front/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script> -->
@@ -106,10 +30,10 @@ a{
 		<script src="resources/front/js/front.js"></script>
 		
 	<!-- <link href="resources/pcPub/static/css/lib/swiper2.css" rel="stylesheet"/>  -->
-<body>
-
+<body class="pc ko">
 
 <div id="main">
+
 
 <header id="headerWrap">
 	<h1 style="margin-left:90px"><a href="index.jsp">HOTEL DELLUNA</a></h1>
@@ -224,7 +148,7 @@ a{
 		<ul>
 		<%-- 	<c:url var="entireResList" value="entireResList.do"/>
 		 --%>
-			<li><a href="#"><em class="icon1"><i></i></em><p>Login</p></a></li>
+			<li><a href="entireResList.do"><em class="icon1"><i></i></em><p>Login</p></a></li>
 			<li><a href="#"><em class="icon2"><i></i></em><p><span>HOTEL</span>JOIN US</p></a></li>
 			<li><a href="#"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
 			<li><a href="#"><em class="icon4"><i></i></em><p><span>RESERVATION</span>MY RESERVATION</p></a></li>
@@ -234,7 +158,6 @@ a{
 </aside>
 
 <!-- //quick Bar -->
-
 </div>
 </body>
 </html>
