@@ -116,8 +116,15 @@ a{
 				<a href="">고객센터</a>
 				</li>
 				<li>
-				<a href="#">Login</a>
-				</li>
+				<c:if test="${ empty sessionScope.loginUser }">
+					<a href="loginForm.do">Login</a>
+					</li>
+				</c:if>
+				<c:if test="${ !empty sessionScope.loginUser }">
+					<c:out value="${ loginUser.userName }"/>
+					<c:url var="logout" value="logout.do"/>
+					<button onclick="location.href='${logout}'">로그아웃</button>
+				</c:if>
 			</ul>
 			</div>
 		</div>
