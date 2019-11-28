@@ -17,5 +17,4 @@ public class ReservationController {
 		System.out.println("entireRes서블릿 실행");
 		return "reservation/entireResView";
 	}
-	
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="roomtypeMapper">
+	<resultMap type ="RoomType" id="r">
+		<id property="type" column="ROOMTYPE"/>  
+		<result property="capacity" column="CAPACITY"/>
+		<result property="addBed" column="ADDBED"/>
+		<result property="rImg" column="RIMG"/>
+		<result property="singleBed" column="SINGLEBED"/> 
+		<result property="doubleBed" column="DOUBLEBED"/>
+		<result property="smoking" column="SMOKING"/>
+		<result property="weekDay" column="WEEKDAY"/>
+		<result property="weekEnd" column="WEEKEND"/>
+		<result property="startDay" column="STARTDAY"/>
+		<result property="endDay" column="ENDDAY"/>
+		<result property="childRate" column="CHILDRATE"/>
+	</resultMap>
+	
+	<resultMap type="Attachment" id ="a">
+		<id property="pNo" column="ROOMTYPE"/>  
+		<id property="type" column="ROOMTYPE"/>  
+		<result property="capacity" column="CAPACITY"/>
+		<result property="capacity" column="CAPACITY"/>
+		<result property="capacity" column="CAPACITY"/>
+		<result property="capacity" column="CAPACITY"/>
+	</resultMap>
+	
+	 <insert id="insertRoom" parameterType="RoomType">
+  	INSERT INTO RoomType VALUES(
+  		SEQ_BID.NEXTVAL, #{bTitle}, #{bWriter}, #{bContent},
+  		#{originalFileName}, #{renameFileName}, DEFAULT, SYSDATE, SYSDATE, DEFAULT 
+  	)
+  </insert>
+</mapper>

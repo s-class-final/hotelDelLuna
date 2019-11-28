@@ -106,10 +106,14 @@
 			</li>
 			
 			<li>
-				<a href="#">관리자 페이지</a>
+				<a href="entireResList.do">관리자 페이지</a>
 				<div class="gnbDepth2">
 					<div>
 						<h2><a href="#"><span>Admin page</span>관리자 페이지</a></h2>
+						<ul>
+							<li><a href="iRoomView.do">방 등록</a></li>
+							
+						</ul>
 					</div>
 				</div>
 		

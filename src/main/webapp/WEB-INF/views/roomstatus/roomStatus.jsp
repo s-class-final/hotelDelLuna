@@ -8,10 +8,12 @@
 </head>
 <body>
 	<div>
-		웰컴
-	</div>
-	<div>
-		시 오프
+		<div>
+			웰컴
+		</div>
+		<div>
+			시 오프
+		</div>
 	</div>
 	
 </body>

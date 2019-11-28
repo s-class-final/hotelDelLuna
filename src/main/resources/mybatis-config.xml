@@ -15,6 +15,7 @@
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/reservation-mapper.xml"/>
+		<mapper resource="mappers/roomtype-mapper.xml"/>
 	</mappers>
 	
 	<!-- 우선 member-mapper.xml만 만들고 로그인부터 하자 -->
