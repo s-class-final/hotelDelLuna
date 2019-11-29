@@ -13,15 +13,5 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 	@Autowired
 	RoomTypeDao rtDao;
 	
-	@Override
-	public int insertRoom(RoomType rt) {
-		return rtDao.insertRoom(rt);
-	}
-
-	@Override
-	public int insertAttachment(Attachment a) {
-		
-		return rtDao.insertAttachment(a);
-	}
 
 }

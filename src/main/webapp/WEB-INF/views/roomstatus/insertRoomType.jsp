@@ -1,15 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 <h1>Room insert</h1>
 <hr>
-	<form action="binsert.do" method="post" enctype="multipart/form-data">
+	<form action="rtinsert.do" method="post" enctype="multipart/form-data">
 		<table border="1px solidBlack">
 			<tr>
 				<td>룸 타입</td>
@@ -51,19 +53,16 @@
 			</tr>
 			<tr>
 				<td>첨부파일</td>
-				<td colspan="5"><input type="File"></td>
+				<td colspan="5"><input type="File" name = "file_0"></td>
 			</tr>
 			<tr>
 				<td>상세 사진</td>
+				<td><button type="button" onclick="button1_click();">상세 사진 추가</button></td>
 			</tr>
 			<tr>
 				<td>첨부파일</td>
-				<td colspan="5">
-				<input type="File"><br> 
-				<input type="File"><br> 
-				<input type="File"><br>
-				<input type="File"><br> 
-				<input type="File"></td>
+			<td colspan="5" id ="filetd">
+				<input type="File" name= "file_1"><br> 
 			</tr>
 			<tr>
 				<td></td><td></td><td></td><td></td><td colspan="2"><input type="submit" value="룸 등록하기"></td>
@@ -72,5 +71,20 @@
 		</table>
 	</form>
 
+	<script>
+		var BtnCount = 2;
+		
+		function button1_click(){
+			var str = "<p><input type='file' name='file_"+(BtnCount++)+"'>"+"<button type='button' onclick='delBtn(this);'>삭제하기</button><br><p>"
+			
+			$("#filetd").append(str);
+			
+		}
+		
+		function delBtn(e){
+			e.parentNode.remove();
+		}
+				
+	</script>
 </body>
 </html>

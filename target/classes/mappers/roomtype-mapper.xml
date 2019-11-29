@@ -17,18 +17,11 @@
 	</resultMap>
 	
 	<resultMap type="Attachment" id ="a">
-		<id property="pNo" column="ROOMTYPE"/>  
-		<id property="type" column="ROOMTYPE"/>  
-		<result property="capacity" column="CAPACITY"/>
-		<result property="capacity" column="CAPACITY"/>
-		<result property="capacity" column="CAPACITY"/>
-		<result property="capacity" column="CAPACITY"/>
+		<id property="num" column="FNO"/>  
+		<id property="roomType" column="ROOMTYPE"/>  
+		<result property="path" column="PATH"/>
+		<result property="originalName" column="ORIGINALNAME"/>
+		<result property="changeName" column="CHANGENAME"/>
+		<result property="imgLv" column="IMGLV"/>
 	</resultMap>
-	
-	 <insert id="insertRoom" parameterType="RoomType">
-  	INSERT INTO RoomType VALUES(
-  		SEQ_BID.NEXTVAL, #{bTitle}, #{bWriter}, #{bContent},
-  		#{originalFileName}, #{renameFileName}, DEFAULT, SYSDATE, SYSDATE, DEFAULT 
-  	)
-  </insert>
 </mapper>

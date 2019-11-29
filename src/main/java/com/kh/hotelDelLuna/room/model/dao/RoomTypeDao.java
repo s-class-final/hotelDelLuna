@@ -13,13 +13,6 @@ public class RoomTypeDao {
 	@Autowired
 	SqlSessionTemplate sqlSession;
 	
-	public int insertRoom(RoomType r) {
 
-		return sqlSession.insert("roomtypeMapper.insertRoom",r);
-	}
-
-	public int insertAttachment(Attachment a) {
-		return sqlSession.insert("roomtypeMapper.insertAttachment",a);
-	}
 
 }
