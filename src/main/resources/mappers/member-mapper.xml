@@ -2,4 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="memberMapper">
 	
+	<resultMap type="Member" id="memberResultSet">
+		<id property="mId" column="MID"/>
+		<result property="userT" column="USER_T"/>
+		<result property="userId" column="USERID"/>
+		<result property="userPwd" column="USERPWD"/>
+		<result property="userName" column="USERNAME"/> 
+		<result property="userPhone" column="USERPHONE"/>
+		<result property="point" column="POINT"/>
+		<result property="mStatus" column="M_STATUS"/>
+		<result property="kakao" column="KAKAO"/>
+	</resultMap>
+	
+	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE USERID=#{userId}
+		AND USERPWD=#{userPwd}
+		AND M_STATUS='Y'
+		
+		<!-- 암호화 적용 이후 -->
+		<!-- SELECT *
+		FROM MEMBER
+		WHERE ID=#{id}
+		AND M_STATUS='Y' -->
+	</select>
+	
+	
 </mapper>

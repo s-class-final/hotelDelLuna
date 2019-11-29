@@ -7,6 +7,7 @@
 	<title>Home</title>
 </head>
 <body>
-	이곳이 home.jsp
+	<jsp:include page="common/menubar.jsp"/>
+
 </body>
 </html>

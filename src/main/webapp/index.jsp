@@ -5,9 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-
 </head>
+
 <body class="pc ko">
 
 <!-- 메인 -->
@@ -641,6 +640,5 @@ function jsLayerEventDefault(obj) {
 
 			</div>
 <!-- 	</div id=main>  -->	
-
 </body>
 </html>

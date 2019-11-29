@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <title>Insert title here</title>
+
 </head>
 		<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <!-- 		<script src="/resources/resource/front/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script> -->
@@ -29,8 +33,11 @@
 	<!-- <link href="resources/pcPub/static/css/lib/swiper2.css" rel="stylesheet"/>  -->
 <body>
 
+
+<div id="main">
+
 <header id="headerWrap">
-	<h1 style="margin-left:90px"><a href="#">HOTEL DELLUNA</a></h1>
+	<h1 style="margin-left:90px"><a href="index.jsp">HOTEL DELLUNA</a></h1>
 	<nav class="gnb">
 		<ul>
 			<li>
@@ -97,9 +104,24 @@
 					</div>
 				</div>
 			</li>
+			
 			<li>
+				<a href="entireResList.do">관리자 페이지</a>
+				<div class="gnbDepth2">
+					<div>
+						<h2><a href="#"><span>Admin page</span>관리자 페이지</a></h2>
+						<ul>
+							<li><a href="iRoomView.do">방 등록</a></li>
+							
+						</ul>
+					</div>
+				</div>
+		
 			</li>
+			
+		
 		</ul>
+		
 	</nav>
 	
 	<div class="topLink">
@@ -140,7 +162,14 @@
 	</div>
 	<div class="quickC">
 		<ul>
-			<li><a href="#"><em class="icon1"><i></i></em><p>Login</p></a></li>
+		<%-- 	<c:url var="entireResList" value="entireResList.do"/>
+		 --%>
+		 	<c:if test="${ empty sessionScope.loginUser }">
+				<li><a href="loginForm.do"><em class="icon1"><i></i></em><p>Login</p></a></li>
+			</c:if>
+			<c:if test="${ !empty sessionScope.loginUser }">
+				<li><a href="logout.do"><em class="icon1"><i></i></em><p>Logout</p></a></li>
+			</c:if>
 			<li><a href="#"><em class="icon2"><i></i></em><p><span>HOTEL</span>JOIN US</p></a></li>
 			<li><a href="#"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
 			<li><a href="#"><em class="icon4"><i></i></em><p><span>RESERVATION</span>MY RESERVATION</p></a></li>
@@ -150,5 +179,7 @@
 </aside>
 
 <!-- //quick Bar -->
+
+</div>
 </body>
 </html>
