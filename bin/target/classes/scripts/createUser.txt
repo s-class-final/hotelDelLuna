@@ -1,5 +1,0 @@
------------------ 계정 생성 ----------------
-
-CREATE USER final IDENTIFIED BY final;
-
-GRANT CONNECT, RESOURCE, DBA TO final;
