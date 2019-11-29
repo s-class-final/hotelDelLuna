@@ -13,7 +13,8 @@
 <!-- 메인 -->
  <div id="main">
  <!-- 헤더 -->
- <jsp:include page="WEB-INF/views/common/menubar.jsp"/>
+ <jsp:include page="WEB-INF/views/common/menubar.jsp"/> 
+ 
 <!-- //헤더영역 -->
 
 

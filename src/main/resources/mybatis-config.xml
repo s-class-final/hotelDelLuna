@@ -5,4 +5,13 @@
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
 	
+	<typeAliases>
+		<typeAlias type="com.kh.hotelDelLuna.admin.model.vo.Invoice" alias="Invoice"/>
+	</typeAliases>
+	
+	
+	<mappers>
+		<mapper resource="mappers/member-mapper.xml"/>
+		<mapper resource="mappers/admin-mapper.xml"/>
+	</mappers>
 </configuration>
