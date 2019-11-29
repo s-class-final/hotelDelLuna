@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <title>hotel Delluna</title>
 
-
 </head>
 
 <body>
@@ -18,44 +17,9 @@
 <!-- //헤더영역 -->
 
 
-<script language="JavaScript">
 
-// 스와이프 관련 오류 해결. 나중에 지울 것
-/* 
-$(document).ready(function(){
-	
-	//메인 갤러리 선언
-	var galleryMain = new Swiper('.gallery-main', {
-		preventClicks: false,
-		preventClicksPropagation: false,
-		slideToClickedSlide: true,
-		loop: true,
-		navigation: {
-			nextEl: '.swiper-button-next',
-			prevEl: '.swiper-button-prev'
-		},
-		pagination: {
-			el: '.swiper-pagination',
-			type: 'fraction',
-		}
-	});
-});
-
- */
-$(window).load(function(){
-	if ($(".quickBar").length > 0) {
-		setTimeout(function() {
-			$(".quickBar").removeClass("view");
-		}, 100);
-	}
-	
-	
-});
-
-</script>
 
 <!-- 컨텐츠 영역 -->
-
 
 <section id="container">
 	
@@ -113,7 +77,7 @@ $(window).load(function(){
 					</a>
 				</div>
 			</div>
-			
+
 			<div class="bg3">
 				<div class="textBox">
 					<i class="icon3"></i>
