@@ -29,7 +29,7 @@ public class InsertRoomController {
 	@RequestMapping("iRoomView.do")
 	public String  iRoomView() {
 		return "roomstatus/insertRoomType";
-	}
+	} 
 
 	
 

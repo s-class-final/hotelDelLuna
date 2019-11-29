@@ -15,7 +15,7 @@
 		<result property="endDay" column="ENDDAY"/>
 		<result property="childRate" column="CHILDRATE"/>
 	</resultMap>
-	
+	 
 	<resultMap type="Attachment" id ="a">
 		<id property="num" column="FNO"/>  
 		<id property="roomType" column="ROOMTYPE"/>  
