@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reservationMapper">
+	
+	<resultMap type="Reservation" id="ResListResultSet">
+		<id property="res_no" column="RES_NO"/>
+		<result property="res_roomNo" column="RES_ROOMNO"/>
+		<result property="res_roomType" column="RES_ROOMTYPE"/>
+		<result property="res_userId" column="RES_USERID"/>
+		<result property="res_breakfast" column="RES_BREAKFAST"/> 
+		<result property="res_dinner" column="RES_DINNER"/>
+		<result property="res_adult" column="RES_ADULT"/>
+		<result property="res_child" column="RES_CHILD"/>
+		<result property="res_checkIn" column="RES_CHECKIN"/>
+		<result property="res_checkOut" column="RES_CHECKOUT"/>
+		<result property="res_status" column="RES_STATUS"/>
+		<result property="res_payStatus" column="RES_PAYSTATUS"/>
+	</resultMap>
+	
+	<!-- 예약 리스트 갯수 -->
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM RESERVATION
+	</select>
+	
+	<!-- 한 페이지에 뿌려줄 예약 리스트 -->
+	<select id="selectResList" resultMap="ResListResultSet">
+		SELECT *
+		FROM RESERVATION
+		ORDER BY RES_NO DESC
+	</select>
+	
+	<!-- 검색한 예약 리스트 갯수 -->
+	<select id="getSearchResultListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM RESERVATION
+<!-- 		<if test="userName != null">
+			WHERE USER_NAME = '%' || #{userName} || '%'
+		</if> -->
+		<if test="userEmail != null">
+			WHERE RES_USERID LIKE '%' || #{userEmail} || '%'
+		</if>
+<!-- 		<if test="userPhone != null">
+			WHERE BCONTENT LIKE '%' || #{userPhone} || '%'
+		</if> -->
+	</select>
+	
+	
+	<select id="selectSearchResultList" resultMap="ResListResultSet">
+		SELECT *
+		FROM RESERVATION
+<!-- 		<if test="userName != null">
+			WHERE USER_NAME = '%' || #{userName} || '%'
+		</if> -->
+		<if test="userEmail != null">
+			WHERE RES_USERID LIKE '%' || #{userEmail} || '%'
+		</if>
+<!-- 		<if test="userPhone != null">
+			WHERE BCONTENT LIKE '%' || #{userPhone} || '%'
+		</if> -->
+		ORDER BY RES_NO DESC	
+	</select>
+	
+	
+	<select id="selectResOne" resultMap="ResListResultSet" parameterType="_int">
+		SELECT *
+		FROM RESERVATION
+		WHERE RES_NO = #{res_no}
+	</select>
+</mapper>
