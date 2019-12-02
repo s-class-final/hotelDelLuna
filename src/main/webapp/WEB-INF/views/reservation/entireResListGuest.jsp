@@ -184,79 +184,88 @@ body {
 
 			</div>
 			<div class="reservationAside">
-			<section class="reservationSection" style="width:350px">
+				<section class="reservationSection" style="width:350px">
 				<br><br>
-				<form class="resInsertForm">
-				<table style="margin:30px;">
-				<tr>
-					<td >예약자: </td>
-					<td><input type="text" name="userName"></td>
-					<td colspan="2"></td>
-				</tr>
-				<tr>
-					<td>이메일: </td>
-					<td colspan="3">
-					<input type="text" name="email1" size="7" style="display:inline">@
-					<input type="text" name="email2" size="7" style="display:inline">
-					</td>
-				</tr>
-				<tr>
-					<td>핸드폰: </td>
-					<td colspan="3">
-						<input type="text" name="phone1" size="1" style="display:inline">
-						<input type="text" name="phone2" size="2" style="display:inline">
-						<input type="text" name="phone3" size="2" style="display:inline">
-					</td>
-				</tr>
-				<tr>
-					<td>객실타입: </td>
-					<td>
-						<select>
-							<option name="res_roomType" value="---">---</option>
-							<option name="res_roomType" value="---">---</option>							
-							<option name="res_roomType" value="---">---</option>														
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>성인: </td>
-					<td><input type="number" id="adult"name="res_adult" min=0 max=10 value=0 style="width:50px;display:inline"></td>
-				</tr>
-				<tr>
-					<td>어린이: </td>
-					<td><input type="number" id="child" name="res_child" min=0 max=10 value=0 style="width:50px;display:inline"></td>
-				</tr>
-				<tr>
-					<td>총 인원: </td>
-					<td><input type="text" id="totalNum" name="res_totalNum" value="0명" readonly></td>
-				</tr>
-				<tr>
-					<td>체크인: </td>
-					<td><input type="date" id="checkIn"  name="res_checkIn"></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>체크아웃: </td>
-					<td><input type="date" id="checkOut" name="res_checkOut"></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td colspan="3">조식: &nbsp;<input type="checkbox" name="res_breakfast">
-					&nbsp;디너: &nbsp;<input type="checkbox" name="res_dinner">
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>
-						<button type="reset">초기화</button>
-					</td>
-					<td>
-						<button type="submit">예약 입력</button>					
-					</td>
-				</tr>
-			</table>
-				
+					<form class="resInsertForm">
+						<table style="margin:30px;">
+						<tr>
+							<td >예약자: </td>
+							<td><input type="text" id="userName" name="userName" ></td>
+							<td colspan="2"></td>
+						</tr>
+						<tr>
+							<td>이메일: </td>
+							<td colspan="3">
+							<input type="text" id="email1" name="email1" size="7" style="display:inline">@
+							<input type="text" id="email2" name="email2" size="7" style="display:inline">
+							<select style="width:100px;margin-right:10px" name="selectEmail" id="selectEmail"> 
+								<option value="1">직접입력</option> 
+								<option value="naver.com" selected>naver.com</option> 
+								<option value="hanmail.net">hanmail.net</option> 
+								<option value="nate.com">nate.com</option> 
+								<option value="korea.com">korea.com</option> 
+								<option value="gmail.com">gmail.com</option> 
+							</select>
+
+							</td>
+						</tr>
+						<tr>
+							<td>핸드폰: </td>
+							<td colspan="3">
+								<input type="text" id="phone1" name="phone1" size="1" style="display:inline">
+								<input type="text" id="phone2" name="phone2" size="2" style="display:inline">
+								<input type="text" id="phone3" name="phone3" size="2" style="display:inline">
+							</td>
+						</tr>
+						<tr>
+							<td>객실타입: </td>
+							<td>
+								<select name="roomType">
+									<option name="res_roomType" value="standard">standard</option>
+									<option name="res_roomType" value="deluxe">deluxe</option>							
+									<option name="res_roomType" value="suite">suite</option>														
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>성인: </td>
+							<td><input type="number" id="adult"name="res_adult" min=0 max=10 value=0 style="width:50px;display:inline"></td>
+						</tr>
+						<tr>
+							<td>어린이: </td>
+							<td><input type="number" id="child" name="res_child" min=0 max=10 value=0 style="width:50px;display:inline"></td>
+						</tr>
+						<tr>
+							<td>총 인원: </td>
+							<td><input type="text" id="totalNum" name="res_totalNum" value="0명" readonly></td>
+						</tr>
+						<tr>
+							<td>체크인: </td>
+							<td><input type="date" id="checkIn"  name="res_checkIn"></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>체크아웃: </td>
+							<td><input type="date" id="checkOut" name="res_checkOut"></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td colspan="3">조식: &nbsp;<input type="checkbox" name="res_breakfast">
+							&nbsp;디너: &nbsp;<input type="checkbox" name="res_dinner">
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<button type="reset">초기화</button>
+							</td>
+							<td>
+								<button type="button" onclick="validate();">예약 입력</button>					
+							</td>
+						</tr>
+					</table>
+						
 				</form>
 			</section>
 			</div>
@@ -283,22 +292,64 @@ body {
 		
 		/* 어른 아이 총 인원수 계산 */
 		$("#adult").focusout(function(){
+			if($("#adult").val().isEmpty()){	//값이 비어있을 경우 0으로 설정
+				$("#adult").val(0);
+			}
+			
 			totalNum = parseInt($("#adult").val()) + parseInt($("#child").val());
 			$("#totalNum").val(totalNum+"명");
-
 		});
 		
 		$("#child").focusout(function(){
+			if($("#child").val().isEmpty()){
+				$("#child").val(0);
+			}
+			
 			totalNum = parseInt($("#adult").val()) + parseInt($("#child").val());
 			$("#totalNum").val(totalNum+"명");		
 		});
-		
-		
-		
-		
-		
 	})
 	
+	//이메일 입력방식 선택 
+	$('#selectEmail').change(function(){ 
+		$("#selectEmail option:selected").each(function () { 
+			if($(this).val()== '1'){ //직접입력일 경우 
+				$("#email02").val(''); //값 초기화 
+				$("#email02").attr("disabled",false); //활성화 
+			}else{ //직접입력이 아닐경우 
+				$("#email02").val($(this).text()); //선택값 입력 
+				$("#email02").attr("disabled",true); //비활성화 
+				} 
+			}); 
+		});
+	
+	
+	
+	//입력값 넘기기 전 검사하기
+	function validate(){
+		//예약자명 비어있는 경우
+		if($("#userName").isEmpty()){
+			alert("예약자 성명을 입력해주세요.");
+			$("#userName").focus();
+			return false;
+		}
+		
+		//예약 이메일 비어있는 경우
+		if($("#email1").isEmpty() || $("#email2").isEmpty()){
+			alert("이메일 주소를 확인해주세요.")
+			$("#email1").focus();
+			return false;
+		}
+	}
+	
+	//빈 값 검사
+	var isEmpty = function(value){ 
+		if( value == "" || value == null || value == undefined || ( value != null && typeof value == "object" && !Object.keys(value).length ) ){ 
+			return true 
+		}else{ 
+			return false 
+		}
+	};
 	</script>
 </div>
 

@@ -54,15 +54,16 @@
 				</div>
 			</li>
 			<li>
+			
 				<a href="#">hotels</a>
 				<div class="gnbDepth2">
 					<div>
 						<h2><a href="#"><span>DELLUNA</span>객실안내</a></h2>
 						<ul>
-							<li><a href="#">Overview</a></li>
-							<li class="on"><a href="#">디럭스</a></li>
-							<li><a href="#">슈페리어</a></li>
-							<li><a href="#">패밀리</a></li>
+							<li><a href="overView.do">Overview</a></li>
+							<li class="on"><a href="roomView.do?dulexe">디럭스</a></li>
+							<li><a href="roomView.do?superior">슈페리어</a></li>
+							<li><a href="roomView.do?family">패밀리</a></li>
 						</ul>
 					</div>
 				</div>

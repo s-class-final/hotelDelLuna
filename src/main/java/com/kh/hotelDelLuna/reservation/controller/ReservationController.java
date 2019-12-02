@@ -18,4 +18,11 @@ public class ReservationController {
 		return "reservation/entireResView";
 	}
 	
+	
+	@RequestMapping(value="entireResListGuest.do", method = RequestMethod.GET)
+	public String entireResListGuest(Locale locale, Model model) {
+		System.out.println("entireResListGuest서블릿 실행");
+		return "reservation/entireResListGuest";
+	}
+	
 }
