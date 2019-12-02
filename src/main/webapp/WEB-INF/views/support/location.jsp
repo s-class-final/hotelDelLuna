@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,8 @@
 </head>
 <body>
 
+	<jsp:include page="../common/menubar.jsp"/>
+	
 
 <!-- Google Maps API -->
 <!--    
@@ -139,17 +142,6 @@ function jsMapView(obj) {
 
 <!-- 컨텐츠 영역 -->
 <section id="container">
-    <section class="subGnb">
-        <div class="innerBox">
-            <h1>Customer Service</h1>
-            <ul>
-                <li><a href="/front/notice">공지사항</a></li>
-                <li><a href="/front/faq">FAQ/Q&amp;A</a></li>
-                <li class="on"><a href="/front/contents/pcity/location?Type=FLOOR">PARADISE CITY MAP</a></li>
-            </ul>
-        </div>
-    </section>
-
     <div class="innerBox">
 
         <h1 class="contTitle"><span>PARADISE CITY MAP</span>파라다이스시티에 오신 걸 <br>환영합니다.</h1>
@@ -163,8 +155,6 @@ function jsMapView(obj) {
         </div>
 
 
-        
-        
 
 
 

@@ -1057,9 +1057,11 @@ function Main(){
 		mainVisual();
 	});
 	
+	
+	
 	function mainVisual(){
 		var winH = $(window).outerHeight(),
-			winW = $(window).outerWidth() - 64,
+			winW = $(window).outerWidth() /*- 64 */,   //퀵바 뺐을때.
 			headerH =  $('#headerWrap').outerHeight(),
 			target = $('.mainVisual .visual'),
 			target2 = $('.mainVisual .visualView'),

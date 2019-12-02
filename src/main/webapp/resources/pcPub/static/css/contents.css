@@ -20,20 +20,20 @@ body.hidden { overflow:hidden;}
 .inp input:disabled {border:1px solid #e6e3df; color:#666; background:#f9f9f9;}
 .inp input:disabled + .btnDelete { display:none !important;} 
 .inp input:focus { border:1px solid #9c836a;}
-.inp .btnDelete { display:none; position:absolute; top:50%; right:16px; width:18px; height:18px; margin-top:-9px; font-size:0; background:url('/pcPub/static/images/common/btn/btn_input_delete.png') no-repeat;}
+.inp .btnDelete { display:none; position:absolute; top:50%; right:16px; width:18px; height:18px; margin-top:-9px; font-size:0; background:url('../../../pcPub/static/images/common/btn/btn_input_delete.png') no-repeat;}
 
 .btnBottom { margin-bottom:45px;}
 
 /* 달력 */
 .inp.calendar .js-date { display:none;}
-.inp .btnCalendar { display:block; position:absolute; top:50%; right:16px; width:18px; height:19px; margin-top:-9px; font-size:0; background:url('/pcPub/static/images/common/icon/icon_calendar.png') no-repeat;}
+.inp .btnCalendar { display:block; position:absolute; top:50%; right:16px; width:18px; height:19px; margin-top:-9px; font-size:0; background:url('../../../pcPub/static/images/common/icon/icon_calendar.png') no-repeat;}
 
 .textarea { width:100%; height:128px; border:1px solid #e6e3df; padding:12px; font-size:14px; font-weight:200; box-sizing:border-box; outline:0; resize:none;}
 
 .checkbox { display:inline-block; position:relative; min-height:20px; padding-left:25px;}
 .checkbox input { position:absolute; top:0; left:0; z-index:1; opacity:0;}
 .checkbox label { color:#666;}
-.checkbox label:after { content:''; display:block; position:absolute; top:50%; left:0; width:20px; height:20px; margin-top:-10px; background:url('/pcPub/static/images/common/icon/icon_checkbox.png') no-repeat;}
+.checkbox label:after { content:''; display:block; position:absolute; top:50%; left:0; width:20px; height:20px; margin-top:-10px; background:url('../../../pcPub/static/images/common/icon/icon_checkbox.png') no-repeat;}
 .checkbox input:checked + label:after { background-position:0 -20px;}
 
 .checkbox2 { display:inline-block; position:relative; min-height:20px; padding-left:29px;}
@@ -49,7 +49,7 @@ body.hidden { overflow:hidden;}
 
 .ui-select-wrapper{ position:relative;display:inline-block; min-width:100px; user-select:none; vertical-align:middle; background:#fff;}
 .ui-select-trigger{ display:inline-block; width:100%; height:48px; border:1px solid #e6e3df; padding:0 39px 0 15px; line-height:48px; font-size:15px;}
-.ui-select-trigger:after{position:absolute; top:50%;right:16px; display:block;content:'';width:10px;height:6px;margin-top:-3px; background:url('/pcPub/static/images/common/icon/icon_selectbox.gif') no-repeat 80% 50%;}
+.ui-select-trigger:after{position:absolute; top:50%;right:16px; display:block;content:'';width:10px;height:6px;margin-top:-3px; background:url('../../../pcPub/static/images/common/icon/icon_selectbox.gif') no-repeat 80% 50%;}
 .ui-select-trigger.active {border:1px solid #9c836a;}
 .ui-select-options{ overflow:hidden; overflow-y:auto; display:none; position:absolute;top:100%;left:0;right:0; z-index:5; max-height:280px; min-width:85%;border:1px solid #e6e3df; border-top:0; background:#fff;}
 .ui-select-options .disabled {background:#f9f9f9;}
@@ -81,6 +81,7 @@ body.hidden { overflow:hidden;}
 .btn.full { width:100%;}
 
 .btn:hover { color:#fff; border-color:#8a7057; background:#8a7057;}
+
 .btn:hover span { color:#fff;}
 .btn.btnFull:hover { background:#8a7057;}
 .btn.btnLine2:hover { border-color:#fff; color:#000; background:#fff;}
@@ -102,9 +103,9 @@ body.hidden { overflow:hidden;}
 .dotList > *:before{display:block; content: ''; position:absolute; top:9px; left:0; width: 2px; height: 2px; background-color: #898989; vertical-align: top;}
 
 /* tooltip */
-.tooltipLink { display:inline-block; width:16px; height:16px; margin-left:8px; font-size:0; vertical-align:middle; background:url('/pcPub/static/images/common/icon/icon_tooltip.png') no-repeat;}
+.tooltipLink { display:inline-block; width:16px; height:16px; margin-left:8px; font-size:0; vertical-align:middle; background:url('../../../pcPub/static/images/common/icon/icon_tooltip.png') no-repeat;}
 .tooltipBox { display:none; position:absolute; padding:10px 16px; margin-top:-25px; margin-left:8px; border:1px solid #9c836a; border-radius:3px; font-size:12px; color:#9c836a; transform: translateY(-100%); box-shadow:2px 2px 3px rgba(0,0,0,0.1); background:#f9f9f9;}
-.tooltipBox:after { content:''; display:block; position:absolute; bottom:-7px; left:6px; width:6px; height:7px; background:url('/pcPub/static/images/common/icon/bg_tooltip.png') no-repeat;}
+.tooltipBox:after { content:''; display:block; position:absolute; bottom:-7px; left:6px; width:6px; height:7px; background:url('../../../pcPub/static/images/common/icon/bg_tooltip.png') no-repeat;}
 
 /* tap */
 .tapBox { margin-bottom:16px;}
@@ -412,7 +413,7 @@ body.reservation #headerWrap .btnClose { display:block; position:absolute; top:2
 .reservationInfoWrap .btn { position:absolute; top:0; right:0; }
 
 .reservationWrap .singleText { padding:13px 0px 0; font-size:12px; color:#e66045;}
-.reservationWrap .singleText:before { content:''; display:inline-block; width:20px; height:20px; margin-top:-3px; margin-right:8px; vertical-align:middle; background:url('/pcPub/static/images/common/icon/icon_caution.png') no-repeat;}
+.reservationWrap .singleText:before { content:''; display:inline-block; width:20px; height:20px; margin-top:-3px; margin-right:8px; vertical-align:middle; background:url('../../../pcPub/static/images/common/icon/icon_caution.png') no-repeat;}
 
 /*
 .selectChoice { position:relative; margin-top:40px; padding:40px 0; border-top:1px dotted #e6e3df;}
@@ -515,9 +516,9 @@ body.reservation #headerWrap .btnClose { display:block; position:absolute; top:2
 
 .cautionBox { border:1px solid #e6e3df; background:#f9f9f9;}
 .cautionBox h2 {font-size:13px 16px; height:56px; padding:0 16px; line-height:56px; color:#e66045;}
-.cautionBox h2:before { content:''; display:inline-block; width:20px; height:20px; margin-top:-3px; margin-right:8px; vertical-align:middle; background:url('/pcPub/static/images/common/icon/icon_caution.png') no-repeat;}
+.cautionBox h2:before { content:''; display:inline-block; width:20px; height:20px; margin-top:-3px; margin-right:8px; vertical-align:middle; background:url('../../../pcPub/static/images/common/icon/icon_caution.png') no-repeat;}
 .cautionBox .singleText { padding:16px; font-size:12px; color:#e66045;}
-.cautionBox .singleText:before { content:''; display:inline-block; width:20px; height:20px; margin-top:-3px; margin-right:8px; vertical-align:middle; background:url('/pcPub/static/images/common/icon/icon_caution.png') no-repeat;}
+.cautionBox .singleText:before { content:''; display:inline-block; width:20px; height:20px; margin-top:-3px; margin-right:8px; vertical-align:middle; background:url('../../../pcPub/static/images/common/icon/icon_caution.png') no-repeat;}
 .cautionBox .dotList { padding:25px 34px; background:#fff;}
 .cautionBox .dotList li + li { margin-top:10px;}
 .cautionBox .textBox { padding:25px 34px; background:#fff;}
@@ -571,7 +572,7 @@ body.reservation #headerWrap .btnClose { display:block; position:absolute; top:2
 .reservationSection .optionListWrap .cont dd { font-size:12px; color:#666;}
 .reservationSection .optionListWrap .cont dd p { margin-bottom:0;}
 .reservationSection .optionListWrap .casyBox * { font-size:12px;}
-.reservationSection .optionListWrap .btnOptionClose { position:absolute; top:13px; right:10px; width:18px; height:18px; font-size:0; background:url('/pcPub/static/images/reservation/btn_option_close.png') no-repeat;}
+.reservationSection .optionListWrap .btnOptionClose { position:absolute; top:13px; right:10px; width:18px; height:18px; font-size:0; background:url('../../../pcPub/static/images/reservation/btn_option_close.png') no-repeat;}
 
 .reservationSection .mark { display:inline-block; width:16px; height:16px; border-radius:50%; text-align:center; font-size:10px; font-weight: 450; line-height: 16px; color:#fff; vertical-align:middle; background:silver;}
 .reservationSection .mark.Red { background:#dc5b51;}
