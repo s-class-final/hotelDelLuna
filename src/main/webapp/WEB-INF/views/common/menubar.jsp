@@ -15,8 +15,8 @@
 		<script src="resources/common/js/check.js"></script>
 		<script src="resources/common/js/form.js"></script>
 		<script src="resources/common/js/string.js"></script>
-		<script src="resources/common/js/common.js"></script>
-
+ 		<script src="resources/common/js/common.js"></script>
+ 
 		<!-- S : 1-2 js -->	
 		<script type="text/javascript" src="resources/pcPub/static/js/common.js"></script>
 		<script src="resources/common/component/jquery-session/jquery.session.js"></script>
@@ -177,7 +177,10 @@
    
    <div class="bgDepth"></div>
 </header>
-
+ <c:if test="${sessionScope.loginUser.userId eq 'admin'}">
+ 	<!-- 관리자 로그인 시 띄울 메뉴 설정할 부분 -->
+ 	
+ </c:if>
 <!-- quick Bar 퀵메뉴 퀵 메뉴 -->
 <aside class="quickBar view">
    <div class="quickH">
