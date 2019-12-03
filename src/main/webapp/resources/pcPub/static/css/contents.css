@@ -3035,7 +3035,7 @@ ul.diningTab li.on a{color: #9c836a; text-decoration: underline;}
 	.aboutWrap  > .section.section04 .sectionH > h1{padding-right: 110px;}
 	.aboutWrap  > .section.section04 .sectionH > p{padding-left: 70px;}
 	.aboutWrap  > .section.section04 .sectionH:before{display: block; content: ''; position: absolute; width: 1px; height: 100%; left: 50%; top: 0; margin-left: -2px; background-color: #ac9073;}
-	.aboutWrap  > .btmVisual{padding-top: 105px; height: 570px; background: url(/pcPub/static/images/aboutUs/btm_visual.jpg) center top; background-size:cover; text-align: center;}
+	.aboutWrap  > .btmVisual{padding-top: 105px; height: 570px; background-image: url('/hotelDelLuna/resources/pcPub/static/images/aboutUs/btm_visual.jpg') center top; background-size:cover; text-align: center;}
 	.aboutWrap  > .btmVisual > p{margin-bottom: 15px; font-size: 18px; color: #fff; line-height: 1;}
 
 	/*회원탈퇴 팝업*/

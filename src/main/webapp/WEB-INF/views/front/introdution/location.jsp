@@ -8,9 +8,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<jsp:include page="../common/menubar.jsp"/>
+	<jsp:include page="../../common/menubar.jsp"/>
 	
+
+
 
 <!-- Google Maps API -->
 <!--    
@@ -39,11 +40,12 @@ window.onload = function() {
     .tableList tbody tr.on td {background:#f9f9f9; color:#e66045;}
  </style> -->
 
-<!-- 1-1차 API -->
-<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABdaj0QLlPOscIx2EcTR-bL8weKd8BxjM&callback=initMap&region=KR"></script>
-
+<!-- 1-1차 API GoogleMap-->
+<!-- <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkcPohXwii_cA1KGytXac10zcd7Kkhq88&callback=initMap&region=KR"></script>
+ -->
 <script>
-function initMap() {
+
+/* function initMap() {
     var myLatLng = {lat: 37.435241, lng: 126.456931};
 
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -54,9 +56,9 @@ function initMap() {
     var marker = new google.maps.Marker({
       position: myLatLng,
       map: map,
-      title: 'PARADISE CITY'
+      title: 'Hotel DelLunar'
     });
-}
+}  */
 
 // 층별/주차안내 버튼 클릭 시 해당 탭 이동 
 function showFloorInfoTab( fmt_dataId ) {
@@ -149,14 +151,10 @@ function jsMapView(obj) {
         <div class="tapBox">
             <ul>
                 <li  class="on"><a href="#">오시는 길</a></li>
-                <li ><a href="#">층별 안내</a></li>
-                <li ><a href="#">아트맵</a></li>
+                <!-- <li ><a href="#">층별 안내</a></li>
+                <li ><a href="#">아트맵</a></li> -->
             </ul>
         </div>
-
-
-
-
 
 
 <script type="text/javascript">
@@ -192,17 +190,18 @@ $(document).ready(function(){
 
                 <!-- map start -->
                 <div class="mapArea">
-                    <div id="map" class="mapBox"></div>
+                    <div id="map" class="mapBox" ></div>
                 </div>
                 <!-- map end -->
+
 
                 <div class="titleArea">
                     <p class="title">언제나 설레는 공항 가는길, 인천공항 바로 옆에 <br>파라다이스시티가 있습니다.</p>
                     <p class="address">인천광역시 중구 영종해안남로 321길 186</p>
-                    <div class="btnGroup">
+                    <!-- <div class="btnGroup">
                         <a href="http://map.naver.com/index.nhn?pinId=38469564&dlevel=10&enc=b64&pinType=site&y=995e0f1892e603ae43e9b6b2f0b59a23&x=3036ebf78a70c5546f717f2012c44ae5" class="btn small"><span>NAVER MAP</span></a>
                         <a href="http://map.daum.net/?urlX=379897&urlY=1094046&itemId=527592042" class="btn small"><span>DAUM MAP</span></a>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="tapBox">
@@ -297,7 +296,7 @@ $(document).ready(function(){
                             <h3>운행노선 및 상세</h3>
                             <!-- 2018.09.28 수정 -->
                             <div class="mapDetailInfo newType6">
-                                <img src="/pcPub/static/images/map/map_new_route_type6.jpg" alt="">
+                                <img src="resources/pcPub/static/images/map/map_new_route_type6.jpg" alt="">
                                 <div class="info1">
                                     <p class="tit">파라다이스시티 <span>매시<br />00분, 20분, 40분</span></p>
                                 </div>
@@ -400,7 +399,7 @@ $(document).ready(function(){
                         <div class="route">
                             <h3>운행노선 및 상세</h3>
                             <div class="mapDetailInfo newType5">
-                                <img src="/pcPub/static/images/map/map_new2_route_type5.jpg" alt="">
+                                <img src="resources/pcPub/static/images/map/map_new2_route_type5.jpg" alt="">
                                 <div class="info1">
                                     <p class="tit">송도/안산 출발</p>
                                 </div>
@@ -544,7 +543,7 @@ $(document).ready(function(){
                         <div class="route">
                             <h3>운행노선 및 상세</h3>
                             <div class="mapDetailInfo newType4">
-                                <img src="/pcPub/static/images/map/map_new2_route_type5.jpg" alt="">
+                                <img src="resources/pcPub/static/images/map/map_new2_route_type5.jpg" alt="">
                                 <div class="info1">
                                     <p class="tit">청라/대림 출발</p>
                                 </div>
@@ -617,7 +616,7 @@ $(document).ready(function(){
                 <div class="tapView">
                     <div class="route">
                         <div class="mapDetailInfo type2">
-                            <img src="/pcPub/static/images/map/map_route02_n.jpg" alt="">
+                            <img src="resources/pcPub/static/images/map/map_route02_n.jpg" alt="">
                             <div class="info1">
                                 <p class="tit">인천국제공항고속도로</p>
                             </div>
@@ -645,7 +644,7 @@ $(document).ready(function(){
                     <div class="route">
                         <h3>지하철 + 자기부상열차</h3>
                         <div class="mapDetailInfo type3">
-                            <img src="/pcPub/static/images/map/map_route03_1_n.jpg" alt="">
+                            <img src="resources/pcPub/static/images/map/map_route03_1_n.jpg" alt="">
                             <div class="info1">
                                 <p class="tit">공항철도 서울역 승차<br />(인천국제공항 방면)</p>
                             </div>
@@ -669,7 +668,7 @@ $(document).ready(function(){
                     <div class="route">
                         <h3>지하철 + 버스</h3>
                         <div class="mapDetailInfo type4">
-                            <img src="/pcPub/static/images/map/map_route03_2_n.jpg" alt="">
+                            <img src="resources/pcPub/static/images/map/map_route03_2_n.jpg" alt="">
                             <div class="info1">
                                 <p class="tit">공항철도 서울역 승차<br />(인천국제공항 방면)</p>
                             </div>
@@ -722,7 +721,7 @@ $(document).ready(function(){
             <!-- paradise city -->
             <div class="floorMapView" data-id="map_pc" style="display:block;">
                 <div class="map type1">
-                    <img src="/pcPub/static/images/map/img_paradise_map01.jpg" alt="" usemap="#floorMap1" />
+                    <img src="resources/pcPub/static/images/map/img_paradise_map01.jpg" alt="" usemap="#floorMap1" />
                     <map name="floorMap1">
                         <area target="" alt="" title="" href="#" coords="461,147,450,165,548,228,553,342,572,347,576,237,580,224,674,168,668,149,569,201,558,203" shape="poly">
                         <area target="" alt="" title="" href="#" coords="534,294,514,321,519,330,490,348,525,417,556,403,551,395,591,371,603,370,604,376,617,371,632,359,630,314,625,310,625,297,580,294,576,342,555,350,547,291" shape="poly">
@@ -5222,6 +5221,42 @@ $(window).load(function(){
     <!-- //layerPopCont -->
 </div>
 <!-- //2018.09.03 운영 시간표 -->
+
+
+
+<!-- DaumMap -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1a9de64f8a5c63f5a51187b1bc584488&libraries=services,clusterer,drawing""></script>
+<script>
+
+		/* var myLatLng = {lat: 37.435241, lng: 126.456931}; */
+		
+		var mapContainer = document.getElementById("map"), // 지도를 표시할 div 
+		    mapOption = { 
+		        center: new kakao.maps.LatLng(37.4390836,126.4512017), // 지도의 중심좌표
+		        level: 3 // 지도의 확대 레벨
+	    };
+	
+		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+		var map = new kakao.maps.Map(mapContainer, mapOption); 
+		
+		setTimeout(function(){ map.relayout(); }, 10);
+		
+
+		/* // 마커가 표시될 위치입니다 
+		var markerPosition  = new kakao.maps.LatLng(37.4376122,126.4550957);  */
+		// 마커가 표시될 위치입니다 
+		var markerPosition  = new kakao.maps.LatLng(37.4363065,126.4567377); 
+
+		// 마커를 생성합니다
+		var marker = new kakao.maps.Marker({
+		    position: markerPosition
+		});
+
+		// 마커가 지도 위에 표시되도록 설정합니다
+		marker.setMap(map);
+
+		
+</script>
 		
 </body>
 </html>

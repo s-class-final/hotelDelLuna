@@ -55,12 +55,12 @@
             <a href="#">hotels</a>
             <div class="gnbDepth2">
                <div>
-                  <h2><a href="#"><span>DELLUNA</span>객실안내</a></h2>
+                  <h2><a href="overView.do"><span>DELLUNA</span>객실안내</a></h2>
                   <ul>
-                     <li><a href="overView.do">Overview</a></li>
-                     <li class="on"><a href="roomView.do">디럭스</a></li>
-                     <li><a href="#">슈페리어</a></li>
-                     <li><a href="#">패밀리</a></li>
+                     <li class="on"><a href="roomView.do">슈페리어</a></li>
+                     <li><a href="roomView.do">디럭스</a></li>
+                     <li><a href="roomView.do">프리미엄 디럭스</a></li>
+                     <li><a href="roomView.do">스위트</a></li>
                   </ul>
                </div>
             </div>
@@ -74,7 +74,7 @@
                      <li><a href="#">Swimming Pool</a></li>
                      <li><a href="#">CASINO</a></li>
                      <li class="on"><a href="#">가격 및 이용안내</a></li>
-                     <li><a href="#">주변 즐길거리</a></li>
+                     <li><a href="around.do">주변 즐길거리</a></li>
                   </ul>
                </div>
             </div>
@@ -95,7 +95,7 @@
             <a href="#">service center</a>
             <div class="gnbDepth2">
                <div>
-                  <h2><a href="#"><span>Service Center</span>고객센터</a></h2>
+                  <h2><a href="support.do"><span>Service Center</span>고객센터</a></h2>
                   <ul>
                      <li><a href="notice.do">공지사항</a></li>
                      <li><a href="voc.do">1:1문의</a></li>

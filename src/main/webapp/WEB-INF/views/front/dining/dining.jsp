@@ -7,7 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="../common/menubar.jsp"/>
+	<jsp:include page="../../common/menubar.jsp"/>
+
+
 
 
 
@@ -48,8 +50,9 @@ function jsList(CATE) {
 <!-- 컨텐츠 영역 -->
 <section id="container">
 	
+	
 	<form id="form1" name="form1">
-		<input type="hidden" id="CATE" name="CATE" value="RESTAURANT"/>
+		<input type="hidden" id="CATE" name="CATE" value=""/>
 		<input type="hidden" id="F_SEQ" name="F_SEQ" value=""/>
 	</form>
 	
@@ -61,8 +64,8 @@ function jsList(CATE) {
 		<div class="utilMenu">
 			
 			<ul class="diningTab clearFixed">
-				<li class="all" id="allLi"><a href="all" onclick="javascript:jsList('All');" >All</a></li>
-				<li class="restaurant on"><a href="cafe" onclick="javascript:jsList('RESTAURANT');">Restaurant</a></li>
+				<li class="all on" id="allLi"><a href="all" onclick="javascript:jsList('All');" >All</a></li>
+				<li class="restaurant"><a href="cafe" onclick="javascript:jsList('RESTAURANT');">Restaurant</a></li>
 				<li class="cafe"><a href="restaurant" onclick="javascript:jsList('CAFE');">Café &amp; Bar</a></li>
 			</ul>
 		</div>
@@ -122,7 +125,31 @@ function jsList(CATE) {
 			</div>
 			
 			
+			<div class="findDiningItem" data-animation="fadeInUp">
+				<p class="img"><a href="/front/hotel/dining/view?DINING_NM=DiningRubik"><img src="/pcPub/static/images/hotalParadise/dining5.jpg" alt="" /></a></p>
+				<div class="textBox">
+					<h2>RUBIK</h2>
+					<p class="text">색다른 공연을 만나는 라이브 뮤직 라운지</p>
+				</div>
+			</div>
 			
+			
+			<div class="findDiningItem" data-animation="fadeInUp">
+				<p class="img"><a href="/front/hotel/dining/view?DINING_NM=DiningLoungeParadise"><img src="/pcPub/static/images/hotalParadise/dining6.jpg" alt="" /></a></p>
+				<div class="textBox">
+					<h2>LOUNGE PARADISE</h2>
+					<p class="text">음악이 흐르는 로비라운지</p>
+				</div>
+			</div>
+			
+			
+			<div class="findDiningItem" data-animation="fadeInUp">
+				<p class="img"><a href="/front/hotel/dining/view?DINING_NM=DiningGardenCafe"><img src="/pcPub/static/images/hotalParadise/dining7.jpg" alt="" /></a></p>
+				<div class="textBox">
+					<h2>GARDEN CAFÉ</h2>
+					<p class="text">유럽의 정취를 지닌 카페</p>
+				</div>
+			</div>
 			
 			
 			
@@ -136,10 +163,19 @@ function jsList(CATE) {
 			
 			
 			<div class="findDiningItem" data-animation="fadeInUp">
-				<p class="img"><a href="/front/hotel/dining/view?DINING_NM=DiningCafe9"><img style="width:100%;" src="/pcPub/static/images/hotalParadise/cafe9_ssImg.jpg" alt="" /></a></p>
+				<p class="img"><a href="/front/hotel/dining/view?DINING_NM=DiningCafe9"><img style="width:100%;" src="/pcPub/static/images/hotalParadise/cafe9_bsImg.jpg" alt="" /></a></p>
 				<div class="textBox">
 					<h2>Café 9</h2>
 					<p class="text">게임 속 오아시스, 미식의 즐거움을 경험하는 곳</p>
+				</div>
+			</div>
+			
+			
+			<div class="findDiningItem" data-animation="fadeInUp">
+				<p class="img"><a href="/front/hotel/dining/view?DINING_NM=DiningBar21"><img style="width:100%;" src="/pcPub/static/images/hotalParadise/bar21_ssImg.jpg" alt="" /></a></p>
+				<div class="textBox" style="padding-right:90px;">
+					<h2>Bar 21</h2>
+					<p class="text">카지노를 한층 더 다이내믹하게 즐길 수 있는 카지노 엔터테인먼트바</p>
 				</div>
 			</div>
 			
@@ -845,6 +881,8 @@ function jsSingleDayFilter(date, obj) {
 <!-- //offer 상세1 -->
 
 </form>
+
+
 
 
 

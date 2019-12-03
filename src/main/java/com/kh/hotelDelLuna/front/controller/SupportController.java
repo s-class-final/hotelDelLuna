@@ -1,4 +1,4 @@
-package com.kh.hotelDelLuna.support.controller;
+package com.kh.hotelDelLuna.front.controller;
 
 import java.util.Locale;
 
@@ -14,7 +14,7 @@ public class SupportController {
 	@RequestMapping(value="entireResListGuest.do", method = RequestMethod.GET)
 	public String entireResListGuest(Locale locale, Model model) {
 		System.out.println("entireResListGuest서블릿 실행");
-		return "support/entireResListGuest";
+		return "front/entireResListGuest";
 	}
 	
 	
@@ -22,30 +22,41 @@ public class SupportController {
 	@RequestMapping(value="hotelDelLunar.do", method = RequestMethod.GET)
 	public String hotelDelLunar(Model model, String room) {
 		System.out.println("location서블릿 실행");
-		return "support/hotelDelLunar";
+		return "front/introdution/hotelDelLunar";
 	}
 	
 	//소개 오시는길 이동
 	@RequestMapping(value="location.do", method = RequestMethod.GET)
 	public String location(Model model, String room) {
 		System.out.println("location서블릿 실행");
-		return "support/location";
+		return "front/introdution/location";
 	}
 	
 	//호텔 룸 오버뷰 이동
 	@RequestMapping(value="overView.do", method = RequestMethod.GET)
 	public String overView(Locale locale, Model model) {
 		System.out.println("overView서블릿 실행");
-		return "support/overView";
+		return "front/hotels/overView";
 	}
 	
 	//호텔 룸 상세보기 이동
 	@RequestMapping(value="roomView.do", method = RequestMethod.GET)
 	public String roomView(Model model, String room) {
 		System.out.println("roomView서블릿 실행");
-		return "support/roomView";
+		return "front/hotels/roomView";
 	}
 	
+	
+	
+	
+	
+	
+	// 즐길거리 주변 즐길거리 이동
+	@RequestMapping(value="around.do", method = RequestMethod.GET)
+	public String around(Model model, String room) {
+		System.out.println("around서블릿 실행");
+		return "front/entertainment/around";
+	}
 	
 	
 	
@@ -53,7 +64,7 @@ public class SupportController {
 	@RequestMapping(value="dining.do", method = RequestMethod.GET)
 	public String dining(Model model, String room) {
 		System.out.println("dining서블릿 실행");
-		return "support/dining";
+		return "front/dining/dining";
 	}
 	
 	
@@ -61,29 +72,35 @@ public class SupportController {
 	@RequestMapping(value="restaurant.do", method = RequestMethod.GET)
 	public String restaurant(Model model, String room) {
 		System.out.println("restaurant서블릿 실행");
-		return "support/restaurant";
+		return "front/dining/restaurant";
 	}
 	
 	//다이닝 카페 이동
 	@RequestMapping(value="cafe.do", method = RequestMethod.GET)
 	public String cafe(Model model, String room) {
 		System.out.println("cafe서블릿 실행");
-		return "support/cafe";
+		return "front/dining/cafe";
 	}
 		
 		
+	//고객센터 전체 이동
+	@RequestMapping(value="support.do", method = RequestMethod.GET)
+	public String support(Model model, String room) {
+		System.out.println("support서블릿 실행");
+		return "front/support/support";
+	}
 
 	//고객센터 공지사항 이동
 	@RequestMapping(value="notice.do", method = RequestMethod.GET)
 	public String notice(Model model, String room) {
 		System.out.println("notice서블릿 실행");
-		return "support/notice";
+		return "front/support/notice";
 	}
 	
 	//고객센터 공지사항 이동
 	@RequestMapping(value="voc.do", method = RequestMethod.GET)
 	public String voc(Model model, String room) {
 		System.out.println("notice서블릿 실행");
-		return "support/voc";
+		return "front/support/voc";
 	}
 }
