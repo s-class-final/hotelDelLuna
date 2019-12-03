@@ -25,7 +25,7 @@
 
 #main #container { padding-top:0;}
 
-.mainVisual { overflow:hidden; position:relative; min-width:1280px; min-height:840px; margin-right:64px;}
+.mainVisual { overflow:hidden; position:relative; min-width:1280px; min-height:840px; }
 .mainVisual .visual { display:table; position:absolute; top:0; left:0; z-index:2; width:100%; min-height:840px;}
 .mainVisual .visual > div { display:table-cell; position:relative;}
 .mainVisual .visual > div:after { content:''; display:block; position:absolute; top:0; left:0; bottom:0; z-index:1; width:1px; background:rgba(255,255,255,0.1);}
