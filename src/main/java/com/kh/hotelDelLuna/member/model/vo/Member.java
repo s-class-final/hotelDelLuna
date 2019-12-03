@@ -6,7 +6,7 @@ public class Member {
 	private String userId;
 	private String userPwd;
 	private String userName;
-	private int userPhone;
+	private String userPhone;
 	private int point;
 	private String mStatus;
 	private String kakao;
@@ -14,7 +14,7 @@ public class Member {
 	public Member() {
 	}
 
-	public Member(int mId, int userT, String userId, String userPwd, String userName, int userPhone, int point,
+	public Member(int mId, int userT, String userId, String userPwd, String userName, String userPhone, int point,
 			String mStatus, String kakao) {
 		super();
 		this.mId = mId;
@@ -68,11 +68,11 @@ public class Member {
 		this.userName = userName;
 	}
 
-	public int getUserPhone() {
+	public String getUserPhone() {
 		return userPhone;
 	}
 
-	public void setUserPhone(int userPhone) {
+	public void setUserPhone(String userPhone) {
 		this.userPhone = userPhone;
 	}
 

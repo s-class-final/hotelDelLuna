@@ -15,6 +15,51 @@ public class MemberDao {
 		
 		return (Member)sqlSession.selectOne("memberMapper.selectOne", m);
 	}
+
+	public int insertMember(Member m) {
+		
+		return sqlSession.insert("memberMapper.insertMember", m);
+	}
+
+	public int idCheck(String userId) {
+		
+		return sqlSession.selectOne("memberMapper.idCheck", userId);
+	}
+
+	public int kakaoIdCheck(String kakaoId) {
+		
+		return sqlSession.selectOne("memberMapper.kakaoIdCheck", kakaoId);
+	}
+
+	public int insertKMember(Member m) {
+		
+		return sqlSession.insert("memberMapper.insertKMember", m);
+	}
+
+	public Member kakaoLogin(String kakao) {
+		
+		return sqlSession.selectOne("memberMapper.kakaoLogin", kakao);
+	}
+
+	public int changePwd(Member m) {
+		
+		return sqlSession.update("memberMapper.changePwd", m);
+	}
+
+	public int nameCheck(Member m) {
+		
+		return sqlSession.selectOne("memberMapper.nameCheck", m);
+	}
+
+	public int phoneCheck(Member m) {
+		
+		return sqlSession.selectOne("memberMapper.phoneCheck", m);
+	}
+
+	public Member findUser(Member m) {
+		
+		return sqlSession.selectOne("memberMapper.findUser", m);
+	}
 	
 	
 }
