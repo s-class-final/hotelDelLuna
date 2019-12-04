@@ -104,19 +104,19 @@
 
 
 @media screen and (max-width: 1560px) {
-	#headerWrap .topLink .more { position:relative; margin-right:0;}
-	#headerWrap .topLink .more .topMore { display:inline-block; position:relative; padding:0 42px 0 16px; line-height:48px; color:#fff; font-size:12px; vertical-align:middle; transition: all .3s ease;}
-	#headerWrap .topLink .more .topMore:after { content:''; display:block; position:absolute; top:50%; right:16px; width:8px; height:5px; margin-top:-2.5px; background:url('../images/common/bg_topArrow.png') no-repeat 0 -5px;}
-	#headerWrap .topLink .more ul { display:none; position:absolute; top:48px; right:0; padding-bottom:15px; background:#21201e; transition: all .3s ease;}
-	#headerWrap .topLink .more li { float:none; margin:0;}
-	#headerWrap .topLink .more li a { display:block; padding:10px 16px; font-size:12px; color:#999;}
-	#headerWrap .topLink .more li a:hover { color:#9c836a;}
-	
-	#headerWrap .topLink .more.on {}
-	#headerWrap .topLink .more.on .topMore { width:168px;}
-	#headerWrap .topLink .more.on .topMore:after { background-position:0 0;}
-	#headerWrap .topLink .more.on ul { display:block; width:168px;}
-	
+   #headerWrap .topLink .more { position:relative; margin-right:0;}
+   #headerWrap .topLink .more .topMore { display:inline-block; position:relative; padding:0 42px 0 16px; line-height:48px; color:#fff; font-size:12px; vertical-align:middle; transition: all .3s ease;}
+   #headerWrap .topLink .more .topMore:after { content:''; display:block; position:absolute; top:50%; right:16px; width:8px; height:5px; margin-top:-2.5px; background:url('../images/common/bg_topArrow.png') no-repeat 0 -5px;}
+   #headerWrap .topLink .more ul { display:none; position:absolute; top:48px; right:0; padding-bottom:15px; background:#21201e; transition: all .3s ease;}
+   #headerWrap .topLink .more li { float:none; margin:0;}
+   #headerWrap .topLink .more li a { display:block; padding:10px 16px; font-size:12px; color:#999;}
+   #headerWrap .topLink .more li a:hover { color:#9c836a;}
+   
+   #headerWrap .topLink .more.on {}
+   #headerWrap .topLink .more.on .topMore { width:168px;}
+   #headerWrap .topLink .more.on .topMore:after { background-position:0 0;}
+   #headerWrap .topLink .more.on ul { display:block; width:168px;}
+   
 }
 
 @media screen and (max-width:800px) {
@@ -124,7 +124,6 @@
 
 @media screen and (max-width:640px) {
 }
-
 
 
 
