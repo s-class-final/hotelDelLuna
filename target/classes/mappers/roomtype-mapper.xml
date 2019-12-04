@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="roomtypeMapper">
-	<resultMap type ="RoomType" id="r">
+	<resultMap type ="RoomType" id="rt">
 		<id property="type" column="ROOMTYPE"/>  
 		<result property="capacity" column="CAPACITY"/>
 		<result property="addBed" column="ADDBED"/>
@@ -16,7 +16,7 @@
 		<result property="childRate" column="CHILDRATE"/>
 	</resultMap>
 	 
-	<resultMap type="Attachment" id ="a">
+	<resultMap type="Attachment" id ="img">
 		<id property="num" column="FNO"/>  
 		<id property="roomType" column="ROOMTYPE"/>  
 		<result property="path" column="PATH"/>
@@ -24,4 +24,15 @@
 		<result property="changeName" column="CHANGENAME"/>
 		<result property="imgLv" column="IMGLV"/>
 	</resultMap>
+	
+	<insert id="insertRtype" parameterType="RoomType">
+		INSERT INTO ROOMTYPE
+		VALUES (#{type},#{capacity},#{addBed},#{singleBed},
+		#{doubleBed},#{smoking},#{weekDay},#{weekEnd},#{startDay},#{endDay},#{childRate})
+	</insert>
+	
+	<insert id="insertRimgs" parameterType="Attachment">
+		INSERT INTO ATTACHMENT 
+		VALUES (SEQ_IMGNO.NEXTVAL,#{roomType},#{path},#{originalName},#{changeName},#{imgLv})
+	</insert>
 </mapper>
