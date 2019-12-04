@@ -1,11 +1,8 @@
 package com.kh.hotelDelLuna.reservation.controller;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -33,6 +30,7 @@ public class ReservationController {
 	@Autowired
 	ReservationService rService;
 
+	/********** 처음 예약 페이지 뿌려줄 때 **********/
 	@RequestMapping(value = "entireResList.do", method = RequestMethod.GET)
 	public ModelAndView entireResList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page) {
 
@@ -59,71 +57,6 @@ public class ReservationController {
 			throw new ReservationException("예약 리스트 조회 실패!");
 		}
 
-		return mv;
-
-	}
-
-	@RequestMapping(value = "searchResList.do", method = RequestMethod.GET)
-	public ModelAndView searchResList(ModelAndView mv, HttpSession session, HttpServletRequest request,
-			@RequestParam(value = "page", required = false) Integer page,
-			@RequestParam(value = "searchCondition", required = false) String searchCondition,
-			@RequestParam(value = "searchValue", required = false) String searchValue)
-			throws UnsupportedEncodingException {
-
-		/*
-		 * String searchCondition = request.getParameter("searchCondition"); String
-		 * searchValue = request.getParameter("searchValue");
-		 */
-		Enumeration enums = request.getParameterNames();
-
-		while (enums.hasMoreElements()) {
-
-			String key = (String) enums.nextElement();
-			String value = request.getParameter(key);
-			System.out.println(key + " : " + value);
-		}
-
-		ResSearchCondition sc = new ResSearchCondition();
-		if (session.getAttribute("sc") != null) {
-			sc = (ResSearchCondition) session.getAttribute("sc");
-			System.out.println("대입 완료");
-		} else {
-
-			if (searchCondition.equals("userEmail")) {
-				sc.setUserEmail(searchValue);
-			} else if (searchCondition.equals("userName")) {
-				sc.setUserName(searchValue);
-			} else if (searchCondition.equals("userPhone")) {
-				sc.setUserPhone(searchValue);
-			}
-
-		}
-		System.out.println("searchCondition : " + sc);
-
-		int currentPage = 1;
-
-		if (page != null) {
-			currentPage = page;
-		}
-
-		int listCount = rService.getSearchResultListCount(sc);
-		System.out.println("검색 목록 갯수 : " + listCount);
-
-		// Pagination의 getPageInfo 메소드로 currentPage, listCount 전달 후 PageInfo 객체 리턴
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-
-		// ********* 2. 검색한 게시글을 DB조회해서 ArrayList에 담자
-		ArrayList<Reservation> rlist = rService.selectSearchResultList(sc, pi);
-
-		if (rlist != null) {
-			mv.addObject("list", rlist);
-			mv.addObject("pi", pi);
-			mv.addObject("searchCondition", searchCondition);
-			mv.addObject("searchValue", searchValue);
-			mv.setViewName("reservation/entireResView");
-		} else {
-			throw new ReservationException("검색한 예약 리스트 조회 실패!");
-		}
 		return mv;
 
 	}
@@ -168,27 +101,33 @@ public class ReservationController {
 
 		int listCount;
 		ResSearchCondition sc = new ResSearchCondition();
+		
 		/** 검색 값이 있었다면!! **/
 		if (session.getAttribute("sc") != null) {
 			sc= (ResSearchCondition)session.getAttribute("sc");
+
+			System.out.println("sc의 값 : " + sc);
 			listCount = rService.getSearchResultListCount(sc);
-			/** 검색 값이 없으면!! **/
+		
+		/** 검색 값이 없으면!! **/
 		} else {
 			listCount = rService.getListCount();
 		}
-
+		
 		PageInfo pi = Pagination.getPageInfo(page, listCount);
-		/** 검색 값이 있었다면!! **/
 		ArrayList<Reservation> rList;
+		/** 검색 값이 있었다면!! **/
 		if (sc != null) {
+			System.out.println("검색값이 있다고 친다고???");
 			rList = rService.selectSearchResultList(sc, pi);
-			/** 검색 값이 없으면!! **/
+		/** 검색 값이 없으면!! **/
 		} else {
+			System.out.println("여기 실행되긴함???");
 			rList = rService.selectResList(pi);
 		}
-
+		
+		System.out.println("sc에 들어간 정렬값 : "+sc.getSort_no());
 		System.out.println(listCount);
-		System.out.println(rList);
 
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(rList, response.getWriter());
@@ -198,7 +137,7 @@ public class ReservationController {
 	@RequestMapping("rPage.do")
 	@ResponseBody
 	public void getResPage(HttpServletResponse response, HttpSession session, int page, String searchCondition,
-			String searchValue,boolean search) throws JsonIOException, IOException {
+			String searchValue,Integer sort_no,boolean search) throws JsonIOException, IOException {
 
 		response.setContentType("application/json;charset=utf-8");
 		/*
@@ -211,9 +150,13 @@ public class ReservationController {
 		 System.out.println("넘어온 searchCondition : " + searchCondition);
 		 System.out.println("넘어온 searchValue : "+searchValue);
 		 System.out.println("검색여부 : "+search);
-		
-		 //********** 검색했을 때  *********//	
-		if (search) {
+		 System.out.println("정렬여부 : "+sort_no);
+		 
+		 //********** 검색했을 때  *********//
+		 if(sort_no!=null) {
+			 sc.setSort_no(sort_no);
+		 }
+		 if (search) {
 			System.out.println("검색 했을 때");
 			session.removeAttribute("sc");
 			 //********** 검색 값이 있을 때!!!!  **********//
@@ -234,16 +177,23 @@ public class ReservationController {
 			if (session.getAttribute("sc") != null) {
 				System.out.println("세션이 비어있지 않을 때");
 				sc = (ResSearchCondition) session.getAttribute("sc");
+				if(sort_no!=null) {
+					sc.setSort_no(sort_no);
+				}
 				listCount = rService.getSearchResultListCount(sc);
 			} else {
-
+				
 				System.out.println("첫 검색!");
-				session.removeAttribute("sc");
+				if(sort_no==null) {
+					System.out.println("세션 삭제!!!!!!");
+					session.removeAttribute("sc");
+				}else {
+					System.out.println("세션에 정렬값 넣음!!");
+					session.setAttribute("sc", sc);
+				}
 				listCount = rService.getListCount();
 			}
 		}
-	
-
 
 		PageInfo pi = Pagination.getPageInfo(page, listCount);
 
@@ -254,12 +204,15 @@ public class ReservationController {
 		gson.toJson(pi, response.getWriter());
 	}
 
+
+
+	
 	public ResSearchCondition checkSearch(String searchCondition, String searchValue) {
 
 		ResSearchCondition sc = new ResSearchCondition();
 
-		if (searchCondition.equals("userEmail")) {
-			sc.setUserEmail(searchValue);
+		if (searchCondition.equals("userId")) {
+			sc.setUserId(searchValue);
 		} else if (searchCondition.equals("userName")) {
 			sc.setUserName(searchValue);
 		} else if (searchCondition.equals("userPhone")) {

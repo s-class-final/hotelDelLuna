@@ -112,12 +112,16 @@ function tabMenuCheck(){
 		 /** 달력 메뉴일 때 **/
 		 if(i==1)
 		 {
+			 sessionStorage.removeItem("sc");
 			 $("#entireRes").prop("hidden",true);	
 			 $("#calendarRes").prop("hidden",false);
-
+		 /** 테이블 메뉴일 때 **/
 		 }else{
 			 $("#entireRes").prop("hidden",false);	
 			 $("#calendarRes").prop("hidden",true); 
+			 $(".sortHead").children("button").css("background-position-y",0);
+			 $(".sortHead").children("button").prop('class','toggle off');
+			 pagingAjax(1,null,null,0,true);
 		 }
 		}else{
 		 $("input[name=tabmenu]").eq(i).parent().removeClass("hovered");
