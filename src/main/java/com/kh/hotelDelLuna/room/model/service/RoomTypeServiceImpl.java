@@ -12,6 +12,26 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 	
 	@Autowired
 	RoomTypeDao rtDao;
+
+	
+
+	
+	@Override
+	public int insertRtype(RoomType rt) {
+		return rtDao.insertRtype(rt);
+	}
+
+	@Override
+	public int insertImgs(Attachment at) {
+		// TODO Auto-generated method stub
+		return rtDao.insertRimgs(at);
+	}
+
+
+
+
+
+
 	
 
 }

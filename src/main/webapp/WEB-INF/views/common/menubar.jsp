@@ -111,7 +111,7 @@
 					<div>
 						<h2><a href="#"><span>Admin page</span>관리자 페이지</a></h2>
 						<ul>
-							<li><a href="iRoomView.do">방 등록</a></li>
+							<li><a href="iRoomtypeView.do">방 등록</a></li>
 							
 						</ul>
 					</div>
