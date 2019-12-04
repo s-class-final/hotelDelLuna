@@ -43,9 +43,9 @@
             <a href="#">introduce</a>
             <div class="gnbDepth2">
                <div>
-                  <h2><a href="#"><span>INTRODUCTION</span>소개</a></h2>
+                  <h2><a href="hotelDelLunar.do"><span>INTRODUCTION</span>소개</a></h2>
                   <ul>
-                     <li><a href="hotelDelLunar.do">호텔 소개</a></li>
+                     <li><a href="instruction.do">호텔 소개</a></li>
                      <li><a href="location.do">오시는 길</a></li>
                   </ul>
                </div>

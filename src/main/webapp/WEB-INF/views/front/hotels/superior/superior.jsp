@@ -64,9 +64,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 
 </style>
 <body>
-	<jsp:include page="../../common/menubar.jsp"/>
-
-
+	<jsp:include page="../../../common/menubar.jsp"/>
 
 <!-- 컨텐츠 영역 -->
 <section id="container">
@@ -81,16 +79,16 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 				<div class="swiperWrap">
 					<ul>
 						<li>
-							<p class="img"><img src="resources/pcPub/static/images/room/deluxe/img_deluxe1.jpg" alt="" /></p>
+							<p class="img"><img src="resources/pcPub/static/images/room/img_deluxe1.jpg" alt="" /></p>
 						</li>
 						<li>
-							<p class="img"><img src="resources/pcPub/static/images/room/deluxe/img_deluxe2.jpg" alt="" /></p>
+							<p class="img"><img src="resources/pcPub/static/images/room/img_deluxe2.jpg" alt="" /></p>
 						</li>
 						<li>
-							<p class="img"><img src="resources/pcPub/static/images/room/deluxe/img_deluxe3.jpg" alt="" /></p>
+							<p class="img"><img src="resources/pcPub/static/images/room/img_deluxe3.jpg" alt="" /></p>
 						</li>
 						<li>
-							<p class="img"><img src="resources/pcPub/static/images/room/deluxe/img_deluxe4.jpg" alt="" /></p>
+							<p class="img"><img src="resources/pcPub/static/images/room/img_deluxe4.jpg" alt="" /></p>
 						</li>
 					</ul>
 				</div>
@@ -181,35 +179,36 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 						<li><a href="#">POOL VILLA</a></li>
 					</ul>
 				</div>
-				<!-- GUEST -->
+				
+				<!-- 슈페리어 -->
 				<div class="tapView" style="display:block;">
 					<div class="jsSwiperMotion type2 eventSwipe">
 						<div class="swiperWrap" data-show="3">
 							<ul>
 								<li>
 									<a href="/front/hotel/room/view?ROOM_NM=RoomDeluxe">
-										<p class="img"><img src="resources/pcPub/static/images/room/list/room1.jpg" alt="" /></p>
+										<p class="img"><img src="resources/pcPub/static/images/room/room_list1.jpg" alt="" /></p>
 										<h4>DELUXE</h4>
-										<p class="text">모던하면서도 아늑한 인테리어의 디럭스 룸</p>
+										<p class="text">모던하면서도 아늑한 인테리어의 슈페리어</p>
 									</a>
 								</li>
 								<li>
 									<a href="/front/hotel/room/view?ROOM_NM=RoomPremierDeluxe">
-										<p class="img"><img src="resources/pcPub/static/images/room/list/room_list2.jpg" alt="" /></p>
+										<p class="img"><img src="resources/pcPub/static/images/room//room_list2.jpg" alt="" /></p>
 										<h4>PREMIER DELUXE</h4>
 										<p class="text">한층 여유로운 공간과 세련된 인테리어가 어우러진 프리미어 디럭스</p>
 									</a>
 								</li>
 								<li>
 									<a href="/front/hotel/room/view?ROOM_NM=RoomGrandPremierDeluxe">
-										<p class="img"><img src="resources/pcPub/static/images/room/list/room_list3.jpg" alt="" /></p>
+										<p class="img"><img src="resources/pcPub/static/images/room//room_list3.jpg" alt="" /></p>
 										<h4>GRAND PREMIER DELUXE</h4>
 										<p class="text">침실과 거실이 하나로 이어지는 특별한 공간 구성과 모던한 감각, 그랜드 프리미어 디럭스</p>
 									</a>
 								</li>
 								<li>
 									<a href="/front/hotel/room/view?ROOM_NM=RoomGrandPremierDeluxeTerrace">
-										<p class="img"><img src="resources/pcPub/static/images/room/list/room_list4.jpg" alt="" /></p>
+										<p class="img"><img src="resources/pcPub/static/images/room//room_list4.jpg" alt="" /></p>
 										<h4>GRAND PREMIER DELUXE TERRACE</h4>
 										<p class="text">테라스의 탁트인 전경과 모던한 감각의 객실 인테리어가 조화를 이루는 그랜드 프리미어 디럭스 테라스</p>
 									</a>
@@ -233,42 +232,42 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 							<ul>
 								<li>
 									<a href="/front/hotel/room/view?ROOM_NM=RoomCornerSuite">
-										<p class="img"><img src="resources/pcPub/static/images/room/list/room_list5.jpg" alt="" /></p>
+										<p class="img"><img src="resources/pcPub/static/images/room//room_list5.jpg" alt="" /></p>
 										<h4>CORNER SUITE</h4>
 										<p class="text">편안한 분위기의 침실과 우아한 감성의 거실이 분리되어 독립적 공간 활용이 매력적인 코너 스위트</p>
 									</a>
 								</li>
 								<li>
 									<a href="/front/hotel/room/view?ROOM_NM=RoomDeluxeSuite">
-										<p class="img"><img src="resources/pcPub/static/images/room/list/room_list6.jpg" alt="" /></p>
+										<p class="img"><img src="resources/pcPub/static/images/room//room_list6.jpg" alt="" /></p>
 										<h4>DELUXE SUITE</h4>
 										<p class="text">심플함과 우아함의 상반적인 매력을 지닌 호텔 파라다이스의 대표 스위트 객실, 디럭스 스위트</p>
 									</a>
 								</li>
 								<li>
 									<a href="/front/hotel/room/view?ROOM_NM=RoomGrandDeluxeSuite">
-										<p class="img"><img src="resources/pcPub/static/images/room/list/room_list7.jpg" alt="" /></p>
+										<p class="img"><img src="resources/pcPub/static/images/room//room_list7.jpg" alt="" /></p>
 										<h4>GRAND DELUXE SUITE</h4>
 										<p class="text">클래식한 감성과 이국적인 신비로움이 가득한 그랜드 디럭스 스위트</p>
 									</a>
 								</li>
 								<li>
 									<a href="/front/hotel/room/view?ROOM_NM=RoomTwoBedroomGrandDeluxeSuite">
-										<p class="img"><img src="resources/pcPub/static/images/room/list/room_list8.jpg" alt="" /></p>
+										<p class="img"><img src="resources/pcPub/static/images/room//room_list8.jpg" alt="" /></p>
 										<h4>TWO BEDROOM GRAND DELUXE SUITE</h4>
 										<p class="text">여유로운 두 개의 침실과 넓게 꾸며진 거실에서 가족이 편안한 시간을 보낼 수 있는 투 베드룸 그랜드 디럭스 스위트</p>
 									</a>
 								</li>
 								<li>
 									<a href="/front/hotel/room/view?ROOM_NM=RoomRoyalSuite">
-										<p class="img"><img src="resources/pcPub/static/images/room/list/room_list9.jpg" alt="" /></p>
+										<p class="img"><img src="resources/pcPub/static/images/room//room_list9.jpg" alt="" /></p>
 										<h4>ROYAL SUITE</h4>
 										<p class="text">왕실의 기품이 흐르는 고급스러운 로열 스위트</p>
 									</a>
 								</li>
 								<li>
 									<a href="/front/hotel/room/view?ROOM_NM=RoomPresidentialSuite">
-										<p class="img"><img src="resources/pcPub/static/images/room/list/room_list10.jpg" alt="" /></p>
+										<p class="img"><img src="resources/pcPub/static/images/room//room_list10.jpg" alt="" /></p>
 										<h4>PRESIDENTIAL SUITE</h4>
 										<p class="text">세계 최고 VIP만을 위한 최상급 프레지덴셜 스위트</p>
 									</a>
@@ -292,14 +291,14 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 							<ul>
 								<li>
 									<a href="/front/hotel/room/view?ROOM_NM=RoomDeluxePoolVilla">
-										<p class="img"><img src="resources/pcPub/static/images/room/list/room_list11.jpg" alt="" /></p>
+										<p class="img"><img src="resources/pcPub/static/images/room//room_list11.jpg" alt="" /></p>
 										<h4>DELUXE POOL VILLA</h4>
 										<p class="text">고급스러운 색채와 감각적인 분위기를 지닌 풀빌라의 정석, 디럭스 풀빌라</p>
 									</a>
 								</li>
 								<li>
 									<a href="/front/hotel/room/view?ROOM_NM=RoomGrandDeluxePoolVilla">
-										<p class="img"><img src="resources/pcPub/static/images/roomlist//room_list12.jpg" alt="" /></p>
+										<p class="img"><img src="resources/pcPub/static/images/room//room_list12.jpg" alt="" /></p>
 										<h4>GRAND DELUXE POOL VILLA</h4>
 										<p class="text">호텔 파라다이스만의 예술적 감성이 묻어나는 격이 다른 럭셔리한 공간, 그랜드 디럭스 풀빌라</p>
 									</a>
@@ -337,10 +336,10 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 				</ul>
 			</div>
 			<div class="tapView" style="display:block;">
-				<img src="resources/pcPub/static/images/room/deluxe/img_deluxe_map1.jpg" alt="" />
+				<img src="resources/pcPub/static/images/room//img_deluxe_map1.jpg" alt="" />
 			</div>
 			<div class="tapView">
-				<img src="resources/pcPub/static/images/room/deluxe/img_deluxe_map2.jpg" alt="" />
+				<img src="resources/pcPub/static/images/room//img_deluxe_map2.jpg" alt="" />
 			</div>
 		</div>
 		

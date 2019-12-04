@@ -2,13 +2,19 @@ package com.kh.hotelDelLuna.front.controller;
 
 import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.kh.hotelDelLuna.front.model.service.SupportService;
+
 @Controller
 public class SupportController {
+	
+	@Autowired
+	private SupportService sService;
 	
 	//사용자 예약페이지 이동
 	@RequestMapping(value="entireResListGuest.do", method = RequestMethod.GET)
@@ -18,11 +24,18 @@ public class SupportController {
 	}
 	
 	
-	//소개 호텔소개 이동
+	//소개 메인 이동
 	@RequestMapping(value="hotelDelLunar.do", method = RequestMethod.GET)
 	public String hotelDelLunar(Model model, String room) {
 		System.out.println("location서블릿 실행");
 		return "front/introdution/hotelDelLunar";
+	}
+	
+	//소개 호텔소개 이동
+	@RequestMapping(value="instruction.do", method = RequestMethod.GET)
+	public String instruction(Model model, String room) {
+		System.out.println("location서블릿 실행");
+		return "front/introdution/instruction";
 	}
 	
 	//소개 오시는길 이동
@@ -31,6 +44,8 @@ public class SupportController {
 		System.out.println("location서블릿 실행");
 		return "front/introdution/location";
 	}
+	
+	
 	
 	//호텔 룸 오버뷰 이동
 	@RequestMapping(value="overView.do", method = RequestMethod.GET)
@@ -41,10 +56,15 @@ public class SupportController {
 	
 	//호텔 룸 상세보기 이동
 	@RequestMapping(value="roomView.do", method = RequestMethod.GET)
-	public String roomView(Model model, String room) {
+	public String roomView(String type) {
 		System.out.println("roomView서블릿 실행");
+		
+		if(type.equals("superior")) {
+			return "front/hotels/superior";
+		}
 		return "front/hotels/roomView";
 	}
+	
 	
 	
 	

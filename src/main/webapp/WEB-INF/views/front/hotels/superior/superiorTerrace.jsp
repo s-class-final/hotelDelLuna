@@ -74,7 +74,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 	<!-- //디자인이 확정이 아니랍니다 -->
 	<div class="hotelParadiseWrap">
 		<div class="innerBox"> <!-- 가로값이 1280으로 설정되어진 아이 -->
-			<h1 class="contTitle"><span>객실</span>호텔 델루나만의 예술적 품격을 갖춘 객실에서 <br />격이 다른 휴식과 여유를 경험해 보세요. </h1>
+			<h1 class="contTitle"><span>객실</span>호텔 파라다이스만의 예술적 품격을 갖춘 객실에서 <br />격이 다른 휴식과 여유를 경험해 보세요. </h1>
 				
 				
 			<div class="roomWrap">
@@ -84,8 +84,8 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 					<section class="jsSwiperMotion">
 						<div class="swiperWrap imageWrap">
 							<ul>
-								<li><img src="resources/pcPub/static/images/room/overView/room1.jpg" alt=""></li>
-								<li><img src="resources/pcPub/static/images/room/overView/room2.jpg" alt=""></li>
+								<li><img src="resources/pcPub/static/images/room/room1.jpg" alt=""></li>
+								<li><img src="resources/pcPub/static/images/room/room2.jpg" alt=""></li>
 							</ul>
 							<div class="textBox">
 								<!-- 이미지별 텍스트 내용 -->
@@ -133,10 +133,10 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 					<section class="jsSwiperMotion">
 						<div class="swiperWrap imageWrap">
 							<ul>
-								<li><img src="resources/pcPub/static/images/room/overView/room5.jpg" alt=""></li>
-								<li><img src="resources/pcPub/static/images/room/overView/room6.jpg" alt=""></li>
-								<li><img src="resources/pcPub/static/images/room/overView/room7.jpg" alt=""></li>
-								<li><img src="resources/pcPub/static/images/room/overView/room8.jpg" alt=""></li>
+								<li><img src="resources/pcPub/static/images/room/room5.jpg" alt=""></li>
+								<li><img src="resources/pcPub/static/images/room/room6.jpg" alt=""></li>
+								<li><img src="resources/pcPub/static/images/room/room7.jpg" alt=""></li>
+								<li><img src="resources/pcPub/static/images/room/room8.jpg" alt=""></li>
 							</ul>
 							<div class="textBox">
 								<!-- 이미지별 텍스트 내용 -->
@@ -209,10 +209,10 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 					<section class="jsSwiperMotion">
 						<div class="swiperWrap imageWrap">
 							<ul>
-								<li><img src="resources/pcPub/static/images/room/overView/room9.jpg" alt=""></li>
-								<li><img src="resources/pcPub/static/images/room/overView/room10.jpg" alt=""></li>
-								<li><img src="resources/pcPub/static/images/room/overView/room11.jpg" alt=""></li>
-								<li><img src="resources/pcPub/static/images/room/overView/room12.jpg" alt=""></li>
+								<li><img src="resources/pcPub/static/images/room/room9.jpg" alt=""></li>
+								<li><img src="resources/pcPub/static/images/room/room10.jpg" alt=""></li>
+								<li><img src="resources/pcPub/static/images/room/room11.jpg" alt=""></li>
+								<li><img src="resources/pcPub/static/images/room/room12.jpg" alt=""></li>
 							</ul>
 							<div class="textBox">
 								<!-- 이미지별 텍스트 내용 -->
@@ -290,8 +290,8 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 					<section class="jsSwiperMotion">
 						<div class="swiperWrap imageWrap">
 							<ul>
-								<li><img src="resources/pcPub/static/images/room/overView/room13.jpg" alt=""></li>
-								<li><img src="resources/pcPub/static/images/room/overView/room14.jpg" alt=""></li>
+								<li><img src="resources/pcPub/static/images/room/room13.jpg" alt=""></li>
+								<li><img src="resources/pcPub/static/images/room/room14.jpg" alt=""></li>
 							</ul>
 							<div class="textBox">
 								<!-- 이미지별 텍스트 내용 -->
