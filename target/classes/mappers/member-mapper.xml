@@ -15,18 +15,75 @@
 	</resultMap>
 	
 	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
-		SELECT *
+		<!-- SELECT *
 		FROM MEMBER
 		WHERE USERID=#{userId}
 		AND USERPWD=#{userPwd}
-		AND M_STATUS='Y'
+		AND M_STATUS='Y' -->
 		
 		<!-- 암호화 적용 이후 -->
-		<!-- SELECT *
+		SELECT *
 		FROM MEMBER
-		WHERE ID=#{id}
-		AND M_STATUS='Y' -->
+		WHERE USERID=#{userId}
+		AND M_STATUS='Y'
 	</select>
 	
+	<insert id="insertMember" parameterType="Member">
+		INSERT INTO MEMBER VALUES(
+			SEQ_MID.NEXTVAL, DEFAULT, #{userId}, #{userPwd}, #{userName}, #{userPhone}, DEFAULT, DEFAULT, null
+		)
+	</insert>
+	
+	<select id="idCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USERID=#{userId}
+	</select>
+	
+	<select id="kakaoIdCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE KAKAO=#{kakaoId}
+	</select>
+	
+	<insert id="insertKMember" parameterType="Member">
+		INSERT INTO MEMBER VALUES(
+			SEQ_MID.NEXTVAL, DEFAULT, #{userId}, null, #{userName}, #{userPhone}, DEFAULT, DEFAULT, #{kakao}
+		)
+	</insert>
+	
+	<select id="kakaoLogin" parameterType="string" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE KAKAO=#{kakao}
+		AND M_STATUS='Y'
+	</select>
+	
+	<update id="changePwd" parameterType="Member">
+		UPDATE MEMBER SET
+		USERPWD=#{userPwd}
+		WHERE USERID=#{userId}
+	</update>
+	
+	<select id="nameCheck" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USERID=#{userId}
+		AND USERNAME=#{userName}
+	</select>
+	
+	<select id="phoneCheck" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USERID=#{userId}
+		AND USERPHONE=#{userPhone}
+	</select>
+	
+	<select id="findUser" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE USERID=#{userId}
+		AND M_STATUS='Y'
+	</select>
 	
 </mapper>

@@ -19,8 +19,8 @@
 		<div class="reservationBox">
 			<img src="https://www.p-city.com/upload_file/201901/1547624304295.jpg" alt="MAIN_IMG" />
 			<div class="reservationInfoWrap">
-				<h1>EarlyBird: Hotel Paradise</h1>
-				<p>3주 먼저 예약하고 현명하게 누리는 호텔 파라다이스 얼리버드 혜택</p>
+				<h1>호텔 방 이름</h1>
+				<p>객실 타입 정보</p>
 				<a href="#detailPop1" class="btn small" onclick="popModal()"><span>자세히 보기</span></a>
 			</div>
 				
@@ -96,22 +96,7 @@
 			</div>
 
 			<div class="cautionBox">
-				<h2 class="cautionH2">유의사항</h2>
-				<ul>
-				<li><strong>본 상품은 타 상품으로의 변경 및 예약 취소가 불가하오니 예약 시 주의하시기 바랍니다.</strong></li>
-				<li><strong>한정된 객실 수량으로 예약 날짜에 따라 조기 마감될 수 있습니다.</strong></li>
-				<li>부가세 10%가 별도 부과됩니다.</li>
-				<li><span style="color: rgb(255, 0, 0);"><em>본 상품은 성인 2인&amp;어린이 2인 기준상품입니다.</em></span>
-					<ul>
-						<li>-단, 1객실 당 성인은 최대 3인까지만 투숙 가능하며 성인 3인 투숙 시 어린이(37개월~13세)는 1인까지만 투숙 가능합니다.</li>
-						<li>-성인 추가인원 투숙 시 50,000원(세금 별도)의 요금이 부과되며 수영장, 플레이스테이션 체험존, 피트니스 혜택이 함께 제공됩니다.</li>
-						<li>-엑스트라베드 추가 시 70,000원(부가세 별도)의 요금이 부과되며 엑스트라베드, 수영장, 피트니스 혜택이 함께&nbsp;<br />
-						제공됩니다.</li>
-					</ul>
-				</li>
-				<li>유아용품 대여는 조기 마감될 수 있으며, 특히 침대 안전가드는 객실당 최대 2개까지 가능합니다.</li>
-				<li>체크인은 오후 3시부터, 체크아웃은 오전 11시까지이며 얼리체크인 또는 레이트체크아웃의 경우 별도 요금이 부과될 수 있습니다.</li>
-				</ul>
+				<h2 class="cautionH2">고객 요청사항</h2>
 
 			</div>
 			

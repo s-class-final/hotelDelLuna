@@ -15,8 +15,8 @@
 		<script src="resources/common/js/check.js"></script>
 		<script src="resources/common/js/form.js"></script>
 		<script src="resources/common/js/string.js"></script>
-		<script src="resources/common/js/common.js"></script>
-
+ 		<script src="resources/common/js/common.js"></script>
+ 
 		<!-- S : 1-2 js -->	
 		<script type="text/javascript" src="resources/pcPub/static/js/common.js"></script>
 		<script src="resources/common/component/jquery-session/jquery.session.js"></script>
@@ -31,7 +31,6 @@
 		
 	<!-- <link href="resources/pcPub/static/css/lib/swiper2.css" rel="stylesheet"/>  -->
 <body>
-
 
 <div id="main">
 
@@ -109,12 +108,11 @@
 					<div>
 						<h2><a href="#"><span>Admin page</span>관리자 페이지</a></h2>
 						<ul>
-							<li><a href="iRoomView.do">방 등록</a></li>
+							<li><a href="iRoomtypeView.do">방 등록</a></li>
 							
 						</ul>
 					</div>
 				</div>
-		
 			</li>
       </ul>
    </nav>
@@ -145,7 +143,10 @@
    
    <div class="bgDepth"></div>
 </header>
-
+ <c:if test="${sessionScope.loginUser.userId eq 'admin'}">
+ 	<!-- 관리자 로그인 시 띄울 메뉴 설정할 부분 -->
+ 	
+ </c:if>
 <!-- quick Bar 퀵메뉴 퀵 메뉴 -->
 <aside class="quickBar view">
    <div class="quickH">
@@ -159,14 +160,19 @@
       <ul>
       <%--    <c:url var="entireResList" value="entireResList.do"/>
        --%>
-          <c:if test="${ empty sessionScope.loginUser }">
-            <li><a href="loginForm.do"><em class="icon1"><i></i></em><p>Login</p></a></li>
-         </c:if>
-         <c:if test="${ !empty sessionScope.loginUser }">
-            <li><a href="logout.do"><em class="icon1"><i></i></em><p>Logout</p></a></li>
-         </c:if>
-         <li><a href="#"><em class="icon2"><i></i></em><p><span>HOTEL</span>JOIN US</p></a></li>
-         <li><a href="#"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
+        	<c:if test="${ empty sessionScope.loginUser }">
+				<li><a href="loginForm.do"><em class="icon1"><i></i></em><p>Login</p></a></li>
+			</c:if>
+			<c:if test="${ !empty sessionScope.loginUser }">
+				<li><a href="logout.do"><em class="icon1"><i></i></em><p>Logout</p></a></li>
+			</c:if>
+			<li><a href="mjoin.do"><em class="icon2"><i></i></em><p><span>HOTEL</span>JOIN US</p></a></li>
+			<c:if test="${ empty sessionScope.loginUser }">
+				<li><a href="void(0);" onclick="alert('로그인 후 이용해 주세요');return false;"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
+			</c:if>
+			<c:if test="${ !empty sessionScope.loginUser }">
+				<li><a href="mconfirm.do"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
+			</c:if>
          <li><a href="entireResList.do"><em class="icon4"><i></i></em><p><span>RESERVATION</span>MY RESERVATION</p></a></li>
          <li><a href="#"><em class="icon5"><i></i></em><p><span>MAP</span>DELLUNA MAP</p></a></li>
       </ul>

@@ -319,68 +319,6 @@
 		</section>
 		
 		<!-- //	DELLUNA EVENTS 이벤트!!!부분   -->
-		
-		<!--  갤러리 부분 일단 지움. 추후 삭제 예정 갤러리부분 갤러리 -->
-		<!-- GALLERY -->
-	<!-- 	<section class="subMainCont type-gallery">
-			<div class="innerBox">
-				<h2>IMAGE GALLERY</h2>
-				<p class="tit">파라다이스시티의 다양한 시설을 한 눈에 만나보세요 .</p>
-				<div class="swiper-container gallery-main">
-					<div class="swiper-wrapper">
-					
-						<span class="swiper-slide cPointer" onclick="javascript:goGalleryDtl('GSBU01');" style="background-image:url(https://www.p-city.com/upload_file/201908/1565571980748.jpg)">
-							<span class="gallery-title">PARADISE CITY</span>
-						</span>
-					
-						<span class="swiper-slide cPointer" onclick="javascript:goGalleryDtl('GSBU02');" style="background-image:url(https://www.p-city.com/upload_file/201907/1564560783416.jpg)">
-							<span class="gallery-title">HOTEL PARADISE</span>
-						</span>
-					
-						<span class="swiper-slide cPointer" onclick="javascript:goGalleryDtl('GSBU03');" style="background-image:url(https://www.p-city.com/upload_file/201907/1564560846634.jpg)">
-							<span class="gallery-title">HOTEL ART PARADISO</span>
-						</span>
-					
-						<span class="swiper-slide cPointer" onclick="javascript:goGalleryDtl('GSBU04');" style="background-image:url(https://www.p-city.com/upload_file/201907/1564560920759.jpg)">
-							<span class="gallery-title">CASINO</span>
-						</span>
-					
-						<span class="swiper-slide cPointer" onclick="javascript:goGalleryDtl('GSBU05');" style="background-image:url(https://www.p-city.com/upload_file/201907/1564560975039.jpg)">
-							<span class="gallery-title">SPA CIMER</span>
-						</span>
-					
-						<span class="swiper-slide cPointer" onclick="javascript:goGalleryDtl('GSBU06');" style="background-image:url(https://www.p-city.com/upload_file/201907/1564560887259.jpg)">
-							<span class="gallery-title">CLUB CHROMA</span>
-						</span>
-					
-						<span class="swiper-slide cPointer" onclick="javascript:goGalleryDtl('GSBU07');" style="background-image:url(https://www.p-city.com/upload_file/201907/1564561011929.jpg)">
-							<span class="gallery-title">THEME PARK WONDERBOX</span>
-						</span>
-					
-						<span class="swiper-slide cPointer" onclick="javascript:goGalleryDtl('GSBU08');" style="background-image:url(https://www.p-city.com/upload_file/201907/1564561103626.jpg)">
-							<span class="gallery-title">SHOPPING PLAZA</span>
-						</span>
-					
-						<span class="swiper-slide cPointer" onclick="javascript:goGalleryDtl('GSBU09');" style="background-image:url(https://www.p-city.com/upload_file/201907/1564561148751.jpg)">
-							<span class="gallery-title">ART</span>
-						</span>
-					
-						<span class="swiper-slide cPointer" onclick="javascript:goGalleryDtl('GSBU10');" style="background-image:url(https://www.p-city.com/upload_file/201907/1564561227907.jpg)">
-							<span class="gallery-title">STUDIO PARADISE</span>
-						</span>
-					
-					</div>
-				</div>
-				<div class="pagingWrap">
-					<div class="swiper-button-next"></div>
-					<div class="swiper-button-prev"></div>
-					<div class="swiper-pagination"></div>
-				</div>
-				<div class="btnMore"><a href="/front/gallery"><span>갤러리 전체보기</span></a></div>
-			</div>
-		</section> -->
-		<!-- //GALLERY -->
-		
 		<!-- MEMBERSHIP -->
 		<section class="subMainCont SMMembership bg pb192i">
 			<div class="innerBox">
