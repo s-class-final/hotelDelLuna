@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.kh.hotelDelLuna.front.model.exception.SupportException;
 import com.kh.hotelDelLuna.front.model.service.SupportService;
 
 @Controller
@@ -57,12 +58,25 @@ public class SupportController {
 	//호텔 룸 상세보기 이동
 	@RequestMapping(value="roomView.do", method = RequestMethod.GET)
 	public String roomView(String type) {
-		System.out.println("roomView서블릿 실행");
+		System.out.println("roomView서블릿 실행 : " + type);
 		
-		if(type.equals("superior")) {
-			return "front/hotels/superior";
+		if(type!=null) {
+			switch(type) {
+			case "superior" : return "front/hotels/superior/superior"; 
+			case "superior_terrace" :  return "front/hotels/superior/superior_terrace"; 
+			case "deluxe" : return "front/hotels/deluxe/deluxe"; 
+			case "grand_deluxe" : return "front/hotels/deluxe/grand_deluxe"; 
+			case "premium_deluxe" : return "front/hotels/deluxe/premium_deluxe"; 
+			case "premium_deluxe_terrace" : return "front/hotels/deluxe/premium_deluxe_terrace"; 
+			case "junior_suite" : return "front/hotels/suite/junior_suite"; 
+			case "deluxe_suite" : return "front/hotels/suite/deluxe_suite"; 
+			case "grand_deluxe_suite" : return "front/hotels/suite/grand_deluxe_suite"; 
+			case "royal_suite" : return "front/hotels/suite/royal_suite"; 
+			default : throw new SupportException("잘못된 접근");
+			}
+		}else {
+			throw new SupportException("잘못된 접근");
 		}
-		return "front/hotels/roomView";
 	}
 	
 	

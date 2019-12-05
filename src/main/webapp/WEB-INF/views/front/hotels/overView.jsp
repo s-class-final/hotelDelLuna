@@ -90,7 +90,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 							<div class="textBox">
 								<!-- 이미지별 텍스트 내용 -->
 								<div class="text on">
-									<p class="title"><span>슈페리어</span>모던하면서도 아늑한 인테리어의 슈페리어</p>
+									<p class="title"><span>슈페리어</span>모던하면서도 아늑한 인테리어의 슈페리어 룸</p>
 									<div class="info">
 										<p><span>면적</span>45m²</p>
 										<p><span>인원</span>성인 2인 기준</p>
@@ -112,7 +112,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 										<p><span>베드타입</span></span>KING, TWIN</p>
 									</div>
 									<c:url var="roomView" value="roomView.do">
-										<c:param name="type" value="superiorTerrace"/>
+										<c:param name="type" value="superior_terrace"/>
 									</c:url>
 									<a href="${roomView }" class="btn small2"><span>상세 보기</span></a>
 								</div>
@@ -141,9 +141,9 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 							<div class="textBox">
 								<!-- 이미지별 텍스트 내용 -->
 								<div class="text on">
-									<p class="title"><span>디럭스</span>모던하면서도 아늑한 인테리어의 디럭스 룸</p>
+									<p class="title"><span>디럭스</span>편안한 분위기의 침실과 우아한 감성의 거실이 분리되어 독립적 공간 활용이 매력적인 디럭스 룸</p>
 									<div class="info">
-										<p><span>면적</span>135m²</p>
+										<p><span>면적</span>68m²</p>
 										<p><span>인원</span>성인 2인 기준</p>
 										<p><span>베드타입</span></span>KING</p>
 									</div>
@@ -155,41 +155,42 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 								
 								<!-- 이미지별 텍스트 내용 -->
 								<div class="text">
-									<p class="title"><span>그랜드 디럭스</span>한층 여유로운 공간과 세련된 인테리어가 어우러진 프리미어 디럭스</p>
+									<p class="title"><span>그랜드 디럭스</span>침실과 거실이 하나로 이어지는 특별한 공간 구성과 모던한 감각, 그랜드 디럭스</p>
+									<div class="info">
+										<p><span>면적</span>90m²</p>
+										<p><span>인원</span>성인 2인 기준</p>
+										<p><span>베드타입</span></span>KING &amp; TWIN</p>
+									</div>
+									<c:url var="roomView" value="roomView.do">
+										<c:param name="type" value="grand_deluxe"/>
+									</c:url>
+									<a href="${roomView }" class="btn small2"><span>상세 보기</span></a>
+								</div>
+								
+								<!-- 이미지별 텍스트 내용 -->
+								<div class="text">
+									<p class="title"><span>프리미엄 디럭스</span>클래식한 감성과 이국적인 신비로움이 가득한 프리미엄 디럭스</p>
+									<div class="info">
+										<p><span>면적</span>135m²</p>
+										<p><span>인원</span>성인 4인 기준</p>
+										<p><span>베드타입</span></span>KING</p>
+									</div>
+									<c:url var="roomView" value="roomView.do">
+										<c:param name="type" value="premium_deluxe"/>
+									</c:url>
+									<a href="${roomView }" class="btn small2"><span>상세 보기</span></a>
+								</div>
+								
+								<!-- 이미지별 텍스트 내용 -->
+								<div class="text">
+									<p class="title"><span>프리미엄 디럭스 테라스</span>여유로운 두 개의 침실과 넓게 꾸며진 거실에서 가족이 편안한 시간을 보낼 수 있는 프리미엄 디럭스 테라스</p>
 									<div class="info">
 										<p><span>면적</span>135m²</p>
 										<p><span>인원</span>성인 4인 기준</p>
 										<p><span>베드타입</span></span>KING &amp; TWIN</p>
 									</div>
 									<c:url var="roomView" value="roomView.do">
-										<c:param name="type" value="grandDeluxe"/>
-									</c:url>
-									<a href="${roomView }" class="btn small2"><span>상세 보기</span></a>
-								</div>
-								
-								<!-- 이미지별 텍스트 내용 -->
-								<div class="text">
-									<p class="title"><span>프리미엄 디럭스</span>침실과 거실이 하나로 이어지는 특별한 공간 구성과 모던한 감각, 그랜드 프리미어 디럭스</p>
-									<div class="info">
-										<p><span>면적</span>180m²</p>
-										<p><span>인원</span>성인 4인 기준</p>
-										<p><span>베드타입</span></span>KING &amp; TWIN</p>
-									</div>
-									<c:url var="roomView" value="roomView.do">
-										<c:param name="type" value="premiumDeluxe"/>
-									</c:url>
-									<a href="${roomView }" class="btn small2"><span>상세 보기</span></a>
-								</div>
-								
-								<!-- 이미지별 텍스트 내용 -->
-								<div class="text">
-									<p class="title"><span>프리미엄 디럭스 테라스</span>테라스의 탁트인 전경과 모던한 감각의 객실 인테리어가 조화를 이루는 그랜드 프리미어 디럭스 테라스</p>
-									<div class="info">
-										<p><span>면적</span>368m²</p>
-										<p><span>베드타입</span></span>KING &amp; TWIN</p>
-									</div>
-									<c:url var="roomView" value="roomView.do">
-										<c:param name="type" value="PremiumDeluxeTerrace"/>
+										<c:param name="type" value="premium_deluxe_terrace"/>
 									</c:url>
 									<a href="${roomView }" class="btn small2"><span>상세 보기</span></a>
 								</div>
@@ -217,42 +218,40 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 							<div class="textBox">
 								<!-- 이미지별 텍스트 내용 -->
 								<div class="text on">
-									<p class="title"><span>주니어 스위트</span>편안한 분위기의 침실과 우아한 감성의 거실이 분리되어 독립적 공간 활용이 매력적인 주니어 스위트</p>
+									<p class="title"><span>주니어 스위트</span>고급스러운 색채와 감각적인 분위기를 지닌 격이 다른 럭셔리한 공간, 주니어 스위트</p>
 									<div class="info">
-										<p><span>면적</span>68m²</p>
-										<p><span>인원</span>성인 2인 기준</p>
-										<p><span>베드타입</span>KING</p>
+										<p><span>면적</span>180m²</p>
+										<p><span>인원</span>성인 4인 기준</p>
+										<p><span>베드타입</span>KING &amp; TWIN</p>
 									</div>
 									<c:url var="roomView" value="roomView.do">
-										<c:param name="type" value="suite"/>
+										<c:param name="type" value="junior_suite"/>
 									</c:url>
 									<a href="${roomView }" class="btn small2"><span>상세 보기</span></a>
 								</div>
 								
 								<!-- 이미지별 텍스트 내용 -->
 								<div class="text">
-									<p class="title"><span>디럭스 스위트</span>심플함과 우아함의 상반적인 매력을 지닌 호텔 파라다이스의 대표 스위트 객실, 디럭스 스위트</p>
+									<p class="title"><span>디럭스 스위트</span>호텔 파라다이스만의 예술적 감성이 묻어나는 호텔 델루나의 대표 스위트 객실, 디럭스 스위트</p>
 									<div class="info">
-										<p><span>면적</span>90m²</p>
-										<p><span>인원</span>성인 2인 기준</p>
-										<p><span>베드타입</span>KING, TWIN</p>
+										<p><span>면적</span>368m²</p>
+										<p><span>베드타입</span>KING &amp; TWIN</p>
 									</div>
 									<c:url var="roomView" value="roomView.do">
-										<c:param name="type" value="deluxeSuite"/>
+										<c:param name="type" value="deluxe_suite"/>
 									</c:url>
 									<a href="${roomView }" class="btn small2"><span>상세 보기</span></a>
 								</div>
 								
 								<!-- 이미지별 텍스트 내용 -->
 								<div class="text">
-									<p class="title"><span>그랜드 디럭스 스위트</span>클래식한 감성과 이국적인 신비로움이 가득한 그랜드 디럭스 스위트</p>
+									<p class="title"><span>그랜드 디럭스 스위트</span>세계 최고 VIP만을 위한 그랜드 디럭스 스위트</p>
 									<div class="info">
-										<p><span>면적</span>135m²</p>
-										<p><span>인원</span>성인 2인 기준</p>
+										<p><span>면적</span>457m²</p>
 										<p><span>베드타입</span>KING</p>
 									</div>
 									<c:url var="roomView" value="roomView.do">
-										<c:param name="type" value="grandDeluxeSuite"/>
+										<c:param name="type" value="grand_deluxe_suite"/>
 									</c:url>
 									<a href="${roomView }" class="btn small2"><span>상세 보기</span></a>
 								</div>
@@ -261,12 +260,11 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 								<div class="text">
 									<p class="title"><span>로열 스위트</span>왕실의 기품이 흐르는 고급스러운 로열 스위트</p>
 									<div class="info">
-										<p><span>면적</span>180m²</p>
-										<p><span>인원</span>성인 4인 기준</p>
+										<p><span>면적</span>942m²</p>
 										<p><span>베드타입</span>KING &amp; TWIN</p>
 									</div>
 									<c:url var="roomView" value="roomView.do">
-										<c:param name="type" value="royalSuite"/>
+										<c:param name="type" value="royal_suite"/>
 									</c:url>
 									<a href="${roomView }" class="btn small2"><span>상세 보기</span></a>
 								</div>
@@ -282,10 +280,10 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 				</div>
 			</div>
 
-
+<%-- 
 			<div class="roomWrap">
 				<h2>라운지</h2>
-				<p class="text">호텔 파라다이스에서의 시간을 더욱 빛내줄 고급 라운지 시설</p>
+				<p class="text">호텔 델루나에서의 시간을 더욱 빛내줄 고급 라운지 시설</p>
 				<div class="descBox">
 					<section class="jsSwiperMotion">
 						<div class="swiperWrap imageWrap">
@@ -298,7 +296,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 								<div class="text on">
 									<p class="title">
 										<span>클럽 라운지</span>
-										호텔 파라다이스에서만 경험할 수 있는 격이 다른 Club Lounge
+										호텔 델루나에서만 경험할 수 있는 격이 다른 Club Lounge
 									</p>
 									<div class="info">
 										<p style="padding-left:110px;"><span>위치</span>3F</p>
@@ -338,7 +336,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 						</div>
 					</section>
 				</div>
-			</div>
+			</div> --%>
 			
 		</div>
 	</div>
