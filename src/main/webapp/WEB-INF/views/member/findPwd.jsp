@@ -89,8 +89,8 @@ body{
 				<option value = "017">017</option>
 				<option value = "019">019</option>
 			</select>&nbsp;
-			<input type="text" id="findPhone2" name="findPhone2" class = "join" oninput="checkId(); this.value=this.value.replace(/[^0-9]/g,'');" required>&nbsp;
-			<input type="text" id="findPhone3" name="findPhone3" class = "join" oninput="checkId(); this.value=this.value.replace(/[^0-9]/g,'');" required>
+			<input type="text" id="findPhone2" name="findPhone2" class = "join" maxlength="4" oninput="nextPhone(); checkId(); this.value=this.value.replace(/[^0-9]/g,'');" required>&nbsp;
+			<input type="text" id="findPhone3" name="findPhone3" class = "join" maxlength="4" oninput="checkId(); this.value=this.value.replace(/[^0-9]/g,'');" required>
 				<input type="hidden" id="randomPwd" name="randomPwd"> <br>
 				<br>
 			<div class="findBtn">
@@ -105,7 +105,7 @@ body{
 					var text = "";
 					var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789?!";
 
-					for (var i = 0; i < 8; i++) {
+					for (var i = 0; i < 7; i++) {
 						text += possible.charAt(Math.floor(Math.random() * possible.length));
 					}
 
@@ -118,6 +118,7 @@ body{
 		var idUsable = false;
 		var nameUsable = false;
 		var phoneUsable = false;
+		var kakaoUsable = false;
 		
 		function checkId() {
 			var userId = $("#findMail");
@@ -139,9 +140,8 @@ body{
 		                data:{userId:userId.val()},
 		                success:function(data){
 		                     if(data == "true"){
-		                        $("#checkId").html('');
-		                        $("#checkId").html("가입된 이메일입니다").css("color", "green");
 		                        idUsable = true;
+		                    	kakaoCheck();
 		                     }else{
 		                        $("#checkId").html('');
 		                        $("#checkId").html("가입되지 않은 이메일입니다").css("color", "red");
@@ -164,7 +164,12 @@ body{
 		        			 }else{
 		        				 nameUsable = false;
 		        			 }
-		        		 }
+		        		 },
+		                  error:function(request, status, errorData){
+								alert("error code: " + request.status + "\n"
+										+"message: " + request.responseText
+										+"error: " + errorData);
+						 }
 		        	 });
 					
 					// 전화번호 일치하는지
@@ -177,11 +182,48 @@ body{
 		        			 }else{
 		        				 phoneUsable = false;
 		        			 }
-		        		 }
+		        		 },
+		                  error:function(request, status, errorData){
+								alert("error code: " + request.status + "\n"
+										+"message: " + request.responseText
+										+"error: " + errorData);
+						 }
 		        	 });
 	            }
 	         }
 	   };
+	   
+	   function kakaoCheck(){
+		   var userId = $("#findMail");
+		   
+		   $.ajax({
+			  url:"findkakao.do",
+			  data:{userId:userId.val()},
+			  success:function(data){
+				  if(data == "true"){
+					  $("#checkId").html('');
+                      $("#checkId").html("카카오 아이디로 가입된 이메일입니다").css("color", "yellow");
+                      kakaoUsable = false;
+				  }else{
+					  $("#checkId").html('');
+                      $("#checkId").html("가입된 이메일입니다").css("color", "green");
+                      kakaoUsable = true;
+				  }
+			  },
+			  error:function(request, status, errorData){
+					alert("error code: " + request.status + "\n"
+							+"message: " + request.responseText
+							+"error: " + errorData);
+			 }
+		   });
+	   }
+	   
+		// 전화번호 4글자 입력 시 다음 칸 넘어가게
+		function nextPhone() {
+			if ($("#findPhone2").val().length >= 4) {
+				$("#findPhone3").focus();
+			}
+		};
 
       // 비밀번호 찾기 버튼 클릭했을 때 유효성 검사 함수 실행
       $(function(){
@@ -237,6 +279,12 @@ body{
          if(phoneUsable == false){
              alert("전화번호가 일치하지 않습니다.");
              $("#findPhone2").focus();
+             return false;
+         }
+         
+         if(kakaoUsable == false){
+             alert("카카오로 가입된 이메일입니다. 카카오 아이디로 로그인 해주세요");
+             $("#findMail").focus();
              return false;
          }
          

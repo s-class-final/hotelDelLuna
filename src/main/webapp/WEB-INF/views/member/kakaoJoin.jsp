@@ -328,8 +328,8 @@ form {
 						<option value = "017">017</option>
 						<option value = "019">019</option>
 					</select>&nbsp;
-					<input type="text" id="userPhone2" name="userPhone2" class = "join" required>&nbsp;
-					<input type="text" id="userPhone3" name="userPhone3" class = "join" required>
+					<input type="text" id="userPhone2" name="userPhone2" maxlength="4" class = "join" oninput="nextPhone(); this.value=this.value.replace(/[^0-9]/g,'');" required>&nbsp;
+					<input type="text" id="userPhone3" name="userPhone3" maxlength="4" class = "join" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required>
             	<td>
             </tr>
           
@@ -383,7 +383,7 @@ form {
          }else{
             $("#userId3").val($("#userId1").val() + '@' + $("#userId2").val());
          
-            if(userId1.val().length == 0){
+            if(userId1.val().length <= 3){
                $("#checkId").html('');
             }else{
                $.ajax({
@@ -392,11 +392,11 @@ form {
                   success:function(data){
                      if(data == "true"){
                         $("#checkId").html('');
-                        $("#checkId").html("아이디가 중복됩니다").css("color", "red");
+                        $("#checkId").html("이미 가입된 이메일입니다").css("color", "red");
                         idUsable = false;
                      }else{
                         $("#checkId").html('');
-                        $("#checkId").html("아이디 사용 가능합니다").css("color", "green");
+                        $("#checkId").html("이메일 사용 가능합니다").css("color", "green");
                         idUsable = true;
                      }
                   },
@@ -409,6 +409,12 @@ form {
             }
          }
       };
+      
+      function nextPhone() {
+			if ($("#userPhone2").val().length >= 4) {
+				$("#userPhone3").focus();
+			}
+		};
       
       <%--
       

@@ -14,6 +14,18 @@
 		<result property="kakao" column="KAKAO"/>
 	</resultMap>
 	
+	<resultMap type="Inquiry" id="inquiryResultSet">
+		<id property="iId" column="IID"/>
+		<result property="iTitle" column="ITITLE"/>
+		<result property="iWriter" column="IWRITER"/>
+		<result property="iContent" column="ICONTENT"/>
+		<result property="iCreateDate" column="I_CREATE_DATE"/>
+		<result property="iModifyDate" column="I_MODIFY_DATE"/>
+		<result property="iStatus" column="I_STATUS"/>
+		<result property="reContent" column="RE_CONTENT"/>
+		<result property="reStatus" column="RE_STATUS"/> 
+	</resultMap>
+	
 	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
 		<!-- SELECT *
 		FROM MEMBER
@@ -85,5 +97,52 @@
 		WHERE USERID=#{userId}
 		AND M_STATUS='Y'
 	</select>
+	
+	<update id="updateMember" parameterType="Member">
+		UPDATE MEMBER SET
+		USERNAME=#{userName}, USERPHONE=#{userPhone}
+		WHERE USERID=#{userId}
+	</update>
+	
+	<select id="findKakao" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USERID=#{userId}
+		AND KAKAO IS NOT NULL
+	</select>
+	
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM INQUIRY
+		WHERE I_STATUS='Y'
+	</select>
+	
+	<select id="selectList" resultMap="inquiryResultSet">
+		SELECT *
+		FROM INQUIRY
+		WHERE I_STATUS='Y'
+		ORDER BY IID DESC
+	</select>
+	
+	<select id="getMListCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM INQUIRY
+		WHERE I_STATUS='Y'
+		AND IWRITER=#{userId}
+	</select>
+	
+	<select id="selectMList" resultMap="inquiryResultSet">
+		SELECT *
+		FROM INQUIRY
+		WHERE I_STATUS='Y'
+		AND IWRITER=#{userId}
+		ORDER BY IID DESC
+	</select>
+	
+	<insert id="insertInquiry" parameterType="Inquiry">
+		INSERT INTO INQUIRY VALUES(
+			SEQ_IID.NEXTVAL, #{iTitle}, #{iWriter}, #{iContent}, SYSDATE, SYSDATE, DEFAULT, NULL, DEFAULT
+		)
+	</insert>
 	
 </mapper>

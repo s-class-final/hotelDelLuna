@@ -9,6 +9,7 @@
 	<typeAliases>
 		<typeAlias type="com.kh.hotelDelLuna.reservation.model.vo.Reservation" alias="Reservation"/>
 		<typeAlias type="com.kh.hotelDelLuna.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.kh.hotelDelLuna.member.model.vo.Inquiry" alias="Inquiry"/>
 		<typeAlias type="com.kh.hotelDelLuna.reservation.model.vo.ResSearchCondition" alias="ResSearchCondition"/>
 		<typeAlias type="com.kh.hotelDelLuna.room.model.vo.Attachment" alias="Attachment"/>
 		<typeAlias type="com.kh.hotelDelLuna.room.model.vo.RoomType" alias="RoomType"/>

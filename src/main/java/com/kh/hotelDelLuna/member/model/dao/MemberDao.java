@@ -1,9 +1,14 @@
 package com.kh.hotelDelLuna.member.model.dao;
 
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.hotelDelLuna.common.PageInfo;
+import com.kh.hotelDelLuna.member.model.vo.Inquiry;
 import com.kh.hotelDelLuna.member.model.vo.Member;
 
 @Repository("mDao")
@@ -59,6 +64,45 @@ public class MemberDao {
 	public Member findUser(Member m) {
 		
 		return sqlSession.selectOne("memberMapper.findUser", m);
+	}
+
+	public int updateMember(Member m) {
+		
+		return sqlSession.update("memberMapper.updateMember", m);
+	}
+
+	public int findKakao(Member m) {
+		
+		return sqlSession.selectOne("memberMapper.findKakao", m);
+	}
+
+	public int getListCount() {
+		
+		return sqlSession.selectOne("memberMapper.getListCount");
+	}
+
+	public ArrayList<Inquiry> selectList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectList", pi, rowBounds);
+	}
+	
+	public int getMListCount(String userId) {
+		
+		return sqlSession.selectOne("memberMapper.getMListCount", userId);
+	}
+
+	public ArrayList<Inquiry> selectMList(String userId, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectMList", userId, rowBounds);
+	}
+
+	public int insertInquiry(Inquiry i) {
+		
+		return sqlSession.insert("memberMapper.insertInquiry", i);
 	}
 	
 	
