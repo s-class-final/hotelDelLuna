@@ -21,7 +21,7 @@ import com.kh.hotelDelLuna.room.model.vo.RoomType;
 
 
 @Controller
-public class InsertRoomController {
+public class RoomController {
 
 	@Autowired
 	RoomTypeService rtService;
@@ -31,6 +31,11 @@ public class InsertRoomController {
 	@RequestMapping("iRoomtypeView.do")
 	public String  iRoomtypeView() {
 		return "roomstatus/insertRoomType";
+	} 
+	
+	@RequestMapping("roomstatus.do")
+	public String roomStatusView() {
+		return "roomstatus/roomStatus";
 	} 
 
 	@RequestMapping("Roomtypeinsert.do")

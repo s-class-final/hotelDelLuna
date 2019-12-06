@@ -109,7 +109,7 @@
 						<h2><a href="#"><span>Admin page</span>관리자 페이지</a></h2>
 						<ul>
 							<li><a href="iRoomtypeView.do">방 등록</a></li>
-							
+							<li><a href="roomstatus.do">방 상태</a></li>
 						</ul>
 					</div>
 				</div>
