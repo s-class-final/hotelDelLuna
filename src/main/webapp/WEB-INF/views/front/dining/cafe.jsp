@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +16,7 @@
 <script>
 $(document).ready(function() {
 	$('#allLi').click(function(){
-		jsList("");
+		jsList('cafe');
 	});
 	
 	//목록 별 높이 조정 (전체 목록의 갯수가 짝수가 아닌 경우)
@@ -41,7 +42,7 @@ $(window).load(function(){
 //목록으로
 function jsList(CATE) {
 	$('#CATE').val(CATE);
-	$("#form1").attr("action", "/front/hotel/dining/list");
+	$("#form1").attr("action", "dining.do");
 	$("#form1").submit();
 }
 </script>
@@ -63,9 +64,9 @@ function jsList(CATE) {
 		<div class="utilMenu">
 			
 			<ul class="diningTab clearFixed">
-				<li class="all" id="allLi"><a href="all" onclick="javascript:jsList('All');" >All</a></li>
-				<li class="restaurant"><a href="cafe" onclick="javascript:jsList('RESTAURANT');">Restaurant</a></li>
-				<li class="cafe on"><a href="restaurant" onclick="javascript:jsList('CAFE');">Café &amp; Bar</a></li>
+				<li class="dining"><a href="dining" onclick="javascript:jsList('dining');" >All</a></li>
+				<li class="restaurant"><a href="restaurant" onclick="javascript:jsList('restaurant');">Restaurant</a></li>
+				<li class="cafe on" id="allLi"><a href="cafe" onclick="javascript:jsList('cafe');">Café &amp; Bar</a></li>
 			</ul>
 		</div>
 		
@@ -77,7 +78,12 @@ function jsList(CATE) {
 			
 			
 			<div class="findDiningItem" data-animation="fadeInUp">
-				<p class="img"><a href="/front/hotel/dining/view?DINING_NM=DiningRubik"><img src="/pcPub/static/images/hotalParadise/dining5.jpg" alt="" /></a></p>
+				<p class="img">
+				<c:url var="diningView" value="diningView.do">
+					<c:param name="type" value="Rubik"/>
+				</c:url>
+				<a href="${diningView }">
+				<img src="resources/pcPub/static/images/dining/dining5.jpg" alt="" /></a></p>
 				<div class="textBox">
 					<h2>RUBIK</h2>
 					<p class="text">색다른 공연을 만나는 라이브 뮤직 라운지</p>
@@ -86,7 +92,12 @@ function jsList(CATE) {
 			
 			
 			<div class="findDiningItem" data-animation="fadeInUp">
-				<p class="img"><a href="/front/hotel/dining/view?DINING_NM=DiningLoungeParadise"><img src="/pcPub/static/images/hotalParadise/dining6.jpg" alt="" /></a></p>
+				<p class="img">
+				<c:url var="diningView" value="diningView.do">
+					<c:param name="type" value="LoungeParadise"/>
+				</c:url>
+				<a href="${diningView }">
+				<img src="resources/pcPub/static/images/dining/dining6.jpg" alt="" /></a></p>
 				<div class="textBox">
 					<h2>LOUNGE PARADISE</h2>
 					<p class="text">음악이 흐르는 로비라운지</p>
@@ -95,7 +106,12 @@ function jsList(CATE) {
 			
 			
 			<div class="findDiningItem" data-animation="fadeInUp">
-				<p class="img"><a href="/front/hotel/dining/view?DINING_NM=DiningGardenCafe"><img src="/pcPub/static/images/hotalParadise/dining7.jpg" alt="" /></a></p>
+				<p class="img">
+				<c:url var="diningView" value="diningView.do">
+					<c:param name="type" value="GardenCafe"/>
+				</c:url>
+				<a href="${diningView }">
+				<img src="resources/pcPub/static/images/dining/dining7.jpg" alt="" /></a></p>
 				<div class="textBox">
 					<h2>GARDEN CAFÉ</h2>
 					<p class="text">유럽의 정취를 지닌 카페</p>
@@ -107,7 +123,12 @@ function jsList(CATE) {
 			
 			
 			<div class="findDiningItem" data-animation="fadeInUp">
-				<p class="img"><a href="/front/hotel/dining/view?DINING_NM=DiningBar21"><img style="width:100%;" src="/pcPub/static/images/hotalParadise/bar21_bsImg.jpg" alt="" /></a></p>
+				<p class="img">
+				<c:url var="diningView" value="diningView.do">
+					<c:param name="type" value="Bar21"/>
+				</c:url>
+				<a href="${diningView }">
+				<img style="width:100%;" src="resources/pcPub/static/images/dining/dining10.jpg" alt="" /></a></p>
 				<div class="textBox" style="padding-right:90px;">
 					<h2>Bar 21</h2>
 					<p class="text">카지노를 한층 더 다이내믹하게 즐길 수 있는 카지노 엔터테인먼트바</p>

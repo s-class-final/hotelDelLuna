@@ -130,10 +130,19 @@
             <a href="#">dine &amp; drink</a>
             <div class="gnbDepth2">
                <div>
-                  <h2><a href="dining.do"><span>dine &amp; drink</span>다이닝</a></h2>
+                  <c:url var="dining" value="dining.do">
+	                  	<c:param name="CATE" value="dining"/>
+	                  </c:url>
+                  <h2><a href="${dining }"><span>dine &amp; drink</span>다이닝</a></h2>
                   <ul>
-                     <li><a href="restaurant.do">RESTRAUNT</a></li>
-                     <li><a href="cafe.do">DRINK &amp; BAR</a></li>
+                     <c:url var="dining" value="dining.do">
+	                  	<c:param name="CATE" value="restaurant"/>
+	                  </c:url>
+                     <li><a href="${dining }">RESTRAUNT</a></li>
+                        <c:url var="dining" value="dining.do">
+	                  	<c:param name="CATE" value="cafe"/>
+	                  </c:url>
+                     <li><a href="${dining }">DRINK &amp; BAR</a></li>
                   </ul>
                </div>
             </div>

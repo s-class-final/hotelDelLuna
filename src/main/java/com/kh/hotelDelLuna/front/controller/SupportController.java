@@ -94,27 +94,46 @@ public class SupportController {
 	
 	
 	
-	//다이닝 전체 이동
+	//다이닝 전체, 레스토랑, 카페 메뉴 리스트 페이지 이동
 	@RequestMapping(value="dining.do", method = RequestMethod.GET)
-	public String dining(Model model, String room) {
-		System.out.println("dining서블릿 실행");
-		return "front/dining/dining";
+	public String dining(String CATE) {
+		System.out.println("dining서블릿 실행 : "+ CATE);
+		
+		if(CATE!=null) {
+			switch(CATE) {
+			case "dining" : return "front/dining/dining"; 
+			case "restaurant" :  return "front/dining/restaurant"; 
+			case "cafe" : return "front/dining/cafe"; 
+			default : throw new SupportException("잘못된 접근");
+			}
+		}else {
+			throw new SupportException("잘못된 접근");
+		}
 	}
 	
-	
-	//다이닝 레스토랑 이동
-	@RequestMapping(value="restaurant.do", method = RequestMethod.GET)
-	public String restaurant(Model model, String room) {
-		System.out.println("restaurant서블릿 실행");
-		return "front/dining/restaurant";
+	//다이닝 상세페이지 이동
+	@RequestMapping(value="diningView.do", method = RequestMethod.GET)
+	public String support(String type) {
+		System.out.println("diningView 서블릿 실행 type : " + type);
+		if(type!=null) {
+			switch(type) {
+			case "OnThePlate" : return "front/dining/r/onThePlate"; 
+			case "LaScala" :  return "front/dining/r/laScala"; 
+			case "Raku" : return "front/dining/r/raku"; 
+			case "ImperialTreasure" : return "front/dining/r/imperialTreasure"; 
+			case "Rubik" : return "front/dining/c/rubik"; 
+			case "LoungeParadise" : return "front/dining/c/loungeParadise"; 
+			case "GardenCafe" : return "front/dining/c/gardenCafe"; 
+			case "TheEmperor" : return "front/dining/r/theEmperor"; 
+			case "Cafe9" : return "front/dining/r/cafe9"; 
+			case "Bar21" : return "front/dining/c/bar21"; 
+			default : throw new SupportException("잘못된 접근");
+			}
+		}else {
+			throw new SupportException("잘못된 접근");
+		}
 	}
 	
-	//다이닝 카페 이동
-	@RequestMapping(value="cafe.do", method = RequestMethod.GET)
-	public String cafe(Model model, String room) {
-		System.out.println("cafe서블릿 실행");
-		return "front/dining/cafe";
-	}
 		
 		
 	//고객센터 전체 이동
