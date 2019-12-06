@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +15,7 @@
 <script>
 $(document).ready(function() {
 	$('#allLi').click(function(){
-		jsList("");
+		jsList('restaurant');
 	});
 	
 	//목록 별 높이 조정 (전체 목록의 갯수가 짝수가 아닌 경우)
@@ -40,7 +41,7 @@ $(window).load(function(){
 //목록으로
 function jsList(CATE) {
 	$('#CATE').val(CATE);
-	$("#form1").attr("action", "/front/hotel/dining/list");
+	$("#form1").attr("action", "dining.do");
 	$("#form1").submit();
 }
 </script>
@@ -61,9 +62,9 @@ function jsList(CATE) {
 		<div class="utilMenu">
 			
 			<ul class="diningTab clearFixed">
-				<li class="all" id="allLi"><a href="all" onclick="javascript:jsList('All');" >All</a></li>
-				<li class="restaurant on"><a href="cafe" onclick="javascript:jsList('RESTAURANT');">Restaurant</a></li>
-				<li class="cafe"><a href="restaurant" onclick="javascript:jsList('CAFE');">Café &amp; Bar</a></li>
+				<li class="dining"> <a href="dining" onclick="javascript:jsList('dining');" >All</a></li>
+				<li class="restaurant on" id="allLi"><a href="restaurant" onclick="javascript:jsList('restaurant');">Restaurant</a></li>
+				<li class="cafe"><a href="cafe" onclick="javascript:jsList('cafe');">Café &amp; Bar</a></li>
 			</ul>
 		</div>
 		
@@ -71,7 +72,12 @@ function jsList(CATE) {
 		<div class="DDfindList" style="visibility:hidden;">
 			
 			<div class="findDiningItem" data-animation="fadeInUp">
-				<p class="img"><a href="/front/hotel/dining/view?DINING_NM=DiningOnThePlate"><img src="/pcPub/static/images/hotalParadise/dining1.jpg" alt="" /></a></p>
+				<p class="img">
+				<c:url var="diningView" value="diningView.do">
+					<c:param name="type" value="OnThePlate"/>
+				</c:url>
+				<a href="${diningView }">
+				<img src="resources/pcPub/static/images/dining/dining1.jpg" alt="" /></a></p>
 				<div class="textBox">
 					<h2>ON THE PLATE</h2>
 					<p class="text">
@@ -85,7 +91,12 @@ function jsList(CATE) {
 			
 			
 			<div class="findDiningItem" data-animation="fadeInUp">
-				<p class="img"><a href="/front/hotel/dining/view?DINING_NM=DiningLaScala"><img src="/pcPub/static/images/hotalParadise/dining2.jpg" alt="" /></a></p>
+				<p class="img">
+				<c:url var="diningView" value="diningView.do">
+					<c:param name="type" value="LaScala"/>
+				</c:url>
+				<a href="${diningView }">
+				<img src="resources/pcPub/static/images/dining/dining2.jpg" alt="" /></a></p>
 				<div class="textBox">
 					<h2>LA SCALA</h2>
 					<p class="text">
@@ -94,13 +105,18 @@ function jsList(CATE) {
 				    
 					
 					</p>
-					<a href="#popReservation" class="btn small2" onclick="javascript:$('#F_SEQ').val('022');initPop();layerPopOpen('#popReservation')"><span>예약하기</span></a>
+					<!-- <a href="#popReservation" class="btn small2" onclick="javascript:$('#F_SEQ').val('022');initPop();layerPopOpen('#popReservation')"><span>예약하기</span></a> -->
 				</div>
 			</div>
 			
 			
 			<div class="findDiningItem" data-animation="fadeInUp">
-				<p class="img"><a href="/front/hotel/dining/view?DINING_NM=DiningRaku"><img src="/pcPub/static/images/hotalParadise/dining3.jpg" alt="" /></a></p>
+				<p class="img">
+				<c:url var="diningView" value="diningView.do">
+					<c:param name="type" value="Raku"/>
+				</c:url>
+				<a href="${diningView }">
+				<img src="resources/pcPub/static/images/dining/dining3.jpg" alt="" /></a></p>
 				<div class="textBox">
 					<h2>RAKU</h2>
 					<p class="text">
@@ -108,13 +124,18 @@ function jsList(CATE) {
 				         다양한 장르의 일식을 창의적으로 재해석한 메뉴를<br/>합리적인 가격에 즐길 수 있는 트렌디한 일식의 진수	
 				    
 					</p>
-					<a href="#popReservation" class="btn small2" onclick="javascript:$('#F_SEQ').val('024');initPop();layerPopOpen('#popReservation')"><span>예약하기</span></a>
+					<!-- <a href="#popReservation" class="btn small2" onclick="javascript:$('#F_SEQ').val('024');initPop();layerPopOpen('#popReservation')"><span>예약하기</span></a> -->
 				</div>
 			</div>
 			
 			
 			<div class="findDiningItem" data-animation="fadeInUp">
-				<p class="img"><a href="/front/hotel/dining/view?DINING_NM=DiningImperialTreasure"><img src="/pcPub/static/images/hotalParadise/dining4.jpg" alt="" /></a></p>
+				<p class="img">
+				<c:url var="diningView" value="diningView.do">
+					<c:param name="type" value="ImperialTreasure"/>
+				</c:url>
+				<a href="${diningView }">
+				<img src="resources/pcPub/static/images/dining/dining4.jpg" alt="" /></a></p>
 				<div class="textBox">
 					<h2>IMPERIAL TREASURE</h2>
 					<p class="text">한국 최초로 선보이는 정통 광동식 Fine Dining Cuisine</p>
@@ -127,7 +148,12 @@ function jsList(CATE) {
 			
 			
 			<div class="findDiningItem" data-animation="fadeInUp">
-				<p class="img"><a href="/front/hotel/dining/view?DINING_NM=DiningTheEmperor"><img style="width:100%;" src="/pcPub/static/images/hotalParadise/emperor_bsImg.jpg" alt="" /></a></p>
+				<p class="img">
+				<c:url var="diningView" value="diningView.do">
+					<c:param name="type" value="TheEmperor"/>
+				</c:url>
+				<a href="${diningView }">
+				<img style="width:100%;" src="resources/pcPub/static/images/dining/dining8.jpg" alt="" /></a></p>
 				<div class="textBox" style="padding-right:80px;">
 					<h2>THE EMPEROR</h2>
 					<p class="text">최고의 고객에게 최고만을 선보이는 카지노 클럽 멤버십 전용 레스토랑</p>
@@ -136,7 +162,12 @@ function jsList(CATE) {
 			
 			
 			<div class="findDiningItem" data-animation="fadeInUp">
-				<p class="img"><a href="/front/hotel/dining/view?DINING_NM=DiningCafe9"><img style="width:100%;" src="/pcPub/static/images/hotalParadise/cafe9_ssImg.jpg" alt="" /></a></p>
+				<p class="img">
+				<c:url var="diningView" value="diningView.do">
+					<c:param name="type" value="Cafe9"/>
+				</c:url>
+				<a href="${diningView }">
+				<img style="width:100%;" src="resources/pcPub/static/images/dining/dining9.jpg" alt="" /></a></p>
 				<div class="textBox">
 					<h2>Café 9</h2>
 					<p class="text">게임 속 오아시스, 미식의 즐거움을 경험하는 곳</p>

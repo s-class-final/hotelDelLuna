@@ -30,14 +30,14 @@
 }
 
 .table-fill  th {
-	color: #D5DDE5;
-	background: #1b1e24;
+	color: WHITE;
+	background: #1b1e24;;
 	border-bottom: 4px solid #9ea7af;
 	border-right: 1px solid #343a45;
 	font-size: 15px;
 	font-weight: 100;
 	padding: 10px;
-
+	cursor:pointer;
 	text-align: left;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 	vertical-align: middle;
@@ -103,6 +103,20 @@
 	border-right: 1px solid #C1C3D1;
 }
 
+.toggle{
+    display: inline;
+    width: 8px;
+    height: 5px;
+    margin-left: 5px;
+    border : none;
+}
+.toggle.off {
+    background: url(resources/pcPub/static/images/common/bg_topArrow.png) no-repeat 0 0px;
+}
+.toggle.on{
+    background: url(resources/pcPub/static/images/common/bg_topArrow.png) no-repeat 0 -5px;
+
+}
 /******************* 오른쪽 예약 입력 메뉴 ****************/
 .resInsertForm{
 	background: white;
@@ -172,7 +186,6 @@
 
 
 
-
 </style>
 <body>
 
@@ -181,18 +194,17 @@
 			<table class="table-fill">
 				<thead>
 					<tr>
-						<th class="text-left" style="width:80px">예약번호</th>
-						<th class="text-left">예약자</th>
+						<th class="sortHead" style="width:100px">예약번호<button id="sort_no" class="toggle off"></button></th>
+						<th class="sortHead">예약자<button id="sort_name" class="toggle off"></button></th>
 						<th style="width:50px">인원</th>
-						<th>체크인</th>
-						<th>체크아웃</th>
+						<th class="sortHead">체크인<button id="sort_checkIn" class="toggle off"></button></th>
+						<th class="sortHead" style="width:95px">체크아웃<button id="sort_checkOut" class="toggle off"></button></th>
 						<th>입금상태</th>
 						<th>예약상태</th>
 					</tr>
 				</thead>	
 			
 				<tbody class="table-hover">
-<!--  <button class="btnOptionClose deleteRes" onclick="deletePopModal()"></button> -->
 				</tbody>
 			</table>
 			<br><br><br>
@@ -201,9 +213,9 @@
 			<div align="center" style="padding-right:150px">
 			<div class="resSearchArea"  align="center" >
 				<select id="searchCondition" class="searchSel" name="category"  style="min-height:10px;display:inline">
-						<option>-----</option>
+						<option value="none">-----</option>
 						<option value="userName">예약자</option>
-						<option value="userEmail">아이디</option>
+						<option value="userId">아이디</option>
 						<option value="userPhone">전화번호</option>		
 				</select>
 				<input type="text" name="searchValue" id="searchValue" style="display:inline">
@@ -224,7 +236,7 @@
 			
 			</div>
 			<div class="reservationAside">
-			<section class="reservationSection" style="width:350px">
+			<section class="reservationSection" style="width:400px;right:30px">
 				<br><br>
 				<form class="resInsertForm">
 				<div class="resInp">
@@ -232,13 +244,20 @@
 				<tr>
 					<td >예약자: </td>
 					<td><input type="text" name="userName"></td>
-					<td colspan="2"></td>
+					<td colspan="3"></td>
 				</tr>
 				<tr>
 					<td>이메일: </td>
-					<td colspan="3">
-					<input type="text" name="email1" size="7" style="display:inline;width:33%">@
-					<input type="text" name="email2" size="7" style="display:inline;width:33%">
+					<td colspan="4">
+					<input type="text" name="email1" size="7" style="display:inline;width:25%">@
+					<input type="text" name="email2" size="7" style="display:inline;width:25%">
+					<select id = "email" name = "email" class = "join" style="display:inline;width:30%">
+                     <option value = "naver.com">naver.com</option>
+                            <option value = "hanmail.net">hanmail.net</option>
+                            <option value = "gmail.com">gmail.com</option>
+                            <option value = "nate.com">nate.com</option>
+                     <option value = "1">직접입력</option>
+                    </select>
 					</td>
 				</tr>
 				<tr>
@@ -272,15 +291,14 @@
 					<td><input type="text" id="totalNum" name="res_totalNum" value="0명" readonly></td>
 				</tr>
 				<tr>
-					<td>체크인: </td>
-					<td><input type="date" id="checkIn"  name="res_checkIn" style="width:100%"></td>
-					<td></td>
-				</tr>
+					<td>날짜: </td>
+					<td colspan=2>
+							<b class="inp calendar">		
+							<input type="text" width=100% readonly="readonly" />
+							<a class="btnCalendar" style="right:-20px"></a>
+							</b>
+					</td>
 				<tr>
-					<td>체크아웃: </td>
-					<td><input type="date" id="checkOut" name="res_checkOut" style="width:100%"></td>
-					<td></td>
-				</tr>
 				<tr>
 					<td></td>
 					<td colspan="3">조식: &nbsp;<input type="checkbox"  name="res_breakfast" style="width:auto;display:inline;">
@@ -323,17 +341,29 @@
 	<!-------------------- //팝업창  ---------------------->
 	<!-- //섹션 영역 -->
 	<script>
-	var currentPage = 1;
+	var nowPage;
 	$(function(){	
-		pagingAjax(currentPage);
+ 		 pagingAjax(1);
 		
-         $("#tabmenu1").prop('checked', true);
+		 $("#tabmenu1").prop('checked', true);
 		 $("#tabmenu1").parent().toggleClass("hovered");
 		 $("#tabmenu2").parent().removeClass("hovered");
-		
-		 $("#entireRes").prop("hidden",false);	
+         $("input[name=email2]").val($("#email option").eq(0).val());
+/* 		 $("#entireRes").prop("hidden",false);	
+ */
+		 // 메일 바뀌게 하는 함수(바뀔 때마다 아이디 중복체크 함수 실행)
+		 $('#email').change(function(){
+		     $("#email option:selected").each(function () {
+		       if($(this).parent().val()== "1"){ // 직접입력일 경우
+		    	  $("input[name=email2]").val(""); // 값 초기화
+		    	  $("input[name=email2]").attr("disabled",false); // 활성화
 
-		 
+		       }else{ // 직접입력이 아닐경우
+		    	  $("input[name=email2]").val($(this).parent().val()); // 선택값 입력
+		    	  $("input[name=email2]").attr("disabled",true); // 비활성화
+		       }
+		    });
+		 });
 		 
 		var totalNum=0;
 		var nowDate = new Date().toISOString().substring(0, 10);
@@ -362,6 +392,57 @@
 			$("#totalNum").val(totalNum+"명");		
 		});
 		
+		
+		/******************* 정렬  ******************/
+		$(".sortHead").click(function(){
+			var sort_no;
+			var className = $(this).children("button").attr('class');
+			var btnId = $(this).children("button").attr('id');
+
+			/*** 내림차순 ***/
+			if(className == "toggle on"){
+				$(this).children("button").css("background-position-y",0);
+				$(this).children("button").prop('class','toggle off');
+				
+				switch(btnId){
+				case "sort_no":
+					sort_no=0;
+					break;
+				case "sort_name":
+					sort_no=2;
+					break;
+				case "sort_checkIn":
+					sort_no=4;
+					break;
+				case "sort_checkOut":
+					sort_no=6;
+					break;
+				}
+			/*** 오름차순 ***/
+			}else{
+				$(this).children("button").css("background-position-y",-5);
+				$(this).children("button").prop('class','toggle on');
+				
+				switch(btnId){
+				case "sort_no":
+					sort_no=1;
+					break;
+				case "sort_name":
+					sort_no=3;
+					break;
+				case "sort_checkIn":
+					sort_no=5;
+					break;
+				case "sort_checkOut":
+					sort_no=7;
+					break;
+				}
+
+			}
+			pagingAjax(nowPage,null,null,sort_no,false);
+		})
+		
+		
 	});
 		
 		/* 상세 정보 가져오기 */
@@ -381,8 +462,9 @@
 		
 		
 		/***** 테이블 ajax 처리 *****/
-		function loadData(code){
-			console.log("전달된 인자값 : "+ code);
+		function loadData(code,sort_no){
+			console.log("전달된 페이지 인자값 : "+ code);
+			
 			var page = code; // 페이지 정보 담기
 			var $tableBody = $(".table-hover");
 			$tableBody.html("");
@@ -398,10 +480,11 @@
 			var $res_payStatus;
 			var $res_status;
 			var $deleteBtn;
-
+	
 			$.ajax({
 				url:"rList.do",
-				data:{page:page},
+				data:{page:page,
+					sort_no:sort_no},
 				dataType:"json",
 				success:function(data){
 					console.log(data.length);
@@ -409,15 +492,18 @@
 						for(var i in data){
 							$tr=$("<tr>");
 							$res_no = $("<td class='text-left'>").text(data[i].res_no);
-							$res_name = $("<td class='text-left'>").text(data[i].res_userId);
+							$res_name = $("<td class='text-left'>").text(data[i].res_userName);
 							$res_adult = $("<td class='text-left'>").text(data[i].res_adult);
 							$res_checkIn = $("<td class='text-left'>").text(data[i].res_checkIn);
 							$res_checkOut = $("<td class='text-left'>").text(data[i].res_checkOut);
 							$res_payStatus = $("<td class='text-left'>").text(data[i].res_payStatus);
 							$res_status = $("<td class='text-left'>").text(data[i].res_status);
 							$deleteBtn = $("<button class='btnOptionClose deleteRes' onclick='deletePopModal()'>");
-
-							$res_status.append($deleteBtn);
+							
+							/*** 입금 대기 상태일 때 예약 삭제버튼 추가 ***/
+							if(data[i].res_payStatus=='입금대기'){
+								$res_status.append($deleteBtn);
+							}
 							
 							
 							$tr.append($res_no);
@@ -439,7 +525,7 @@
 		}
 	
 		/***** 페이징 ajax 처리 *****/
-		function pagingAjax(currentPage,searchCondition,searchValue,bool){
+		function pagingAjax(currentPage,searchCondition,searchValue,sort_no,bool){
 			var $pagination = $(".pagination");
 			$pagination.html("");
 			var $startPage;
@@ -457,7 +543,8 @@
 				data:{page:cPage,
 					searchCondition:searchCondition,
 					searchValue:searchValue,
-					search:search},
+					search:search,
+					sort_no:sort_no},
 				dataType:"json",
 				success:function(data){
 					console.log(data);
@@ -517,7 +604,7 @@
 							
 							loadData(data.currentPage);
 							
-							currentPage = data.currentPage;
+							nowPage = data.currentPage;
 					}
 			
 				},error:function(request, status, errorData){
@@ -537,17 +624,16 @@
 
 		/* 검색 필터 적용하여 검색 */
 		function searchResList(){
-/* 			sessionStorage.removeItem("sc");
- */			console.log("세션 아이템 값 : "+sessionStorage.key(0));
-			console.log("세션에 저장된 sc 값 : "+sessionStorage.getItem("sc"));
-			console.log("세션에 저장된 값들 길이: "+sessionStorage.length); 
+			 
 			var currentPage = 1;
 			var searchCondition = $("#searchCondition").val();
 			var searchValue = $("#searchValue").val();
+			$("#searchValue").val("");
+			$("#searchCondition").val("none");
 			var bool = true;
 			console.log("searchResList 실행 됨. 컨디션 : "+searchCondition + " 값 : "+searchValue);
 			
-			pagingAjax(currentPage,searchCondition,searchValue,bool);
+			pagingAjax(currentPage,searchCondition,searchValue,0,bool);
 		}
 	</script>
 
