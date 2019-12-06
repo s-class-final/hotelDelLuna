@@ -53,5 +53,20 @@ public class ReservationDao {
 		return sqlSession.selectOne("reservationMapper.selectResOne",res_no);
 	}
 
+	public int resInsert(Reservation res) {
+
+		return sqlSession.insert("reservationMapper.resInsert",res);
+	}
+
+	public int resDelete(int res_no) {
+
+		return sqlSession.update("reservationMapper.resDelete",res_no);
+	}
+
+	public int resModify(Reservation res) {
+
+		return sqlSession.update("reservationMapper.resModify",res);
+	}
+
 
 }

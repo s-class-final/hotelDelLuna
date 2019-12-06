@@ -7,7 +7,7 @@
  /* ==============================
  * main
  * ============================== */
-#main #headerWrap { height:94px; background:none; transition:background .3s ease;}
+#main #headerWrap { height:94px; background:rgba(33,32,30,0.95); transition:background .3s ease;}
 #main #headerWrap.on { background:rgba(33,32,30,0.95);}
 #main #headerWrap h1 { width:213px; height:91px; margin-top:10px; background:url('../images/common/delluna_menulogo.png') no-repeat;}
 #main #headerWrap .gnb { margin-top:39px; margin-left:90px;}
@@ -20,7 +20,7 @@
 #main #headerWrap .bgDepth { top:94px; background:rgba(33,32,30,0.95);}
 
 .scrollActive #main #headerWrap { top:0;}
-.mainHeaderBg #main #headerWrap { background:rgba(33,32,30,0.95);}
+.mainHeaderBg #main #headerWrap { background:rgba(33,32,30,0.45);}
 .mainHeaderBg #main #headerWrap h1 { background:url('../images/common/delluna_menulogo.png') no-repeat;}
 
 #main #container { padding-top:0;}

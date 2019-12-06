@@ -1,6 +1,7 @@
 package com.kh.hotelDelLuna.reservation.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.common.Pagination;
+import com.kh.hotelDelLuna.member.model.service.MemberService;
+import com.kh.hotelDelLuna.member.model.vo.Member;
 import com.kh.hotelDelLuna.reservation.model.exception.ReservationException;
 import com.kh.hotelDelLuna.reservation.model.service.ReservationService;
 import com.kh.hotelDelLuna.reservation.model.vo.ResSearchCondition;
@@ -29,7 +33,10 @@ public class ReservationController {
 
 	@Autowired
 	ReservationService rService;
-
+	
+	@Autowired
+	MemberService mService;
+	
 	/********** 처음 예약 페이지 뿌려줄 때 **********/
 	@RequestMapping(value = "entireResList.do", method = RequestMethod.GET)
 	public ModelAndView entireResList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page) {
@@ -52,15 +59,17 @@ public class ReservationController {
 			mv.addObject("pi", pi);
 
 			mv.setViewName("reservation/tabResMenu");
-
+		
 		} else {
 			throw new ReservationException("예약 리스트 조회 실패!");
 		}
 
 		return mv;
-
+		
 	}
 
+	/********** 예약 상세 보기 **********/
+	
 	@RequestMapping(value = "resDetail.do")
 	public ModelAndView resDetail(ModelAndView mv, @RequestParam(value = "res_no", required = false) int res_no) {
 
@@ -76,6 +85,7 @@ public class ReservationController {
 		return mv;
 
 	}
+	/********** 캘린더로 예약목록 보기 **********/
 
 	@RequestMapping(value = "calendarResList.do")
 	public ModelAndView calendarResList(ModelAndView mv) {
@@ -84,7 +94,8 @@ public class ReservationController {
 		return mv;
 
 	}
-
+	
+	/********** 테이블에 뿌려줄 예약목록 가져오기 **********/
 	@RequestMapping("rList.do")
 	@ResponseBody
 	public void getResList(HttpServletResponse response, HttpSession session, int page)
@@ -134,6 +145,7 @@ public class ReservationController {
 
 	}
 
+	/********** 페이징 목록 가져오기 **********/
 	@RequestMapping("rPage.do")
 	@ResponseBody
 	public void getResPage(HttpServletResponse response, HttpSession session, int page, String searchCondition,
@@ -204,9 +216,135 @@ public class ReservationController {
 		gson.toJson(pi, response.getWriter());
 	}
 
-
-
 	
+	/********** 예약 내역 생성하기 **********/
+	
+	@RequestMapping(value = "resInsert.do")
+	public ModelAndView resInsert(ModelAndView mv,Reservation res,
+			@RequestParam(value = "userName1", required = false) String userName1,
+			@RequestParam(value = "userName2", required = false) String userName2,			
+			@RequestParam(value = "email1", required = false) String email1,
+			@RequestParam(value = "email2", required = false) String email2,
+			@RequestParam(value = "phone1", required = false) String phone1,
+			@RequestParam(value = "phone2", required = false) String phone2,
+			@RequestParam(value = "phone3", required = false) String phone3,
+			@RequestParam(value = "checkInOut", required = false) String checkInOut) {
+
+
+		System.out.println("넘어온 값: "+checkInOut);
+		System.out.println("넘어온 값: "+res);
+		
+		
+		// 아이디 합치기
+		res.setRes_userId(email1 + '@' + email2);
+		// 이름 합치기
+		res.setRes_userName(userName1 + " "+userName2);
+		
+		// 휴대폰 번호 합치기
+		String userPhone = phone1 + "-"  + phone2 + "-"  + phone3;
+		
+		Member m = new Member(email1+'@'+email2,userName1 +" "+userName2,userPhone);
+		
+		res = settingDate(res,checkInOut);
+
+		System.out.println(res);
+		// 1_1. 예약자 아이디가 회원에 있는지 확인!
+		Member member = mService.findUser(m);
+		// 1_2. 예약자 아이디가 비회원에 있는지 확인!
+		/*
+		 * if(member==null) {
+		 * 
+		 * }
+		 */
+		
+		int mInsert=1;
+		int result;
+		// 2. 예약자 아이디가 회원,비회원에 없으면 비회원 테이블에 예약자 정보 삽입
+		
+		if(member==null){
+			mInsert = mService.insertKMember(m);
+		}
+		
+		
+		// 3. 예약 내역 생성
+		if(mInsert>0) {
+			result = rService.resInsert(res);
+			
+			if(result>0) {
+				System.out.println("예약 삽입 성공!");
+			}else {
+				throw new ReservationException("예약 내역 생성 실패!");
+			}
+		}else {
+			throw new ReservationException("예약 내역 생성할 비회원 정보 생성 실패!");
+		}
+
+
+		mv.setView(new RedirectView("entireResList.do"));
+		return mv;
+	}
+	
+	
+	
+	/********** 예약 내역 삭제하기 **********/
+	@RequestMapping(value = "resDelete.do")
+	public ModelAndView resDelete(ModelAndView mv, @RequestParam(value = "res_no", required = false) String res_no) {
+
+		System.out.println("넘어온 res_no : "+res_no);
+		
+		int resNo = Integer.valueOf(res_no);
+		int result = rService.resDelete(resNo);
+		if(result>0) {
+			System.out.println("예약 내역 삭제 성공!");
+		}else {
+			throw new ReservationException("예약 내역 삭제 실패!!");
+		}
+
+		mv.setView(new RedirectView("entireResList.do"));
+		return mv;
+
+	}
+	
+	
+	/********** 예약 내역 수정 **********/
+	@RequestMapping(value = "resModify.do")
+	public ModelAndView resModify(ModelAndView mv,Reservation res,
+			@RequestParam(value = "checkInOut", required = false) String checkInOut) {
+
+		System.out.println("넘어왓냥");
+		
+		res = settingDate(res,checkInOut);
+
+		System.out.println(res);
+		
+		int result = rService.resModify(res);
+		
+		if(result>0) {
+			mv.addObject("res_no", res.getRes_no());
+			mv.setView(new RedirectView("resDetail.do"));
+		}else {
+			throw new ReservationException("예약 내역 수정 실패!!");
+		}
+		return mv;
+
+	}
+	
+	
+	/******* 날짜 데이터 재구성 *******/
+	public Reservation settingDate(Reservation res,String checkInOut) {
+	    
+		checkInOut = checkInOut.replace(".", "-");
+		String str_checkIn = checkInOut.substring(0,checkInOut.indexOf(" "));
+		String str_checkOut = checkInOut.substring(checkInOut.lastIndexOf(" ")+1);
+		Date checkIn = new Date(Date.valueOf(str_checkIn).getTime());
+		Date checkOut = new Date(Date.valueOf(str_checkOut).getTime());
+		
+		res.setRes_checkIn(checkIn);
+		res.setRes_checkOut(checkOut);
+		
+		return res;
+	}
+	/******* 검색 필터 ********/
 	public ResSearchCondition checkSearch(String searchCondition, String searchValue) {
 
 		ResSearchCondition sc = new ResSearchCondition();

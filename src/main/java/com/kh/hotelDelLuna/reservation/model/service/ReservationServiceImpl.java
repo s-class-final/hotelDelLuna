@@ -51,5 +51,23 @@ public class ReservationServiceImpl implements ReservationService{
 		return rDao.selectResOne(res_no);
 	}
 
+	@Override
+	public int resInsert(Reservation res) {
+		// TODO Auto-generated method stub
+		return rDao.resInsert(res);
+	}
+
+	@Override
+	public int resDelete(int res_no) {
+		// TODO Auto-generated method stub
+		return rDao.resDelete(res_no);
+	}
+
+	@Override
+	public int resModify(Reservation res) {
+
+		return rDao.resModify(res);
+	}
+
 
 }
