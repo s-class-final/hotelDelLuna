@@ -12,6 +12,21 @@ public class RoomTypeDao {
 	
 	@Autowired
 	SqlSessionTemplate sqlSession;
+
+
+
+	public int insertRtype(RoomType rt) {
+	
+		System.out.println("DAO rt : " + rt);
+		return sqlSession.insert("roomtypeMapper.insertRtype",rt);
+	
+	}
+
+
+	public int insertRimgs(Attachment at) {
+		System.out.println("DAO at : " + at);
+		return sqlSession.insert("roomtypeMapper.insertRimgs",at);
+	}
 	
 
 

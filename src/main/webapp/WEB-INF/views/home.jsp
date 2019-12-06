@@ -9,7 +9,7 @@
 <body>
 
 	<jsp:include page="common/menubar.jsp"/>
-
+	
 
 </body>
 </html>
