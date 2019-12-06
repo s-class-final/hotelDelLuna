@@ -42,9 +42,9 @@
             <a href="#">introduce</a>
             <div class="gnbDepth2">
                <div>
-                  <h2><a href="#"><span>INTRODUCTION</span>소개</a></h2>
+                  <h2><a href="hotelDelLunar.do"><span>INTRODUCTION</span>소개</a></h2>
                   <ul>
-                     <li><a href="hotelDelLunar.do">호텔 소개</a></li>
+                     <li><a href="instruction.do">호텔 소개</a></li>
                      <li><a href="location.do">오시는 길</a></li>
                   </ul>
                </div>
@@ -56,11 +56,59 @@
                <div>
                   <h2><a href="overView.do"><span>DELLUNA</span>객실안내</a></h2>
                   <ul>
-                     <li class="on"><a href="roomView.do">슈페리어</a></li>
-                     <li><a href="roomView.do">디럭스</a></li>
-                     <li><a href="roomView.do">프리미엄 디럭스</a></li>
-                     <li><a href="roomView.do">스위트</a></li>
-                  </ul>
+	                  <c:url var="roomView" value="roomView.do">
+	                  	<c:param name="type" value="superior"/>
+	                  </c:url>
+	                     <li class="on"><a href="${roomView }">슈페리어</a></li>
+	                    <c:url var="roomView" value="roomView.do">
+	                  	<c:param name="type" value="superior_terrace"/>
+	                  </c:url>
+	                     <li><a href="${roomView }">슈페리어 테라스</a></li>
+	                  </ul>
+               </div>
+               <div>
+               	<h2>&nbsp;<span>&nbsp;</span>&nbsp;&nbsp;</h2>
+               	<h2>&nbsp;<span>&nbsp;</span>&nbsp;&nbsp;</h2>
+	               <ul>
+	                  <c:url var="roomView" value="roomView.do">
+	                  	<c:param name="type" value="deluxe"/>
+	                  </c:url>
+                     <li class="on"><a href="${roomView }">디럭스</a></li>
+                     <c:url var="roomView" value="roomView.do">
+	                  	<c:param name="type" value="grand_deluxe"/>
+	                  </c:url>
+                     <li><a href="${roomView }">그랜드 디럭스</a></li>
+                     <c:url var="roomView" value="roomView.do">
+	                  	<c:param name="type" value="premium_deluxe"/>
+	                  </c:url>
+                     <li><a href="${roomView }">프리미엄 디럭스</a></li>
+                     <c:url var="roomView" value="roomView.do">
+	                  	<c:param name="type" value="premium_deluxe_terrace"/>
+	                  </c:url>
+                     <li><a href="${roomView }">프리미엄 디럭스 테라스</a></li>
+                  </ul>	
+               </div>
+               <div>
+               	<h2>&nbsp;<span>&nbsp;</span>&nbsp;&nbsp;</h2>
+               	<h2>&nbsp;<span>&nbsp;</span>&nbsp;&nbsp;</h2>
+	               <ul>
+	                  <c:url var="roomView" value="roomView.do">
+	                  	<c:param name="type" value="junior_suite"/>
+	                  </c:url>
+                     <li class="on"><a href="${roomView }">주니어 스위트</a></li>
+                     <c:url var="roomView" value="roomView.do">
+	                  	<c:param name="type" value="deluxe_suite"/>
+	                  </c:url>
+                     <li><a href="${roomView }">디럭스 스위트</a></li>
+                     <c:url var="roomView" value="roomView.do">
+	                  	<c:param name="type" value="grand_deluxe_suite"/>
+	                  </c:url>
+                     <li><a href="${roomView }">그랜드 디럭스 스위트</a></li>
+                     <c:url var="roomView" value="roomView.do">
+	                  	<c:param name="type" value="royal_suite"/>
+	                  </c:url>
+                     <li><a href="${roomView }">로열 스위트</a></li>
+                  </ul>	
                </div>
             </div>
          </li>   
@@ -82,10 +130,19 @@
             <a href="#">dine &amp; drink</a>
             <div class="gnbDepth2">
                <div>
-                  <h2><a href="dining.do"><span>dine &amp; drink</span>다이닝</a></h2>
+                  <c:url var="dining" value="dining.do">
+	                  	<c:param name="CATE" value="dining"/>
+	                  </c:url>
+                  <h2><a href="${dining }"><span>dine &amp; drink</span>다이닝</a></h2>
                   <ul>
-                     <li><a href="restaurant.do">RESTRAUNT</a></li>
-                     <li><a href="cafe.do">DRINK &amp; BAR</a></li>
+                     <c:url var="dining" value="dining.do">
+	                  	<c:param name="CATE" value="restaurant"/>
+	                  </c:url>
+                     <li><a href="${dining }">RESTRAUNT</a></li>
+                        <c:url var="dining" value="dining.do">
+	                  	<c:param name="CATE" value="cafe"/>
+	                  </c:url>
+                     <li><a href="${dining }">DRINK &amp; BAR</a></li>
                   </ul>
                </div>
             </div>
@@ -109,7 +166,7 @@
 						<h2><a href="#"><span>Admin page</span>관리자 페이지</a></h2>
 						<ul>
 							<li><a href="iRoomtypeView.do">방 등록</a></li>
-							
+							<li><a href="roomstatus.do">방 상태</a></li>
 						</ul>
 					</div>
 				</div>
@@ -166,15 +223,26 @@
 			<c:if test="${ !empty sessionScope.loginUser }">
 				<li><a href="logout.do"><em class="icon1"><i></i></em><p>Logout</p></a></li>
 			</c:if>
-			<li><a href="mjoin.do"><em class="icon2"><i></i></em><p><span>HOTEL</span>JOIN US</p></a></li>
+			<c:if test="${ empty sessionScope.loginUser }">
+				<li><a href="mjoin.do"><em class="icon2"><i></i></em><p><span>HOTEL</span>JOIN US</p></a></li>
+			</c:if>
 			<c:if test="${ empty sessionScope.loginUser }">
 				<li><a href="void(0);" onclick="alert('로그인 후 이용해 주세요');return false;"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
 			</c:if>
-			<c:if test="${ !empty sessionScope.loginUser }">
+			<c:if test="${ !empty sessionScope.loginUser and empty loginUser.kakao}">
 				<li><a href="mconfirm.do"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
+			</c:if>
+			<c:if test="${ !empty sessionScope.loginUser and !empty loginUser.kakao}">
+				<li><a href="mypage.do"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
 			</c:if>
          <li><a href="entireResList.do"><em class="icon4"><i></i></em><p><span>RESERVATION</span>MY RESERVATION</p></a></li>
          <li><a href="#"><em class="icon5"><i></i></em><p><span>MAP</span>DELLUNA MAP</p></a></li>
+         <c:if test="${ empty sessionScope.loginUser }">
+         	<li><a href="allinquiry.do"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1문의</p></a></li>
+         </c:if>
+         <c:if test="${ !empty sessionScope.loginUser }">
+         	<li><a href="minquiry.do"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1문의</p></a></li>
+         </c:if>
       </ul>
    </div>
 </aside>

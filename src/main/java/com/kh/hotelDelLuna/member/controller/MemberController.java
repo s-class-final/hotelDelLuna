@@ -1,6 +1,7 @@
 package com.kh.hotelDelLuna.member.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -19,9 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.hotelDelLuna.common.PageInfo;
+import com.kh.hotelDelLuna.common.Pagination;
 import com.kh.hotelDelLuna.member.model.exception.MemberException;
 import com.kh.hotelDelLuna.member.model.service.MemberService;
+import com.kh.hotelDelLuna.member.model.vo.Inquiry;
 import com.kh.hotelDelLuna.member.model.vo.Member;
 
 @SessionAttributes("loginUser")
@@ -46,14 +51,19 @@ public class MemberController {
 	public String memberLogin(Member m, Model model) {
 		Member loginUser = mService.loginUser(m);
 		
-		if(bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
+		if(m.getUserPwd().length() <= 7 && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
 			model.addAttribute("loginUser", loginUser);
-		
+			return "member/changePwd";
+			
 		}else {
-			throw new MemberException("로그인 실패!!");
+			if(bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
+				model.addAttribute("loginUser", loginUser);
+			}else {
+				throw new MemberException("로그인 실패!!");
+			}
+			return "home";
 		}
 		
-		return "home";
 	}
 	
 
@@ -114,6 +124,19 @@ public class MemberController {
 		boolean isUsable = mService.idCheck(userId) == 0 ? false : true;
 		
 		response.getWriter().print(isUsable);
+	}
+	
+	@RequestMapping(value="pwdcheck.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String pwdCheck(Member m, Model model, String userId, String userPwd) throws IOException {
+		Member loginUser = mService.loginUser(m);
+		
+		if(bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
+			return "true";
+		}else {
+			return "false";
+		}
+		
 	}
 	
 	@RequestMapping("kakaocheck.do")
@@ -277,6 +300,139 @@ public class MemberController {
 			return "true";			
 		}else {
 			return "false";
+		}
+	}
+	
+	@RequestMapping("changeInfo.do")
+	@ResponseBody
+	public String changeInfo(Member m, String userId, String userName, String userPhone) {
+		m.setUserId(userId);
+		m.setUserName(userName);
+		m.setUserPhone(userPhone);
+		
+		int result = mService.updateMember(m);
+		
+		if(result > 0) {
+			return "true";			
+		}else {
+			return "false";
+		}
+	}
+	
+	@RequestMapping("findkakao.do")
+	@ResponseBody
+	public String findKakao(Member m, HttpServletResponse response, String userId) {
+		m.setUserId(userId);
+		
+		int result = mService.findKakao(m);
+		
+		if(result > 0) {
+			return "true";			
+		}else {
+			return "false";
+		}
+		
+	}
+	
+	@RequestMapping("allinquiry.do")
+	public ModelAndView inquiryList(ModelAndView mv,
+									@RequestParam(value="page", required=false) Integer page) {
+		// 마이바티스 때 했던 PageInfo와 Pagination을 그대로 쓰자
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = mService.getListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		
+		ArrayList<Inquiry> list = mService.selectList(pi);
+		
+		if(list != null && list.size() > 0) {	// 게시글이 있다면
+			mv.addObject("list", list);
+			mv.addObject("pi", pi);
+			mv.setViewName("member/inquiryAll");
+		}else {
+			throw new MemberException("게시글 전체 조회 실패!!");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("minquiry.do")
+	public ModelAndView mInquiryList(ModelAndView mv, HttpSession session,
+									@RequestParam(value="page", required=false) Integer page) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		String userId = loginUser.getUserId();
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = mService.getMListCount(userId);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		
+		ArrayList<Inquiry> list = mService.selectMList(userId, pi);
+		
+		if(list != null && list.size() > 0) {	// 게시글이 있다면
+			mv.addObject("list", list);
+			mv.addObject("pi", pi);
+			mv.setViewName("member/inquiryMember");
+		}else {
+			throw new MemberException("게시글 전체 조회 실패!!");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = "sendcode.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String sendCode(HttpSession session, String userId, String emailCode) {
+		
+		System.out.println(emailCode);
+		String setfrom = "hoteldelluna1226@gmail.com";
+		String tomail = userId; // 받는 사람 이메일
+		String title = "호텔 델루나 가입 인증 코드"; // 제목
+		String content = emailCode; // 내용
+
+		try {
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+
+			messageHelper.setFrom(setfrom); // 보내는사람 생략하면 정상작동을 안함
+			messageHelper.setTo(tomail); // 받는사람 이메일
+			messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
+			messageHelper.setText(content); // 메일 내용
+
+			mailSender.send(message);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		return "true";
+	}
+	
+	@RequestMapping("iinsertView.do")
+	public String boardInsertView() {
+		return "member/inquiryInsert";
+	}
+	
+	@RequestMapping(value="iInsert.do", method=RequestMethod.POST)
+	public String InquiryInsert(HttpSession session, HttpServletRequest request, Inquiry i) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		String iWriter = loginUser.getUserId();
+		i.setiWriter(iWriter);
+		int result = mService.insertInquiry(i);
+		
+		if(result > 0) {
+			return "redirect:minquiry.do";
+		}else {
+			throw new MemberException("게시글 등록 실패!");
 		}
 	}
 	

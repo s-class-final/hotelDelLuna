@@ -20,6 +20,7 @@ body {
 }
 body .container {
   position: relative;
+  top:10%;
   overflow: hidden;
   width: 900px;
   height: 650px;
@@ -183,7 +184,7 @@ body .container .content .checkbox {
   clip: rect(0 0 0 0);
   width: 0;
   height: 0;
-  margin: 17px -1px;
+  margin: 5px -1px;
   padding: 0;
   border: 0;
 }
@@ -220,6 +221,7 @@ body .container .content .submit-wrap {
   bottom: 0;
   width: 100%;
   text-align: center;
+  line-height: 0.5em;
 }
 body .container .content .submit-wrap a {
   font-size: 12px;
@@ -280,6 +282,8 @@ body .container .content .signup-cont {
 </style>
 </head>
 <body>
+	<jsp:include page="../common/menubar.jsp"/>
+
 <section class="container">
 		    <article class="half">
 			        <h1>Hotel del luna</h1>
@@ -289,7 +293,7 @@ body .container .content .signup-cont {
 			        </div>
 			        <div class="content">
 				            <div class="signin-cont cont">
-					                <form action="login.do" onsubmit="return validate();" method="post">
+					                <form id="loginForm" action="login.do" method="post">
 						                    <input type="text" name="userId" id="userId" class="inpt" required="required" placeholder="Your email">
 						                    <label for="email">Your email</label>
 						                    <input type="password" name="userPwd" id="userPwd" class="inpt" required="required" placeholder="Your password">
@@ -297,9 +301,9 @@ body .container .content .signup-cont {
 						                    <input type="checkbox" id="saveId" name="saveId" class="checkbox">
 						                    <label for="saveId">Remember id</label>
 						                    <div class="submit-wrap">
-							                        <input type="submit" value="Login" class="submit"><br>
+							                        <input type="button" id="loginBtn" value="Login" class="submit" onclick="checkLogin()"><br>
 							                        <input type="button" id="kakao" value="kakao login" class="submit">
-							                        <a href="mjoin.do" class="more">Sign up</a>&nbsp;
+							                        <a href="mjoin.do" class="more">Join us</a>&nbsp;
 							                        <a href="findpwd.do" class="more">Forgot your password?</a>
 						                    </div>
         					        </form>
@@ -429,9 +433,62 @@ $(function(){
 		$(".half.bg").css("background-image", "url('resources/images/login2.jpg')");
 	});
 });
+
+// 로그인 버튼 클릭 시 아이디, 비번 체크
+function checkLogin(){
+	var userId = $("#userId").val();
+	var userPwd = $("#userPwd").val();
+	
+	if(userId.trim().length == 0){
+		alert("아이디를 입력하세요");
+		$("#userId").focus();
+		return false;
+	}
+	
+	if(userPwd.trim().length == 0){
+		alert("비밀번호를 입력하세요");
+		$("#userPwd").focus();
+		return false;
+	}
+	
+	$.ajax({
+		url:"idcheck.do",
+		data:{userId:userId},
+		success:function(data){
+			if(data == "true"){
+				$.ajax({
+					url:"pwdcheck.do",
+					type:"post",
+					data:{userId:userId, userPwd:userPwd},
+					success:function(data){
+						if(data == "true"){
+							$("#loginForm").submit();
+						}else{
+							alert("비밀번호를 확인해 주세요");
+							$("#userPwd").focus();
+						}
+					},
+					error : function(request, status, errorData) {
+						alert("error code: " + request.status + "\n"
+								+ "message: " + request.responseText
+								+ "error: " + errorData);
+					}
+				});
+			}else{
+				alert("아이디를 확인해 주세요");
+				$("#userId").focus();
+			}
+		},
+		error : function(request, status, errorData) {
+			alert("error code: " + request.status + "\n"
+					+ "message: " + request.responseText
+					+ "error: " + errorData);
+		}
+	})
+}
 </script>
 
-<script type='text/javascript'>
+<script type='text/javascript'>	// 카카오 로그인
 	$(function(){
 		$("#kakao").click(function(){
 		   Kakao.init('de55ce2e9e0330e7281dfe9da45b537b');
@@ -449,10 +506,8 @@ $(function(){
 		               data:{kakaoId:kakaoId},
 		               success:function(data){
 		                  if(data == "true"){
-		                	 alert("가입 되어 있음")
 		                     location.href = "kakaologin.do?" + kakaoId;
 		                  }else{
-		                	 alert("가입 안되어 있음")
 		                     location.href = "kakaojoin.do?" + kakaoId;
 		                  }
 		               },
