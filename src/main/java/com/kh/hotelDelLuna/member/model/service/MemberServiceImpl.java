@@ -1,9 +1,13 @@
 package com.kh.hotelDelLuna.member.model.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.member.model.dao.MemberDao;
+import com.kh.hotelDelLuna.member.model.vo.Inquiry;
 import com.kh.hotelDelLuna.member.model.vo.Member;
 
 @Service("mService")
@@ -69,6 +73,48 @@ public class MemberServiceImpl implements MemberService{
 	public Member findUser(Member m) {
 		
 		return mDao.findUser(m);
+	}
+
+	@Override
+	public int updateMember(Member m) {
+		
+		return mDao.updateMember(m);
+	}
+
+	@Override
+	public int findKakao(Member m) {
+		
+		return mDao.findKakao(m);
+	}
+
+	@Override
+	public int getListCount() {
+		
+		return mDao.getListCount();
+	}
+
+	@Override
+	public ArrayList<Inquiry> selectList(PageInfo pi) {
+		
+		return mDao.selectList(pi);
+	}
+	
+	@Override
+	public int getMListCount(String userId) {
+		
+		return mDao.getMListCount(userId);
+	}
+
+	@Override
+	public ArrayList<Inquiry> selectMList(String userId, PageInfo pi) {
+		
+		return mDao.selectMList(userId, pi);
+	}
+
+	@Override
+	public int insertInquiry(Inquiry i) {
+		
+		return mDao.insertInquiry(i);
 	}
 
 

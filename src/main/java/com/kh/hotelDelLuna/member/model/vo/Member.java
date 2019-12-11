@@ -14,6 +14,15 @@ public class Member {
 	public Member() {
 	}
 
+	
+	public Member(String userId, String userName, String userPhone) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.userPhone = userPhone;
+	}
+
+
 	public Member(int mId, int userT, String userId, String userPwd, String userName, String userPhone, int point,
 			String mStatus, String kakao) {
 		super();

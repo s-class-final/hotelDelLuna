@@ -10,23 +10,24 @@
 </head>
 <body>
 	짜잔 마이페이지가 떴습니다
-	<form>
-		<h3>아이디(이메일)</h3>
-		<input type="text" id="userId" name="userId" value="${loginUser.userId}" disabled>
-		<c:forTokens var="userId" items="${loginUser.userId}" delims="@" varStatus="status">
-			<c:if test="${status.index eq 0}">
-				<input type="hidden" id="userId1" value="${userId}">
-			</c:if>
-		</c:forTokens>
-		
-		<h3>변경할 비밀번호</h3>
-		<input type="password" id="userPwd" name="userPwd">
-		<h3>변경할 비밀번호 확인</h3>
-		<input type="password" id="checkPwd" name="checkPwd">
-		<button id="changePwd" type="button">비밀번호 변경</button>
-	</form>
-	
-	<hr>
+	<c:if test="${empty loginUser.kakao}">
+		<form>
+			<h3>아이디(이메일)</h3>
+			<input type="text" id="userId" name="userId" value="${loginUser.userId}" disabled>
+			<c:forTokens var="userId" items="${loginUser.userId}" delims="@" varStatus="status">
+				<c:if test="${status.index eq 0}">
+					<input type="hidden" id="userId1" value="${userId}">
+				</c:if>
+			</c:forTokens>
+			
+			<h3>변경할 비밀번호</h3>
+			<input type="password" id="userPwd" name="userPwd">
+			<h3>변경할 비밀번호 확인</h3>
+			<input type="password" id="checkPwd" name="checkPwd">
+			<button id="changePwd" type="button">비밀번호 변경</button>
+		</form>
+		<hr>
+	</c:if>
 	
 	<form>
 		<h3>* 이름</h3>
@@ -91,6 +92,8 @@
 	</form>
 	
 	<button type="button" onclick="location.href='index.jsp'">메인으로</button>
+	
+	<hr>
 	
 	<script>
 	
@@ -193,6 +196,10 @@
 	
 	// 회원정보 유효성 검사 및 회원정보 변경
 	function checkInfo(){
+		var userId = $("#userId").val();
+		var userName = $("#lastName").val() + " " + $("#firstName").val();
+		var userPhone = $("#userPhone1").val() + "-" + $("#userPhone2").val() + "-" + $("#userPhone3").val(); 
+		
 		if($("#lastName").val().length == 0){
             alert("이름을 입력하세요");
             $("#lastName").focus();
@@ -220,12 +227,15 @@
 		// 유효성 검사 통과 시 회원정보 변경
 		$.ajax({
 			url:"changeInfo.do",
-			data:{},
+			data:{userId:userId, userName:userName, userPhone:userPhone},
 			success:function(data){
 				if(data == "true"){
-					
+					var conPwd = confirm("회원정보가 변경되었습니다. 메인으로 돌아가시겠습니까?");
+					if(conPwd == true){
+						location.href="index.jsp";
+					}
 				}else{
-					
+					alert("회원정보 변경에 실패했습니다.");
 				}
 			},
 			error:function(request, status, errorData){

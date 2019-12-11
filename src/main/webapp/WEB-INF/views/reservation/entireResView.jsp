@@ -184,6 +184,9 @@
 	
 }
 
+.date-picker-wrapper{
+	top:350px;
+}
 
 
 </style>
@@ -238,78 +241,89 @@
 			<div class="reservationAside">
 			<section class="reservationSection" style="width:400px;right:30px">
 				<br><br>
-				<form class="resInsertForm">
+				<form class="resInsertForm" action="resInsert.do">
 				<div class="resInp">
-				<table style="margin:30px;">
+				<table style="margin:30px;border-spacing:10px;border-collapse: separate;">
 				<tr>
 					<td >예약자: </td>
-					<td><input type="text" name="userName"></td>
-					<td colspan="3"></td>
+					<td><input type="text" name="userName1" placeholder="성"></td>
+					<td colspan="2"><input type="text" name="userName2" placeholder="이름"></td>
+					<td></td>
 				</tr>
 				<tr>
 					<td>이메일: </td>
 					<td colspan="4">
 					<input type="text" name="email1" size="7" style="display:inline;width:25%">@
 					<input type="text" name="email2" size="7" style="display:inline;width:25%">
-					<select id = "email" name = "email" class = "join" style="display:inline;width:30%">
-                     <option value = "naver.com">naver.com</option>
+					<select id = "email" name = "email" class = "join" style="display:inline;width:30%;height:30px">
+                    		<option value = "naver.com">naver.com</option>
                             <option value = "hanmail.net">hanmail.net</option>
                             <option value = "gmail.com">gmail.com</option>
                             <option value = "nate.com">nate.com</option>
-                     <option value = "1">직접입력</option>
+                     		<option value = "1">직접입력</option>
                     </select>
 					</td>
 				</tr>
 				<tr>
 					<td>핸드폰: </td>
 					<td colspan="3">
-						<input type="text" name="phone1"  style="display:inline;width:17%">
-						<input type="text" name="phone2"  style="display:inline;width:20%">
-						<input type="text" name="phone3"  style="display:inline;width:20%">
+						<select id = "userPhone1" name = "phone1" style="display:inline;width:23%;height:30px">
+							<option value = "010">010</option>
+							<option value = "011">011</option>
+							<option value = "016">016</option>
+							<option value = "017">017</option>
+							<option value = "019">019</option>
+						</select>&nbsp;
+						<input type="text" name="phone2"  style="display:inline;width:25%">
+						<input type="text" name="phone3"  style="display:inline;width:25%">
 					</td>
 				</tr>
 				<tr>
 					<td>객실타입: </td>
-					<td>
-						<select>
-							<option name="res_roomType" value="---">---</option>
-							<option name="res_roomType" value="---">---</option>							
-							<option name="res_roomType" value="---">---</option>														
+					<td colspan=2>
+						<select name="res_roomType" style="width:80%;height:32px">
+							<option value="디럭스">디럭스</option>
+							<option value="스위트">스위트</option>							
+							<option value="슈페리어">슈페리어</option>														
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<td>성인: </td>
-					<td><input type="number" id="adult"name="res_adult" min=0 max=10 value=0 style="width:50px;display:inline"></td>
-				</tr>
-				<tr>
-					<td>어린이: </td>
-					<td><input type="number" id="child" name="res_child" min=0 max=10 value=0 style="width:50px;display:inline"></td>
-				</tr>
-				<tr>
-					<td>총 인원: </td>
-					<td><input type="text" id="totalNum" name="res_totalNum" value="0명" readonly></td>
-				</tr>
-				<tr>
 					<td>날짜: </td>
-					<td colspan=2>
+					<td colspan=3>
 							<b class="inp calendar">		
-							<input type="text" width=100% readonly="readonly" />
+							<input type="text" name="checkInOut" width=100% readonly="readonly" />
 							<a class="btnCalendar" style="right:-20px"></a>
 							</b>
 					</td>
 				<tr>
 				<tr>
-					<td></td>
-					<td colspan="3">조식: &nbsp;<input type="checkbox"  name="res_breakfast" style="width:auto;display:inline;">
-					&nbsp;디너: &nbsp;<input type="checkbox" name="res_dinner" style="width:auto;display:inline;">
-					</td>
+					<td>성인: </td>
+					<td><input type="number" id="adult"name="res_adult" min=0 max=10 value=0 style="width:50px;display:inline"></td>
+					<td colspan=3>흡연여부  <input id="smoking" class="check" type="checkbox" name="res_smoking" style="width:auto;display:inline;">
+					&nbsp;&nbsp;베드추가  <input id="addBed" class="check" type="checkbox" name="res_addBed" style="width:auto;display:inline;"></td>
+					
+				</tr>
+				<tr>
+					<td>어린이: </td>
+					<td><input type="number" id="child" name="res_child" min=0 max=10 value=0 style="width:50px;display:inline"></td>
+					<td colspan=2 style="padding-left:15px;"> 조식: <input type="number" name="res_breakfast" min=0 max=10 value=0 style="width:50px;display:inline"></td>
+				</tr>
+				<tr>
+					<td>총 인원: </td>
+					<td><input type="text" id="totalNum" name="res_totalNum" value="0명" readonly></td>
+					<td colspan=2 style="padding-left:15px;"> 디너: <input type="number" name="res_breakfast" min=0 max=10 value=0 style="width:50px;display:inline"></td>
+				</tr>
+				<tr >
+				<td colspan=4 rowspan=2>
+					<input type="text" name="res_require" style="margin-left:15px;margin-top:10px" placeholder="요청사항 입력">
+				</td>
 				</tr>
 			</table>
 				</div>
 				<div class="resButtonDiv">
-						<button type="reset" class="resButton">예약 입력</button>
-						<button type="submit" class="resButton">초기화</button>					
+						<button type="submit" class="resButton">예약 입력</button>
+						<button type="reset" class="resButton">초기화</button>					
 				</div>
 				</form>
 			</section>
@@ -341,7 +355,8 @@
 	<!-------------------- //팝업창  ---------------------->
 	<!-- //섹션 영역 -->
 	<script>
-	var nowPage;
+	var nowPage;   //현재 페이지를 담을 변수
+	var resNo;	   //예약 번호를 담을 변수
 	$(function(){	
  		 pagingAjax(1);
 		
@@ -356,11 +371,11 @@
 		     $("#email option:selected").each(function () {
 		       if($(this).parent().val()== "1"){ // 직접입력일 경우
 		    	  $("input[name=email2]").val(""); // 값 초기화
-		    	  $("input[name=email2]").attr("disabled",false); // 활성화
+		    	  $("input[name=email2]").attr("readonly",false); // 활성화
 
 		       }else{ // 직접입력이 아닐경우
 		    	  $("input[name=email2]").val($(this).parent().val()); // 선택값 입력
-		    	  $("input[name=email2]").attr("disabled",true); // 비활성화
+		    	  $("input[name=email2]").attr("readonly",true); // 비활성화
 		       }
 		    });
 		 });
@@ -444,7 +459,16 @@
 		
 		
 	});
-		
+		/* 흡연여부 베드추가여부 체크 */
+		$(document).on("click",".check",function(){
+			if ($(this).is(":checked")){ 
+		        $(this).val("Y");
+		    }else{
+		        $(this).val("N");
+		    }
+
+		});
+
 		/* 상세 정보 가져오기 */
 		$(document).on("click",".text-left",function(){
 			var res_no=$(this).parents().children("td").eq(0).text();
@@ -459,7 +483,7 @@
 			console.log(res_no);
 		    event.stopPropagation();
 		});
-		
+
 		
 		/***** 테이블 ajax 처리 *****/
 		function loadData(code,sort_no){
@@ -493,15 +517,15 @@
 							$tr=$("<tr>");
 							$res_no = $("<td class='text-left'>").text(data[i].res_no);
 							$res_name = $("<td class='text-left'>").text(data[i].res_userName);
-							$res_adult = $("<td class='text-left'>").text(data[i].res_adult);
+							$res_adult = $("<td class='text-left'>").text(Number(data[i].res_adult)+Number(data[i].res_child));
 							$res_checkIn = $("<td class='text-left'>").text(data[i].res_checkIn);
 							$res_checkOut = $("<td class='text-left'>").text(data[i].res_checkOut);
 							$res_payStatus = $("<td class='text-left'>").text(data[i].res_payStatus);
 							$res_status = $("<td class='text-left'>").text(data[i].res_status);
-							$deleteBtn = $("<button class='btnOptionClose deleteRes' onclick='deletePopModal()'>");
+							$deleteBtn = $("<button class='btnOptionClose deleteRes' onclick='deletePopModal("+(data[i].res_no)+","+'"'+(data[i].res_userName)+'"'+")'>");
 							
 							/*** 입금 대기 상태일 때 예약 삭제버튼 추가 ***/
-							if(data[i].res_payStatus=='입금대기'){
+							if(data[i].res_payStatus=='입금대기'&&data[i].res_status!='예약취소'){
 								$res_status.append($deleteBtn);
 							}
 							
@@ -615,12 +639,19 @@
 			});
 		}
 		
-		function deletePopModal(){
+		/** 예약 삭제 확인창 띄우기 **/
+		function deletePopModal(res_no,res_userName){
+			console.log(res_no);
+			console.log(res_userName);
+			$(".loginWrap h1 span").text(res_userName+"님의 예약 정보");
+			$(".btn.small2").prop("href","resDelete.do?res_no="+res_no);
 			layerPopOpen("#loginPop");
+
 		};
+		
 		function closePopModal(){
 			layerPopClose("#loginPop");
-		}
+		};
 
 		/* 검색 필터 적용하여 검색 */
 		function searchResList(){
@@ -634,7 +665,8 @@
 			console.log("searchResList 실행 됨. 컨디션 : "+searchCondition + " 값 : "+searchValue);
 			
 			pagingAjax(currentPage,searchCondition,searchValue,0,bool);
-		}
+		};
+
 	</script>
 
 </body>

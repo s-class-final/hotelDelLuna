@@ -1,11 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+#calTotal{
+	display: inline-block;
+    width: 100%;
+    height: 48px;
+    border: 1px solid #e6e3df;
+    padding: 0 39px 0 15px;
+    line-height: 48px;
+    font-size: 15px;
+}
+.cautionBox h3{
+	padding: 10px 40px;
+}
+</style>
 <body>
  <jsp:include page="../common/menubar.jsp"/>
 	
@@ -17,11 +33,14 @@
 	<div class="reservationWrap">
 	
 		<div class="reservationBox">
+			<h1 style="margin-bottom:10px;color: #9c836a;font-size: 30px;font-weight: 100" >${res.res_userName}님의 예약 내역</h1>
 			<img src="https://www.p-city.com/upload_file/201901/1547624304295.jpg" alt="MAIN_IMG" />
 			<div class="reservationInfoWrap">
 				<h1>호텔 방 이름</h1>
-				<p>객실 타입 정보</p>
+				<p>${res.res_roomType } 룸</p>
 				<a href="#detailPop1" class="btn small" onclick="popModal()"><span>자세히 보기</span></a>
+				<label>흡연 여부</label><input id="smoking" class="check" type="checkbox" name="res_smoking">
+				<label>베드 추가</label><input id="addBed" class="check" type="checkbox" name="res_addBed">
 			</div>
 				
 			<div class="selectChoice clearFixed">
@@ -29,140 +48,101 @@
 					<dt>체크인 &amp; 체크아웃</dt>
 					<dd>
 						<div id="TA0000010" class="inp calendar">
-							<input type="text" value="" readonly="readonly" />
-							<button class="btnCalendar">달력</button>
+							<input  name="checkInOut" type="text" value="${res.res_checkIn} ~ ${res.res_checkOut}" readonly="readonly">
+							<a class="btnCalendar">달력</a>
 						</div>
 					</dd>
 				</dl>
 				<dl>
 					<dt>성인</dt>
-					<dd><select class="selectBox aCnt"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></dd>
+					<dd>
+						<select name="res_adult" class="selectBox aCnt">
+							<c:forEach var="i" begin="0" end="8">
+								<c:if test="${i ne res.res_adult}">
+										<option value="${i}">${i}</option>
+								</c:if>
+								<c:if test="${i eq res.res_adult}">
+										<option value="${i}" selected>${i}</option>
+								</c:if>		
+							</c:forEach>
+						</select>
+					</dd>
 				</dl>
 				<dl>
 					<dt>
-						어린이<button class="tooltipLink" data-tooltip="tip0"></button>
+						어린이<a class="tooltipLink" data-tooltip="tip0"></a>
 						<div class="tooltipBox" id="tip0"><p>어린이 기준 : 37개월 ~ 13세(초등학생) 이하</p></div>
 					</dt>
-					<dd><select class="selectBox cCnt" ><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></dd>
+					<dd>
+						<select name="res_child" class="selectBox cCnt">
+							<c:forEach var="i" begin="0" end="8">
+								<c:if test="${i ne res.res_child}">
+										<option value="${i}">${i}</option>
+								</c:if>
+								<c:if test="${i eq res.res_child}">
+										<option value="${i}" selected>${i}</option>
+								</c:if>		
+							</c:forEach>
+						</select>
+					</dd>
 				</dl>
 				<dl>
-					<dt>유아</dt>
-					<dd><select class="selectBox bCnt" ><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></dd>
+					<dt>총 인원</dt>
+					<dd>
+						<input type="text" id="calTotal" value="${res.res_child + res.res_adult}">
+					</dd>
 				</dl>
 			</div>
 			
 
-			<div class="optionSelectBox clearFixed" style="display:none" data-key="BREAKFAST">
-				<h2>추가옵션</h2>
-				
-				<p class="img"><img src="/pcPub/static/images/sample/sample_optionimg1.jpg" alt="" /></p>
-				<div class="optionInfo">
-					<h3>Fine Dining Breakfast</h3>
-					<p>유럽, 뉴욕, 상해의 최신 Trend를 반영, 다섯가지 Station으로 구성된 Premium Buffet Restaurant</p>
-				
-					<p class="casy">
-						
-						<span class="aRpoAmt">성인 : 50,000 원</span>
-						
-						
-						<span class="cRpoAmt">어린이 : 29,000 원</span>
-						
-					</p>
-					
-					<div class="optionSelect clearFixed">
-						<dl>
-							<dt>성인</dt>
-							<dd><select class="selectBox aCnt disabled"></select></dd>
-						</dl>
-						<dl>
-							<dt>기간</dt>
-							<dd><select class="selectBox aDay disabled"></select></dd>
-						</dl>
-					</div>
-					
-					
-					<div class="optionSelect clearFixed">
-						<dl>
-							<dt>어린이</dt>
-							<dd><select class="selectBox cCnt disabled"></select></dd>
-						</dl>
-						<dl>
-							<dt>기간</dt>
-							<dd><select class="selectBox cDay disabled"></select></dd>
-						</dl>
-					</div>
-					
-				</div>
-			</div>
 
 			<div class="cautionBox">
 				<h2 class="cautionH2">고객 요청사항</h2>
-
+				<h3>${res.res_require}</h3>
 			</div>
-			
-			
-			
+
 			<input type="hidden" class="itemDtlData" data-std_adult_cnt="2" data-std_child_cnt="2" data-addable_adult_cnt="1" data-addable_child_cnt="1" data-adult_rpo_amt="55000" data-child_rpo_amt="33000" data-salestype_seq="442296" data-salestype="HPHP1911007" data-adult_add_roseq="221" data-child_add_roseq="222" data-adult_bf_roseq="162" data-child_bf_roseq="163" data-adult_bf_rpo_amt="50000" data-child_bf_rpo_amt="29000" data-period="1" data-adult_bf_max_cnt="3" data-child_bf_max_cnt="3" />
-			
-			
+
 		</div>
 	
 	<input type="hidden" id="BADGE_TYPE2_CNT" value="1"/>
 	
 	<!---------------------------- 우측 메뉴 ---------------------------->
 	<div class="reservationAside">
-		<section class="reservationSection">
+		<section class="reservationSection" style="margin-top:10px">
 			<div class="productHeader">
 				<h1>
 					<span>Summary</span>
 				</h1>
-				<a href="javascript:jsAllDelFromCart();" class="btnDeleteAll">전체삭제</a>
+				<a href="entireResList.do" class="btnDeleteAll">이전으로</a>
 			</div>
 			<div class="productWrap mCustomScrollbar" data-mcs-theme="dark">
-				<div class="productNone" style="display: none;">
-					담긴 상품이 없습니다.
-				</div>
-				<div class="productListBox" style="display: none;">
-				
+				<div class="productListBox">
 					<article class="productItem">
 						<div class="productListH">
 							<h2>
-								<span>EarlyBird: Hotel Paradise</span>
+								<span>상품명 : Hotel Delluna</span>
 							</h2>
-							<a onclick="javascript:jsDelFromCart(this);" class="btnDelete"></a>
+							<a onclick="#" class="btnDelete"></a>
 						</div>
 						<div class="productListC">
-							<h3>HOTEL PARADISE</h3>
-							
-							<p>체크인 / 체크아웃</p>
-							
-							
-							<p>성인 / 어린이 / 유아</p>
-							
-							
-							<p>객실</p>
-							
-							
-							<p>베드타입</p>
-							
+							<h3>HOTEL DELLUNA</h3>		
+							<p id="checkInOut">${res.res_checkIn} ~ ${res.res_checkOut}</p>			
+							<p id="total">성인 ${res.res_adult} / 어린이 ${res.res_child}</p>			
+							<p>${res.res_roomType} 룸</p>	
+							<p id="res_smoking">흡연 여부  ${res.res_smoking}</p>	
+							<p id="res_addBed">베드 추가  ${res.res_addBed}</p>	
 							<div class="casyBox">
-								
 								<dl>
 									<dt>
 										총액
 									</dt>
 									<dd class="totalAmt">원</dd>
 								</dl>
-								
-								
-							</div>
-						
-						
+							</div>	
 						</div>
-						
 						<input type="hidden" class="summaryItemData" data-product_item='{"RP_SEQ":1999,"OFFER_TYPE":"TA","OFFER_TYPE_CD":"000001","OFFER_CONT":{"PRICE_INFO":{"TOTAL_AMT":0,"DISC_AMT":0}},"OFFER_ORD":0,"OFFER_NAME":"EarlyBird: Hotel Paradise"}' />
 					</article>
-					
 				</div>
 			</div>
 	
@@ -177,9 +157,7 @@
 					<dt>할인액</dt>
 					<dd id="f_discount" class="txtRed">원</dd>
 				</dl>
-				
-				
-				
+		
 				<dl>
 					<dt>포인트</dt>
 					<dd id="f_point">P</dd>
@@ -195,9 +173,8 @@
 					</dd>
 				</dl>
 			</div>
-			
-			<button class="btn btnFull" disabled="disabled" onclick="javascript:jsPaymentView();">
-				<span>결제정보 입력하기</span>
+			<button class="btn btnFull"  onclick="resModify()">
+				<span>예약정보 수정</span>
 			</button>
 			
 		</section>
@@ -256,8 +233,72 @@
 <!-------------------- //팝업창  ---------------------->
 <script>
 
-	function popModal(){
+$(function(){
+	var smoking = "${res.res_smoking}";
+	var addBed = "${res.res_addBed}";
+	
+	
+	/*** 체크박스 선택 먼저 지정 ***/
+	if(smoking=='Y'){
+		$("#smoking").prop("checked",true);
+	}
+	if(addBed=='Y'){
+		$("#addBed").prop("checked",true);
+	}
+	
+	
+	/**** 날짜 변경 감지 ****/
+	$('.date-picker-wrapper').on("DOMSubtreeModified",function(){
+		if($('.date-picker-wrapper').css("display")=="none"){
+			$("#checkInOut").text($("input[name=checkInOut]").val());
+		}else{
+			$("#checkInOut").text($("input[name=checkInOut]").val());
+		}
+	});
+
+	/**** 인원수 변경 감지 ****/
+	$('.ui-select-trigger').on("DOMSubtreeModified",function(){
+
+		var adult = $("select[name=res_adult]").val();
+		var child = $("select[name=res_child]").val();
+		var total = Number(adult) + Number(child);
+		$("#total").text("성인 "+adult+"  /  어린이 "+child);
+		$("#calTotal").val(total);
+	});
+	
+
+});
+
+	/***** 흡연여부 베드추가여부 결과창에 담기 *****/
+	$(document).on("click",".check",function(){
+		if ($(this).is(":checked")){ 
+	        $(this).val("Y");
+	    }else{
+	        $(this).val("N");
+	    }
 		
+		if($(this).attr("name")=="res_smoking"){
+			$("#res_smoking").text("흡연 여부  "+$(this).val());
+		}
+		if($(this).attr("name")=="res_addBed"){
+			$("#res_addBed").text("베드 추가  "+$(this).val());			
+		}
+		
+	});
+
+	
+	/**** 수정하기 버튼 ****/
+	function resModify(){
+		var res_no = ${res.res_no};
+		var res_adult = $("select[name=res_adult]").val();
+		var res_child = $("select[name=res_child]").val();
+		var checkInOut = $("input[name=checkInOut]").val();
+		
+		location.href="resModify.do?&res_no="+res_no+"&res_adult="+res_adult+"&res_child="+res_child+"&checkInOut="+checkInOut;
+				
+	}
+
+	function popModal(){
 		layerPopOpen("#loginPop");
 	};
 

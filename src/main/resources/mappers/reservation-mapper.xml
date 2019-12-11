@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="reservationMapper">
-	
+
 	<resultMap type="Reservation" id="ResListResultSet">
 		<id property="res_no" column="RES_NO"/>
 		<result property="res_roomNo" column="RES_ROOMNO"/>
@@ -10,12 +10,15 @@
 		<result property="res_userName" column="USERNAME"/>
 		<result property="res_breakfast" column="RES_BREAKFAST"/> 
 		<result property="res_dinner" column="RES_DINNER"/>
+		<result property="res_smoking" column="RES_SMOKING"/>
+		<result property="res_addBed" column="RES_ADDBED"/>
 		<result property="res_adult" column="RES_ADULT"/>
 		<result property="res_child" column="RES_CHILD"/>
 		<result property="res_checkIn" column="RES_CHECKIN"/>
 		<result property="res_checkOut" column="RES_CHECKOUT"/>
 		<result property="res_status" column="RES_STATUS"/>
 		<result property="res_payStatus" column="RES_PAYSTATUS"/>
+		<result property="res_require" column="RES_REQUIRE"/>
 	</resultMap>
 	
 	<!-- 예약 리스트 갯수 -->
@@ -51,7 +54,7 @@
 		</if> -->
 	</select>
 	
-	
+	<!-- 검색어 적용 예약 리스트 -->
 	<select id="selectSearchResultList" resultMap="ResListResultSet">
 		SELECT *
 		FROM RESERVATION R
@@ -102,7 +105,32 @@
 	
 	<select id="selectResOne" resultMap="ResListResultSet" parameterType="_int">
 		SELECT *
-		FROM RESERVATION
+		FROM RESERVATION R		
+		JOIN MEMBER M ON(R.RES_USERID=M.USERID)
 		WHERE RES_NO = #{res_no}
 	</select>
+	
+	
+	<!-- 예약 내역 생성 (수정 필요)-->
+	<insert id="resInsert" parameterType="Reservation">
+		INSERT INTO
+		RESERVATION
+		VALUES(SEQ_RESNO.NEXTVAL,DEFAULT,#{res_roomType},#{res_userId},#{res_breakfast},#{res_dinner},
+				#{res_smoking},#{res_addBed},#{res_adult},#{res_child},#{res_checkIn},#{res_checkOut},DEFAULT,DEFAULT,#{res_require})
+	
+	</insert>
+	
+	<!-- 예약 내역 삭제 -->
+	<update id="resDelete" parameterType="_int">
+		UPDATE RESERVATION
+		SET RES_STATUS='예약취소'
+		WHERE RES_NO=#{res_no}
+	</update>
+	
+	
+	<update id="resModify" parameterType="Reservation">
+		UPDATE RESERVATION
+		SET RES_ADULT=#{res_adult}, RES_CHILD=#{res_child}, RES_CHECKIN=#{res_checkIn}, RES_CHECKOUT=#{res_checkOut}
+		WHERE RES_NO = #{res_no}
+	</update>
 </mapper>

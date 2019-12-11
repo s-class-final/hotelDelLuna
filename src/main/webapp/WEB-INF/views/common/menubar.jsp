@@ -166,7 +166,7 @@
 						<h2><a href="#"><span>Admin page</span>관리자 페이지</a></h2>
 						<ul>
 							<li><a href="iRoomtypeView.do">방 등록</a></li>
-							
+							<li><a href="roomstatus.do">방 상태</a></li>
 						</ul>
 					</div>
 				</div>
@@ -223,15 +223,26 @@
 			<c:if test="${ !empty sessionScope.loginUser }">
 				<li><a href="logout.do"><em class="icon1"><i></i></em><p>Logout</p></a></li>
 			</c:if>
-			<li><a href="mjoin.do"><em class="icon2"><i></i></em><p><span>HOTEL</span>JOIN US</p></a></li>
+			<c:if test="${ empty sessionScope.loginUser }">
+				<li><a href="mjoin.do"><em class="icon2"><i></i></em><p><span>HOTEL</span>JOIN US</p></a></li>
+			</c:if>
 			<c:if test="${ empty sessionScope.loginUser }">
 				<li><a href="void(0);" onclick="alert('로그인 후 이용해 주세요');return false;"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
 			</c:if>
-			<c:if test="${ !empty sessionScope.loginUser }">
+			<c:if test="${ !empty sessionScope.loginUser and empty loginUser.kakao}">
 				<li><a href="mconfirm.do"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
+			</c:if>
+			<c:if test="${ !empty sessionScope.loginUser and !empty loginUser.kakao}">
+				<li><a href="mypage.do"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
 			</c:if>
          <li><a href="entireResList.do"><em class="icon4"><i></i></em><p><span>RESERVATION</span>MY RESERVATION</p></a></li>
          <li><a href="#"><em class="icon5"><i></i></em><p><span>MAP</span>DELLUNA MAP</p></a></li>
+         <c:if test="${ empty sessionScope.loginUser }">
+         	<li><a href="allinquiry.do"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1문의</p></a></li>
+         </c:if>
+         <c:if test="${ !empty sessionScope.loginUser }">
+         	<li><a href="minquiry.do"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1문의</p></a></li>
+         </c:if>
       </ul>
    </div>
 </aside>

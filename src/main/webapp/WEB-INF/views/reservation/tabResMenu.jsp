@@ -74,7 +74,7 @@ body {
  <jsp:include page="../common/menubar.jsp"/>
 	<!-- 섹션 영역 -->
 	<section id="container">	
-	<div class="reservationWrap">
+	<div class="reservationWrap" style="padding-top:130px">
 		<div class="tabmenu">
 			<ul>
 				<li id="tab1" class="btnCon btn small"> 

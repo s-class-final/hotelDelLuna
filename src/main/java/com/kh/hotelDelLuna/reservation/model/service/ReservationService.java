@@ -27,6 +27,15 @@ public interface ReservationService {
 	/* 예약 상세 가져오기 */
 	Reservation selectResOne(int res_no);
 
+	/* 예약 내역 삽입 */
+	int resInsert(Reservation res);
+
+	/* 예약 내역 삭제 */
+	int resDelete(int res_no);
+
+	/* 예약 내역 수정 */
+	int resModify(Reservation res);
+
 
 	
 }
