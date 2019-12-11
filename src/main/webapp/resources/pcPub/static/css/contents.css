@@ -2015,7 +2015,7 @@ ul.diningTab li.on a{color: #9c836a; text-decoration: underline;}
 	.noticeWrap div.paginate{margin-top: 60px;}
 
 	div.noticeList table{width: 100%; margin-top: 56px; text-align: center; font-size: 16px; font-weight: 300; border-top: 1px solid #9c836a; border-bottom: 1px solid #c6b5a4;}
-	div.noticeList table th{position: relative; height: 60px; font-weight: 300; color: #9c836a;}
+	div.noticeList table th{position: relative; height: 60px; font-weight: 300; color: #9c836a; width: 100%;}
 	div.noticeList table thead th:before{display: block; content: ''; position: absolute; top: 23px; right: 0px; height: 16px; width: 1px; background-color: #e6e3df;}
 	div.noticeList table thead th:last-child:before{display: none;}
 	div.noticeList table tbody tr{border-top: 1px solid #f4f2ef;}
