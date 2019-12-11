@@ -240,7 +240,10 @@
          <c:if test="${ empty sessionScope.loginUser }">
          	<li><a href="allinquiry.do"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1문의</p></a></li>
          </c:if>
-         <c:if test="${ !empty sessionScope.loginUser }">
+         <c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 2}">
+         	<li><a href="allinquiry.do"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1문의</p></a></li>
+         </c:if>
+         <c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 1}">
          	<li><a href="minquiry.do"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1문의</p></a></li>
          </c:if>
       </ul>

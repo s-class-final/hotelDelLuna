@@ -228,7 +228,7 @@ public class MemberController {
 		}
 		
 		m.setUserId(tomail);
-		String encPwd = bcryptPasswordEncoder.encode(content);
+		String encPwd = bcryptPasswordEncoder.encode(request.getParameter("randomPwd"));
 		m.setUserPwd(encPwd);
 		
 		int result = mService.changePwd(m);
@@ -289,7 +289,7 @@ public class MemberController {
 	
 	@RequestMapping("changepwd.do")
 	@ResponseBody
-	public String changePwd(Member m, String userId, String userPwd) {
+	public String changePwd(Member m, Model model, String userId, String userPwd) {
 		m.setUserId(userId);
 		String encPwd = bcryptPasswordEncoder.encode(userPwd);
 		m.setUserPwd(encPwd);
@@ -297,6 +297,7 @@ public class MemberController {
 		int result = mService.changePwd(m);
 		
 		if(result > 0) {
+			model.addAttribute("loginUser", m);
 			return "true";			
 		}else {
 			return "false";
@@ -305,14 +306,16 @@ public class MemberController {
 	
 	@RequestMapping("changeInfo.do")
 	@ResponseBody
-	public String changeInfo(Member m, String userId, String userName, String userPhone) {
-		m.setUserId(userId);
+	public String changeInfo(HttpSession session, Model model, Member m, String userName, String userPhone) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		m.setUserId(loginUser.getUserId());
 		m.setUserName(userName);
 		m.setUserPhone(userPhone);
 		
 		int result = mService.updateMember(m);
 		
 		if(result > 0) {
+			model.addAttribute("loginUser", m);
 			return "true";			
 		}else {
 			return "false";
@@ -355,7 +358,8 @@ public class MemberController {
 			mv.addObject("pi", pi);
 			mv.setViewName("member/inquiryAll");
 		}else {
-			throw new MemberException("게시글 전체 조회 실패!!");
+			mv.addObject("list", list);
+			mv.setViewName("member/inquiryAll");
 		}
 		
 		return mv;
@@ -384,7 +388,8 @@ public class MemberController {
 			mv.addObject("pi", pi);
 			mv.setViewName("member/inquiryMember");
 		}else {
-			throw new MemberException("게시글 전체 조회 실패!!");
+			mv.addObject("list", list);
+			mv.setViewName("member/inquiryMember");
 		}
 		
 		return mv;
@@ -434,6 +439,70 @@ public class MemberController {
 		}else {
 			throw new MemberException("게시글 등록 실패!");
 		}
+	}
+	
+	/*
+	 * @RequestMapping("idetail.do") public ModelAndView inquiryDetail(ModelAndView
+	 * mv, int iId,
+	 * 
+	 * @RequestParam("page") Integer page) { // 상세 페이지 보고 나서 목록으로 돌아갈 때 페이징 처리가
+	 * 필요하니까 int currentPage = 1;
+	 * 
+	 * if(page != null) { currentPage = page; }
+	 * 
+	 * Inquiry inquiry = mService.selectInquiry(iId);
+	 * 
+	 * if(inquiry != null) { // 메소드 체이닝 방식 mv.addObject("inquiry",
+	 * inquiry).addObject("currentPage",
+	 * currentPage).setViewName("member/inquiryDetail");
+	 * 
+	 * }else { throw new MemberException("게시글 상세조회 실패!!"); }
+	 * 
+	 * return mv; }
+	 */
+	
+	@RequestMapping("reinquiry.do")
+	public ModelAndView inquiryUpdateView(ModelAndView mv, int iId,
+										@RequestParam("page") Integer page) {
+		mv.addObject("inquiry", mService.selectInquiry(iId)).addObject("currentPage", page).setViewName("member/inquiryReply");
+		
+		return mv;
+	}
+	
+	@RequestMapping("idelete.do")
+	public String inquiryDelete(int iId, HttpServletRequest request, HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		int result = mService.deleteInquiry(iId);
+		
+		if(result > 0) {
+			if(loginUser.getUserT() == 1) {
+				return "redirect:minquiry.do";				
+			}else {
+				return "redirect:allinquiry.do";
+			}
+		}else {
+			throw new MemberException("문의글 삭제 실패!!");
+		}
+	}
+
+	@RequestMapping("reupdate.do")
+	public ModelAndView inquiryUpdate(ModelAndView mv, Inquiry i,
+									HttpServletRequest request,
+									@RequestParam("iId") Integer iId,
+									@RequestParam("reContent") String reContent,
+									@RequestParam("page") Integer page) {
+		i.setiId(iId);
+		i.setReContent(reContent);
+		int result = mService.updateInquiry(i);
+		
+		if(result > 0) {
+			mv.addObject("page", page).setViewName("redirect:allinquiry.do");
+		}else {
+			throw new MemberException("문의글 답변 실패!!");
+		}
+		
+		return mv;
 	}
 	
 }

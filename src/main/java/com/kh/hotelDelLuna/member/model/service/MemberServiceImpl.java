@@ -117,6 +117,24 @@ public class MemberServiceImpl implements MemberService{
 		return mDao.insertInquiry(i);
 	}
 
+	@Override
+	public Inquiry selectInquiry(int iId) {
+		
+		return mDao.selectInquiry(iId);
+	}
+
+	@Override
+	public int deleteInquiry(int iId) {
+		
+		return mDao.deleteInquiry(iId);
+	}
+
+	@Override
+	public int updateInquiry(Inquiry i) {
+		
+		return mDao.updateInquiry(i);
+	}
+
 
 
 }

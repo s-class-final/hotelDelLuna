@@ -132,7 +132,7 @@ body{
 				$("#checkId").html('');
 
 			} else {
-				if (userId.val().length == 0) {
+				if (userId.val().length <= 3) {
 					$("#checkId").html('');
 				} else {
 					$.ajax({
@@ -193,6 +193,7 @@ body{
 	         }
 	   };
 	   
+	   // 카카오 이메일 체크
 	   function kakaoCheck(){
 		   var userId = $("#findMail");
 		   
