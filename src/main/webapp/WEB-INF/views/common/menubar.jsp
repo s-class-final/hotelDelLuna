@@ -118,9 +118,9 @@
                <div>
                   <h2><a href="#"><span>entertainment</span>즐길거리</a></h2>
                   <ul>
-                     <li><a href="#">Swimming Pool</a></li>
-                     <li><a href="#">CASINO</a></li>
-                     <li class="on"><a href="#">가격 및 이용안내</a></li>
+                     <li class="on"><a href="facility.do">부대시설</a></li>
+                     <li><a href="casino.do">CASINO</a></li>
+                     <li><a href="plaza.do">PLAZA</a></li>
                      <li><a href="around.do">주변 즐길거리</a></li>
                   </ul>
                </div>
@@ -153,7 +153,7 @@
                <div>
                   <h2><a href="support.do"><span>Service Center</span>고객센터</a></h2>
                   <ul>
-                     <li><a href="notice.do">공지사항</a></li>
+                     <li><a href="noticeList.do">공지사항</a></li>
                      <li><a href="voc.do">1:1문의</a></li>
                   </ul>
                </div>

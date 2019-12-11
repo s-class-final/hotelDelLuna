@@ -146,7 +146,7 @@
 	<div class="subMain pad0i">
 		
 		<!-- FEAUTRED OFFERS 오퍼!!!부분  -->
-		<section class="subMainCont SMOffers">
+		<section class="subMainCont SMOffers" style="margin-top: 30px;">
 			<div class="innerBox">
 				<h2>FEATURED OFFERS</h2>
 				<p class="tit">델루나에서 준비한 특별한 상품과 혜택을 지금 만나보세요. </p>

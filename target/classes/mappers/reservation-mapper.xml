@@ -1,127 +1,136 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="reservationMapper">
-   
-   <resultMap type="Reservation" id="ResListResultSet">
-      <id property="res_no" column="RES_NO"/>
-      <result property="res_roomNo" column="RES_ROOMNO"/>
-      <result property="res_roomType" column="RES_ROOMTYPE"/>
-      <result property="res_userId" column="RES_USERID"/>
-      <result property="res_userName" column="USERNAME"/>
-      <result property="res_breakfast" column="RES_BREAKFAST"/> 
-      <result property="res_dinner" column="RES_DINNER"/>
-      <result property="res_smoking" column="RES_SMOKING"/>
-      <result property="res_addBed" column="RES_ADDBED"/>
-      <result property="res_adult" column="RES_ADULT"/>
-      <result property="res_child" column="RES_CHILD"/>
-      <result property="res_checkIn" column="RES_CHECKIN"/>
-      <result property="res_checkOut" column="RES_CHECKOUT"/>
-      <result property="res_status" column="RES_STATUS"/>
-      <result property="res_payStatus" column="RES_PAYSTATUS"/>
-      <result property="res_require" column="RES_REQUIRE"/>
-   </resultMap>
-   
-   <!-- 예약 리스트 갯수 -->
-   <select id="getListCount" resultType="_int">
-      SELECT COUNT(*)
-      FROM RESERVATION
-   </select>
-   
-   <!-- 한 페이지에 뿌려줄 예약 리스트 -->
-   <select id="selectResList" resultMap="ResListResultSet">
-      <!-- SELECT *
-      FROM RESERVATION
-      ORDER BY RES_NO DESC -->
-      SELECT *
-      FROM RESERVATION R
-      JOIN MEMBER M ON(R.RES_USERID=M.USERID)
-      ORDER BY RES_NO DESC
-   </select>
-   
-   <!-- 검색한 예약 리스트 갯수 -->
-   <select id="getSearchResultListCount" resultType="_int">
-      SELECT COUNT(*)
-      FROM RESERVATION R
-      JOIN MEMBER M ON(R.RES_USERID=M.USERID)
-       <if test="userName != null">
-         WHERE REPLACE(USERNAME, ' ', '') LIKE '%' || #{userName} || '%'
-      </if>
-       <if test="userId != null">
-         WHERE RES_USERID LIKE '%' || #{userId} || '%'
-      </if> 
-      <if test="userPhone != null">
-         WHERE USERPHONE LIKE '%' || #{userPhone} || '%'
-      </if> -->
-   </select>
-   
-   <!-- 검색어 적용 예약 리스트 -->
-   <select id="selectSearchResultList" resultMap="ResListResultSet">
-      SELECT *
-      FROM RESERVATION R
-      JOIN MEMBER M ON(R.RES_USERID=M.USERID)
-       <if test="userName != null">
-      WHERE REPLACE(USERNAME, ' ', '') LIKE '%' || #{userName} || '%'
-      </if> 
-       <if test="userId != null">
-         WHERE RES_USERID LIKE '%' || #{userId} || '%'
-      </if> 
-      <if test="userPhone != null">
-         WHERE USERPHONE LIKE '%' || #{userPhone} || '%'
-      </if>
-      <!-- 예약번호 큰거부터 작은거, (내림차) -->
-      <if test="sort_no == 0">
-         ORDER BY RES_NO DESC
-      </if>
-      <!-- 예약번호 작은거부터 큰거, (오름차) -->
-      <if test="sort_no == 1">
-         ORDER BY RES_NO ASC
-      </if>
-      <!-- 예약자이름 큰거부터 작은거, (내림차) -->
-      <if test="sort_no == 2">
-         ORDER BY USERNAME DESC
-      </if>
-      <!-- 예약자이름 작은거부터 큰거, (오름차) -->
-      <if test="sort_no == 3">
-         ORDER BY USERNAME ASC
-      </if>
-      <!-- 체크인날짜 큰거부터 작은거, (내림차) -->
-      <if test="sort_no == 4">
-         ORDER BY RES_CHECKIN DESC
-      </if>
-      <!-- 체크인날짜 작은거부터 큰거, (오름차) -->
-      <if test="sort_no == 5">
-         ORDER BY RES_CHECKIN ASC
-      </if>      
-      <!-- 체크아웃날짜 큰거부터 작은거, (내림차) -->
-      <if test="sort_no == 6">
-         ORDER BY RES_CHECKOUT DESC
-      </if>
-      <!-- 체크아웃날짜 작은거부터 큰거, (오름차) -->
-      <if test="sort_no == 7">
-         ORDER BY RES_CHECKOUT ASC
-      </if>
-   </select>
-   
-   
-   <select id="selectResOne" resultMap="ResListResultSet" parameterType="_int">
-      SELECT *
-      FROM RESERVATION
-      WHERE RES_NO = #{res_no}
-   </select>
-   
-   
-   <!-- 예약 내역 생성 (수정 필요)-->
-   <insert id="resInsert" parameterType="Reservation">
-      INSERT INTO
-      RESERVATION
-      VALUES(SEQ_RESNO.NEXTVAL,DEFAULT,#{res_roomType},#{res_userId},#{res_breakfast},#{res_dinner},
-            DEFAULT,DEFAULT,#{res_adult},#{res_child},#{res_checkIn},#{res_checkOut},DEFAULT,DEFAULT,DEFAULT)
-   
-   </insert>
-   
-   <update id="resDelete" parameterType="_int">
-      UPDATE RESERVATION
-      SET RES_STATUS='예약취소'
-      WHERE RES_NO=#{res_no}
-   </update>
+
+	<resultMap type="Reservation" id="ResListResultSet">
+		<id property="res_no" column="RES_NO"/>
+		<result property="res_roomNo" column="RES_ROOMNO"/>
+		<result property="res_roomType" column="RES_ROOMTYPE"/>
+		<result property="res_userId" column="RES_USERID"/>
+		<result property="res_userName" column="USERNAME"/>
+		<result property="res_breakfast" column="RES_BREAKFAST"/> 
+		<result property="res_dinner" column="RES_DINNER"/>
+		<result property="res_smoking" column="RES_SMOKING"/>
+		<result property="res_addBed" column="RES_ADDBED"/>
+		<result property="res_adult" column="RES_ADULT"/>
+		<result property="res_child" column="RES_CHILD"/>
+		<result property="res_checkIn" column="RES_CHECKIN"/>
+		<result property="res_checkOut" column="RES_CHECKOUT"/>
+		<result property="res_status" column="RES_STATUS"/>
+		<result property="res_payStatus" column="RES_PAYSTATUS"/>
+		<result property="res_require" column="RES_REQUIRE"/>
+	</resultMap>
+	
+	<!-- 예약 리스트 갯수 -->
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM RESERVATION
+	</select>
+	
+	<!-- 한 페이지에 뿌려줄 예약 리스트 -->
+	<select id="selectResList" resultMap="ResListResultSet">
+		<!-- SELECT *
+		FROM RESERVATION
+		ORDER BY RES_NO DESC -->
+		SELECT *
+		FROM RESERVATION R
+		JOIN MEMBER M ON(R.RES_USERID=M.USERID)
+		ORDER BY RES_NO DESC
+	</select>
+	
+	<!-- 검색한 예약 리스트 갯수 -->
+	<select id="getSearchResultListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM RESERVATION R
+		JOIN MEMBER M ON(R.RES_USERID=M.USERID)
+ 		<if test="userName != null">
+			WHERE REPLACE(USERNAME, ' ', '') LIKE '%' || #{userName} || '%'
+		</if>
+ 		<if test="userId != null">
+			WHERE RES_USERID LIKE '%' || #{userId} || '%'
+		</if> 
+		<if test="userPhone != null">
+			WHERE USERPHONE LIKE '%' || #{userPhone} || '%'
+		</if> -->
+	</select>
+	
+	<!-- 검색어 적용 예약 리스트 -->
+	<select id="selectSearchResultList" resultMap="ResListResultSet">
+		SELECT *
+		FROM RESERVATION R
+		JOIN MEMBER M ON(R.RES_USERID=M.USERID)
+ 		<if test="userName != null">
+		WHERE REPLACE(USERNAME, ' ', '') LIKE '%' || #{userName} || '%'
+		</if> 
+ 		<if test="userId != null">
+			WHERE RES_USERID LIKE '%' || #{userId} || '%'
+		</if> 
+		<if test="userPhone != null">
+			WHERE USERPHONE LIKE '%' || #{userPhone} || '%'
+		</if>
+		<!-- 예약번호 큰거부터 작은거, (내림차) -->
+		<if test="sort_no == 0">
+			ORDER BY RES_NO DESC
+		</if>
+		<!-- 예약번호 작은거부터 큰거, (오름차) -->
+		<if test="sort_no == 1">
+			ORDER BY RES_NO ASC
+		</if>
+		<!-- 예약자이름 큰거부터 작은거, (내림차) -->
+		<if test="sort_no == 2">
+			ORDER BY USERNAME DESC
+		</if>
+		<!-- 예약자이름 작은거부터 큰거, (오름차) -->
+		<if test="sort_no == 3">
+			ORDER BY USERNAME ASC
+		</if>
+		<!-- 체크인날짜 큰거부터 작은거, (내림차) -->
+		<if test="sort_no == 4">
+			ORDER BY RES_CHECKIN DESC
+		</if>
+		<!-- 체크인날짜 작은거부터 큰거, (오름차) -->
+		<if test="sort_no == 5">
+			ORDER BY RES_CHECKIN ASC
+		</if>		
+		<!-- 체크아웃날짜 큰거부터 작은거, (내림차) -->
+		<if test="sort_no == 6">
+			ORDER BY RES_CHECKOUT DESC
+		</if>
+		<!-- 체크아웃날짜 작은거부터 큰거, (오름차) -->
+		<if test="sort_no == 7">
+			ORDER BY RES_CHECKOUT ASC
+		</if>
+	</select>
+	
+	
+	<select id="selectResOne" resultMap="ResListResultSet" parameterType="_int">
+		SELECT *
+		FROM RESERVATION R		
+		JOIN MEMBER M ON(R.RES_USERID=M.USERID)
+		WHERE RES_NO = #{res_no}
+	</select>
+	
+	
+	<!-- 예약 내역 생성 (수정 필요)-->
+	<insert id="resInsert" parameterType="Reservation">
+		INSERT INTO
+		RESERVATION
+		VALUES(SEQ_RESNO.NEXTVAL,DEFAULT,#{res_roomType},#{res_userId},#{res_breakfast},#{res_dinner},
+				#{res_smoking},#{res_addBed},#{res_adult},#{res_child},#{res_checkIn},#{res_checkOut},DEFAULT,DEFAULT,#{res_require})
+	
+	</insert>
+	
+	<!-- 예약 내역 삭제 -->
+	<update id="resDelete" parameterType="_int">
+		UPDATE RESERVATION
+		SET RES_STATUS='예약취소'
+		WHERE RES_NO=#{res_no}
+	</update>
+	
+	
+	<update id="resModify" parameterType="Reservation">
+		UPDATE RESERVATION
+		SET RES_ADULT=#{res_adult}, RES_CHILD=#{res_child}, RES_CHECKIN=#{res_checkIn}, RES_CHECKOUT=#{res_checkOut}
+		WHERE RES_NO = #{res_no}
+	</update>
 </mapper>
