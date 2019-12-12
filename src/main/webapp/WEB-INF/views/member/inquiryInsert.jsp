@@ -29,7 +29,6 @@
 				</td>
 			</tr>
 		</table>
-		<!-- binsert.do 만들러 ㄱㄱ -->
 	</form>
 </body>
 </html>

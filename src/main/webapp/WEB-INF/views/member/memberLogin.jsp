@@ -281,7 +281,7 @@ body .container .content .signup-cont {
 
 </style>
 </head>
-<body>
+<body onkeydown="javascript:onEnterLogin();">
 	<jsp:include page="../common/menubar.jsp"/>
 
 <section class="container">
@@ -433,6 +433,14 @@ $(function(){
 		$(".half.bg").css("background-image", "url('resources/images/login2.jpg')");
 	});
 });
+
+//엔터 입력 시 로그인 버튼 클릭
+function onEnterLogin(){
+   var keyCode = window.event.keyCode;
+   if (keyCode == 13) {
+      $("#loginBtn").click();
+   }
+}
 
 // 로그인 버튼 클릭 시 아이디, 비번 체크
 function checkLogin(){

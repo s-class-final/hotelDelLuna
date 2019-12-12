@@ -10,7 +10,6 @@ public class Pagination {
 			
 			// currentPage와 listCount가 넘어온 상태이기 때문에
 			// 페이징 처리에 필요한 나머지 변수만 선언함
-			
 			int pageLimit = 10;		// 한 페이지에서 보여질 페이징 수
 			int maxPage;			// 전체 페이징 수 중 가장 마지막 페이지
 			int startPage;			// 현재 페이지에서 보여질 페이징 버튼의 시작 페이지

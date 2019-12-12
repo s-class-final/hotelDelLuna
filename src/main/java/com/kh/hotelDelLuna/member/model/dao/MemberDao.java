@@ -104,6 +104,21 @@ public class MemberDao {
 		
 		return sqlSession.insert("memberMapper.insertInquiry", i);
 	}
+
+	public Inquiry selectInquiry(int iId) {
+		
+		return sqlSession.selectOne("memberMapper.selectInquiry", iId);
+	}
+
+	public int deleteInquiry(int iId) {
+		
+		return sqlSession.update("memberMapper.deleteInquiry", iId);
+	}
+
+	public int updateInquiry(Inquiry i) {
+		
+		return sqlSession.update("memberMapper.updateInquiry", i);
+	}
 	
 	
 }

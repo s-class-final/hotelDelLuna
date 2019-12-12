@@ -58,5 +58,14 @@ public interface MemberService {
 	// 문의 게시판 등록(사용자)
 	int insertInquiry(Inquiry i);
 	
+	// 문의 게시판 상세조회
+	Inquiry selectInquiry(int iId);
+	
+	// 문의 글 삭제
+	int deleteInquiry(int iId);
+	
+	// 문의 글 수정
+	int updateInquiry(Inquiry i);
+	
 
 }

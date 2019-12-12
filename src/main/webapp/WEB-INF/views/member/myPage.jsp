@@ -82,10 +82,10 @@
 				</select>&nbsp;
 			</c:if>
 			<c:if test="${status.index eq 1}">
-				<input type="text" id="userPhone2" name="userPhone2" class = "join" oninput="this.value=this.value.replace(/[^0-9]/g,'');" value="${userPhone}" required>&nbsp;
+				<input type="text" id="userPhone2" name="userPhone2" class = "join" maxlength="4" oninput="nextPhone(); this.value=this.value.replace(/[^0-9]/g,'');" value="${userPhone}" required>&nbsp;
 			</c:if>
 			<c:if test="${status.index eq 2}">
-				<input type="text" id="userPhone3" name="userPhone3" class = "join" oninput="this.value=this.value.replace(/[^0-9]/g,'');" value="${userPhone}" required>
+				<input type="text" id="userPhone3" name="userPhone3" class = "join" maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'');" value="${userPhone}" required>
 			</c:if>
 		</c:forTokens>
 		<button id="changeInfo" type="button">회원정보 변경</button>
@@ -227,7 +227,7 @@
 		// 유효성 검사 통과 시 회원정보 변경
 		$.ajax({
 			url:"changeInfo.do",
-			data:{userId:userId, userName:userName, userPhone:userPhone},
+			data:{userName:userName, userPhone:userPhone},
 			success:function(data){
 				if(data == "true"){
 					var conPwd = confirm("회원정보가 변경되었습니다. 메인으로 돌아가시겠습니까?");
@@ -245,6 +245,13 @@
 			}
 		});
 	}
+	
+	// 전화번호 4글자 입력 시 다음 칸 넘어가게
+	function nextPhone() {
+		if ($("#userPhone2").val().length >= 4) {
+			$("#userPhone3").focus();
+		}
+	};
 	
 	</script>
 	

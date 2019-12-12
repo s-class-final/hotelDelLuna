@@ -145,4 +145,23 @@
 		)
 	</insert>
 	
+	<select id="selectInquiry" parameterType="_int" resultMap="inquiryResultSet">
+		SELECT *
+		FROM INQUIRY
+		WHERE IID=#{iId}
+		AND I_STATUS='Y'
+	</select>
+	
+	<update id="deleteInquiry" parameterType="_int">
+		UPDATE INQUIRY SET
+		I_STATUS='N'
+		WHERE IID=#{iId}
+	</update>
+	
+	<update id="updateInquiry" parameterType="Inquiry">
+		UPDATE INQUIRY
+		SET RE_CONTENT=#{reContent}, RE_STATUS='Y', I_MODIFY_DATE=SYSDATE
+		WHERE IID=#{iId}
+	</update>
+	
 </mapper>

@@ -236,9 +236,8 @@ input {
 						data : {userId : userId.val()},
 						success : function(data) {
 							if (data == "true") {
-								$("#checkId").html('');
-								$("#checkId").html("아이디가 중복됩니다").css("color","red");
 								idUsable = false;
+								kakaoCheck();
 							} else {
 								$("#checkId").html('');
 								$("#checkId").html("아이디 사용 가능합니다").css("color","green");
@@ -254,6 +253,32 @@ input {
 				}
 			}
 		};
+		
+		// 카카오 이메일 체크
+		function kakaoCheck(){
+		   var userId = $("#userId3");
+		   
+		   $.ajax({
+			  url:"findkakao.do",
+			  data:{userId:userId.val()},
+			  success:function(data){
+				  if(data == "true"){
+					  $("#checkId").html('');
+                      $("#checkId").html("카카오 아이디로 가입된 이메일입니다. 카카오 아이디로 로그인 해주세요").css("color", "yellow");
+                      kakaoUsable = false;
+				  }else{
+					  $("#checkId").html('');
+                      $("#checkId").html("이미 가입된 이메일입니다").css("color", "green");
+                      kakaoUsable = true;
+				  }
+			  },
+			  error:function(request, status, errorData){
+					alert("error code: " + request.status + "\n"
+							+"message: " + request.responseText
+							+"error: " + errorData);
+			 }
+		   });
+	   }
 
 		var emailCode = 0; // 이메일 인증 번호
 		var sendCode = false; // 인증 번호 발송 확인용
@@ -540,7 +565,7 @@ input {
 			}
 
 			if (idUsable == false) {
-				alert("아이디가 중복됩니다");
+				alert("이미 가입된 이메일입니다.");
 				$("#userId1").focus();
 				return false;
 			}
