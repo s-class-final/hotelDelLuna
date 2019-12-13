@@ -3,12 +3,17 @@ package com.kh.hotelDelLuna.reservation.controller;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +30,7 @@ import com.kh.hotelDelLuna.member.model.service.MemberService;
 import com.kh.hotelDelLuna.member.model.vo.Member;
 import com.kh.hotelDelLuna.reservation.model.exception.ReservationException;
 import com.kh.hotelDelLuna.reservation.model.service.ReservationService;
+import com.kh.hotelDelLuna.reservation.model.vo.DateData;
 import com.kh.hotelDelLuna.reservation.model.vo.ResSearchCondition;
 import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
 
@@ -284,7 +290,29 @@ public class ReservationController {
 		return mv;
 	}
 	
-	
+	/********** 생성할 예약내역 유저 검사 **********/
+	@RequestMapping(value = "resIdCheck.do")
+	public void resIdCheck(HttpServletResponse response, HttpSession session,String userId)
+			throws JsonIOException, IOException {
+		
+		response.setContentType("application/json;charset=utf-8");
+		System.out.println(userId);
+		
+		Member m = new Member(userId);
+		
+		// 아이디 찾기
+		Member member = mService.findUser(m);
+		Gson gson = new Gson();
+
+		if(member!=null) {
+			gson.toJson(member, response.getWriter());
+		}else {
+			response.getWriter().print(false);
+		}
+		
+
+	}
+
 	
 	/********** 예약 내역 삭제하기 **********/
 	@RequestMapping(value = "resDelete.do")
@@ -310,8 +338,6 @@ public class ReservationController {
 	@RequestMapping(value = "resModify.do")
 	public ModelAndView resModify(ModelAndView mv,Reservation res,
 			@RequestParam(value = "checkInOut", required = false) String checkInOut) {
-
-		System.out.println("넘어왓냥");
 		
 		res = settingDate(res,checkInOut);
 
@@ -328,6 +354,71 @@ public class ReservationController {
 		return mv;
 
 	}
+	
+	
+	
+	/******* 달력으로 예약내역 불러오기 *********/
+
+	@RequestMapping(value = "calendar.do", method = RequestMethod.GET)
+	public void calendar(ModelAndView mv,HttpServletResponse response, HttpServletRequest request, DateData dateData,
+			boolean type) throws JsonIOException, IOException{
+		
+		Calendar cal = Calendar.getInstance();
+		DateData calendarData;
+		
+		System.out.println("전달된 year month"+dateData);
+		//검색 날짜
+		if(dateData.getDate().equals("")&&dateData.getMonth().equals("")){
+			dateData = new DateData(String.valueOf(cal.get(Calendar.YEAR)),String.valueOf(cal.get(Calendar.MONTH)),String.valueOf(cal.get(Calendar.DATE)),null);
+		}
+		//검색 날짜 end
+
+		Map<String, Integer> today_info =  dateData.today_info(dateData);
+		List<DateData> dateList = new ArrayList<DateData>();
+		
+		//실질적인 달력 데이터 리스트에 데이터 삽입 시작.
+		//일단 시작 인덱스까지 아무것도 없는 데이터 삽입
+		for(int i=1; i<today_info.get("start"); i++){
+			calendarData= new DateData(null, null, null, "before_date");
+			dateList.add(calendarData);
+		}
+		
+		//날짜 삽입
+		for (int i = today_info.get("startDay"); i <= today_info.get("endDay"); i++) {
+			if(i==today_info.get("today")){
+				calendarData= new DateData(String.valueOf(dateData.getYear()), String.valueOf(dateData.getMonth()), String.valueOf(i), "today");
+			}else if(i<today_info.get("today")) {
+				calendarData= new DateData(String.valueOf(dateData.getYear()), String.valueOf(dateData.getMonth()), String.valueOf(i), "before_date");
+			}else if(today_info.get("today")==-1) {
+				calendarData= new DateData(String.valueOf(dateData.getYear()), String.valueOf(dateData.getMonth()), String.valueOf(i), "before_date");
+			}else{
+				calendarData= new DateData(String.valueOf(dateData.getYear()), String.valueOf(dateData.getMonth()), String.valueOf(i), "normal_date");
+			}
+			dateList.add(calendarData);
+		}
+
+		//달력 빈곳 빈 데이터로 삽입
+		int index = 7-dateList.size()%7;
+		
+		if(dateList.size()%7!=0){
+			
+			for (int i = 0; i < index; i++) {
+				calendarData= new DateData(null, null, null, "before_date");
+				dateList.add(calendarData);
+			}
+		}
+		System.out.println(dateList);
+		System.out.println(type);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		if(type==false) {
+			gson.toJson(today_info, response.getWriter());			
+		}else {
+			gson.toJson(dateList,response.getWriter());
+		}
+		 
+	}
+	
+	
 	
 	
 	/******* 날짜 데이터 재구성 *******/
