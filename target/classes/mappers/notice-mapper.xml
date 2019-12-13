@@ -29,7 +29,6 @@
 		SELECT *
 		FROM NOTICE
 		WHERE NID=#{nId}
-		AND N_STATUS='Y'
 	</select>
 	
 	<insert id="insertNotice" parameterType="Notice">
@@ -51,6 +50,16 @@
 		WHERE NID=#{nId}
 	</delete>
 	
+	<select id="getAListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM NOTICE
+	</select>
+	
+	<select id="selectAList" resultMap="noticeResultSet">
+		SELECT *
+	  	FROM NOTICE
+	  	ORDER BY NID DESC
+	</select>
 	
 	
 </mapper>

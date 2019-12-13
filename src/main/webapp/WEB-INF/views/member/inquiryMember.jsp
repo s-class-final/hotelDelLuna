@@ -9,7 +9,7 @@
 <style>
 body {
     position: relative;
-    top: 150px;
+    top: 130px;
 }
 /* 문의내역 버튼 */
 button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:transparent; overflow:visible; cursor:pointer; line-height:1; }
@@ -55,7 +55,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 	<div class="mypageWrap pos">
 			<div class="innerBox"> <!-- 가로값이 1280으로 설정되어진 아이 -->
 				<h1 class="contTitle"><span>1:1 문의</span>회원님께서 문의하신 내역을 <br />확인하실 수 있습니다.</h1>
-				<p class="btnInquiry"><a href="#pop1" class="btn small layerPopOpen">1:1 문의</a></p>
+				<p class="btnInquiry"><a id="mpop" href="#pop1" class="btn small layerPopOpen">1:1 문의</a></p>
 
 				<!-- 상태표시
 					.inquiryList > .status, .end : 답변완료
@@ -79,7 +79,16 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 								<c:url var="idelete" value="idelete.do">
 									<c:param name="iId" value="${i.iId}"/>
 								</c:url>
-								<a href="${idelete}" onclick="return confirm('정말로 삭제하시겠습니까?');" class="btnDelete" style="background: url('resources/pcPub/static/images/mypage/btn_delete.png') no-repeat 3px center;" >삭제</a>
+								<c:if test="${i.reStatus eq 'N'}">
+									<a href="${idelete}" onclick="return confirm('정말로 삭제하시겠습니까?');" class="btnDelete" style="background: url('resources/pcPub/static/images/mypage/btn_delete.png') no-repeat 3px center;" >삭제</a>
+								</c:if>
+								<%-- 
+								<c:url var="pop2" value="#pop2">
+									<c:param name="iId" value="${i.iId}"/>
+									<c:param name="iContent" value="${i.iContent}"/>
+								</c:url>
+								<a href="${pop2}" class="layerPopOpen" style="top:53px; padding:0">수정</a>
+								 --%>
 							</button>
 							<!-- 답변 영역 -->
 							<div class="answerBox">
@@ -153,7 +162,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 			</div>
 		</div>
 		
-
+		<jsp:include page="../common/footer.jsp"/>
 
 <script>
 var title = "1:1 문의";
@@ -164,7 +173,7 @@ $(window).load(function(){
     
 });
 
-$(document).ready(function(){
+$("#mpop").click(function(){
     // 팝업 제목 설정
     $(".popHeaderInq").text(title);
     
@@ -233,7 +242,7 @@ function jsSave() {
                 <a href="javascript:jsSave();" class="btn btnFull small"><span>등록</span></a>
             </div>
         </div>
-        <a href="#" class="layerPopClose btnPopClose">레이어 팝업 닫기</a>
+        <a href="#" class="layerPopClose btnPopClose" style="background: url('resources/pcPub/static/images/common/btn/btn_pop_close.png') no-repeat;">레이어 팝업 닫기</a>
     </div>
 </div>
 

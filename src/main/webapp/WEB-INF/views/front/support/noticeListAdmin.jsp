@@ -10,72 +10,121 @@
 <body>
 	<jsp:include page="../../common/menubar.jsp"/>
 
-<script>
-$(document).ready(function() {
-	
+<style>
+div.noticeList table tbody tr.fixed{background-color: #f9f9f9;}
+div.noticeList table tbody tr.fixed td.link a{font-weight:300; color:#333;}
+div.noticeList table tbody tr.fixed:hover > *{background-color: rgba(0, 0, 0, 0.03);}
+.noticeWrap ul.reserveCategory li.active:after {content: '';display: block;bottom: 0;left: 0;right: 0;height: 1px;background: #9c836a;}
+</style>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
 });
 
-function jsList() {
-	$("#form1").attr("action", "noticeListA.do");
-	$("#form1").attr("method", "post");
-	$("#form1").submit();
-}
-
-function jsList1() {
-	$("#form1").attr("action", "noticeList.do");
-	$("#form1").attr("method", "post");
-	$("#form1").submit();
-}
-
-function jsDelete(nId) {
-	//정말로 삭제하시겠습니까?
-	$("#form1").attr("action", "noticeDelete.do");
+function jsViewDtl(nId, currentPage) {		//게시글 번호를 가지고 디테일 페이지로 이동 하는데 post로 값 넘김(detail은 게시글 번호로 DB에서 게시글 내용 가져와서 보여줍니다.)
+	$("#nId").val(nId);
+	$("#page").val(currentPage);
+	
+	$("#form1").attr("action", "noticeDetail.do");
 	$("#form1").attr("method", "post");
 	$("#form1").submit();
 }
 
 </script>
 
-<!-- 컨텐츠 영역 -->
+
 <section id="container">
-	<form id="form1" name="form1">
-		<input type="hidden" id="nId" name="nId" value="${notice.nId }">
-	</form>
 	
-	
-	<div class="noticeViewWrap">
-		<h1>공지사항</h1>
-		<h2>${notice.nTitle}</h2> 
-		<div class="cont">
-			<p>${notice.nContent }</p>
+	<div class="noticeWrap">
+		<h1 class="contTitle"><span>공지사항</span>호텔 델루나의 다양한 소식을<br />확인 해보세요.</h1>
+		<c:if test="${loginUser.userT eq 2}">
+			<div class="rightButton"><a id="noticePop" href="#pop1" class="btn layerPopOpen small">공지사항 작성하기</a></div>
+		</c:if>
+		
+			<form id="form1" name="form1">
+				<input type='hidden' id='nId' name='nId' value=""/>
+				<input type='hidden' id='page' name='page' value="" />
+			</form>
+		<div class="noticeList">
+			<table>
+				<colgroup>
+	               <col width="" />
+	               <col width="100px" />
+	               
+	            </colgroup>
+				<thead>
+					<tr>
+						<th>제목</th>
+						<th width="100px">공개 여부</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="n" items="${list }">
+				<tr>
+					<td align="center">
+						
+						<a href="javascript:jsViewDtl('${n.nId }', '${pi.currentPage }');" class="ellipsis"><span>${n.nTitle }</span></a>
+					</td>
+					<td>${n.nStatus}</td>
+				</tr>
+			</c:forEach>
+				</tbody>
+			</table>
 		</div>
-		<div style="text-align:center;">
-			<c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 1 || empty sessionScope.loginUser}">
-				<a href="javascript:jsList1();" class="btn btnFull"><span>목록</span></a>
-			</c:if>
-			<c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 2}">
-				<a href="javascript:jsList();" class="btn btnFull"><span>목록</span></a>
-				<a href="#pop1" class="btn btnFull layerPopOpen"><span>수정</span></a>
-				<a href="javascript:jsDelete('${notice.nId }');" class="btn btnFull"><span>삭제</span></a>
-			</c:if>
-		</div>
+		
+		<!-- 페이지네이션 -->
+		<div class='paginate'>
+				<c:if test="${pi.currentPage > 1}">
+					<c:url var="nlistBack" value="noticeList.do">
+						<c:param name="page" value="${pi.currentPage -1 }"/>
+					</c:url>
+					<a href="${nlistBack }" style="width:60px;">&nbsp;[이전]</a>
+				</c:if>
+				
+				<!-- [번호들] -->
+				<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+					<c:if test="${p eq pi.currentPage }">
+						<a href='#' class='num active'>[${p}]</a>
+					</c:if>
+					
+					<c:if test="${p ne pi.currentPage }">
+						<c:url var="nlistCheck" value="noticeList.do">
+							<c:param name="page" value="${p }"/>
+						</c:url>
+						<a href="${nlistCheck }" class='num'>${p }</a>
+					</c:if>
+				</c:forEach>
+				
+				<!-- [다음] -->
+				<c:if test="${pi.currentPage < pi.maxPage }">
+					<c:url var="nlistEnd" value="noticeList.do">
+						<c:param name="page" value="${pi.currentPage + 1 }"/>
+					</c:url>
+					<a href="${nlistEnd }" style="width:60px;">&nbsp;[다음]</a>
+				</c:if>
+			</div>
+
 	</div>
 </section>
-<!-- //컨텐츠 영역 -->
+
+
+
+
+
 
 
 
 <script>
-var title = "공지사항 수정하기";
+var title = "공지사항 작성하기";
 
 $(window).load(function(){
     //최초 로딩시 스크롤바 조정
     $("#FACILITY1").siblings("div.selectBox").find("ul.ui-select-options").eq(0).css("right", "4px");
     
-    
 });
 
-$(document).ready(function(){
+$("#noticePop").click(function(){
     // 팝업 제목 설정
     $(".popHeaderInq").text(title);
     
@@ -109,7 +158,6 @@ function jsSave() {
     
     $("#PI_REG_EMPNO").val($("#PI_CUST_NM").val());
     
-    var nId = $("#nId").val();
     var user_T = $("#user_T").val();
 	var nTitle = $("#nTitle").val();
 	var nContent = $("#nContent").val();
@@ -117,13 +165,13 @@ function jsSave() {
 	
 	
      $.ajax({
-        url : "noticeUpdate.do",
+        url : "noticeInsert.do",
         method : "post",
-        data : {nId:nId, user_T:user_T, nTitle:nTitle, nContent:nContent, nStatus:nStatus},
+        data : {user_T:user_T, nTitle:nTitle, nContent:nContent, nStatus:nStatus},
         success : function(data, status, xhr) {
             if (status == "success") {
-            	alert("공지사항 작성 완료");
-               location.href="noticeListA.do";
+               alert("공지사항 작성 완료");
+               location.href="noticeList.do";
             }
         },
 		error:function(request, status, errorData){
@@ -154,7 +202,7 @@ function jsSave() {
                         </dt>
                         <dd>
                             <div class="inp">
-                                <input type="text" id="nTitle" name="nTitle" required title="제목" value="${notice.nTitle}">
+                                <input type="text" id="nTitle" name="nTitle" required title="제목">
                                 <button class="btnDelete">삭제</button>
                             </div>
                         </dd>
@@ -162,16 +210,11 @@ function jsSave() {
                     <dl>
                         <dt><label for="nContent">내용<span class="color">*</span></label></dt>
                         <dd>
-                            <textarea class="textarea" cols="0" rows="0" id="nContent" name="nContent" required title="내용">${notice.nContent}</textarea>
+                            <textarea class="textarea" cols="0" rows="0" id="nContent" name="nContent" required title="내용"></textarea>
                         </dd>
                     </dl>
                     <div class="checkbox">
-                    	<c:if test="${notice.nStatus eq 'N'}">
-                    		<input type="checkbox" id="nStatus" name="nStatus" value="Y"><label for="nStatus">공개</label>
-                    	</c:if>
-                    	<c:if test="${notice.nStatus eq 'Y'}">
-                    		<input type="checkbox" id="nStatus" name="nStatus" value="Y" checked><label for="nStatus">공개</label>
-                    	</c:if>
+                    	<input type="checkbox" id="nStatus" name="nStatus" value="Y"><label for="nStatus">공개</label>
                     </div>
             	</div>
             </form>
@@ -190,8 +233,8 @@ function jsSave() {
 
 </section>
 <!-- //컨텐츠 영역 -->
-
-
 		
+
+
 </body>
 </html>

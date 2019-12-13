@@ -70,9 +70,9 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public Member findUser(Member m) {
+	public Member findMember(Member m) {
 		
-		return mDao.findUser(m);
+		return mDao.findMember(m);
 	}
 
 	@Override
@@ -135,6 +135,23 @@ public class MemberServiceImpl implements MemberService{
 		return mDao.updateInquiry(i);
 	}
 
+	@Override
+	public int deleteMember(String userId) {
+
+		return mDao.deleteMember(userId);
+	}
+
+	@Override
+	public int getNoReplyListCount() {
+		
+		return mDao.getNoReplyListCount();
+	}
+
+	@Override
+	public ArrayList<Inquiry> selectNoReplyList(PageInfo pi) {
+		
+		return mDao.selectNoReplyList(pi);
+	}
 
 
 }

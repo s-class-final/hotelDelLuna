@@ -67,6 +67,7 @@ body{
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+	<jsp:include page="../common/menubar.jsp"/>
 	<div id="outer">
 		<br>
 		<h2 align="center">비밀번호 찾기</h2>
@@ -74,7 +75,7 @@ body{
 		<br>
 		<form id="findForm" action="sendmail.do">
 			<h3>이메일 입력</h3>
-			<input type="email"	id="findMail" name="findMail" oninput="checkId();"	placeholder="아이디">
+			<input type="email"	id="findMail" name="findMail" oninput="checkId();"	placeholder="이메일">
 			<div id = "checkId" class="check"></div>
 			
 			<h3>이름</h3>
@@ -290,6 +291,7 @@ body{
          }
          
          alert("이메일 전송이 완료되면 페이지가 전환됩니다. 잠시만 기다려주세요");
+         fullLoding($("body"));
          $("#findForm").submit();
          
       }

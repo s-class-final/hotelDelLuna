@@ -171,6 +171,7 @@ input {
 						<option value = "011">011</option>
 						<option value = "016">016</option>
 						<option value = "017">017</option>
+						<option value = "018">018</option>
 						<option value = "019">019</option>
 					</select>&nbsp;
 					<input type="text" id="userPhone2" name="userPhone2" maxlength="4" class = "join" oninput="nextPhone(); this.value=this.value.replace(/[^0-9]/g,'');" required>&nbsp;
@@ -553,13 +554,13 @@ input {
 			}
 
 			if ($("#userPhone2").val().length == 0) {
-				alert("전화번호를 입력하세요");
+				alert("휴대폰 가운데 자리를 입력하세요");
 				$("#userPhone2").focus();
 				return false;
 			}
 
 			if ($("#userPhone3").val().length == 0) {
-				alert("전화번호를 입력하세요");
+				alert("휴대폰 끝자리를 입력하세요");
 				$("#userPhone3").focus();
 				return false;
 			}

@@ -56,7 +56,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 			<div class="innerBox"> <!-- 가로값이 1280으로 설정되어진 아이 -->
 				<h1 class="contTitle"><span>문의 내역 관리</span>회원님께서 문의하신 내역을 <br />관리자가 확인 및 답변할 수 있는 페이지입니다.</h1>
 				
-				<p class="btnInquiry"><a href="noreply.do" class="btn small">[답변 대기]만 보기</a></p>
+				<p class="btnInquiry"><a href="allinquiry.do" class="btn small">문의 내역 전체 보기</a></p>
 
 				<!-- 상태표시
 					.inquiryList > .status, .end : 답변완료
@@ -79,26 +79,15 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 							${i.iContent}
 							</p>
 							<p class="date">${i.iCreateDate}</p>
-							<c:url var="idelete" value="idelete.do">
-								<c:param name="iId" value="${i.iId}"/>
-							</c:url>
-							<a href="${idelete}" onclick="return confirm('정말로 삭제하시겠습니까?');" class="btnDelete" style="background: url('resources/pcPub/static/images/mypage/btn_delete.png') no-repeat 3px center;">삭제</a>
-							
 							<c:url var="reinquiry" value="reinquiry.do">
 								<c:param name="iId" value="${i.iId}"/>
 								<c:param name="page" value="${pi.currentPage}"/>
 							</c:url>
-							<c:if test="${i.reStatus eq 'N'}">
-								<a href="${reinquiry}" style="top:53px; padding:0">답변 등록</a>
-							</c:if>
-							
-							<c:url var="upreinquiry" value="upreinquiry.do">
+							<c:url var="idelete" value="idelete.do">
 								<c:param name="iId" value="${i.iId}"/>
-								<c:param name="page" value="${pi.currentPage}"/>
 							</c:url>
-							<c:if test="${i.reStatus eq 'Y'}">
-								<a href="${upreinquiry}" style="top:53px; padding:0">답변 수정</a>
-							</c:if>
+							<a href="${idelete}" onclick="return confirm('정말로 삭제하시겠습니까?');" class="btnDelete" style="background: url('resources/pcPub/static/images/mypage/btn_delete.png') no-repeat 3px center;">삭제</a>
+							<a href="${reinquiry}" style="top:53px; padding:0">답변 등록</a>
 						</button>
 						<!-- 답변 영역 -->
 						<div class="answerBox">
@@ -126,7 +115,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 							</c:if>
 							
 							<c:if test="${ pi.currentPage > 1 }">
-								<c:url var="ilistBack" value="allinquiry.do">
+								<c:url var="ilistBack" value="noreply.do">
 									<c:param name="page" value="${ pi.currentPage - 1 }"/>
 								</c:url>
 								<a href="${ ilistBack }"><</a>
@@ -139,7 +128,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 								</c:if>
 								
 								<c:if test="${ p ne pi.currentPage }">
-									<c:url var="ilistCheck" value="allinquiry.do">
+									<c:url var="ilistCheck" value="noreply.do">
 										<c:param name="page" value="${p}"/>
 									</c:url>
 									<a href="${ ilistCheck }">${p}</a>
@@ -152,7 +141,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 							</c:if>
 							
 							<c:if test="${ pi.currentPage < pi.maxPage }">
-								<c:url var="ilistEnd" value="allinquiry.do">
+								<c:url var="ilistEnd" value="noreply.do">
 									<c:param name="page" value="${ pi.currentPage + 1 }"/>
 								</c:url>
 								<a href="${ ilistEnd }">></a>

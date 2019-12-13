@@ -153,8 +153,14 @@
                <div>
                   <h2><a href="support.do"><span>Service Center</span>고객센터</a></h2>
                   <ul>
-                     <li><a href="noticeList.do">공지사항</a></li>
-                     <li><a href="voc.do">1:1문의</a></li>
+                     <c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 2}">
+                     	<li><a href="noticeListA.do">공지사항</a></li>
+                     	<li><a href="allinquiry.do">1:1문의</a></li>
+                     </c:if>
+                     <c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 1 || empty sessionScope.loginUser}">
+                     	<li><a href="noticeList.do">공지사항</a></li>
+                     	<li><a href="minquiry.do">1:1문의</a></li>
+                     </c:if>
                   </ul>
                </div>
             </div>
@@ -238,7 +244,7 @@
          <li><a href="entireResList.do"><em class="icon4"><i></i></em><p><span>RESERVATION</span>MY RESERVATION</p></a></li>
          <li><a href="#"><em class="icon5"><i></i></em><p><span>MAP</span>DELLUNA MAP</p></a></li>
          <c:if test="${ empty sessionScope.loginUser }">
-         	<li><a href="allinquiry.do"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1문의</p></a></li>
+         	<li><a id="pppop" href="#poppop" class="layerPopOpen"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1문의</p></a></li>
          </c:if>
          <c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 2}">
          	<li><a href="allinquiry.do"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1문의</p></a></li>
@@ -288,6 +294,142 @@ $(window).load(function(){
 <!-- //quick Bar -->
 
 </div>
+
+<script>
+var title1 = "비회원 1:1 문의";
+
+$(window).load(function(){
+    //최초 로딩시 스크롤바 조정
+    $("#FACILITY1").siblings("div.selectBox").find("ul.ui-select-options").eq(0).css("right", "4px");
+    
+});
+
+$("#pppop").click(function(){
+    // 팝업 제목 설정
+    $(".popHeaderInq").text(title1);
+    
+    $("#PI_VOC_CN").val("");   //에러 발생 시 에러 메시지 출력칸
+})
+
+// 1:1 문의 submit 함수
+function jsSave() {
+    
+    rtn = $("#nminquiry").validate();
+    
+    if (rtn.isValid == false) {
+        var sub_fix = "을 입력하세요.";
+        if (rtn.chkType == "type") {
+            sub_fix = "형식이 올바르지 않습니다.";
+        }
+        
+        if (rtn.msg != "") {
+            alert(rtn.msg + sub_fix);
+        } else {
+            alert(sub_fix);
+        }
+        
+        return;     
+    }
+    
+    $("#PI_REG_EMPNO").val($("#PI_CUST_NM1").val());
+    // 로딩
+    fullLoding($("#container"));
+    
+    $("#nminquiry").submit();
+}
+
+</script>
+
+<div class="layerPopWrap normalLayer" id="poppop">
+    <div class="bg"></div>
+    <!-- layerPopCont -->
+    <div class="layerPopCont">
+        <h1 class="popHeader popHeaderInq"></h1>
+        <div class="inquiryPopCont">
+        <p>회원가입을 하시면 좀 더 편리하게 문의 및 내역 확인을 하실 수 있습니다.</p>
+            <form action="sendinquiry.do" method="post" id="nminquiry" name="form_inquiry">
+                <div class="formInquiryWrap">
+                    <dl class="title">
+                        <dt>
+                            <label for="iTitle">제목 <span class="color">*</span></label>
+                            <p class="imp"><span class="color">*</span> 필수 입력 항목</p>
+                        </dt>
+                        <dd>
+                            <div class="inp">
+                                <input type="text" name="iTitle" required title="제목">
+                            </div>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><label for="iContent">내용 <span class="color">*</span></label></dt>
+                        <dd>
+                            <textarea class="textarea" cols="0" rows="0" name="iContent" required title="내용"></textarea>
+                        </dd>
+                    </dl>
+                    <div class="clearFixed">
+                        <dl class="name">
+                            <dt><label for="PI_CUST_NM1">이름 <span class="color">*</span></label></dt>
+                            <!-- 에러시 dd의 error 클래스 추가 -->
+                            <dd>
+                                <div class="inp">
+                                    <input type="text" id="PI_CUST_NM1" name="PI_CUST_NM" required title="이름">
+                                </div>
+                                
+                                <div class="errorText">
+                                    <!-- 에러 메시지 -->
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl class="pwd">
+                            <dt><label for="EMAIL">이메일 <span class="color">*</span></label></dt>
+                            <!-- 에러시 dd의 error 클래스 추가 -->
+                            <dd>
+                                <div class="inp">
+                                    <input type="email" class="inqEmailValidation" name="EMAIL" required title="이메일">
+                                </div>
+                                <div class="errorText">
+                                    <!-- 에러 메시지 -->
+                                </div>  
+                            </dd>
+                        </dl>
+                    </div>
+                    <dl class="phone">
+                        
+                        <dt><label for="TEL1">휴대폰 번호 <span class="color">*</span></label></dt>
+                        <dd>
+                            <select class="selectBox" id="TEL1" name="TEL1" required title="핸드폰 첫째자리 선택" >
+                                <option value="010">010</option>
+                                <option value="011" >011</option>
+                                <option value="016" >016</option>
+                                <option value="017" >017</option>
+                                <option value="018" >018</option>
+                                <option value="019" >019</option>
+                            </select>
+                            <div class="inp">
+                                <input type="tel" id="TEL2" name="TEL2" required onkeydown="return inputNumCheck(event)" onkeyup="removeChar(event)" title="핸드폰 가운데자리 입력" maxlength="4">
+                            </div>
+                            <span>-</span>
+                            <div class="inp">
+                                <input type="tel" id="TEL3" name="TEL3" required onkeydown="return inputNumCheck(event)" onkeyup="removeChar(event)" title="핸드폰 끝자리 입력" maxlength="4">
+                            </div>
+                        
+                            <div class="errorText">
+                                <!-- 에러 메시지 -->
+                            </div>
+                        </dd>
+                    </dl>
+               </div>
+            </form>
+            
+            <div class="btnGroup">
+                <a href="javascript:jsSave();" class="btn btnFull small"><span>메일 전송</span></a>
+            </div>
+        </div>
+        <a href="#" class="layerPopClose btnPopClose" style="background: url('resources/pcPub/static/images/common/btn/btn_pop_close.png') no-repeat;">레이어 팝업 닫기</a>
+    </div>
+</div>
+
+
 </body>
 
 </html>

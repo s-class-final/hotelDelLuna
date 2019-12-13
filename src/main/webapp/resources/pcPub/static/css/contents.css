@@ -132,7 +132,7 @@ body.hidden { overflow:hidden;}
 .layerPopWrap { visibility:hidden; overflow-y: auto; position:fixed; top:0; left:0; width:100%; height:100%; z-index:100; opacity:0; transition:all .2s ease}
 .layerPopWrap .bg {position:fixed; top:0; right:0; width:100%; height:100%; background:rgba(0,0,0,0.8);}
 .layerPopWrap .layerPopCont { position:absolute; top:50%; left:50%; width:568px; padding:24px 64px 0; margin-left:-284px; background:#fff; -webkit-font-smoothing: antialiased; transform:translateY(-30px); transition:transform .4s ease .2s;  opacity:0;}
-.layerPopWrap .layerPopCont .layerPopClose { position:absolute; top:-26px; right:0; width:18px; height:18px; font-size:0;}
+.layerPopWrap .layerPopCont .layerPopClose { position:absolute; top:-26px; right:0; width:18px; height:18px; font-size:0; background: url('resources/pcPub/static/images/common/btn/btn_pop_close.png') no-repeat;}
 
 .layerPopWrap.normalLayer {}
 .layerPopWrap.normalLayer .layerPopCont { opacity:0; top:0; left:50%; width:800px; padding:0 32px; margin-left:0; margin-top:0; margin-bottom:50px; transform:translateX(-50%) translateY(-30px); transition:transform .4s ease .2s;}

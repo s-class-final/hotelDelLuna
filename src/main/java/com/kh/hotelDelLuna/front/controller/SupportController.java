@@ -199,6 +199,34 @@ public class SupportController {
 //		return "front/support/noticeList";
 	}
 	
+	//고객센터 공지사항 이동(공지사항 목록)(관리자)
+		@RequestMapping(value="noticeListA.do")
+		public ModelAndView noticeListAdmin(ModelAndView mv,
+								@RequestParam(value="page", required=false) Integer page) {
+			int currentPage = 1;
+			if(page != null) {
+				currentPage = page;
+			}
+			
+			int listCount = sService.getAListCount();
+			
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+			
+			ArrayList<Notice> list = sService.selectAList(pi);
+			
+//			System.out.println(list.get(4));
+			
+			if(list != null && list.size() > 0) {	// 게시글이 있다면
+				mv.addObject("list",list);
+				mv.addObject("pi", pi);
+				mv.setViewName("front/support/noticeListAdmin");
+			}else {
+				throw new SupportException("공지사항 조회 실패!!");
+			}
+			return mv;
+//			return "front/support/noticeList";
+		}
+	
 	
 	//고객센터 공지글 작성하기 팝업
 	@RequestMapping(value="noticeInsert.do", method = RequestMethod.POST)
@@ -212,7 +240,7 @@ public class SupportController {
 		
 		if(result > 0) {
 			
-			return "redirect:noticeList.do";
+			return "redirect:noticeListA.do";
 		}else {
 			throw new SupportException("공지사항 등록 실패");
 		}
@@ -264,7 +292,7 @@ public class SupportController {
 		int result = sService.updateNotice(n);
 		
 		if(result > 0) {
-			return "redirect:noticeList.do";
+			return "redirect:noticeListA.do";
 		}else {
 			throw new SupportException("게시글 수정 실패");
 		}
@@ -280,7 +308,7 @@ public class SupportController {
 		int result = sService.deleteNotice(nId);
 		
 		if(result>0) {
-			return "redirect:noticeList.do";
+			return "redirect:noticeListA.do";
 		}else {
 			throw new SupportException("공지사항 삭제 실패");
 		}
