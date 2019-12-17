@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.hotelDelLuna.admin.model.vo.Invoice;
-import com.kh.hotelDelLuna.admin.model.vo.PageInfo;
+import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.admin.model.vo.Sales;
 
 @Repository("aDao")

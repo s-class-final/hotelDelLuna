@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.hotelDelLuna.admin.model.dao.AdminDao;
 import com.kh.hotelDelLuna.admin.model.vo.Invoice;
-import com.kh.hotelDelLuna.admin.model.vo.PageInfo;
+import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.admin.model.vo.Sales;
 
 @Service("aService")
