@@ -14,19 +14,175 @@
 		<result property="kakao" column="KAKAO"/>
 	</resultMap>
 	
+	<resultMap type="Inquiry" id="inquiryResultSet">
+		<id property="iId" column="IID"/>
+		<result property="iTitle" column="ITITLE"/>
+		<result property="iWriter" column="IWRITER"/>
+		<result property="iContent" column="ICONTENT"/>
+		<result property="iCreateDate" column="I_CREATE_DATE"/>
+		<result property="iModifyDate" column="I_MODIFY_DATE"/>
+		<result property="iStatus" column="I_STATUS"/>
+		<result property="reContent" column="RE_CONTENT"/>
+		<result property="reStatus" column="RE_STATUS"/> 
+	</resultMap>
+	
 	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
-		SELECT *
+		<!-- SELECT *
 		FROM MEMBER
 		WHERE USERID=#{userId}
 		AND USERPWD=#{userPwd}
-		AND M_STATUS='Y'
+		AND M_STATUS='Y' -->
 		
 		<!-- 암호화 적용 이후 -->
-		<!-- SELECT *
+		SELECT *
 		FROM MEMBER
-		WHERE ID=#{id}
-		AND M_STATUS='Y' -->
+		WHERE USERID=#{userId}
+		AND M_STATUS='Y'
 	</select>
 	
+	<insert id="insertMember" parameterType="Member">
+		INSERT INTO MEMBER VALUES(
+			SEQ_MID.NEXTVAL, DEFAULT, #{userId}, #{userPwd}, #{userName}, #{userPhone}, DEFAULT, DEFAULT, null
+		)
+	</insert>
+	
+	<select id="idCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USERID=#{userId}
+	</select>
+	
+	<select id="kakaoIdCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE KAKAO=#{kakaoId}
+	</select>
+	
+	<insert id="insertKMember" parameterType="Member">
+		INSERT INTO MEMBER VALUES(
+			SEQ_MID.NEXTVAL, DEFAULT, #{userId}, null, #{userName}, #{userPhone}, DEFAULT, DEFAULT, #{kakao}
+		)
+	</insert>
+	
+	<select id="kakaoLogin" parameterType="string" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE KAKAO=#{kakao}
+		AND M_STATUS='Y'
+	</select>
+	
+	<update id="changePwd" parameterType="Member">
+		UPDATE MEMBER SET
+		USERPWD=#{userPwd}
+		WHERE USERID=#{userId}
+	</update>
+	
+	<select id="nameCheck" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USERID=#{userId}
+		AND USERNAME=#{userName}
+	</select>
+	
+	<select id="phoneCheck" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USERID=#{userId}
+		AND USERPHONE=#{userPhone}
+	</select>
+	
+	<select id="findMember" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE USERID=#{userId}
+		AND M_STATUS='Y'
+	</select>
+	
+	<update id="updateMember" parameterType="Member">
+		UPDATE MEMBER SET
+		USERNAME=#{userName}, USERPHONE=#{userPhone}
+		WHERE USERID=#{userId}
+	</update>
+	
+	<select id="findKakao" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USERID=#{userId}
+		AND KAKAO IS NOT NULL
+		AND M_STATUS='Y'
+	</select>
+	
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM INQUIRY
+		WHERE I_STATUS='Y'
+	</select>
+	
+	<select id="selectList" resultMap="inquiryResultSet">
+		SELECT *
+		FROM INQUIRY
+		WHERE I_STATUS='Y'
+		ORDER BY IID DESC
+	</select>
+	
+	<select id="getMListCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM INQUIRY
+		WHERE I_STATUS='Y'
+		AND IWRITER=#{userId}
+	</select>
+	
+	<select id="selectMList" resultMap="inquiryResultSet">
+		SELECT *
+		FROM INQUIRY
+		WHERE I_STATUS='Y'
+		AND IWRITER=#{userId}
+		ORDER BY IID DESC
+	</select>
+	
+	<insert id="insertInquiry" parameterType="Inquiry">
+		INSERT INTO INQUIRY VALUES(
+			SEQ_IID.NEXTVAL, #{iTitle}, #{iWriter}, #{iContent}, SYSDATE, SYSDATE, DEFAULT, NULL, DEFAULT
+		)
+	</insert>
+	
+	<select id="selectInquiry" parameterType="_int" resultMap="inquiryResultSet">
+		SELECT *
+		FROM INQUIRY
+		WHERE IID=#{iId}
+		AND I_STATUS='Y'
+	</select>
+	
+	<update id="deleteInquiry" parameterType="_int">
+		UPDATE INQUIRY SET
+		I_STATUS='N'
+		WHERE IID=#{iId}
+	</update>
+	
+	<update id="updateInquiry" parameterType="Inquiry">
+		UPDATE INQUIRY
+		SET RE_CONTENT=#{reContent}, RE_STATUS='Y', I_MODIFY_DATE=SYSDATE
+		WHERE IID=#{iId}
+	</update>
+	
+	<update id="deleteMember" parameterType="string">
+		UPDATE MEMBER
+		SET M_STATUS='N'
+		WHERE USERID=#{userId}
+	</update>
+	
+	<select id="getNoReplyListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM INQUIRY
+		WHERE I_STATUS='Y'
+		AND RE_STATUS='N'
+	</select>
+	
+	<select id="selectNoReplyList" resultMap="inquiryResultSet">
+		SELECT *
+		FROM INQUIRY
+		WHERE I_STATUS='Y'
+		AND RE_STATUS='N'
+	</select>
 	
 </mapper>

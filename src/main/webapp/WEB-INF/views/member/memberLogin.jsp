@@ -1,457 +1,544 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>로그인</title>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <style>
-body{
-   align-items: center;
-}
-#outer{
-   width: 400px;
-   height: 800px;
-   color: black;
-   margin-left: auto;
-   margin-right: auto;
-   margin-top: 50px;
-}
-
-#loginBtn{
-  background:#2b0552;
-  color:#fff;
-  border:none;
-  border-radius: 5px;
-  position:relative;
-  width: 300px;
-  height:50px;
-  font-size:1.1em;
-  padding:0 2em;
-  cursor:pointer;
-  transition:800ms ease all;
-  outline:none;
-  font-weight: 600;
-}
-#loginBtn:hover{
-  background:#fff;
-  color:#2b0552;
-}
-#loginBtn:before,#loginBtn:after{
-  content:'';
-  position:absolute;
-  top:0;
-  right:0;
-  height:2px;
-  width:0;
-  background: #2b0552;
-  transition:400ms ease all;
-}
-#loginBtn:after{
-  right:inherit;
-  top:inherit;
-  left:0;
-  bottom:0;
-}
-#loginBtn:hover:before,#loginBtn:hover:after{
-  width:100%;
-  transition:800ms ease all;
-}
-
-form {
-  display: grid;
-  grid-template-rows: 80px;
-  font-family: Avenir;
-  -webkit-text-size-adjust: 100%;
-  -webkit-font-smoothing: antialiased;
-  overflow: hidden;
-}
 * {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-.inp {
-  position: relative;
-  margin: auto;
-  width: 100%;
-  max-width: 280px;
-}
-.inp .label {
-  position: absolute;
-  top: 16px;
-  left: 0;
-  font-size: 16px;
-  color: #9098a9;      /* 이메일 입력 글씨색 */
-  font-weight: 500;
-  transform-origin: 0 0;
-  transition: all 0.2s ease;
-}
-.inp svg {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 26px;
-  fill: none;
-}
-.inp svg path {
-  stroke: #c8ccd4;      /* 커서 안눌렀을 때 왼쪽 줄 색 */
-  stroke-width: 2;
-}
-.inp svg path d {
-  transition: all 0.2s ease;
-}
-.inp .border {
-  position: absolute;
-  bottom: 0;
-  left: 120px;
-  height: 2px;
-  right: 0;
-  background: #c8ccd4;      /* 커서 안눌렀을 때 오른쪽 줄 색 */
-}
-.inp input {
-  -webkit-appearance: none;
-  width: 100%;
-  border: 0;
-  font-family: inherit;
-  padding: 12px 0;
-  height: 48px;
-  font-size: 16px;
-  font-weight: 500;
-  background: none;
-  border-radius: 0;
-  color: #223254;
-  transition: all 0.15s ease;
-}
-.inp input:not(:placeholder-shown) + span {
-  color: #5a667f;
-  transform: translateY(-26px) scale(0.75);
-}
-.inp input:focus {
-  background: none;
-  outline: none;
-}
-.inp input:focus + span {
-  color: #2b0552;      /* 커서 눌렀을 때 이메일 입력 글씨 색 */
-  transform: translateY(-26px) scale(0.75);
-  transition-delay: 0.1s;
-}
-.inp input:focus + span + svg path {
-  stroke: #2b0552;      /* 커서 눌렀을 때 왼쪽 줄 색 */
-  animation: elasticInput 0.4s ease forwards;
-}
-.inp input:focus + span + svg + .border {
-  background: #2b0552;      /* 커서 눌렀을 때 오른쪽 줄 색 */
-}
-@-moz-keyframes elasticInput {
-  50% {
-    d: path("M2,2 C21,17 46,25 74,25 C102,25 118,25 120,25");
-  }
-}
-@-webkit-keyframes elasticInput {
-  50% {
-    d: path("M2,2 C21,17 46,25 74,25 C102,25 118,25 120,25");
-  }
-}
-@-o-keyframes elasticInput {
-  50% {
-    d: path("M2,2 C21,17 46,25 74,25 C102,25 118,25 120,25");
-  }
-}
-@keyframes elasticInput {
-  50% {
-    d: path("M2,2 C21,17 46,25 74,25 C102,25 118,25 120,25");
-  }
-}
 
-/* 체크박스 */
-.grid .item {
-  align-self: center;
-  user-select: none;
-  transform: translateZ(0);
+body {
+  font-family: 'Lato', sans-serif;
+  background-color: #f8f8f8;
 }
-.grid .item .cbx {
+body .container {
   position: relative;
-  top: 5px;
+  top:10%;
+  overflow: hidden;
+  width: 900px;
+  height: 650px;
+  margin: 80px auto 0;
+  background-color: #ffffff;
+  -moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 30px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 30px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 30px;
+}
+body .container .half {
+  float: left;
+  width: 50%;
+  height: 100%;
+  padding: 58px 40px 0;
+}
+body .container .half.bg {
+  background-image: url("resources/images/login.jpg");
+  background-size: 535px;
+  background-repeat: no-repeat;
+  transition: 0.5s linear;
+}
+body .container h1 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 23px;
+  text-align: center;
+  text-indent: 6px;
+  letter-spacing: 7px;
+  text-transform: uppercase;
+  color: #263238;
+}
+body .container .tabs {
+  width: 100%;
+  margin-bottom: 29px;
+  border-bottom: 1px solid #d9d9d9;
+}
+body .container .tabs .tab {
   display: inline-block;
-  width: 14px;
-  height: 14px;
-  margin-right: 6px;
-  border: 1px solid #c8ccd4;
-  border-radius: 3px;
+  margin-bottom: -1px;
+  padding: 20px 15px 10px;
   cursor: pointer;
+  letter-spacing: 0;
+  border-bottom: 1px solid #d9d9d9;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: all 0.1s ease-in-out;
 }
-.grid .item .cbx svg {
+body .container .tabs .tab a {
+  font-size: 11px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #d9d9d9;
+  transition: all 0.1s ease-in-out;
+}
+body .container .tabs .tab.active a, body .container .tabs .tab:hover a {
+  color: #263238;
+}
+body .container .tabs .tab.active {
+  border-bottom: 1px solid #263238;
+}
+body .container .content form {
   position: relative;
-  top: -5px;
-  transform: scale(0);
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  height: 287px;
 }
-.grid .item .cbx svg polyline {
-  stroke-width: 2;
-  stroke: #18cda6;
+body .container .content label:first-of-type, body .container .content input:first-of-type, body .container .content .more:first-of-type {
+  -moz-animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
+  -webkit-animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
+  animation: slideIn 0.4s cubic-bezier(0.37, 0.82, 0.2, 1);
 }
-.grid .item .cbx:before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: -10px 0 0 -10px;
-  width: 20px;
-  height: 20px;
-  border-radius: 100%;
-  background: #18cda6;
-  transform: scale(0);
+body .container .content label:nth-of-type(2), body .container .content input:nth-of-type(2), body .container .content .more:nth-of-type(2) {
+  -moz-animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
+  -webkit-animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
+  animation: slideIn 0.5s cubic-bezier(0.37, 0.82, 0.2, 1);
 }
-.grid .item .cbx:after {
-  content: '';
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  width: 2px;
-  height: 2px;
-  border-radius: 2px;
-  box-shadow: 0 -18px 0 #18cda6, 12px -12px 0 #18cda6, 18px 0 0 #18cda6, 12px 12px 0 #18cda6, 0 18px 0 #18cda6, -12px 12px 0 #18cda6, -18px 0 0 #18cda6, -12px -12px 0 #18cda6;
-  transform: scale(0);
+body .container .content label:nth-of-type(3), body .container .content input:nth-of-type(3), body .container .content .more:nth-of-type(3) {
+  -moz-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
+  -webkit-animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
+  animation: slideIn 0.6s cubic-bezier(0.37, 0.82, 0.2, 1);
 }
-.grid .item .cbx-lbl {
-  position: relative;
-  cursor: pointer;
-  transition: color 0.3s ease;
+body .container .content label {
+  font-size: 12px;
+  color: #263238;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
-.grid .item input {
+body .container .content label:not([for='remember']) {
   display: none;
 }
-.grid .item input:checked + .cbx {
-  border-color: transparent;
-}
-.grid .item input:checked + .cbx svg {
-  transform: scale(1);
-  transition: all 0.4s ease;
-  transition-delay: 0.1s;
-}
-.grid .item input:checked + .cbx:before {
-  transform: scale(1);
-  opacity: 0;
-  transition: all 0.3s ease;
-}
-.grid .item input:checked + .cbx:after {
-  transform: scale(1);
-  opacity: 0;
-  transition: all 0.6s ease;
-}
-.grid .item input:checked + .cbx:after {
+body .container .content input.inpt {
+  font-size: 14px;
+  display: block;
   width: 100%;
-  transition: all 0.4s ease;
+  height: 42px;
+  margin-bottom: 12px;
+  padding: 16px 13px;
+  color: #999999;
+  border: 1px solid #d9d9d9;
+  background: transparent;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}
+body .container .content input.inpt::-webkit-input-placeholder {
+  font-size: 14px;
+  color: #999999;
+  font-family: 'Lato', sans-serif;
+}
+body .container .content input.inpt:-moz-placeholder {
+  font-size: 14px;
+  color: #999999;
+  font-family: 'Lato', sans-serif;
+}
+body .container .content input.inpt::-moz-placeholder {
+  font-size: 14px;
+  color: #999999;
+  font-family: 'Lato', sans-serif;
+}
+body .container .content input.inpt:-ms-input-placeholder {
+  font-size: 14px;
+  color: #999999;
+  font-family: 'Lato', sans-serif;
+}
+body .container .content input.inpt:focus {
+  border-color: #999999;
+}
+body .container .content input.submit {
+  font-size: 12px;
+  line-height: 42px;
+  display: block;
+  width: 100%;
+  height: 42px;
+  cursor: pointer;
+  vertical-align: middle;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #263238;
+  border: 1px solid #263238;
+  background: transparent;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}
+body .container .content input.submit:hover {
+  background-color: #263238;
+  color: #ffffff;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+body .container .content input:focus {
+  outline: none;
+}
+body .container .content .checkbox {
+  margin-top: 4px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  width: 0;
+  height: 0;
+  margin: 5px -1px;
+  padding: 0;
+  border: 0;
+}
+body .container .content .checkbox + label {
+  vertical-align: middle;
+  display: inline-block;
+  width: 50%;
+}
+body .container .content .checkbox + label:before {
+  content: "\A";
+  color: #999999;
+  font-family: Verdana;
+  font-weight: bold;
+  font-size: 8px;
+  line-height: 10px;
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  background: transparent;
+  border: 1px solid #d9d9d9;
+  width: 11px;
+  height: 11px;
+  margin: -2px 8px 0 0;
+}
+body .container .content .checkbox:checked + label:before {
+  content: "✓";
+}
+body .container .content .submit-wrap {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  line-height: 0.5em;
+}
+body .container .content .submit-wrap a {
+  font-size: 12px;
+  display: inline-block;
+  margin-top: 20px;
+  text-align: center;
+  text-decoration: none;
+  color: #999999;
+}
+body .container .content .submit-wrap a:hover {
+  text-decoration: underline;
+}
+body .container .content .signup-cont {
+  display: none;
 }
 
-#wrongId{
-   width: 300px;
-   height:25px;
-   border-radius: 5px;
+@keyframes slideIn {
+  0% {
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    opacity: 0;
+    margin-left: -320px;
+  }
+  100% {
+    filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+    opacity: 1;
+    margin-left: 0px;
+  }
+}
+@-webkit-keyframes slideIn {
+  0% {
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    opacity: 0;
+    margin-left: -320px;
+  }
+  100% {
+    filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+    opacity: 1;
+    margin-left: 0px;
+  }
+}
+.credits {
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: #999999;
+  font-size: 14px;
+  margin: 0 10px 10px 0;
+}
+.credits a {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+  opacity: 0.8;
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
 }
 
-#mainImg:hover{
-   cursor:pointer;
-}
-
-a {
-   text-decoration:none;
-   color : black;
-} 
 </style>
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
-<body>
-   
-   <div id="outer" align = "center">
-   
-     <%--  <div id = "wrongId"></div>
-      <script>
-      <%if(msg != null) {%>
-      $(function(){         
-      $("#wrongId").html("이메일 주소나 비밀번호가 틀립니다").css({'background-color':'#ffcccc', color:'red'});
-      });
-      <%}else{ %>
-      $(function(){         
-            $("#wrongId").html("");
-            });
-      <%}%>
-      </script> --%>
-      <br><br>
-   <form id=loginForm " action="login.do" onsubmit="return validate();" method="post">
-   <label for="userId" class="inp">
-      <input type="text" name="userId" id="userId" oninput = "checkId();" placeholder="&nbsp;">
-      <span class="label">아이디(이메일)</span>
-      <svg width="120px" height="26px" viewBox="0 0 120 26">
-      <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
-      </svg>
-      <span class="border"></span>
-   </label>
-   
-   <label for="userPwd" class="inp">
-      <input type="password" name="userPwd" id="userPwd" oninput = "checkId();" placeholder="&nbsp;">
-      <span class="label">비밀번호</span>
-      <svg width="120px" height="26px" viewBox="0 0 120 26">
-      <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
-      </svg>
-      <span class="border"></span>
-   </label>
-   <br><br>
-   <div class="grid">
-      <label for="saveId" class="cbx-lbl">아이디 저장</label>&nbsp;
-      <label for="saveId" class="item"> <input type="checkbox" name="saveId" id="saveId" class="hidden" />
-      <label for="saveId" class="cbx">
-      <svg width="14px" height="12px" viewBox="0 0 14 12">
-      <polyline points="1 7.6 5 11 13 1"></polyline>
-      </svg>
-      </label>
-      </label>
-   </div>
-   <br><br>
-   
+<body onkeydown="javascript:onEnterLogin();">
+	<jsp:include page="../common/menubar.jsp"/>
 
-   
-   <div class = "findBtn">
-   <button id="loginBtn" type="submit">로그인</button>
-   </div>
-   </form>
-   <br>
-   <div id = "kakao">
-      <a id="kakao-login-btn"></a>
-      <a href="http://developers.kakao.com/logout"></a>
-   </div>
-   
-   <p>비밀번호를 잊으셨나요?<p><a href='<%= request.getContextPath() %>/views/member/findPwdView.jsp'>비밀번호 찾기</a>
-   
-   </div>
-   
-   
-   <script>
+<section class="container">
+	    <article class="half">
+		        <h1>Hotel del luna</h1>
+		        <div class="tabs">
+			            <span class="tab signin active"><a href="#signin">로그인</a></span>
+			            <span class="tab signup"><a href="#signup">비회원(예약 확인)</a></span>
+		        </div>
+		        <div class="content">
+			            <div class="signin-cont cont">
+				                <form id="loginForm" action="login.do" method="post">
+					                    <input type="text" name="userId" id="userId" class="inpt" required="required" placeholder="Your email">
+					                    <label for="email">Your email</label>
+					                    <input type="password" name="userPwd" id="userPwd" class="inpt" required="required" placeholder="Your password">
+               						    <label for="password">Your password</label>
+					                    <input type="checkbox" id="saveId" name="saveId" class="checkbox">
+					                    <label for="saveId">Remember id</label>
+					                    <div class="submit-wrap">
+						                        <input type="button" id="loginBtn" value="Login" class="submit" onclick="checkLogin()"><br>
+						                        <input type="button" id="kakao" value="kakao login" class="submit">
+						                        <a href="mjoin.do" class="more">Join us</a>&nbsp;
+						                        <a href="findpwd.do" class="more">Forgot your password?</a>
+					                    </div>
+       					        </form>
+   				        </div>
+   				        <div class="signup-cont cont">
+               <form action="#" method="post" enctype="multipart/form-data">
+                   						<input type="email" name="email" id="email" class="inpt" required="required" placeholder="Your email">
+					                    <label for="email">Your email</label>
+					                    <input type="text" name="email" id="name" class="inpt" required="required" placeholder="Your name">
+					                    <label for="name">Your name</label>
+					                    <input type="number" name="password" id="password" class="inpt" required="required" placeholder="Your password">
+               						    <label for="password">Your phone</label>
+					                    <div class="submit-wrap">
+						                        <input type="submit" value="confirm" class="submit">
+						                        <a href="#" class="more">Terms and conditions</a>
+					                    </div>
+       					        </form>
+           </div>
+		        </div>
+	    </article>
+	    <div class="half bg"></div>
+</section>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<jsp:include page="../common/footer.jsp"/>
 
-   //홈으로
-   function goHome(){
-      location.href ="<%=request.getContextPath() %>/index.jsp";
-   }
-   
-   function validate(){
-      if($("#userId").val().trim().length == 0){
-         alert("아이디를 입력하세요");
-         $("#userId").focus();
-         
-         return false;   // return값이 false면 submit이 되지 않는다
-      }
-      if($("#userPwd").val().trim().length == 0){
-         alert("비밀번호를 입력하세요");
-         $("#userPwd").focus();
-         
-         return false;
-      }
-      
-      return true;
-   }
-   
-   // 아이디 저장(쿠키) 관련 함수
-   $(function(){
-      // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
-       var userInputId = getCookie("userInputId");
-      $("#userId").val(userInputId);
-        
-      if($("#userId").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
-         $("#saveId").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
-       }
-        
-      $("#saveId").change(function(){ // 체크박스에 변화가 있다면,
-         if($("#saveId").is(":checked")){ // ID 저장하기 체크했을 때,
-            var userInputId = $("#userId").val();
-            setCookie("userInputId", userInputId, 7); // 7일 동안 쿠키 보관
-           }else{ // ID 저장하기 체크 해제 시,
-              deleteCookie("userInputId");
-           }
-       });
-        
-       // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
-       $("#userId").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
-          if($("#saveId").is(":checked")){ // ID 저장하기를 체크한 상태라면,
-             var userInputId = $("#userId").val();
-             setCookie("userInputId", userInputId, 7); // 7일 동안 쿠키 보관
-           }
-       });
-   });
-   
-   function setCookie(cookieName, value, exdays){
-      var exdate = new Date();
-      exdate.setDate(exdate.getDate() + exdays);
-      var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toUTCString());
-      document.cookie = cookieName + "=" + cookieValue;
-   }
+<script type="text/javascript">
+$('.tabs .tab').click(function(){
+    if ($(this).hasClass('signin')) {
+        $('.tabs .tab').removeClass('active');
+        $(this).addClass('active');
+        $('.cont').hide();
+        $('.signin-cont').show();
+    }
+    if ($(this).hasClass('signup')) {
+        $('.tabs .tab').removeClass('active');
+        $(this).addClass('active');
+        $('.cont').hide();
+        $('.signup-cont').show();
+    }
+});
+$('.container .bg').mousemove(function(e){
+    var amountMovedX = (e.pageX * -1 / 30);
+    var amountMovedY = (e.pageY * -1 / 9);
+    $(this).css('background-position', amountMovedX + 'px ' + amountMovedY + 'px');
+});
 
-   function deleteCookie(cookieName){
-      var expireDate = new Date();
-      expireDate.setDate(expireDate.getDate() - 1);
-      document.cookie = cookieName + "= " + "; expires=" + expireDate.toUTCString();
-   }
+// 아이디 비번 미입력 시
+function validate(){
+    if($("#userId").val().trim().length == 0){
+       alert("아이디를 입력하세요");
+       $("#userId").focus();
+       
+       return false;   // return값이 false면 submit이 되지 않는다
+    }
+    if($("#userPwd").val().trim().length == 0){
+       alert("비밀번호를 입력하세요");
+       $("#userPwd").focus();
+       
+       return false;
+    }
+    
+    return true;
+ }
+ 
+//아이디 저장(쿠키) 관련 함수
+$(function(){
+   // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
+    var userInputId = getCookie("userInputId");
+   $("#userId").val(userInputId);
+     
+   if($("#userId").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
+      $("#saveId").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
+    }
+     
+   $("#saveId").change(function(){ // 체크박스에 변화가 있다면,
+      if($("#saveId").is(":checked")){ // ID 저장하기 체크했을 때,
+         var userInputId = $("#userId").val();
+         setCookie("userInputId", userInputId, 7); // 7일 동안 쿠키 보관
+        }else{ // ID 저장하기 체크 해제 시,
+           deleteCookie("userInputId");
+        }
+    });
+     
+    // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
+    $("#userId").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
+       if($("#saveId").is(":checked")){ // ID 저장하기를 체크한 상태라면,
+          var userInputId = $("#userId").val();
+          setCookie("userInputId", userInputId, 7); // 7일 동안 쿠키 보관
+        }
+    });
+});
 
-   function getCookie(cookieName) {
-      cookieName = cookieName + '=';
-      var cookieData = document.cookie;
-      var start = cookieData.indexOf(cookieName);
-      var cookieValue = '';
-      if(start != -1){
-         start += cookieName.length;
-         var end = cookieData.indexOf(';', start);
-         if(end == -1)end = cookieData.length;
-            cookieValue = cookieData.substring(start, end);
-      }
-      return unescape(cookieValue);
+function setCookie(cookieName, value, exdays){
+   var exdate = new Date();
+   exdate.setDate(exdate.getDate() + exdays);
+   var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toUTCString());
+   document.cookie = cookieName + "=" + cookieValue;
+}
+
+function deleteCookie(cookieName){
+   var expireDate = new Date();
+   expireDate.setDate(expireDate.getDate() - 1);
+   document.cookie = cookieName + "= " + "; expires=" + expireDate.toUTCString();
+}
+
+function getCookie(cookieName) {
+   cookieName = cookieName + '=';
+   var cookieData = document.cookie;
+   var start = cookieData.indexOf(cookieName);
+   var cookieValue = '';
+   if(start != -1){
+      start += cookieName.length;
+      var end = cookieData.indexOf(';', start);
+      if(end == -1)end = cookieData.length;
+         cookieValue = cookieData.substring(start, end);
    }
-   
-   </script>
-   
-   <script type='text/javascript'>
-   // 사용할 앱의 JavaScript 키를 설정해 주세요.
-   Kakao.init('e955c40a1536d6e04ad9bbc441193544');
-   // 카카오 로그인 버튼을 생성합니다.
-   Kakao.Auth.createLoginButton({
-      container: '#kakao-login-btn',
-      size: 'large',
-      success: function(authObj) {
-      // 로그인 성공시, API를 호출합니다.
-      Kakao.API.request({
-         url: '/v1/user/me',
-         success: function(res) {
-            <%-- console.log(JSON.stringify(res.id));
-            var kakaoId = JSON.stringify(res.id);
-            
-            $.ajax({
-               url:"<%=request.getContextPath()%>/kakaocheck.me",
-               type:"post",
-               data:{kakaoId:kakaoId},
-               success:function(data){
-                  if(data == "o"){
-                     location.href = '<%= request.getContextPath() %>/kakaologin.me?kakaoId='+kakaoId;
-                  }else{
-                     location.href = '<%= request.getContextPath() %>/views/member/kakaoJoinForm.jsp?kakaoId='+kakaoId;
-                  } --%>
-               },
-               error:function(data){
-                  console.log("서버 통신 안됨");
-               }
-            });
-            
-         },
-         fail: function(error) {
-            alert(JSON.stringify(error));
-         }
-      });
-      },
-      fail: function(err) {
-         alert(JSON.stringify(err));
-      }
-   });
+   return unescape(cookieValue);
+}
+
+// 탭 클릭 시 사진 변경
+$(function(){
+	$(".signin").click(function(){
+		$(".half.bg").css("background-image", "url('resources/images/login.jpg')");
+	});
+	
+	$(".signup").click(function(){
+		$(".half.bg").css("background-image", "url('resources/images/login2.jpg')");
+	});
+});
+
+//엔터 입력 시 로그인 버튼 클릭
+function onEnterLogin(){
+   var keyCode = window.event.keyCode;
+   if (keyCode == 13) {
+      $("#loginBtn").click();
+   }
+}
+
+// 로그인 버튼 클릭 시 아이디, 비번 체크
+function checkLogin(){
+	var userId = $("#userId").val();
+	var userPwd = $("#userPwd").val();
+	
+	if(userId.trim().length == 0){
+		alert("아이디를 입력하세요");
+		$("#userId").focus();
+		return false;
+	}
+	
+	if(userPwd.trim().length == 0){
+		alert("비밀번호를 입력하세요");
+		$("#userPwd").focus();
+		return false;
+	}
+	
+	$.ajax({
+		url:"idcheck.do",
+		data:{userId:userId},
+		success:function(data){
+			if(data == "true"){
+				$.ajax({
+					url:"pwdcheck.do",
+					type:"post",
+					data:{userId:userId, userPwd:userPwd},
+					success:function(data){
+						if(data == "true"){
+							$("#loginForm").submit();
+						}else if(data == "nope"){
+							alert("회원 정보를 불러올 수 없습니다");
+						}else{
+							alert("비밀번호를 확인해 주세요");
+							$("#userPwd").focus();
+						}
+					},
+					error : function(request, status, errorData) {
+						alert("error code: " + request.status + "\n"
+								+ "message: " + request.responseText
+								+ "error: " + errorData);
+					}
+				});
+			}else{
+				alert("아이디를 확인해 주세요");
+				$("#userId").focus();
+			}
+		},
+		error : function(request, status, errorData) {
+			alert("error code: " + request.status + "\n"
+					+ "message: " + request.responseText
+					+ "error: " + errorData);
+		}
+	})
+}
+</script>
+
+<script type='text/javascript'>	// 카카오 로그인
+	$(function(){
+		$("#kakao").click(function(){
+		   Kakao.init('de55ce2e9e0330e7281dfe9da45b537b');
+		   Kakao.Auth.login({
+		      success: function(authObj) {
+		      // 로그인 성공시, API를 호출합니다.
+		      Kakao.API.request({
+		         url: '/v1/user/me',
+		         success: function(res) {
+		            console.log(JSON.stringify(res.id));
+		            var kakaoId = JSON.stringify(res.id);
+		            
+		            $.ajax({
+		               url:"kakaocheck.do",
+		               data:{kakaoId:kakaoId},
+		               success:function(data){
+		                  if(data == "true"){
+		                     location.href = "kakaologin.do?" + kakaoId;
+		                  }else{
+		                     location.href = "kakaojoin.do?" + kakaoId;
+		                  }
+		               },
+		               error:function(data){
+		                  console.log("서버 통신 안됨");
+		               }
+		            });
+		            
+		         },
+		         fail: function(error) {
+		            alert(JSON.stringify(error));
+		         }
+		      });
+		      },
+		      fail: function(err) {
+		         alert(JSON.stringify(err));
+		      }
+		   });
+	
+		});
+	});
    
    </script>
 
