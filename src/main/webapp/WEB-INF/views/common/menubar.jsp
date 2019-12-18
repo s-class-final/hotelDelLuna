@@ -224,7 +224,7 @@
 <!-- quick Bar 퀵메뉴 퀵 메뉴 -->
 <aside class="quickBar view">
    <div class="quickH">
-      <a href="#">
+      <a href="ReservationGuest.do">
          <h1><img src="resources/pcPub/static/images/common/Reservation_icon_100.png" />reservation</h1>
          <p>호텔 델루나의 시설과 <br />상품을 한번에 예약하세요.</p>
 <!--          <span class="newCount">99</span> : PC는 갯수 불요-->
