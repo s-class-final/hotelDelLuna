@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>문의 답변 등록</title>
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
 #reContent {
@@ -29,7 +29,7 @@
 <section id="container">
    
    <div class="noticeViewWrap inquiry">
-	<form id="reInquiry" action="reupdate.do">
+	<form id="reInquiry" action="reupdate.do" method="post">
 		<input type="hidden" id="iId" name="iId" value="${inquiry.iId}">
 		<input type="hidden" id="page" name="page" value="${currentPage}">
       <h1>1:1 문의</h1>

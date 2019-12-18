@@ -4,7 +4,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원 탈퇴</title>
+<style>
+body {
+    position: relative;
+    top: 80px;
+}
+#dropBtn{
+	cursor: pointer;
+}
+</style>
 </head>
 <body onkeydown="javascript:confirmPwd();">
 <jsp:include page="../common/menubar.jsp"/>
@@ -40,6 +49,7 @@ function jsValidationPwd() {
 					layerPopOpen("#SECESSION_USER");
 				} else {
 					alert("비밀번호가 일치하지 않습니다.");
+					$("#userPwd").focus();
 				}
 			},
 			error : function(request, status, errorData) {
@@ -127,21 +137,6 @@ function jsRightBtnAction() {
 
 	<!-- 컨텐츠 영역 -->
 	<section id="container">
-		<section class="subGnb">
-			<div class="innerBox">
-				<h1>My page</h1>
-				<ul>
-					<li><a href="/auth/front/mypage">Overview</a></li>
-					<li><a href="/auth/front/mypage/membership">멤버십</a></li>
-					<li><a href="/auth/front/mypage/point">포인트</a></li>
-					<li><a href="/auth/front/mypage/reservation">예약내역</a></li>
-					<li><a href="/auth/front/mypage/coupon">쿠폰</a></li>
-					<li><a href="/auth/front/mypage/voc">이용문의</a></li>
-					<li class="on"><a href="/auth/front/mypage/validationPwd">회원정보수정</a></li>
-				</ul>
-			</div>
-		</section>
-		
 		<div class="loginWrap">
 			<div class="innerBox">
 				<h1><span>탈퇴 신청</span>호텔델루나에서 탈퇴하시겠습니까?</h1>
@@ -166,7 +161,6 @@ function jsRightBtnAction() {
 		</div>
 	</section>
 	<!-- //컨텐츠 영역 -->
-	<br><br><br><br><br>
 	<jsp:include page="../common/footer.jsp"/>
 
 

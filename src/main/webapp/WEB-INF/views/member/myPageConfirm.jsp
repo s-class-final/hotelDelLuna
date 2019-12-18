@@ -5,11 +5,14 @@
 <head>
 <meta charset="UTF-8">
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<title>Insert title here</title>
+<title>마이 페이지 비밀번호 확인</title>
 <style>
 body {
     position: relative;
-    top: 150px;
+    top: 80px;
+}
+#joinBtn{
+	cursor: pointer;
 }
 </style>
 </head>
@@ -17,31 +20,30 @@ body {
 	<jsp:include page="../common/menubar.jsp"/>
 	
 	<div class="loginWrap">
-			<div class="innerBox"> <!-- 가로값이 1280으로 설정되어진 아이 -->
-				<h1><span>비밀번호 확인</span>회원님의 개인정보 보호를 위한 확인 절차이오니,<br />회원 로그인 시 사용하시는 비밀번호를 입력해주세요.</h1>
-			</div>
-			<div class="fullBg">
-				<div class="innerBox bg"> <!-- 가로값이 1280으로 설정되어진 아이 -->
-					<div class="loginBox">
-						<div class="inp">
-							<h3 style="padding: 10px;">아이디(이메일)</h3>
-							<input type="text" id="userId" name="userId" value="${loginUser.userId}" disabled>
-							<button class="btnDelete">삭제</button>
-						</div>
-						<br><br>
-						<div class="inp">
-							<h3 style="padding: 10px;">비밀번호</h3>
-							<input type="password" id="userPwd" name="userPwd" placeholder="비밀번호" title="비밀번호">
-						</div>
-						<br><br>
-						<button id="joinBtn" class="btn btnFull btnLogin">확인</button>
-					</div>
-				</div>
-				
-			</div>
+		<div class="innerBox"> <!-- 가로값이 1280으로 설정되어진 아이 -->
+			<h1><span>비밀번호 확인</span>회원님의 개인정보 보호를 위한 확인 절차이오니,<br />회원 로그인 시 사용하시는 비밀번호를 입력해주세요.</h1>
 		</div>
-	</section>
-	<br><br><br><br><br><br>
+		<div class="fullBg">
+			<div class="innerBox bg"> <!-- 가로값이 1280으로 설정되어진 아이 -->
+				<div class="loginBox">
+					<div class="inp">
+						<h3 style="padding: 10px;">아이디(이메일)</h3>
+						<input type="text" id="userId" name="userId" value="${loginUser.userId}" disabled>
+					</div>
+					<br><br>
+					<div class="inp">
+						<h3 style="padding: 10px;">비밀번호</h3>
+						<input type="password" id="userPwd" name="userPwd" placeholder="비밀번호" title="비밀번호">
+					</div>
+					<br><br>
+					<button id="joinBtn" class="btn btnFull btnLogin">확인</button>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+		
+	<br><br><br><br>
 	<jsp:include page="../common/footer.jsp"/>
 
 	<script>
@@ -74,6 +76,9 @@ body {
 						})
 					}
 				});
+			
+			// 페이지 실행 시 비밀번호로 커서 가게
+			$("#userPwd").focus();
 		});
 		
 		function confirmPwd(){

@@ -314,7 +314,7 @@ body .container .content .signup-cont {
 					                    <label for="email">Your email</label>
 					                    <input type="text" name="email" id="name" class="inpt" required="required" placeholder="Your name">
 					                    <label for="name">Your name</label>
-					                    <input type="number" name="password" id="password" class="inpt" required="required" placeholder="Your password">
+					                    <input type="number" name="password" id="password" class="inpt" required="required" placeholder="Your phone">
                						    <label for="password">Your phone</label>
 					                    <div class="submit-wrap">
 						                        <input type="submit" value="confirm" class="submit">

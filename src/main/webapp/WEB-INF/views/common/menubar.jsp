@@ -63,7 +63,7 @@
 	                    <c:url var="roomView" value="roomView.do">
 	                  	<c:param name="type" value="superior_terrace"/>
 	                  </c:url>
-	                     <li><a href="${roomView }">슈페리어 테라스</a></li>
+	                     <li><a href="${roomView}">슈페리어 테라스</a></li>
 	                  </ul>
                </div>
                <div>
@@ -153,11 +153,15 @@
                <div>
                   <h2><a href="support.do"><span>Service Center</span>고객센터</a></h2>
                   <ul>
+                  	<c:if test="${ empty sessionScope.loginUser }">
+                  		<li><a href="noticeList.do">공지사항</a></li>
+		         		<li><a id="pppop" href="#poppop" class="layerPopOpen">1:1문의</a></li>
+		         	</c:if>
                      <c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 2}">
                      	<li><a href="noticeListA.do">공지사항</a></li>
                      	<li><a href="allinquiry.do">1:1문의</a></li>
                      </c:if>
-                     <c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 1 || empty sessionScope.loginUser}">
+                     <c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 1}">
                      	<li><a href="noticeList.do">공지사항</a></li>
                      	<li><a href="minquiry.do">1:1문의</a></li>
                      </c:if>
@@ -248,7 +252,7 @@
 			<c:if test="${ !empty sessionScope.loginUser and !empty loginUser.kakao}">
 				<li><a href="mypage.do"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
 			</c:if>
-         <li><a href="#"><em class="icon4"><i></i></em><p><span>RESERVATION</span>MY RESERVATION</p></a></li>
+         <li><a href="mmyres.do"><em class="icon4"><i></i></em><p><span>RESERVATION</span>MY RESERVATION</p></a></li>
          <li><a href="#"><em class="icon5"><i></i></em><p><span>MAP</span>DELLUNA MAP</p></a></li>
          <c:if test="${ empty sessionScope.loginUser }">
          	<li><a id="pppop" href="#poppop" class="layerPopOpen"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1문의</p></a></li>
@@ -353,7 +357,9 @@ function jsSave() {
     <div class="layerPopCont">
         <h1 class="popHeader popHeaderInq"></h1>
         <div class="inquiryPopCont">
-        <p>회원가입을 하시면 좀 더 편리하게 문의 및 내역 확인을 하실 수 있습니다.</p>
+        <p>문의하신 내용은 호텔 델루나 관리자 메일로 전송되며,</p>
+        <p>입력하신 이메일로 답변을 받으실 수 있습니다.</p>
+        <p style="font-weight: 600;">회원가입을 하시면 좀 더 편리하게 문의 및 문의 내역 확인을 하실 수 있습니다.</p>
             <form action="sendinquiry.do" method="post" id="nminquiry" name="form_inquiry">
                 <div class="formInquiryWrap">
                     <dl class="title">

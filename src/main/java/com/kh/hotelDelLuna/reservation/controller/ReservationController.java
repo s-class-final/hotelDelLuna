@@ -282,6 +282,7 @@ public class ReservationController {
 
 		// 1_1. 예약자 아이디가 회원에 있는지 확인!
 		Member member = mService.findMember(m);		
+
 		
 		int mInsert=1;
 		int result;
