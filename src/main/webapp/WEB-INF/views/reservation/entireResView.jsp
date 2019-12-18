@@ -244,15 +244,15 @@
 				<table style="margin:30px;border-spacing:10px;border-collapse: separate;">
 				<tr>
 					<td >예약자: </td>
-					<td><input type="text" name="userName1" placeholder="성"></td>
-					<td colspan="2"><input type="text" name="userName2" placeholder="이름"></td>
+					<td><input type="text" name="userName1" placeholder="성" required></td>
+					<td colspan="2"><input type="text" name="userName2" placeholder="이름" required></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>이메일: </td>
 					<td colspan="4">
-					<input type="text" id="email1" name="email1" size="7" oninput="checkId();" style="display:inline;width:25%">@
-					<input type="text" id="email2" name="email2" size="7" oninput="checkId();" style="display:inline;width:25%">
+					<input type="text" id="email1" name="email1" size="7" oninput="checkId();" style="display:inline;width:25%" required>@
+					<input type="text" id="email2" name="email2" size="7" oninput="checkId();" style="display:inline;width:25%" required>
 					<input type = "hidden" id = "email3" name = "email3">
 					
 					<select id = "email" name = "email" class = "join" style="display:inline;width:30%;height:30px">
@@ -274,32 +274,33 @@
 				<tr>
 					<td>핸드폰: </td>
 					<td colspan="3">
-						<select id = "userPhone1" name = "phone1" style="display:inline;width:23%;height:30px">
+						<select id = "userPhone1" name = "phone1" style="display:inline;width:23%;height:30px" required>
 							<option value = "010">010</option>
 							<option value = "011">011</option>
 							<option value = "016">016</option>
 							<option value = "017">017</option>
 							<option value = "019">019</option>
 						</select>&nbsp;
-						<input type="text" name="phone2"  style="display:inline;width:25%">
-						<input type="text" name="phone3"  style="display:inline;width:25%">
+						<input type="text" name="phone2"  style="display:inline;width:25%" required>
+						<input type="text" name="phone3"  style="display:inline;width:25%" required>
 					</td>
 				</tr>
 				<tr>
 					<td>객실타입: </td>
-					<td colspan=2>
-						<select name="res_roomType" style="width:80%;height:32px">
-							<option value="디럭스">디럭스</option>
-							<option value="스위트">스위트</option>							
-							<option value="슈페리어">슈페리어</option>														
+					<td colspan=3>
+						<select name="res_roomType" style="width:100%;height:32px;border: 1px solid #e6e3df;">
+							<c:forEach var="room" items="${roomList}">
+								<option value="${room}">${room}</option>
+							</c:forEach>
+													
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>날짜: </td>
 					<td colspan=3>
-							<b class="inp calendar">		
-							<input type="text" name="checkInOut" width=100% readonly="readonly" />
+							<b class="inp calendar" style="padding-left:0px">		
+							<input type="text" name="checkInOut" width=100% readonly="readonly" required/>
 							<a class="btnCalendar" style="right:-20px"></a>
 							</b>
 					</td>
@@ -716,6 +717,7 @@
 		
 		function closePopModal(){
 			layerPopClose("#loginPop");
+			
 		};
 
 		/* 검색 필터 적용하여 검색 */

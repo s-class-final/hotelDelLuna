@@ -586,12 +586,12 @@ body.reservation #headerWrap .btnClose { display:block; position:absolute; top:2
 .reservationSection .casyBox .tooltipBox p { margin-bottom:0;}
 .reservationSection .casyBox .tooltipBox:after { left:88%;}
 
-.reservationSection .productFooter { padding:24px 0px 16px;}
+.reservationSection .productFooter { padding:10px 0px 16px;}
 .reservationSection .productFooter dl { overflow:hidden; font-size:14px; color:rgba(0,0,0,0.7);}
 .reservationSection .productFooter dl + dl { margin-top:5px;}
 .reservationSection .productFooter dt { float:left; width:70px;}
 .reservationSection .productFooter dd { float:right; width:170px; text-align:right;}
-.reservationSection .productTotal { padding:10px 0; border-top:1px solid #f4f2ef;}
+.reservationSection .productTotal { padding-bottom:20px; border-top:1px solid #f4f2ef;}
 .reservationSection .productTotal dl { overflow:hidden; color:#9c836a;}
 .reservationSection .productTotal dt { float:left; width:70px; line-height:33px;}
 .reservationSection .productTotal dd { float:right; width:170px; line-height:33px; font-weight:bold; text-align:right;}

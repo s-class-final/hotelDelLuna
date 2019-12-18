@@ -136,5 +136,11 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 
+	@Override
+	public int insertNonMember(Member m) {
+		return mDao.insertNonMember(m);
+	}
+
+
 
 }

@@ -119,6 +119,11 @@ public class MemberDao {
 		
 		return sqlSession.update("memberMapper.updateInquiry", i);
 	}
+
+	public int insertNonMember(Member m) {
+		
+		return sqlSession.insert("memberMapper.insertNonMember",m);
+	}
 	
 	
 }
