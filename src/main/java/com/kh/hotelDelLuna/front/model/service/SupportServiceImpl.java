@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.front.model.dao.SupportDao;
 import com.kh.hotelDelLuna.front.model.vo.Notice;
+import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
+import com.kh.hotelDelLuna.room.model.vo.RoomType;
 
 @Service("sService")
 public class SupportServiceImpl implements SupportService{
@@ -45,6 +47,14 @@ public class SupportServiceImpl implements SupportService{
 		return sDao.deleteNotice(nId);
 	}
 
+
+	////////////////////////////////////////////////////////////////////////////
+	
+
+	@Override
+	public ArrayList<RoomType> selectReservationGst(Reservation res) {
+		return sDao.selectReservationGst(res);
+	}
 	
 
 }

@@ -38,7 +38,7 @@ function jsViewDtl(nId, currentPage) {		//게시글 번호를 가지고 디테�
 	
 	<div class="noticeWrap">
 		<h1 class="contTitle"><span>공지사항</span>호텔 델루나의 다양한 소식을<br />확인 해보세요.</h1>
-		<div class="rightButton"><a href="#pop1" class="btn layerPopOpen small">공지사항 작성하기</a></div>
+		<div class="rightButton"><a id="noticePop" href="#pop1" class="btn layerPopOpen small">공지사항 작성하기</a></div>
 		
 			<form id="form1" name="form1">
 				<input type='hidden' id='nId' name='nId' value=""/>
@@ -116,7 +116,7 @@ $(window).load(function(){
     
 });
 
-$(document).ready(function(){
+$("#noticePop").click(function(){
     // 팝업 제목 설정
     $(".popHeaderInq").text(title);
     
