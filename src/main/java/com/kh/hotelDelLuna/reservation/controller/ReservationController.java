@@ -281,7 +281,7 @@ public class ReservationController {
 		}
 
 		// 1_1. 예약자 아이디가 회원에 있는지 확인!
-		Member member = mService.findUser(m);		
+		Member member = mService.findMember(m);		
 		
 		int mInsert=1;
 		int result;
@@ -336,7 +336,7 @@ public class ReservationController {
 		Member m = new Member(userId);
 		
 		// 아이디 찾기
-		Member member = mService.findUser(m);
+		Member member = mService.findMember(m);
 		
 		Gson gson = new Gson();
 
