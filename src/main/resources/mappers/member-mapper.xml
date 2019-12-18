@@ -164,7 +164,14 @@
 		SET RE_CONTENT=#{reContent}, RE_STATUS='Y', I_MODIFY_DATE=SYSDATE
 		WHERE IID=#{iId}
 	</update>
+
 	
+	<insert id="insertNonMember" parameterType="Member">
+		INSERT INTO MEMBER VALUES(
+			SEQ_MID.NEXTVAL, DEFAULT, #{userId}, null, #{userName}, #{userPhone}, DEFAULT, DEFAULT,NULL
+		)
+	</insert>
+
 	<update id="deleteMember" parameterType="string">
 		UPDATE MEMBER
 		SET M_STATUS='N'

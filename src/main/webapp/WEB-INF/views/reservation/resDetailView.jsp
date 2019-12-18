@@ -34,29 +34,44 @@
 	
 		<div class="reservationBox">
 			<h1 style="margin-bottom:10px;color: #9c836a;font-size: 30px;font-weight: 100" >${res.res_userName}님의 예약 내역</h1>
-			<img src="https://www.p-city.com/upload_file/201901/1547624304295.jpg" alt="MAIN_IMG" />
+			<c:if test="${empty fileName }">
+				<img src="https://www.p-city.com/upload_file/201901/1547624304295.jpg" alt="MAIN_IMG" />			
+			</c:if>
+			<c:if test="${!empty fileName }">
+				<img src="resources\pcPub\static\images\room\<c:out value='${fileName}'/>" alt="MAIN_IMG" width=736px height=320px/>			
+
+			</c:if>
 			<div class="reservationInfoWrap">
-				<h1>호텔 방 이름</h1>
-				<p>${res.res_roomType } 룸</p>
+				<h1>${res.res_roomType }</h1>
+				<br>
 				<a href="#detailPop1" class="btn small" onclick="popModal()"><span>자세히 보기</span></a>
-				<label>흡연 여부</label><input id="smoking" class="check" type="checkbox" name="res_smoking">
-				<label>베드 추가</label><input id="addBed" class="check" type="checkbox" name="res_addBed">
+				<label>흡연 여부</label><input id="smoking" class="check" type="checkbox" name="res_smoking"<c:if test="${res.res_payStatus eq '입금완료' }">  
+						 disabled </c:if> >
+				<label>베드 추가</label><input id="addBed" class="check" type="checkbox" name="res_addBed"<c:if test="${res.res_payStatus eq '입금완료' }">  
+						 disabled </c:if> >
 			</div>
 				
 			<div class="selectChoice clearFixed">
 				<dl>
 					<dt>체크인 &amp; 체크아웃</dt>
 					<dd>
+						<c:if test="${res.res_payStatus eq '입금대기' }">
 						<div id="TA0000010" class="inp calendar">
 							<input  name="checkInOut" type="text" value="${res.res_checkIn} ~ ${res.res_checkOut}" readonly="readonly">
-							<a class="btnCalendar">달력</a>
+								<a class="btnCalendar">달력</a>
 						</div>
+						</c:if>
+						<c:if test="${res.res_payStatus eq '입금완료' }">
+							<input  name="checkInOut" type="text" value="${res.res_checkIn} ~ ${res.res_checkOut}" readonly="readonly"
+							style="">
+						</c:if>
 					</dd>
 				</dl>
 				<dl>
 					<dt>성인</dt>
 					<dd>
-						<select name="res_adult" class="selectBox aCnt">
+						<select name="res_adult" class="selectBox aCnt"<c:if test="${res.res_payStatus eq '입금완료' }">  
+						 disabled </c:if>>
 							<c:forEach var="i" begin="0" end="8">
 								<c:if test="${i ne res.res_adult}">
 										<option value="${i}">${i}</option>
@@ -74,7 +89,8 @@
 						<div class="tooltipBox" id="tip0"><p>어린이 기준 : 37개월 ~ 13세(초등학생) 이하</p></div>
 					</dt>
 					<dd>
-						<select name="res_child" class="selectBox cCnt">
+						<select name="res_child" class="selectBox cCnt" <c:if test="${res.res_payStatus eq '입금완료' }">  
+						 disabled </c:if> >
 							<c:forEach var="i" begin="0" end="8">
 								<c:if test="${i ne res.res_child}">
 										<option value="${i}">${i}</option>
@@ -89,7 +105,7 @@
 				<dl>
 					<dt>총 인원</dt>
 					<dd>
-						<input type="text" id="calTotal" value="${res.res_child + res.res_adult}">
+						<input type="text" id="calTotal" value="${res.res_child + res.res_adult} " readonly>
 					</dd>
 				</dl>
 			</div>
@@ -116,14 +132,14 @@
 				</h1>
 				<a href="entireResList.do" class="btnDeleteAll">이전으로</a>
 			</div>
-			<div class="productWrap mCustomScrollbar" data-mcs-theme="dark">
+			<div class="productWrap mCustomScrollbar" data-mcs-theme="dark" style="height:380px;!important">
 				<div class="productListBox">
 					<article class="productItem">
 						<div class="productListH">
 							<h2>
 								<span>상품명 : Hotel Delluna</span>
 							</h2>
-							<a onclick="#" class="btnDelete"></a>
+					
 						</div>
 						<div class="productListC">
 							<h3>HOTEL DELLUNA</h3>		
@@ -172,10 +188,16 @@
 						원
 					</dd>
 				</dl>
+				<c:if test="${res.res_payStatus eq '입금대기' }">
+					<button  onclick="payStatusCheck()" class="btn btnFull" style="display: block;width: 100%;border-radius: 5px;margin-bottom: 10px;box-shadow: 3px 3px 15px rgba(0,0,0,0.25)">
+					입금 완료</button>
+				</c:if>
 			</div>
-			<button class="btn btnFull"  onclick="resModify()">
-				<span>예약정보 수정</span>
-			</button>
+			<c:if test="${res.res_payStatus eq '입금대기' }">
+				<button class="btn btnFull"  onclick="resModify()">
+					<span>예약정보 수정</span>
+				</button>
+			</c:if>
 			
 		</section>
 	</div>
@@ -187,48 +209,27 @@
 
 <!-------------------- 팝업창  ---------------------->
 <form>
-<div class="layerPopWrap" id="loginPop">
-	<div class="bg"></div>
-	<!-- layerPopCont -->
-	<div class="layerPopCont">
-		<div class="loginWrap">
-			<h1><span>로그인</span>로그인을 하시고<br/>더 편리하게 이용하세요.</h1>
-			<div class="loginBox">
-				<div class="inp">
-					<input type="text" id="USER_ID" name="USER_ID" onKeyPress="if(event.keyCode=='13') jsLogin();" placeholder="아이디" title="아이디">
-					<button class="btnDelete">삭제</button>
-				</div>
-				
-				<div class="inp">
-					<input type="password" id="USER_PWD" name="USER_PWD" onKeyPress="if(event.keyCode=='13') jsLogin();" placeholder="비밀번호" title="비밀번호">
-					<button class="btnDelete">삭제</button>
-				</div>
-				<div class="loginSave">
-					<div class="checkbox">
-						<input type="checkbox" id="loginchk" name="loginchk"/><label for="check">로그인 상태 유지</label>
+	<div class="layerPopWrap" id="loginPop">
+		<div class="bg"></div>
+		<!-- layerPopCont -->
+		<div class="layerPopCont">
+			<div class="loginWrap">
+				<h1><span>예약 정보</span></h1>
+				<img src="#" style="width:100%;height:300px">
+				<br><br>
+
+				<div class="popJoinBox">
+					<div class="wrap">
+						<p>삭제 버튼을 누르면 <br />해당 예약 내역이 삭제됩니다. </p>
+						<a href="#" class="btn small2" style="display:inline;right:65px"><span>삭제</span></a>
+						<a href="javascript:void(0);" class="btnPopClose btn small2" style="display:inline;right:150px"><span>취소</span></a>
 					</div>
-					<p class="findPWD"><a href="#">아이디/비밀번호 찾기</a></p>
-				</div>
-				
-				
-				<div class="btnLoginGroup">
-					<button id="btnPaymentLogin" class="btn btnFull btnLogin" onclick="#">로그인</button>
-					<button id="btnPaymentGuest" class="btn btnLogin" onclick="#">비회원 구매</button>
-				</div>
-				
-			</div>
-			
-			<div class="popJoinBox">
-				<div class="wrap">
-					<p>파라다이스 리워즈 회원이 되시면 <br />더 많은 혜택을 누리실 수 있습니다. </p>
-					<a href="#" class="btn small2"><span>회원가입</span></a>
 				</div>
 			</div>
+			<a href="#" class="layerPopClose btnPopClose">레이어 팝업 닫기</a>
 		</div>
-		<a href="#" class="layerPopClose btnPopClose">레이어 팝업 닫기</a>
+		<!-- //layerPopCont -->
 	</div>
-	<!-- //layerPopCont -->
-</div>
 </form>
 <!-------------------- //팝업창  ---------------------->
 <script>
@@ -241,10 +242,11 @@ $(function(){
 	/*** 체크박스 선택 먼저 지정 ***/
 	if(smoking=='Y'){
 		$("#smoking").prop("checked",true);
-	}
+	}	
 	if(addBed=='Y'){
 		$("#addBed").prop("checked",true);
 	}
+	
 	
 	
 	/**** 날짜 변경 감지 ****/
@@ -286,6 +288,12 @@ $(function(){
 		
 	});
 
+	
+	function payStatusCheck(){
+		var res_no = ${res.res_no};
+		location.href="payStatusCheck.do?res_no="+res_no;
+		
+	}
 	
 	/**** 수정하기 버튼 ****/
 	function resModify(){

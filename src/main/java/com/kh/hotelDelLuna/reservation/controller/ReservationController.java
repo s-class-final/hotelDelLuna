@@ -1,7 +1,10 @@
 package com.kh.hotelDelLuna.reservation.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -13,7 +16,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,18 +54,20 @@ public class ReservationController {
 		if (page != null) {
 			currentPage = page;
 		}
-
+		
+		
 		int listCount = rService.getListCount();
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		ArrayList<Reservation> rlist = rService.selectResList(pi);
 
-		System.out.println(listCount);
-		System.out.println(rlist);
+		List<String> roomTypeList = rService.selectRoomTypeList();
+		System.out.println("뽑아온 roomTypeList : "+roomTypeList);
 
 		if (rlist != null && rlist.size() > 0) { // 게시글이 있다면
 			mv.addObject("list", rlist);
 			mv.addObject("pi", pi);
-
+			mv.addObject("roomList",roomTypeList);
+			
 			mv.setViewName("reservation/tabResMenu");
 		
 		} else {
@@ -76,18 +80,25 @@ public class ReservationController {
 
 	/********** 예약 상세 보기 **********/
 	
+
 	@RequestMapping(value = "resDetail.do")
 	public ModelAndView resDetail(ModelAndView mv, @RequestParam(value = "res_no", required = false) int res_no) {
 
 		Reservation reservation = rService.selectResOne(res_no);
-
+		
+		/****** 객실 타입에 해당하는 사진 가져오기 ******/
+		String fileName = rService.getRoomFileName(reservation.getRes_roomType());
+		
+		System.out.println(fileName);
 		System.out.println("가져온 예약 상세 : " + reservation);
 		if (reservation != null) {
 			mv.addObject("res", reservation);
+			mv.addObject("fileName",fileName);
 			mv.setViewName("reservation/resDetailView");
 		} else {
 			throw new ReservationException("예약 상세 가져오기 실패!");
 		}
+		
 		return mv;
 
 	}
@@ -144,7 +155,7 @@ public class ReservationController {
 		}
 		
 		System.out.println("sc에 들어간 정렬값 : "+sc.getSort_no());
-		System.out.println(listCount);
+		System.out.println(rList);
 
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(rList, response.getWriter());
@@ -244,16 +255,31 @@ public class ReservationController {
 		// 아이디 합치기
 		res.setRes_userId(email1 + '@' + email2);
 		// 이름 합치기
-		res.setRes_userName(userName1 + " "+userName2);
-		
+		res.setRes_userName(userName1 + " "+userName2);	
 		// 휴대폰 번호 합치기
-		String userPhone = phone1 + "-"  + phone2 + "-"  + phone3;
-		
+		String userPhone = phone1 + "-"  + phone2 + "-"  + phone3;	
 		Member m = new Member(email1+'@'+email2,userName1 +" "+userName2,userPhone);
 		
 		res = settingDate(res,checkInOut);
 
-		System.out.println(res);
+		String strFormat = "yyyy-MM-dd"; // strStartDate 와 strEndDate 의 format
+		long diffDay = 0;
+		java.util.Date startDate = new java.util.Date();
+		// SimpleDateFormat 을 이용하여 startDate와 endDate의 Date 객체를 생성한다.
+		SimpleDateFormat sdf = new SimpleDateFormat(strFormat);
+		try {
+			startDate = sdf.parse(res.getRes_checkIn().toString());
+			java.util.Date endDate = sdf.parse(res.getRes_checkOut().toString());
+
+			// 두날짜 사이의 시간 차이(ms)를 하루 동안의 ms(24시*60분*60초*1000밀리초) 로 나눈다.
+			diffDay = (endDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000);
+			System.out.println(diffDay + "일");
+			res.setRes_count((int) diffDay);
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 		// 1_1. 예약자 아이디가 회원에 있는지 확인!
 		Member member = mService.findMember(m);
 		// 1_2. 예약자 아이디가 비회원에 있는지 확인!
@@ -268,14 +294,29 @@ public class ReservationController {
 		// 2. 예약자 아이디가 회원,비회원에 없으면 비회원 테이블에 예약자 정보 삽입
 		
 		if(member==null){
-			mInsert = mService.insertKMember(m);
+			mInsert = mService.insertNonMember(m);
 		}
-		
-		
+
 		// 3. 예약 내역 생성
 		if(mInsert>0) {
 			result = rService.resInsert(res);
+			int res_no = rService.getResNo(res);
+			res.setRes_no(res_no);
 			
+    		for(int i=0;i<diffDay;i++) {
+	            Calendar cal = Calendar.getInstance();
+
+	            cal.setTime(startDate);
+	            cal.add(Calendar.DATE, i);
+
+	            String strResult = sdf.format(cal.getTime());
+	            
+	            java.sql.Date checkIn = new java.sql.Date(Date.valueOf(strResult).getTime());
+	            res.setRes_checkIn(checkIn);
+	            result= rService.resRoomStatusInsert(res);
+    		}
+    		
+			System.out.println("됐나? :"+result);
 			if(result>0) {
 				System.out.println("예약 삽입 성공!");
 			}else {
@@ -322,7 +363,11 @@ public class ReservationController {
 		
 		int resNo = Integer.valueOf(res_no);
 		int result = rService.resDelete(resNo);
-		if(result>0) {
+		
+		// 해당 예약번호로 roomstatus검색 후 전부 삭제.
+		int dResult = rService.roomStatusDelete(resNo);
+		
+		if(result>0 && dResult>0) {
 			System.out.println("예약 내역 삭제 성공!");
 		}else {
 			throw new ReservationException("예약 내역 삭제 실패!!");
@@ -334,26 +379,35 @@ public class ReservationController {
 	}
 	
 	
-	/********** 예약 내역 수정 **********/
+	/********** 예약 내역 수정 
+	 * @throws IOException **********/
 	@RequestMapping(value = "resModify.do")
-	public ModelAndView resModify(ModelAndView mv,Reservation res,
-			@RequestParam(value = "checkInOut", required = false) String checkInOut) {
+	public void resModify(HttpServletResponse response,Reservation res,
+			@RequestParam(value = "checkInOut", required = false) String checkInOut) throws IOException {
 		
 		res = settingDate(res,checkInOut);
 
 		System.out.println(res);
 		
 		int result = rService.resModify(res);
+	
+		// roomStatus 테이블의 예약 상황도 변경!!!, 같은 예약 번호를 찾아
+		// 날짜 변경
 		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+	
 		if(result>0) {
-			mv.addObject("res_no", res.getRes_no());
-			mv.setView(new RedirectView("resDetail.do"));
+			
+			out.println("<script>alert('예약 내역이 수정되었습니다'); location.href='entireResList.do'=;</script>");
+
+			out.flush();
 		}else {
 			throw new ReservationException("예약 내역 수정 실패!!");
 		}
-		return mv;
 
-	}
+	} 
+	
 	
 	
 	
@@ -383,17 +437,63 @@ public class ReservationController {
 			dateList.add(calendarData);
 		}
 		
+
+		// 날짜
+		// today_info.get("search_year") , today_info.get("search_month") , i
+		String date = today_info.get("search_year")+"";
+		if( today_info.get("search_month")<10) {
+			date += "0"+today_info.get("search_month");
+		}else {
+			date += today_info.get("search_month")+"";		
+		}
+
+		String yearMonth = date;
+		
 		//날짜 삽입
+		// 해당 날짜에 남아있는 방 개수를 구해야함
+
+		// 슈페리어 룸 개수
+		int superiorRoom = rService.getRoomCount("SUPERIOR");
+		// 디럭스 룸 개수
+		int deluxeRoom = rService.getRoomCount("DELUXE");
+		// 스위트 룸 개수
+		int suiteRoom = rService.getRoomCount("SUITE");
+
+		int totalRoomCount = superiorRoom+deluxeRoom+suiteRoom;
+		
 		for (int i = today_info.get("startDay"); i <= today_info.get("endDay"); i++) {
+			date = yearMonth;
+			if(i<10) {
+				date += "0"+i;
+			}else {
+				date += i+"";
+			}
+			
+			// 날짜와 방 종류별 예약된 개수
+			int superiorCount = rService.getSuperiorResCount(date);
+			int deluxeCount = rService.getDeluxeResCount(date);
+			int suiteCount = rService.getSuiteResCount(date);
+			
+			// 날짜별 예약된 방의 총 개수
+			int resRoomCount = superiorCount+ deluxeCount+ suiteCount;
+			
+			// System.out.println(date + "의 예약된 방 : "+ resRoomCount);
+			
 			if(i==today_info.get("today")){
-				calendarData= new DateData(String.valueOf(dateData.getYear()), String.valueOf(dateData.getMonth()), String.valueOf(i), "today");
+				calendarData= new DateData(String.valueOf(dateData.getYear()), 
+						String.valueOf(dateData.getMonth()), String.valueOf(i), 
+						"today",totalRoomCount-resRoomCount,superiorRoom-superiorCount,deluxeRoom- deluxeCount,suiteRoom - suiteCount);
 			}else if(i<today_info.get("today")) {
 				calendarData= new DateData(String.valueOf(dateData.getYear()), String.valueOf(dateData.getMonth()), String.valueOf(i), "before_date");
 			}else if(today_info.get("today")==-1) {
 				calendarData= new DateData(String.valueOf(dateData.getYear()), String.valueOf(dateData.getMonth()), String.valueOf(i), "before_date");
 			}else{
-				calendarData= new DateData(String.valueOf(dateData.getYear()), String.valueOf(dateData.getMonth()), String.valueOf(i), "normal_date");
+		
+				calendarData= new DateData(String.valueOf(dateData.getYear()),
+						String.valueOf(dateData.getMonth()), String.valueOf(i), 
+						"normal_date",totalRoomCount-resRoomCount,superiorRoom-superiorCount,deluxeRoom- deluxeCount,suiteRoom - suiteCount);
 			}
+			
 			dateList.add(calendarData);
 		}
 
@@ -409,6 +509,7 @@ public class ReservationController {
 		}
 		System.out.println(dateList);
 		System.out.println(type);
+		System.out.println(today_info);
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		if(type==false) {
 			gson.toJson(today_info, response.getWriter());			
@@ -417,6 +518,30 @@ public class ReservationController {
 		}
 		 
 	}
+	
+	
+	/******* 예약 내역 입금 완료로 변경 
+	 * @throws IOException *********/
+		@RequestMapping(value = "payStatusCheck.do")
+		public void payStatusCheck(ModelAndView mv,HttpServletResponse response,int res_no) throws IOException {
+			
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+
+			System.out.println("예약번호 : "+res_no);
+			
+			int result = rService.payStatusCheck(res_no);
+			
+			
+			if(result>0) {
+				out.println("<script>alert('입금 완료 처리 되었습니다'); location.href='entireResList.do';</script>");
+
+				out.flush();
+			}else {
+				throw new ReservationException("예약 내역 수정 실패!!");
+			}
+			
+		}
 	
 	
 	

@@ -153,5 +153,11 @@ public class MemberServiceImpl implements MemberService{
 		return mDao.selectNoReplyList(pi);
 	}
 
+	@Override
+	public int insertNonMember(Member m) {
+		return mDao.insertNonMember(m);
+	}
+
+
 
 }

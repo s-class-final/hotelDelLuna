@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html lang="kr">
 	<head>
@@ -177,26 +178,30 @@ main section h1 {
 <nav>
 	<label for="menu_state"><i class="fa"></i></label>
 	<ul>
+	<c:url var="pList" value="pList.do"/>
 		<li data-content="0" class="active unread">
-			<a href="javascript:void(0)">
+			<a href="${pList }">
 				<i class="fa fa-inbox"></i>
 				<span>Inbox</span>
 			</a>
 		</li>
+		<c:url var="sales" value="sales.do"/>
 		<li>
-			<a href="javascript:void(0)">
+			<a href="${sales }">
 				<i class="fa fa-heart"></i>
 				<span>Favorites</span>
 			</a>
 		</li>
+		<c:url var="rqlist" value="rqlist.do"/>
 		<li>
-			<a href="WEB-INF/views/invoice/createInvoice.jsp">
+			<a href="${rqlist }">
 				<i class="fa fa-paper-plane"></i>
 				<span>Sent</span>
 			</a>
 		</li>
+		<c:url var="sumSales" value="sumSales.do"/>
 		<li>
-			<a href="javascript:void(0)">
+			<a href="${sumSales }">
 				<i class="fa fa-pencil"></i>
 				<span>Draft</span>
 			</a>

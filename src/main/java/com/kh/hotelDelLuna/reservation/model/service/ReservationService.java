@@ -1,6 +1,9 @@
 package com.kh.hotelDelLuna.reservation.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.reservation.model.vo.ResSearchCondition;
@@ -35,6 +38,35 @@ public interface ReservationService {
 
 	/* 예약 내역 수정 */
 	int resModify(Reservation res);
+
+	/* 방 종류별 개수 */
+	int getRoomCount(String string);
+
+	
+	/* 날짜와 방 종류별 개수 */
+	int getSuperiorResCount(String date);
+
+	int getDeluxeResCount(String date);
+
+	int getSuiteResCount(String date);
+
+	/* 방 종류 이름별로 모두 뽑기 */
+	List<String>  selectRoomTypeList();
+
+	/* 방 사진 받아오기 */
+	String getRoomFileName(String res_roomType);
+
+	/* 날짜 예약 정보 삽입 */
+	int resRoomStatusInsert(Reservation res);
+
+	/* 예약한 정보로 예약번호 가져오기 */
+	int getResNo(Reservation res);
+
+	/* 입금 완료 하기 */
+	int payStatusCheck(int res_no);
+
+	/* 방 상태 정보 삭제하기 */
+	int roomStatusDelete(int resNo);
 
 
 	

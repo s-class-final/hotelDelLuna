@@ -66,6 +66,9 @@ public interface MemberService {
 	
 	// 문의 글 수정
 	int updateInquiry(Inquiry i);
+
+	// 예약내역 삽입시 비회원일 때 비회원으로 회원 생성
+	int insertNonMember(Member m);
 	
 	// 회원 탈퇴
 	int deleteMember(String userId);
