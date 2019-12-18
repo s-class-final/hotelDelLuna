@@ -60,6 +60,7 @@ public class ReservationController {
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		ArrayList<Reservation> rlist = rService.selectResList(pi);
 
+		
 		List<String> roomTypeList = rService.selectRoomTypeList();
 		System.out.println("뽑아온 roomTypeList : "+roomTypeList);
 
@@ -279,6 +280,21 @@ public class ReservationController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		for(int i=0;i<diffDay;i++) {
+            Calendar cal = Calendar.getInstance();
+
+            cal.setTime(startDate);
+            cal.add(Calendar.DATE, i);
+
+            String strResult = sdf.format(cal.getTime());
+            
+            java.sql.Date checkIn = new java.sql.Date(Date.valueOf(strResult).getTime());
+           
+            // 체크인 날짜. 룸타입으로 roomStatus테이블에서 검색.
+            // 룸타입 총 개수 - 해당날짜 룸타입 개수 . 0일 시 브레이크 하고 예약 입력 취소
+           
+		}
+		
 
 		// 1_1. 예약자 아이디가 회원에 있는지 확인!
 		Member member = mService.findMember(m);		
@@ -383,20 +399,57 @@ public class ReservationController {
 		
 		res = settingDate(res,checkInOut);
 
-		System.out.println(res);
+		System.out.println("수정할 예약 정보 : "+res);
 		
 		int result = rService.resModify(res);
-	
-		// roomStatus 테이블의 예약 상황도 변경!!!, 같은 예약 번호를 찾아
+		
+		Reservation nowRes = rService.selectResOne(res.getRes_no());
+		
+		System.out.println("현재예약찍어본다 : "+nowRes);
+		// roomStatus 테이블의 예약 상황도 변경!!!, 같은 예약 번호를 찾아 삭제 후 다시 생성하자.
 		// 날짜 변경
+		int dResult = rService.roomStatusDelete(nowRes.getRes_no());
+		int iResult=0;
+		
+		String strFormat = "yyyy-MM-dd"; // strStartDate 와 strEndDate 의 format
+		long diffDay = 0;
+		java.util.Date startDate = new java.util.Date();
+		// SimpleDateFormat 을 이용하여 startDate와 endDate의 Date 객체를 생성한다.
+		SimpleDateFormat sdf = new SimpleDateFormat(strFormat);
+		try {
+			startDate = sdf.parse(nowRes.getRes_checkIn().toString());
+			java.util.Date endDate = sdf.parse(nowRes.getRes_checkOut().toString());
+
+			// 두날짜 사이의 시간 차이(ms)를 하루 동안의 ms(24시*60분*60초*1000밀리초) 로 나눈다.
+			diffDay = (endDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000);
+			System.out.println(diffDay + "일");
+			nowRes.setRes_count((int) diffDay);
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		
+		for(int i=0;i<diffDay;i++) {
+            Calendar cal = Calendar.getInstance();
+
+            cal.setTime(startDate);
+            cal.add(Calendar.DATE, i);
+
+            String strResult = sdf.format(cal.getTime());
+            
+            java.sql.Date checkIn = new java.sql.Date(Date.valueOf(strResult).getTime());
+            nowRes.setRes_checkIn(checkIn);
+            iResult= rService.resRoomStatusInsert(nowRes);
+		}
+		
 		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 	
-		if(result>0) {
+		if(result>0&&dResult>0&&iResult>0) {
 			
-			out.println("<script>alert('예약 내역이 수정되었습니다'); location.href='entireResList.do'=;</script>");
-
+			out.println("<script>alert('예약 내역이 수정되었습니다'); location.href='entireResList.do';</script>");
 			out.flush();
 		}else {
 			throw new ReservationException("예약 내역 수정 실패!!");

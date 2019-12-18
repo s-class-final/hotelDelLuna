@@ -63,7 +63,7 @@
 						</c:if>
 						<c:if test="${res.res_payStatus eq '입금완료' }">
 							<input  name="checkInOut" type="text" value="${res.res_checkIn} ~ ${res.res_checkOut}" readonly="readonly"
-							style="">
+							style="height:48px;width:245px;border: 1px solid #e6e3df;background: #f9f9f9">
 						</c:if>
 					</dd>
 				</dl>
@@ -105,7 +105,7 @@
 				<dl>
 					<dt>총 인원</dt>
 					<dd>
-						<input type="text" id="calTotal" value="${res.res_child + res.res_adult} " readonly>
+						<input type="text" id="calTotal" value="${res.res_child + res.res_adult} " readonly disabled>
 					</dd>
 				</dl>
 			</div>
@@ -302,7 +302,13 @@ $(function(){
 		var res_child = $("select[name=res_child]").val();
 		var checkInOut = $("input[name=checkInOut]").val();
 		
-		location.href="resModify.do?&res_no="+res_no+"&res_adult="+res_adult+"&res_child="+res_child+"&checkInOut="+checkInOut;
+		calTotal
+		if($("#calTotal").val()!=0){
+			
+			location.href="resModify.do?&res_no="+res_no+"&res_adult="+res_adult+"&res_child="+res_child+"&checkInOut="+checkInOut;
+		}else{
+			alert("인원 수가 잘못 되었습니다.")
+		}
 				
 	}
 
