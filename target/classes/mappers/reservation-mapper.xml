@@ -131,7 +131,24 @@
 		RESERVATION
 		VALUES(SEQ_RESNO.NEXTVAL,DEFAULT,#{res_roomType},#{res_userId},#{res_breakfast},#{res_dinner},
 				#{res_smoking},#{res_addBed},#{res_adult},#{res_child},#{res_checkIn},#{res_checkOut},DEFAULT,DEFAULT,#{res_require})
+		
+	</insert>
 	
+	<select id="getResNo" parameterType="Reservation" resultType="_int">
+		SELECT RES_NO
+		FROM RESERVATION
+		WHERE RES_USERID=#{res_userId}
+			AND RES_CHECKIN=#{res_checkIn}
+			AND RES_CHECKOUT=#{res_checkOut}
+	
+	</select>
+	
+	<!-- 날짜별 예약 정보 생성 -->
+	<insert id="resRoomStatusInsert" parameterType="Reservation">
+		INSERT INTO
+		ROOMSTATUS
+		VALUES(#{res_roomType},DEFAULT,#{res_checkIn},#{res_no})
+
 	</insert>
 	
 	<!-- 예약 내역 삭제 -->
@@ -141,13 +158,73 @@
 		WHERE RES_NO=#{res_no}
 	</update>
 	
-	
+	<!-- 예약 내역 수정 -->
 	<update id="resModify" parameterType="Reservation">
 		UPDATE RESERVATION
 		SET RES_ADULT=#{res_adult}, RES_CHILD=#{res_child}, RES_CHECKIN=#{res_checkIn}, RES_CHECKOUT=#{res_checkOut}
 		WHERE RES_NO = #{res_no}
 	</update>
 	
+	<!-- 날짜별 예약된 방 개수 구하기 -->
+	<select id="getResRoomCount" parameterType="String" resultType="_int">
+		SELECT COUNT(*)
+		FROM ROOMSTATUS
+		WHERE RES_DATE = TO_DATE(#{date},'YYYYMMDD')
+	</select>
+	
+	<!-- 방 타입별 개수 구하기 -->
+	<select id="getRoomCount" parameterType="String" resultType="_int">
+		SELECT COUNT(*)
+		FROM ROOM
+		WHERE ROOMTYPE LIKE #{string}||'%'
+	</select>
+	
+	<select id="getSuperiorResCount" parameterType="String" resultType="_int">
+		SELECT COUNT(*)
+		FROM ROOMSTATUS
+		WHERE RES_DATE = TO_DATE(#{date},'YYYYMMDD')
+		AND ROOMTYPE LIKE 'SUPERIOR'||'%'
+	</select>
+	
+	<select id="getDeluxeResCount" parameterType="String" resultType="_int">
+		SELECT COUNT(*)
+		FROM ROOMSTATUS
+		WHERE RES_DATE = TO_DATE(#{date},'YYYYMMDD')
+		AND ROOMTYPE LIKE 'DELUXE'||'%'
+	</select>
+	
+	<select id="getSuiteResCount" parameterType="String" resultType="_int">
+		SELECT COUNT(*)
+		FROM ROOMSTATUS
+		WHERE RES_DATE = TO_DATE(#{date},'YYYYMMDD')
+		AND ROOMTYPE LIKE 'SUITE'||'%'
+	</select>
+	
+	
+	<select id="selectRoomTypeList" resultType="java.lang.String">
+		SELECT DISTINCT ROOMTYPE
+		FROM ROOM
+		ORDER BY ROOMTYPE ASC
+	</select>
+	
+	<select id="getRoomFileName" resultType="String">
+		SELECT CHANGENAME
+		FROM ATTACHMENT
+		WHERE ROOMTYPE = #{res_roomType}
+		AND IMGLV = 0
+	</select>
+	
+	<update id="payStatusCheck" parameterType="_int">
+		UPDATE RESERVATION
+		SET RES_PAYSTATUS='입금완료'
+		WHERE RES_NO = #{res_no}
+	</update>
+	
+	<delete id="roomStatusDelete" parameterType="_int">
+		DELETE FROM
+		ROOMSTATUS
+		WHERE RES_NO = #{resNo}
+	</delete>
 	
 	<!-- 예약 가능한 날짜 검색
 		1.선택된 날짜에서 예약되지 않은 방 정보 불러오기 -->

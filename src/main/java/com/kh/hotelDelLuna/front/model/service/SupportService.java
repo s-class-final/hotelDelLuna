@@ -24,6 +24,10 @@ public interface SupportService {
 
 	public int deleteNotice(int nId);
 
+	public int getAListCount();
+
+	public ArrayList<Notice> selectAList(PageInfo pi);
+
 
 	
 	

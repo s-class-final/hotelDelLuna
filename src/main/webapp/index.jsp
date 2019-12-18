@@ -102,6 +102,7 @@
 					<p class="text" data-animation="fadeInUp" data-delay="0.9">발 딛는 순간, 내 안에 잠재해 있던 <br />예술적 영감이 살아납니다.</p>
 				</div>
 				
+				
 				<div class="textView">
 					<a href="#">
 						<h2>PLAZA</h2>

@@ -53,7 +53,20 @@ public class SupportDao {
 
 
 	
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public int getAListcount() {
+		
+		return sqlSession.selectOne("noticeMapper.getAListCount");
+	}
+
+
+	public ArrayList<Notice> selectAList(PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("noticeMapper.selectAList", null, rowBounds);
+	}
+
+	
 
 	public ArrayList<RoomType> selectReservationGst(Reservation res) {
 		return (ArrayList)sqlSession.selectList("reservationMapper.guestSelectList");

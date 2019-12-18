@@ -48,9 +48,21 @@ public class SupportServiceImpl implements SupportService{
 	}
 
 
-	////////////////////////////////////////////////////////////////////////////
 	
+	
+	@Override
+	public int getAListCount() {
+		
+		return sDao.getAListcount();
+	}
 
+	@Override
+	public ArrayList<Notice> selectAList(PageInfo pi) {
+		
+		return sDao.selectAList(pi);
+	}
+
+	
 	@Override
 	public ArrayList<RoomType> selectReservationGst(Reservation res) {
 		return sDao.selectReservationGst(res);

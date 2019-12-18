@@ -5,6 +5,7 @@ DROP TABLE ROOMTYPE  CASCADE CONSTRAINTS;
 DROP TABLE USERTYPE  CASCADE CONSTRAINTS;
 DROP TABLE NOTICE  CASCADE CONSTRAINTS;
 DROP TABLE ROOMSTATUS CASCADE CONSTRAINTS;
+DROP TABLE ROOM CASCADE CONSTRAINTS;
 
 DROP SEQUENCE SEQ_MID;
 DROP SEQUENCE SEQ_RESNO;
@@ -16,7 +17,7 @@ CREATE SEQUENCE SEQ_RESNO;
 CREATE SEQUENCE SEQ_IMGNO;
 CREATE SEQUENCE SEQ_NID;
 
--------------------------------- 맴버 테이블 --------------------------------
+-------------------------------- 멤버 테이블 --------------------------------
 CREATE TABLE MEMBER (
     MID   NUMBER NOT NULL,
     USER_T NUMBER DEFAULT 1 NULL,
@@ -28,6 +29,7 @@ CREATE TABLE MEMBER (
     M_STATUS VARCHAR(255) DEFAULT 'Y' NULL,
     KAKAO VARCHAR(255) NULL
 );
+
 
 -------------------------------- 예약 테이블 --------------------------------
 CREATE TABLE RESERVATION (
@@ -58,20 +60,7 @@ CREATE TABLE ATTACHMENT (
    IMGLV   NUMBER      NOT NULL
 );
 
--------------------- 객실 타입 -------------------------
-CREATE TABLE ROOMTYPE(
-   ROOMTYPE   VARCHAR2(100)      NOT NULL,
-   CAPACITY   NUMBER      NULL,
-   ADDBED      VARCHAR(1)   DEFAULT 'N'   NULL,
-   SINGLEBED   NUMBER      NULL,
-   DOUBLEBED   NUMBER      NULL,
-   SMOKING   VARCHAR(1)   DEFAULT 'N'   NULL,
-   WEEKDAY   NUMBER      NULL,
-   WEEKEND   NUMBER      NULL,
-   STARTDAY    DATE      NULL,
-   ENDDAY       DATE      NULL,
-   CHILDRATE   NUMBER      NULL
-);
+
 
 -------------------- 유저 타입 -------------------------
 CREATE TABLE USERTYPE(
@@ -90,36 +79,68 @@ CREATE TABLE NOTICE (
 	N_STATUS	VARCHAR(1)	DEFAULT 'N'	NULL
 );
 
+-------------------- 객실 타입 -------------------------
+CREATE TABLE ROOMTYPE(
+   ROOMTYPE   VARCHAR2(100)      NOT NULL,
+   CAPACITY   NUMBER      NULL,
+   ADDBED      VARCHAR(1)   DEFAULT 'N'   NULL,
+   SINGLEBED   NUMBER      NULL,
+   DOUBLEBED   NUMBER      NULL,
+   SMOKING   VARCHAR(1)   DEFAULT 'N'   NULL,
+   WEEKDAY   NUMBER      NULL,
+   WEEKEND   NUMBER      NULL,
+   STARTDAY    DATE      NULL,
+   ENDDAY       DATE      NULL,
+   CHILDRATE   NUMBER      NULL
+);
+
+
+---------------- 객실 정보 ------------------------
+CREATE TABLE ROOM(
+    ROOMNO NUMBER,
+    ROOMTYPE VARCHAR2(100) NOT NULL,
+    RES_NO NUMBER DEFAULT NULL,
+    CONDITION VARCHAR2(40),
+    INTIME DATE,
+    OUTTIME DATE,
+    REQUIRE VARCHAR2(800)
+);
+
+
 -------------------- 배정상태 -------------------------
 CREATE TABLE ROOMSTATUS(
     ROOMTYPE VARCHAR2(100) NOT NULL,
     ROOMNO NUMBER NOT NULL,
     RES_DATE DATE NOT NULL,
     RES_NO NUMBER NOT NULL
-)
+);
+
+>>>>>>> refs/remotes/origin/master
 
 ALTER TABLE RESERVATION ADD CONSTRAINT PK_RESERVATION PRIMARY KEY (
    RES_NO
 );
 
 -------------------------------- 맴버 더미값 --------------------------------
-INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, 2, 'admin', '1234', '관리자', 01012341234, DEFAULT, DEFAULT, NULL);
-INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'user1', '1234', '사용자1', 01012341234, DEFAULT, DEFAULT, NULL);
+INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, 2, 'admin', '1234', '관리자', '010-1234-1234', DEFAULT, DEFAULT, NULL);
+INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'user1', '1234', '사용자1', '010-1234-1234', DEFAULT, DEFAULT, NULL);
 
-INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'user01@naver.com', '1234', '사용자1', 01012341234, DEFAULT, DEFAULT, NULL);
-INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'user02@naver.com', '1234', '사용자2', 01033349284, DEFAULT, DEFAULT, NULL);
-INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'user03@naver.com', '1234', '사용자3', 01024769384, DEFAULT, DEFAULT, NULL);
-INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'user04@naver.com', '1234', '사용자4', 01012366223, DEFAULT, DEFAULT, NULL);
-INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'qqqq1@naver.com', '1234', '개 똥이', 01039843635, DEFAULT, DEFAULT, NULL);
-INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'qqqq3@naver.com', '1234', '구 린내', 01016661234, DEFAULT, DEFAULT, NULL);
-INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'qqqq5@naver.com', '1234', '으 으윽', 01099989996, DEFAULT, DEFAULT, NULL);
-INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'bbbb4@naver.com', '1234', '홍 길동', 01012341234, DEFAULT, DEFAULT, NULL);
-INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'bbbb5@naver.com', '1234', '길 동홍', 01012341234, DEFAULT, DEFAULT, NULL);
-INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'user10@naver.com', '1234', '동 홍길', 01012341234, DEFAULT, DEFAULT, NULL);
-INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'user11@naver.com', '1234', '장 동건', 01012341234, DEFAULT, DEFAULT, NULL);
-INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'user12@naver.com', '1234', '유 해진', 01012341234, DEFAULT, DEFAULT, NULL);
+INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'user01@naver.com', '1234', '사용자1', '010-1234-1234', DEFAULT, DEFAULT, NULL);
+INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'user02@naver.com', '1234', '사용자2', '010-3334-9284', DEFAULT, DEFAULT, NULL);
+INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'user03@naver.com', '1234', '사용자3', '010-2476-9384', DEFAULT, DEFAULT, NULL);
+INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'user04@naver.com', '1234', '사용자4', '010-1236-6223', DEFAULT, DEFAULT, NULL);
+INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'qqqq1@naver.com', '1234', '개 똥이', '017-3984-3635', DEFAULT, DEFAULT, NULL);
+INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'qqqq3@naver.com', '1234', '구 린내', '010-1666-1234', DEFAULT, DEFAULT, NULL);
+INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'qqqq5@naver.com', '1234', '으 으윽', '016-9998-9996', DEFAULT, DEFAULT, NULL);
+INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'bbbb4@naver.com', '1234', '홍 길동', '010-1464-1834', DEFAULT, DEFAULT, NULL);
+INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'bbbb5@naver.com', '1234', '길 동홍', '017-8834-4434', DEFAULT, DEFAULT, NULL);
+INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'user10@naver.com', '1234', '동 홍길', '016-1234-6734', DEFAULT, DEFAULT, NULL);
+INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'user11@naver.com', '1234', '장 동건', '010-1234-8284', DEFAULT, DEFAULT, NULL);
+INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'user12@naver.com', '1234', '유 해진', '010-8834-9294', DEFAULT, DEFAULT, NULL);
 
-INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'rukanick@naver.com', '1234', '신 재혁', 01012341234, DEFAULT, DEFAULT, NULL);
+INSERT INTO MEMBER VALUES(SEQ_MID.NEXTVAL, DEFAULT, 'rukanick@naver.com', '1234', '신 재혁', '010-1154-1234', DEFAULT, DEFAULT, NULL);
+
+-------------------------------- 비회원 더미값 --------------------------------
 
 
 
@@ -167,6 +188,76 @@ INSERT INTO NOTICE VALUES(SEQ_NID.NEXTVAL, 2, '공지사항 테스트 글11', '�
 INSERT INTO NOTICE VALUES(SEQ_NID.NEXTVAL, 2, '공지사항 테스트 글12', '공지사항 내용입니다.12', SYSDATE, SYSDATE,  'Y');
 INSERT INTO NOTICE VALUES(SEQ_NID.NEXTVAL, 2, '공지사항 테스트 글13', '공지사항 내용입니다.13', SYSDATE, SYSDATE,  'Y');
 INSERT INTO NOTICE VALUES(SEQ_NID.NEXTVAL, 2, '공지사항 테스트 글14', '공지사항 내용입니다.14', SYSDATE, SYSDATE,  'Y');
+
+
+-------------------------------- 방 정보 더미값 --------------------------------
+
+begin
+for i in 501 .. 520 loop
+insert into ROOM values (i,'SUPERIOR', null, DEFAULT , null, null, null);
+end loop;
+end;
+
+begin
+for i in 521 .. 540 loop
+insert into ROOM values (i,'SUPERIOR_TERRACE', null, DEFAULT , null, null, null);
+end loop;
+end;
+
+begin
+for i in 601 .. 605 loop
+insert into ROOM values (i,'DELUXE', null, DEFAULT , null, null, null);
+end loop;
+end;
+
+begin
+for i in 606 .. 610 loop
+insert into ROOM values (i,'DELUXE_GRAND', null, DEFAULT , null, null, null);
+end loop;
+end;
+
+begin
+for i in 611 .. 615 loop
+insert into ROOM values (i,'DELUXE_PREMIUM', null, DEFAULT , null, null, null);
+end loop;
+end;
+
+begin
+for i in 615 .. 620 loop
+insert into ROOM values (i,'DELUXE_PREMIUM_TERRACE', null, DEFAULT , null, null, null);
+end loop;
+end;
+
+begin
+for i in 701 .. 708 loop
+insert into ROOM values (i,'SUITE_JUNIOR', null, DEFAULT , null, null, null);
+end loop;
+end;
+
+begin
+for i in 801 .. 808 loop
+insert into ROOM values (i,'SUITE_JUNIOR', null, DEFAULT , null, null, null);
+end loop;
+end;
+
+begin
+for i in 901 .. 905 loop
+insert into ROOM values (i,'SUITE_DELUXE', null, DEFAULT , null, null, null);
+end loop;
+end;
+
+begin
+for i in 1001 .. 1003 loop
+insert into ROOM values (i,'SUITE_GRAND_DELUXE', null, DEFAULT , null, null, null);
+end loop;
+end;
+
+begin
+for i in 1101 .. 1102 loop
+insert into ROOM values (i,'SUITE_ROYAL', null, DEFAULT , null, null, null);
+end loop;
+end;
+
 
 
 -------------------------------- 배정상태 더미값 --------------------------------
@@ -219,6 +310,7 @@ INSERT INTO ROOMSTATUS VALUES('DELUXE', '605', TO_DATE('20191222', 'YYYYMMDD'), 
 
 INSERT INTO ROOMSTATUS VALUES('DELUXE', '601', TO_DATE('20191220', 'YYYYMMDD'), 7);
 INSERT INTO ROOMSTATUS VALUES('DELUXE', '601', TO_DATE('20191221', 'YYYYMMDD'), 7);
+
 
 COMMIT;
 

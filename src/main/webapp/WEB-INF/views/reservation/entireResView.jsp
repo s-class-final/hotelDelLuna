@@ -11,8 +11,6 @@
 
 <style>
 
-
-
 /*** Table Styles **/
 .table-fill {
 
@@ -246,15 +244,17 @@
 				<table style="margin:30px;border-spacing:10px;border-collapse: separate;">
 				<tr>
 					<td >예약자: </td>
-					<td><input type="text" name="userName1" placeholder="성"></td>
-					<td colspan="2"><input type="text" name="userName2" placeholder="이름"></td>
+					<td><input type="text" name="userName1" placeholder="성" required></td>
+					<td colspan="2"><input type="text" name="userName2" placeholder="이름" required></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>이메일: </td>
 					<td colspan="4">
-					<input type="text" name="email1" size="7" style="display:inline;width:25%">@
-					<input type="text" name="email2" size="7" style="display:inline;width:25%">
+					<input type="text" id="email1" name="email1" size="7" oninput="checkId();" style="display:inline;width:25%" required>@
+					<input type="text" id="email2" name="email2" size="7" oninput="checkId();" style="display:inline;width:25%" required>
+					<input type = "hidden" id = "email3" name = "email3">
+					
 					<select id = "email" name = "email" class = "join" style="display:inline;width:30%;height:30px">
                     		<option value = "naver.com">naver.com</option>
                             <option value = "hanmail.net">hanmail.net</option>
@@ -265,34 +265,42 @@
 					</td>
 				</tr>
 				<tr>
+					<td>
+					</td>
+					<td colspan="4">
+					<div id = "checkId" class = "check"></div>
+					</td>
+				</tr>
+				<tr>
 					<td>핸드폰: </td>
 					<td colspan="3">
-						<select id = "userPhone1" name = "phone1" style="display:inline;width:23%;height:30px">
+						<select id = "userPhone1" name = "phone1" style="display:inline;width:23%;height:30px" required>
 							<option value = "010">010</option>
 							<option value = "011">011</option>
 							<option value = "016">016</option>
 							<option value = "017">017</option>
 							<option value = "019">019</option>
 						</select>&nbsp;
-						<input type="text" name="phone2"  style="display:inline;width:25%">
-						<input type="text" name="phone3"  style="display:inline;width:25%">
+						<input type="text" name="phone2"  style="display:inline;width:25%" required>
+						<input type="text" name="phone3"  style="display:inline;width:25%" required>
 					</td>
 				</tr>
 				<tr>
 					<td>객실타입: </td>
-					<td colspan=2>
-						<select name="res_roomType" style="width:80%;height:32px">
-							<option value="디럭스">디럭스</option>
-							<option value="스위트">스위트</option>							
-							<option value="슈페리어">슈페리어</option>														
+					<td colspan=3>
+						<select name="res_roomType" style="width:100%;height:32px;border: 1px solid #e6e3df;">
+							<c:forEach var="room" items="${roomList}">
+								<option value="${room}">${room}</option>
+							</c:forEach>
+													
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>날짜: </td>
 					<td colspan=3>
-							<b class="inp calendar">		
-							<input type="text" name="checkInOut" width=100% readonly="readonly" />
+							<b class="inp calendar" style="padding-left:0px">		
+							<input type="text" name="checkInOut" width=100% readonly="readonly" required/>
 							<a class="btnCalendar" style="right:-20px"></a>
 							</b>
 					</td>
@@ -323,7 +331,7 @@
 				</div>
 				<div class="resButtonDiv">
 						<button type="submit" class="resButton">예약 입력</button>
-						<button type="reset" class="resButton">초기화</button>					
+						<button type="reset" onclick="init()" class="resButton">초기화</button>					
 				</div>
 				</form>
 			</section>
@@ -366,19 +374,7 @@
          $("input[name=email2]").val($("#email option").eq(0).val());
 /* 		 $("#entireRes").prop("hidden",false);	
  */
-		 // 메일 바뀌게 하는 함수(바뀔 때마다 아이디 중복체크 함수 실행)
-		 $('#email').change(function(){
-		     $("#email option:selected").each(function () {
-		       if($(this).parent().val()== "1"){ // 직접입력일 경우
-		    	  $("input[name=email2]").val(""); // 값 초기화
-		    	  $("input[name=email2]").attr("readonly",false); // 활성화
 
-		       }else{ // 직접입력이 아닐경우
-		    	  $("input[name=email2]").val($(this).parent().val()); // 선택값 입력
-		    	  $("input[name=email2]").attr("readonly",true); // 비활성화
-		       }
-		    });
-		 });
 		 
 		var totalNum=0;
 		var nowDate = new Date().toISOString().substring(0, 10);
@@ -639,6 +635,76 @@
 			});
 		}
 		
+		// 초기화 
+		function init(){
+			$("#checkId").html('');
+			
+		}
+		// 메일 바뀌게 하는 함수(바뀔 때마다 아이디 중복체크 함수 실행)
+		$('#email').change(function() {
+			$("#email option:selected").each(function() {
+				if ($(this).parent().val() == "1") { // 직접입력일 경우
+					$("#email2").val(""); // 값 초기화
+					$("#email2").attr("disabled", false); // 활성화
+					checkId();
+				} else { // 직접입력이 아닐경우
+					$("#email2").val($(this).parent().val()); // 선택값 입력
+					$("#email2").attr("disabled", true); // 비활성화
+					checkId();
+				}
+			});
+		});
+		
+		
+		// 아이디 존재 여부 검사
+		function checkId(){
+			
+			var email1 = $("#email1");
+			var email2 = $("#email2");
+			var email3 = $("#email3");
+			
+			$("#email3").val($("#email1").val() + '@' + $("#email2").val());
+			console.log(email3.val());
+			
+			$("#checkId").show();
+				if (email1.val().length <= 4) {
+					$("#checkId").html('');
+				} else {
+					$.ajax({
+						url : "resIdCheck.do",
+						data : {userId : email3.val()},
+						success : function(data) {
+							if (data == false) {
+								$("#checkId").html('');
+							} else {
+								$("#checkId").html('');
+								$("#checkId").html("존재하는 회원입니다.").css("color","green");
+								var beforeName = data.userName;
+								var afterName = beforeName.split(" ");
+								var beforePhone = data.userPhone;
+								var afterPhone = beforePhone.split("-");
+								
+								$("input[name=userName1]").val(afterName[0]);
+								$("input[name=userName2]").val(afterName[1]);
+								$("select[name=phone1]").val(afterPhone[0]).prop("selected", true);
+
+								$("input[name=phone2]").val(afterPhone[1]);
+								$("input[name=phone3]").val(afterPhone[2]);
+
+							}
+						},
+						error : function(request, status, errorData) {
+							alert("error code: " + request.status + "\n"
+									+ "message: " + request.responseText
+									+ "error: " + errorData);
+						}
+					});
+				}
+			
+		}
+		
+		
+		
 		/** 예약 삭제 확인창 띄우기 **/
 		function deletePopModal(res_no,res_userName){
 			console.log(res_no);
@@ -651,6 +717,7 @@
 		
 		function closePopModal(){
 			layerPopClose("#loginPop");
+			
 		};
 
 		/* 검색 필터 적용하여 검색 */

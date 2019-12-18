@@ -70,9 +70,9 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public Member findUser(Member m) {
+	public Member findMember(Member m) {
 		
-		return mDao.findUser(m);
+		return mDao.findMember(m);
 	}
 
 	@Override
@@ -115,6 +115,47 @@ public class MemberServiceImpl implements MemberService{
 	public int insertInquiry(Inquiry i) {
 		
 		return mDao.insertInquiry(i);
+	}
+
+	@Override
+	public Inquiry selectInquiry(int iId) {
+		
+		return mDao.selectInquiry(iId);
+	}
+
+	@Override
+	public int deleteInquiry(int iId) {
+		
+		return mDao.deleteInquiry(iId);
+	}
+
+	@Override
+	public int updateInquiry(Inquiry i) {
+		
+		return mDao.updateInquiry(i);
+	}
+
+	@Override
+	public int deleteMember(String userId) {
+
+		return mDao.deleteMember(userId);
+	}
+
+	@Override
+	public int getNoReplyListCount() {
+		
+		return mDao.getNoReplyListCount();
+	}
+
+	@Override
+	public ArrayList<Inquiry> selectNoReplyList(PageInfo pi) {
+		
+		return mDao.selectNoReplyList(pi);
+	}
+
+	@Override
+	public int insertNonMember(Member m) {
+		return mDao.insertNonMember(m);
 	}
 
 

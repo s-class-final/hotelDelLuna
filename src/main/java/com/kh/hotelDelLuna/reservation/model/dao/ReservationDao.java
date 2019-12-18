@@ -1,6 +1,9 @@
 package com.kh.hotelDelLuna.reservation.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -66,6 +69,55 @@ public class ReservationDao {
 	public int resModify(Reservation res) {
 
 		return sqlSession.update("reservationMapper.resModify",res);
+	}
+
+	public int getRoomCount(String string) {
+		return sqlSession.selectOne("reservationMapper.getRoomCount",string);
+	}
+
+	
+	
+	public int getSuperiorResCount(String date) {
+		return sqlSession.selectOne("reservationMapper.getSuperiorResCount",date);
+	}
+
+	public int getDeluxeResCount(String date) {
+		return sqlSession.selectOne("reservationMapper.getDeluxeResCount",date);
+	}
+
+	public int getSuiteResCount(String date) {
+		return sqlSession.selectOne("reservationMapper.getSuiteResCount",date);
+	}
+
+	public List<String> selectRoomTypeList() {
+
+		return sqlSession.selectList("reservationMapper.selectRoomTypeList");
+	}
+
+	
+	public String getRoomFileName(String res_roomType) {
+		
+		return sqlSession.selectOne("reservationMapper.getRoomFileName",res_roomType);
+	}
+
+	public int resRoomStatusInsert(Reservation res) {
+
+		return sqlSession.insert("reservationMapper.resRoomStatusInsert",res);
+	}
+
+	public int getResNo(Reservation res) {
+
+		return sqlSession.selectOne("reservationMapper.getResNo",res);
+	}
+
+	public int payStatusCheck(int res_no) {
+
+		return sqlSession.update("reservationMapper.payStatusCheck",res_no);
+	}
+
+	public int roomStatusDelete(int resNo) {
+
+		return sqlSession.delete("reservationMapper.roomStatusDelete",resNo);
 	}
 
 

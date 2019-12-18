@@ -1,6 +1,9 @@
 package com.kh.hotelDelLuna.reservation.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,7 +62,7 @@ public class ReservationServiceImpl implements ReservationService{
 
 	@Override
 	public int resDelete(int res_no) {
-		// TODO Auto-generated method stub
+
 		return rDao.resDelete(res_no);
 	}
 
@@ -67,6 +70,65 @@ public class ReservationServiceImpl implements ReservationService{
 	public int resModify(Reservation res) {
 
 		return rDao.resModify(res);
+	}
+
+	@Override
+	public int getRoomCount(String string) {
+		return rDao.getRoomCount(string);
+	}
+
+	
+	@Override
+	public int getSuperiorResCount(String date) {
+
+		return rDao.getSuperiorResCount(date);
+	}
+
+	@Override
+	public int getDeluxeResCount(String date) {
+
+		return rDao.getDeluxeResCount(date);
+	}
+
+	@Override
+	public int getSuiteResCount(String date) {
+
+		return rDao.getSuiteResCount(date);
+	}
+
+	@Override
+	public List<String>  selectRoomTypeList() {
+
+		return rDao.selectRoomTypeList();
+	}
+
+	@Override
+	public String getRoomFileName(String res_roomType) {
+		// TODO Auto-generated method stub
+		return rDao.getRoomFileName(res_roomType);
+	}
+
+	@Override
+	public int resRoomStatusInsert(Reservation res) {
+		return rDao.resRoomStatusInsert(res);
+	}
+
+	@Override
+	public int getResNo(Reservation res) {
+
+		return rDao.getResNo(res);
+	}
+
+	@Override
+	public int payStatusCheck(int res_no) {
+
+		return rDao.payStatusCheck(res_no);
+	}
+
+	@Override
+	public int roomStatusDelete(int resNo) {
+
+		return rDao.roomStatusDelete(resNo);
 	}
 
 

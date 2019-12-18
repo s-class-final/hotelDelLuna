@@ -14,6 +14,7 @@
 		<typeAlias type="com.kh.hotelDelLuna.room.model.vo.Attachment" alias="Attachment"/>
 		<typeAlias type="com.kh.hotelDelLuna.room.model.vo.RoomType" alias="RoomType"/>
 		<typeAlias type="com.kh.hotelDelLuna.admin.model.vo.Invoice" alias="Invoice"/>
+		<typeAlias type="com.kh.hotelDelLuna.admin.model.vo.Sales" alias="Sales"/>
 		<typeAlias type="com.kh.hotelDelLuna.front.model.vo.Notice" alias="Notice"/>
 		<typeAlias type="com.kh.hotelDelLuna.room.model.vo.Room" alias="Room"/>
 	</typeAliases>

@@ -132,7 +132,7 @@ body.hidden { overflow:hidden;}
 .layerPopWrap { visibility:hidden; overflow-y: auto; position:fixed; top:0; left:0; width:100%; height:100%; z-index:100; opacity:0; transition:all .2s ease}
 .layerPopWrap .bg {position:fixed; top:0; right:0; width:100%; height:100%; background:rgba(0,0,0,0.8);}
 .layerPopWrap .layerPopCont { position:absolute; top:50%; left:50%; width:568px; padding:24px 64px 0; margin-left:-284px; background:#fff; -webkit-font-smoothing: antialiased; transform:translateY(-30px); transition:transform .4s ease .2s;  opacity:0;}
-.layerPopWrap .layerPopCont .layerPopClose { position:absolute; top:-26px; right:0; width:18px; height:18px; font-size:0;}
+.layerPopWrap .layerPopCont .layerPopClose { position:absolute; top:-26px; right:0; width:18px; height:18px; font-size:0; background: url('resources/pcPub/static/images/common/btn/btn_pop_close.png') no-repeat;}
 
 .layerPopWrap.normalLayer {}
 .layerPopWrap.normalLayer .layerPopCont { opacity:0; top:0; left:50%; width:800px; padding:0 32px; margin-left:0; margin-top:0; margin-bottom:50px; transform:translateX(-50%) translateY(-30px); transition:transform .4s ease .2s;}
@@ -586,12 +586,12 @@ body.reservation #headerWrap .btnClose { display:block; position:absolute; top:2
 .reservationSection .casyBox .tooltipBox p { margin-bottom:0;}
 .reservationSection .casyBox .tooltipBox:after { left:88%;}
 
-.reservationSection .productFooter { padding:24px 0px 16px;}
+.reservationSection .productFooter { padding:10px 0px 16px;}
 .reservationSection .productFooter dl { overflow:hidden; font-size:14px; color:rgba(0,0,0,0.7);}
 .reservationSection .productFooter dl + dl { margin-top:5px;}
 .reservationSection .productFooter dt { float:left; width:70px;}
 .reservationSection .productFooter dd { float:right; width:170px; text-align:right;}
-.reservationSection .productTotal { padding:10px 0; border-top:1px solid #f4f2ef;}
+.reservationSection .productTotal { padding-bottom:20px; border-top:1px solid #f4f2ef;}
 .reservationSection .productTotal dl { overflow:hidden; color:#9c836a;}
 .reservationSection .productTotal dt { float:left; width:70px; line-height:33px;}
 .reservationSection .productTotal dd { float:right; width:170px; line-height:33px; font-weight:bold; text-align:right;}

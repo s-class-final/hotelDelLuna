@@ -113,7 +113,6 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 				<div class="btnGroup">
 					<a href="#map" class="btn small layerPopOpen"><span>도면보기</span></a>
 					<!-- 2018.07.09 수정 -->
-					<a href="#pop1" class="btn small btnFull layerPopOpen"><span>문의하기</span></a>
 				</div>
 			</div>
 			

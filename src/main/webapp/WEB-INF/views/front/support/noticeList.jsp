@@ -38,7 +38,9 @@ function jsViewDtl(nId, currentPage) {		//게시글 번호를 가지고 디테�
 	
 	<div class="noticeWrap">
 		<h1 class="contTitle"><span>공지사항</span>호텔 델루나의 다양한 소식을<br />확인 해보세요.</h1>
-		<div class="rightButton"><a id="noticePop" href="#pop1" class="btn layerPopOpen small">공지사항 작성하기</a></div>
+		<c:if test="${loginUser.userT eq 2}">
+			<div class="rightButton"><a id="noticePop" href="#pop1" class="btn layerPopOpen small">공지사항 작성하기</a></div>
+		</c:if>
 		
 			<form id="form1" name="form1">
 				<input type='hidden' id='nId' name='nId' value=""/>
@@ -49,14 +51,12 @@ function jsViewDtl(nId, currentPage) {		//게시글 번호를 가지고 디테�
 				<thead>
 					<tr>
 						<th>제목</th>
-						
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="n" items="${list }">
 				<tr>
 					<td align="center">
-						
 						<a href="javascript:jsViewDtl('${n.nId }', '${pi.currentPage }');" class="ellipsis"><span>${n.nTitle }</span></a>
 					</td>
 				</tr>
@@ -215,7 +215,7 @@ function jsSave() {
                 <a href="javascript:jsSave();" class="btn btnFull small"><span>등록</span></a>
             </div>
         </div>
-        <a href="#" class="layerPopClose btnPopClose">레이어 팝업 닫기</a>
+        <a href="#" class="layerPopClose btnPopClose" style="background: url('resources/pcPub/static/images/common/btn/btn_pop_close.png') no-repeat;">레이어 팝업 닫기</a>
     </div>
     <!-- //layerPopCont -->
 </div>
