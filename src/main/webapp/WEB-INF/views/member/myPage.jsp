@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>마이 페이지</title>
 <style>
 body {
     position: relative;
-    top: 130px;
+    top: 80px;
 }
 .btnChangePWD button{
 	cursor: pointer;
@@ -52,7 +52,7 @@ body {
 							<!-- 에러시 dd의 error 클래스 추가 -->
 							<dd>
 								<div class="inp">
-									<input type="password" id="userPwd" name="userPwd" maxlength="16" title="비밀번호" placeholder="영문, 숫자 조합 8~16자 이내">
+									<input type="password" id="userPwd" name="userPwd" maxlength="16" title="비밀번호" placeholder="영문, 숫자 조합 8~16자 이내" onkeydown="javascript:confirmPwd();">
 								</div>
 							</dd>
 						</dl>
@@ -61,7 +61,7 @@ body {
 							<!-- 에러시 dd의 error 클래스 추가 -->
 							<dd>
 								<div class="inp">
-									<input type="password" id="checkPwd" name="checkPwd" maxlength="16" title="비밀번호 확인">
+									<input type="password" id="checkPwd" name="checkPwd" maxlength="16" title="비밀번호 확인" onkeydown="javascript:confirmPwd();">
 								</div>	
 							</dd>
 						</dl>
@@ -88,12 +88,12 @@ body {
 									<c:forTokens var="userName" items="${loginUser.userName}" delims=" " varStatus="status">
 										<c:if test="${status.index eq 0}">
 											<div class="inp">
-												<input type="text" id="lastName" name="lastName" value="${userName}" maxlength="50" placeholder="Last Name(성)" title="Last Name(성)">
+												<input type="text" id="lastName" name="lastName" value="${userName}" maxlength="50" placeholder="Last Name(성)" title="Last Name(성)" onkeydown="javascript:confirmInfo();">
 											</div>
 										</c:if>
 										<c:if test="${status.index eq 1}">
 											<div class="inp">
-												<input type="text" id="firstName" name="firstName" value="${userName}" maxlength="50" placeholder="First Name(이름)" title="First Name(이름)">
+												<input type="text" id="firstName" name="firstName" value="${userName}" maxlength="50" placeholder="First Name(이름)" title="First Name(이름)" onkeydown="javascript:confirmInfo();">
 											</div>
 										</c:if>
 									</c:forTokens>
@@ -147,13 +147,13 @@ body {
 									</c:if>
 									<c:if test="${status.index eq 1}">
 									<div class="inp">
-										<input type="tel" id="userPhone2" name="userPhone2" value="${userPhone}" maxlength="4" oninput="nextPhone(); this.value=this.value.replace(/[^0-9]/g,'');" title="휴대 전화 가운데 번호">
+										<input type="tel" id="userPhone2" name="userPhone2" value="${userPhone}" maxlength="4" oninput="confirmInfo(); nextPhone(); this.value=this.value.replace(/[^0-9]/g,'');" title="휴대 전화 가운데 번호">
 									</div>
 									<span>-</span>
 									</c:if>
 									<c:if test="${status.index eq 2}">
 									<div class="inp">
-										<input type="tel" id="userPhone3" name="userPhone3" value="${userPhone}" maxlength="4" oninput="nextPhone(); this.value=this.value.replace(/[^0-9]/g,'');" title="휴대 전화 마지막 번호">
+										<input type="tel" id="userPhone3" name="userPhone3" value="${userPhone}" maxlength="4" oninput="confirmInfo(); nextPhone(); this.value=this.value.replace(/[^0-9]/g,'');" title="휴대 전화 마지막 번호">
 									</div>
 									</c:if>
 									</c:forTokens>
@@ -189,6 +189,13 @@ body {
 		<jsp:include page="../common/footer.jsp"/>
 		
 	<script>
+	function confirmPwd(){
+		var keyCode = window.event.keyCode;
+			if (keyCode == 13) {
+				$("#changePwd").click();
+			}
+	}
+	
 	// 비밀번호 함수 실행
 	$(function(){
 		$("#changePwd").click(function(){
@@ -254,30 +261,40 @@ body {
 		}
 		
 		// 유효성 검사 통과 시 비밀번호 변경
-		$.ajax({
-			url:"changepwd.do",
-			data:{userId:userId, userPwd:userPwd},
-			success:function(data){
-				if(data == "true"){
-					$("#userPwd").val("");
-					$("#checkPwd").val("");
-					var conPwd = confirm("비밀번호가 변경되었습니다. 메인으로 돌아가시겠습니까?");
-					if(conPwd == true){
-						location.href="index.jsp";
+		var conChange = confirm("비밀번호를 변경하시겠습니까?");
+		if(conChange){
+			$.ajax({
+				url:"changepwd.do",
+				data:{userId:userId, userPwd:userPwd},
+				success:function(data){
+					if(data == "true"){
+						$("#userPwd").val("");
+						$("#checkPwd").val("");
+						var conPwd = confirm("비밀번호가 변경되었습니다. 메인으로 돌아가시겠습니까?");
+						if(conPwd == true){
+							location.href="index.jsp";
+						}
+					}else{
+						$("userPwd").val("");
+						$("checkPwd").val("");
+						alert("비밀번호 변경에 실패했습니다.");
 					}
-				}else{
-					$("userPwd").val("");
-					$("checkPwd").val("");
-					alert("비밀번호 변경에 실패했습니다.");
+				},
+				error:function(request, status, errorData){
+					alert("error code: " + request.status + "\n"
+							+"message: " + request.responseText
+							+"error: " + errorData);
 				}
-			},
-			error:function(request, status, errorData){
-				alert("error code: " + request.status + "\n"
-						+"message: " + request.responseText
-						+"error: " + errorData);
-			}
-		});
+			});
+		}
 	};
+	
+	function confirmInfo(){
+		var keyCode = window.event.keyCode;
+			if (keyCode == 13) {
+				$("#changeInfo").click();
+			}
+	}
 	
 	// 회원정보 함수 실행
 	$(function(){
@@ -317,25 +334,28 @@ body {
         }
 		
 		// 유효성 검사 통과 시 회원정보 변경
-		$.ajax({
-			url:"changeInfo.do",
-			data:{userName:userName, userPhone:userPhone},
-			success:function(data){
-				if(data == "true"){
-					var conPwd = confirm("회원정보가 변경되었습니다. 메인으로 돌아가시겠습니까?");
-					if(conPwd == true){
-						location.href="index.jsp";
+		var conChange = confirm("회원정보를 변경하시겠습니까?");
+		if(conChange){
+			$.ajax({
+				url:"changeInfo.do",
+				data:{userName:userName, userPhone:userPhone},
+				success:function(data){
+					if(data == "true"){
+						var conPwd = confirm("회원정보가 변경되었습니다. 메인으로 돌아가시겠습니까?");
+						if(conPwd == true){
+							location.href="index.jsp";
+						}
+					}else{
+						alert("회원정보 변경에 실패했습니다.");
 					}
-				}else{
-					alert("회원정보 변경에 실패했습니다.");
+				},
+				error:function(request, status, errorData){
+					alert("error code: " + request.status + "\n"
+							+"message: " + request.responseText
+							+"error: " + errorData);
 				}
-			},
-			error:function(request, status, errorData){
-				alert("error code: " + request.status + "\n"
-						+"message: " + request.responseText
-						+"error: " + errorData);
-			}
-		});
+			});
+		}
 	}
 	
 	// 전화번호 4글자 입력 시 다음 칸 넘어가게

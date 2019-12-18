@@ -61,7 +61,7 @@ public class MemberController {
 			}else {
 				throw new MemberException("로그인 실패!!");
 			}
-			return "home";
+			return "../../index";
 		}
 		
 	}
@@ -76,7 +76,7 @@ public class MemberController {
 		// 로그아웃은 되는데 간혹 로그아웃 버튼을 두 번 눌러야 로그아웃 되는 경우가 있는데
 		// 그럴 때는 로그인 부분에서 미리 setComplete를 실행하고 로그아웃 해 주면 잘 됨
 
-		return "home";
+		return "../../index";
 		// 다 되는 거 확인 됐으면 menubar.jsp 가서 회원가입 만들자(a 태그에 urlmapping 경로 추가)
 	}
 	
@@ -223,7 +223,7 @@ public class MemberController {
 			session.setAttribute("loginUser", loginUser);
 		}
 		
-		return "home";
+		return "../../index";
 	}
 	
 	@RequestMapping("findpwd.do")
@@ -261,7 +261,7 @@ public class MemberController {
 		int result = mService.changePwd(m);
 		
 		if(result > 0) {
-			return "home";
+			return "../../index";
 		}else {
 			throw new MemberException("임시 비밀번호 변경 실패!");
 		}
@@ -316,10 +316,17 @@ public class MemberController {
 	
 	@RequestMapping("changepwd.do")
 	@ResponseBody
-	public String changePwd(Member m, Model model, String userId, String userPwd) {
+	public String changePwd(HttpSession session, Member m, Model model, String userId, String userPwd) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
 		m.setUserId(userId);
 		String encPwd = bcryptPasswordEncoder.encode(userPwd);
 		m.setUserPwd(encPwd);
+		
+		m.setUserName(loginUser.getUserName());
+		m.setUserPhone(loginUser.getUserPhone());
+		m.setUserT(loginUser.getUserT());
+		m.setKakao(loginUser.getKakao());
+		m.setPoint(loginUser.getPoint());
 		
 		int result = mService.changePwd(m);
 		
@@ -338,6 +345,10 @@ public class MemberController {
 		m.setUserId(loginUser.getUserId());
 		m.setUserName(userName);
 		m.setUserPhone(userPhone);
+		
+		m.setUserT(loginUser.getUserT());
+		m.setKakao(loginUser.getKakao());
+		m.setPoint(loginUser.getPoint());
 		
 		int result = mService.updateMember(m);
 		
@@ -473,7 +484,7 @@ public class MemberController {
 	@RequestMapping("reinquiry.do")
 	public ModelAndView inquiryUpdateView(ModelAndView mv, int iId,
 										@RequestParam("page") Integer page) {
-		mv.addObject("inquiry", mService.selectInquiry(iId)).addObject("currentPage", page).setViewName("member/inquiryReply");
+		mv.addObject("inquiry", mService.selectInquiry(iId)).addObject("currentPage", page).setViewName("member/inquiryReplyInsert");
 		
 		return mv;
 	}
@@ -503,7 +514,7 @@ public class MemberController {
 		}
 	}
 
-	@RequestMapping("reupdate.do")
+	@RequestMapping(value="reupdate.do", method=RequestMethod.POST)
 	public ModelAndView inquiryUpdate(ModelAndView mv, Inquiry i,
 									HttpServletRequest request,
 									@RequestParam("iId") Integer iId,
@@ -522,7 +533,7 @@ public class MemberController {
 		return mv;
 	}
 	
-	@RequestMapping("reupdate2.do")
+	@RequestMapping(value="reupdate2.do", method=RequestMethod.POST)
 	public ModelAndView replyUpdate(ModelAndView mv, Inquiry i,
 									HttpServletRequest request,
 									@RequestParam("iId") Integer iId,
@@ -568,7 +579,7 @@ public class MemberController {
 			System.out.println(e);
 		}
 		
-		return "home";
+		return "../../index";
 	}
 	
 	@RequestMapping("noreply.do")
@@ -595,6 +606,12 @@ public class MemberController {
 		}
 		
 		return mv;
+	}
+	
+	@RequestMapping("mmyres.do")
+	public String memberMyRes() {
+
+		return "member/memberMyRes";
 	}
 	
 }

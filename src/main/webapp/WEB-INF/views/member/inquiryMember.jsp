@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>1:1 문의</title>
 <style>
 body {
     position: relative;
-    top: 130px;
+    top: 80px;
 }
 /* 문의내역 버튼 */
 button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:transparent; overflow:visible; cursor:pointer; line-height:1; }
@@ -110,13 +110,25 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 					<div class='paginate'>
 						<tr align="center" height="20">
 							<td colspan="6">
+								<!-- 처음으로 -->
+								<c:if test="${ pi.currentPage <= 1 }">
+									<<&nbsp;
+								</c:if>
+								
+								<c:if test="${ pi.currentPage > 1 }">
+									<c:url var="iliststart" value="minquiry.do">
+										<c:param name="page" value="${ pi.startPage }"/>
+									</c:url>
+									<a href="${ iliststart }"><<</a>
+								</c:if>
+							
 								<!-- [이전] -->
 								<c:if test="${ pi.currentPage <= 1 }">
 									<&nbsp;
 								</c:if>
 								
 								<c:if test="${ pi.currentPage > 1 }">
-									<c:url var="ilistBack" value="/minquiry.do">
+									<c:url var="ilistBack" value="minquiry.do">
 										<c:param name="page" value="${ pi.currentPage - 1 }"/>
 									</c:url>
 									<a href="${ ilistBack }"><</a>
@@ -146,6 +158,18 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 										<c:param name="page" value="${ pi.currentPage + 1 }"/>
 									</c:url>
 									<a href="${ ilistEnd }">></a>
+								</c:if>
+								
+								<!-- 끝으로 -->
+								<c:if test="${ pi.currentPage >= pi.maxPage }">
+									&nbsp;>>
+								</c:if>
+								
+								<c:if test="${ pi.currentPage < pi.maxPage }">
+									<c:url var="ilistend" value="minquiry.do">
+										<c:param name="page" value="${ pi.maxPage }"/>
+									</c:url>
+									<a href="${ ilistend }">>></a>
 								</c:if>
 							</td>
 						</tr>

@@ -255,7 +255,7 @@ public class ReservationController {
 
 		System.out.println(res);
 		// 1_1. 예약자 아이디가 회원에 있는지 확인!
-		Member member = mService.findUser(m);
+		Member member = mService.findMember(m);
 		// 1_2. 예약자 아이디가 비회원에 있는지 확인!
 		/*
 		 * if(member==null) {
@@ -301,7 +301,7 @@ public class ReservationController {
 		Member m = new Member(userId);
 		
 		// 아이디 찾기
-		Member member = mService.findUser(m);
+		Member member = mService.findMember(m);
 		Gson gson = new Gson();
 
 		if(member!=null) {
