@@ -45,6 +45,18 @@ public class SupportServiceImpl implements SupportService{
 		return sDao.deleteNotice(nId);
 	}
 
+	@Override
+	public int getAListCount() {
+		
+		return sDao.getAListcount();
+	}
+
+	@Override
+	public ArrayList<Notice> selectAList(PageInfo pi) {
+		
+		return sDao.selectAList(pi);
+	}
+
 	
 
 }

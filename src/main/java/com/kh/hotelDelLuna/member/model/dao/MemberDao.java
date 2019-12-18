@@ -61,9 +61,9 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.phoneCheck", m);
 	}
 
-	public Member findUser(Member m) {
+	public Member findMember(Member m) {
 		
-		return sqlSession.selectOne("memberMapper.findUser", m);
+		return sqlSession.selectOne("memberMapper.findMember", m);
 	}
 
 	public int updateMember(Member m) {
@@ -125,5 +125,21 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.insertNonMember",m);
 	}
 	
+	public int deleteMember(String userId) {
+		
+		return sqlSession.update("memberMapper.deleteMember", userId);
+	}
+
+	public int getNoReplyListCount() {
+		
+		return sqlSession.selectOne("memberMapper.getNoReplyListCount");
+	}
+
+	public ArrayList<Inquiry> selectNoReplyList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectNoReplyList", pi, rowBounds);
+	}
 	
 }

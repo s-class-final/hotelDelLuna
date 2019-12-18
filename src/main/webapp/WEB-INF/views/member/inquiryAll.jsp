@@ -9,7 +9,7 @@
 <style>
 body {
     position: relative;
-    top: 150px;
+    top: 130px;
 }
 /* 문의내역 버튼 */
 button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:transparent; overflow:visible; cursor:pointer; line-height:1; }
@@ -54,8 +54,9 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 	<jsp:include page="../common/menubar.jsp"/>
 	<div class="mypageWrap pos">
 			<div class="innerBox"> <!-- 가로값이 1280으로 설정되어진 아이 -->
-				<h1 class="contTitle"><span>이용문의</span>회원님께서 문의 하신 내역을 <br />확인하실 수 있습니다.</h1>
-				<p class="btnInquiry"><a href="#pop1" class="btn small layerPopOpen">1:1 문의</a></p>
+				<h1 class="contTitle"><span>문의 내역 관리</span>회원님께서 문의하신 내역을 <br />관리자가 확인 및 답변할 수 있는 페이지입니다.</h1>
+				
+				<p class="btnInquiry"><a href="noreply.do" class="btn small">[답변 대기]만 보기</a></p>
 
 				<!-- 상태표시
 					.inquiryList > .status, .end : 답변완료
@@ -78,15 +79,26 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 							${i.iContent}
 							</p>
 							<p class="date">${i.iCreateDate}</p>
+							<c:url var="idelete" value="idelete.do">
+								<c:param name="iId" value="${i.iId}"/>
+							</c:url>
+							<a href="${idelete}" onclick="return confirm('정말로 삭제하시겠습니까?');" class="btnDelete" style="background: url('resources/pcPub/static/images/mypage/btn_delete.png') no-repeat 3px center;">삭제</a>
+							
 							<c:url var="reinquiry" value="reinquiry.do">
 								<c:param name="iId" value="${i.iId}"/>
 								<c:param name="page" value="${pi.currentPage}"/>
 							</c:url>
-							<c:url var="idelete" value="idelete.do">
-									<c:param name="iId" value="${i.iId}"/>
-								</c:url>
-								<a href="${idelete}" onclick="return confirm('정말로 삭제하시겠습니까?');" class="btnDelete" style="background: url('resources/pcPub/static/images/mypage/btn_delete.png') no-repeat 3px center;">삭제</a>
-							<a href="${reinquiry}" style="top:53px; padding:0">답변 등록</a>
+							<c:if test="${i.reStatus eq 'N'}">
+								<a href="${reinquiry}" style="top:53px; padding:0">답변 등록</a>
+							</c:if>
+							
+							<c:url var="upreinquiry" value="upreinquiry.do">
+								<c:param name="iId" value="${i.iId}"/>
+								<c:param name="page" value="${pi.currentPage}"/>
+							</c:url>
+							<c:if test="${i.reStatus eq 'Y'}">
+								<a href="${upreinquiry}" style="top:53px; padding:0">답변 수정</a>
+							</c:if>
 						</button>
 						<!-- 답변 영역 -->
 						<div class="answerBox">
@@ -153,92 +165,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 			</div>
 		</div>
 		
-
-
-<script>
-var title = "1:1 문의";
-
-$(window).load(function(){
-    //최초 로딩시 스크롤바 조정
-    $("#FACILITY1").siblings("div.selectBox").find("ul.ui-select-options").eq(0).css("right", "4px");
-    
-});
-
-$(document).ready(function(){
-    // 팝업 제목 설정
-    $(".popHeaderInq").text(title);
-    
-    $("#PI_VOC_CN").val("");   //에러 발생 시 에러 메시지 출력칸
-});
-
-
-function jsSave() {
-    
-    rtn = $("#form_inquiry").validate();
-    
-    if (rtn.isValid == false) {
-        var sub_fix = "을 입력하세요.";
-        if (rtn.chkType == "type") {
-            sub_fix = "형식이 올바르지 않습니다.";
-        }
-        
-        if (rtn.msg != "") {
-            alert(rtn.msg + sub_fix);
-        } else {
-            alert(sub_fix);
-        }
-        
-        return;     
-    }
-    
-    $("#PI_REG_EMPNO").val($("#PI_CUST_NM").val());
-    
-    $("#form_inquiry").submit();
-}
-
-</script>
-
-<!-- 공지사항 작성 (레이어 팝업) -->
-<div class="layerPopWrap normalLayer" id="pop1">
-    <div class="bg"></div>
-    <!-- layerPopCont -->
-    <div class="layerPopCont">
-        <h1 class="popHeader popHeaderInq"></h1>
-        <div class="inquiryPopCont">
-        
-            <form action="iInsert.do" method="post" id="form_inquiry" name="form_inquiry">
-               <input type="hidden" name="iWriter" value="${loginUser.userId}">
-                <div class="formInquiryWrap">
-                    <dl class="title">
-                        <dt>
-                            <label for="iTitle">제목 <span class="color">*</span></label>
-                            <p class="imp"><span class="color">*</span> 필수 입력 항목</p>
-                        </dt>
-                        <dd>
-                            <div class="inp">
-                                <input type="text" id="iTitle" name="iTitle" required title="제목">
-                                <button class="btnDelete">삭제</button>
-                            </div>
-                        </dd>
-                    </dl>
-                    <dl>
-                        <dt><label for="iContent">내용 <span class="color">*</span></label></dt>
-                        <dd>
-                            <textarea class="textarea" cols="0" rows="0" id="iContent" name="iContent" required title="내용"></textarea>
-                        </dd>
-                    </dl>
-               </div>
-            </form>
-            
-            <div class="btnGroup">
-                <a href="javascript:jsSave();" class="btn btnFull small"><span>등록</span></a>
-            </div>
-        </div>
-        <a href="#" class="layerPopClose btnPopClose">레이어 팝업 닫기</a>
-    </div>
-    <!-- //layerPopCont -->
-</div>
-<!-- //1:1 문의 (레이어 팝업) -->
+		<jsp:include page="../common/footer.jsp"/>
 
 
 </body>

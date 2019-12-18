@@ -35,7 +35,7 @@ public interface MemberService {
 	int phoneCheck(Member m);
 	
 	// 마이페이지 들어갈 때 비밀번호 한 번 더 확인
-	Member findUser(Member m);
+	Member findMember(Member m);
 	
 	// 회원 정보 수정
 	int updateMember(Member m);
@@ -69,6 +69,15 @@ public interface MemberService {
 
 	// 예약내역 삽입시 비회원일 때 비회원으로 회원 생성
 	int insertNonMember(Member m);
+	
+	// 회원 탈퇴
+	int deleteMember(String userId);
+	
+	// 문의 게시판 답변 대기 전체 수 조회(관리자)
+	int getNoReplyListCount();
+	
+	// 문의 게시판 답변 대기 조회(관리자)
+	ArrayList<Inquiry> selectNoReplyList(PageInfo pi);
 	
 
 }

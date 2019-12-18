@@ -6,13 +6,86 @@
  <resultMap type="Invoice" id="invoiceResultSet">
  
  	<id property="ivId" column="IVID"/>
- 	<result property="userId" column="USER_ID"/>
+ 	<result property="userName" column="USER_NAME"/>
+ 	<result property="userPhone" column="USER_PHONE"/>
  	<result property="rType" column="R_TYPE"/>
  	<result property="ckinDate" column="CKIN_DATE"/>
  	<result property="price" column="PRICE"/>
  	<result property="rqDate" column="RQ_DATE"/>
+ 	<result property="quantity" column="QUANTITY"/>
+ 	<result property="totalPrice" column="TOTALPRICE"/>
+ 	<result property="userEmail" column="USER_EMAIL"/>
+ 	<result property="iStatus" column="I_STATUS"/>
  
  </resultMap>
  
+ <resultMap type="Sales" id="salesResultSet">
+ 
+ <id property="rType" column="R_TYPE"/>
+ <result property="price" column="PRICE"/>
+ <result property="ckinDate" column="CKIN_DATE"/>
+ 
+ </resultMap>
+ 
+ <select id="getListCount" resultType="_int">
+ 	SELECT COUNT(*)
+ 	FROM INVOICE
+ 
+ </select>
+ 
+ <select id="selectList" resultMap="invoiceResultSet">
+ 	SELECT *
+ 	FROM INVOICE
+ 	ORDER BY IVID DESC
+ 
+ </select>
+ 
+ <select id="createInvoice" resultMap="invoiceResultSet">
+ 	
+ 	SELECT *
+ 	FROM INVOICE
+ 	WHERE IVID = #{ivId}
+ 	AND I_STATUS='N'
+ 	
+ </select>
+ 
+ <select id="getSalesListCount" resultType="_int">
+ 	SELECT COUNT(*)
+ 	FROM SALES
+ </select>
+ 
+ <select id="selectSalesList" resultMap="salesResultSet">
+ 
+ SELECT CKIN_DATE,SUM(PRICE) AS PRICE
+ FROM SALES
+ GROUP BY CKIN_DATE
+ ORDER BY CKIN_DATE DESC
+ 
+ </select>
+ 
+ <select id="salesDetail" resultMap="salesResultSet">
+ 	SELECT SUM(PRICE)
+ 	FROM SALES
+ 	WHERE CKIN_DATE = TO_DATE(#{ckDate},'YYYYMMDDHH')
+ 	GROUP BY PRICE
+ 	
+ </select>
+ 
+ <select id="selectMonthSales" resultMap="salesResultSet">
+ SELECT TO_DATE(EXTRACT(MONTH FROM CKIN_DATE),'MM') AS CKIN_DATE,SUM(PRICE) AS PRICE
+ FROM SALES
+ WHERE CKIN_DATE BETWEEN '20190101' AND '20191231'
+ GROUP BY TO_DATE(EXTRACT(MONTH FROM CKIN_DATE),'MM')
+ ORDER BY CKIN_DATE DESC
+ 
+ </select>
+ 
+ <select id="selectYearSales" resultMap="salesResultSet">
+ SELECT TO_DATE(EXTRACT(YEAR FROM CKIN_DATE),'YY') AS CKIN_DATE,SUM(PRICE) AS PRICE
+ FROM SALES
+ GROUP BY TO_DATE(EXTRACT(YEAR FROM CKIN_DATE),'YY')
+ ORDER BY CKIN_DATE DESC
+ 
+ </select>
  
 </mapper>

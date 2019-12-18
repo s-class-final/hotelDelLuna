@@ -285,49 +285,49 @@ body .container .content .signup-cont {
 	<jsp:include page="../common/menubar.jsp"/>
 
 <section class="container">
-		    <article class="half">
-			        <h1>Hotel del luna</h1>
-			        <div class="tabs">
-				            <span class="tab signin active"><a href="#signin">로그인</a></span>
-				            <span class="tab signup"><a href="#signup">비회원(예약 확인)</a></span>
-			        </div>
-			        <div class="content">
-				            <div class="signin-cont cont">
-					                <form id="loginForm" action="login.do" method="post">
-						                    <input type="text" name="userId" id="userId" class="inpt" required="required" placeholder="Your email">
-						                    <label for="email">Your email</label>
-						                    <input type="password" name="userPwd" id="userPwd" class="inpt" required="required" placeholder="Your password">
-                						    <label for="password">Your password</label>
-						                    <input type="checkbox" id="saveId" name="saveId" class="checkbox">
-						                    <label for="saveId">Remember id</label>
-						                    <div class="submit-wrap">
-							                        <input type="button" id="loginBtn" value="Login" class="submit" onclick="checkLogin()"><br>
-							                        <input type="button" id="kakao" value="kakao login" class="submit">
-							                        <a href="mjoin.do" class="more">Join us</a>&nbsp;
-							                        <a href="findpwd.do" class="more">Forgot your password?</a>
-						                    </div>
-        					        </form>
-    				        </div>
-    				        <div class="signup-cont cont">
-                <form action="#" method="post" enctype="multipart/form-data">
-                    						<input type="email" name="email" id="email" class="inpt" required="required" placeholder="Your email">
-						                    <label for="email">Your email</label>
-						                    <input type="text" name="email" id="name" class="inpt" required="required" placeholder="Your name">
-						                    <label for="name">Your name</label>
-						                    <input type="number" name="password" id="password" class="inpt" required="required" placeholder="Your password">
-                						    <label for="password">Your phone</label>
-						                    <div class="submit-wrap">
-							                        <input type="submit" value="confirm" class="submit">
-							                        <a href="#" class="more">Terms and conditions</a>
-						                    </div>
-        					        </form>
-            </div>
-			        </div>
-		    </article>
-		    <div class="half bg"></div>
-	</section>
-
-
+	    <article class="half">
+		        <h1>Hotel del luna</h1>
+		        <div class="tabs">
+			            <span class="tab signin active"><a href="#signin">로그인</a></span>
+			            <span class="tab signup"><a href="#signup">비회원(예약 확인)</a></span>
+		        </div>
+		        <div class="content">
+			            <div class="signin-cont cont">
+				                <form id="loginForm" action="login.do" method="post">
+					                    <input type="text" name="userId" id="userId" class="inpt" required="required" placeholder="Your email">
+					                    <label for="email">Your email</label>
+					                    <input type="password" name="userPwd" id="userPwd" class="inpt" required="required" placeholder="Your password">
+               						    <label for="password">Your password</label>
+					                    <input type="checkbox" id="saveId" name="saveId" class="checkbox">
+					                    <label for="saveId">Remember id</label>
+					                    <div class="submit-wrap">
+						                        <input type="button" id="loginBtn" value="Login" class="submit" onclick="checkLogin()"><br>
+						                        <input type="button" id="kakao" value="kakao login" class="submit">
+						                        <a href="mjoin.do" class="more">Join us</a>&nbsp;
+						                        <a href="findpwd.do" class="more">Forgot your password?</a>
+					                    </div>
+       					        </form>
+   				        </div>
+   				        <div class="signup-cont cont">
+               <form action="#" method="post" enctype="multipart/form-data">
+                   						<input type="email" name="email" id="email" class="inpt" required="required" placeholder="Your email">
+					                    <label for="email">Your email</label>
+					                    <input type="text" name="email" id="name" class="inpt" required="required" placeholder="Your name">
+					                    <label for="name">Your name</label>
+					                    <input type="number" name="password" id="password" class="inpt" required="required" placeholder="Your password">
+               						    <label for="password">Your phone</label>
+					                    <div class="submit-wrap">
+						                        <input type="submit" value="confirm" class="submit">
+						                        <a href="#" class="more">Terms and conditions</a>
+					                    </div>
+       					        </form>
+           </div>
+		        </div>
+	    </article>
+	    <div class="half bg"></div>
+</section>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<jsp:include page="../common/footer.jsp"/>
 
 <script type="text/javascript">
 $('.tabs .tab').click(function(){
@@ -471,6 +471,8 @@ function checkLogin(){
 					success:function(data){
 						if(data == "true"){
 							$("#loginForm").submit();
+						}else if(data == "nope"){
+							alert("회원 정보를 불러올 수 없습니다");
 						}else{
 							alert("비밀번호를 확인해 주세요");
 							$("#userPwd").focus();

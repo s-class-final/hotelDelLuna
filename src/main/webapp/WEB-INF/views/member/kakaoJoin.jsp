@@ -326,6 +326,7 @@ form {
 						<option value = "011">011</option>
 						<option value = "016">016</option>
 						<option value = "017">017</option>
+						<option value = "018">018</option>
 						<option value = "019">019</option>
 					</select>&nbsp;
 					<input type="text" id="userPhone2" name="userPhone2" maxlength="4" class = "join" oninput="nextPhone(); this.value=this.value.replace(/[^0-9]/g,'');" required>&nbsp;
@@ -415,137 +416,100 @@ form {
 				$("#userPhone3").focus();
 			}
 		};
-      
-      <%--
-      
-      // 가입 버튼 클릭했을 때
-      $(function(){
-         $("#joinBtn").click(function(){
-            return invalidJoin();
-         })
-      });
-      
-      // 가입버튼 클릭했을 때 실행 함수
-      function invalidJoin(){
-         var pattern1 = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
-          var pattern2 = /(\w)\1\1\1/;
-          
-         if($("#userId1").val().length == 0){
-            alert("아이디를 입력하세요");
-            $("#userId1").focus();
-            return false;
-         }
-         
-         if($("#pwd").val().length == 0){
-            alert("비밀번호를 입력하세요");
-            $("#pwd").focus();
-            return false;
-         }
-         
-         if($("#pwd").val().length < 8){
-            alert("비밀번호는 8자 이상이어야 합니다");
-            $("#pwd").focus();
-            return false;
-         }
-         
-         if($("#pwd").val().length > 25){
-            alert("비밀번호는 25자 이하여야 합니다");
-            $("#pwd").focus();
-            return false;
-         }
-         
-         if($("#checkPwd").val().length == 0){
-            alert("비밀번호 확인을 입력하세요");
-            $("#checkPwd").focus();
-            return false;
-         }
-         
-         if($("#nickname").val().length == 0){
-            alert("별명을 입력하세요");
-            $("#nickname").focus();
-            return false;
-         }
-         
-         if(idUsable == false){
-            alert("아이디가 중복됩니다");
-            $("#userId1").focus();
-            return false;
-         }
-         
-         if($("#pwd").val() != $("#checkPwd").val()){
-            alert("비밀번호가 일치하지 않습니다");
-            $("#checkPwd").focus();
-            return false;
-         }
-         
-         if(nickUsable == false){
-            alert("별명이 중복됩니다");
-            $("#nickname").focus();
-            return false;
-         }
-         
-         if(!/^[a-zA-Z0-9]*$/.test($("#userId1").val())){
-            alert("아이디에 한글 및 특수문자는 입력하실 수 없습니다");
-            $("#userId1").focus();
-            return false;
-         }
-         
-         if($("#userId1").val().indexOf(" ") >= 0){
-            alert("아이디에 공백은 입력할 수 없습니다");
-            $("#userId1").focus();
-            return false;
-         }
-         
-         if($('#pwd').val().indexOf(" ") >= 0){
-            alert("비밀번호에 공백은 입력할 수 없습니다");
-            $('#pwd').focus();
-            return false;
-         }
-         
-         if($('#checkPwd').val().indexOf(" ") >= 0){
-            alert("비밀번호 확인에 공백은 입력할 수 없습니다");
-            $('#checkPwd').focus();
-            return false;
-         }
-         
-         if(!pattern1.test($("#pwd").val())){            
-            alert("비밀번호는 영문, 숫자 8자 이상 조합을 사용해야 합니다");
-             $("#pwd").focus();
-             return false;
-          }
-         
-         if(pattern2.test($("#pwd").val())){
-            alert("비밀번호에 같은 문자를 4번 이상 사용하실 수 없습니다");
-             $("#pwd").focus();
-             return false;
-          }
-         
-         if($("#pwd").val().search($("#userId1").val()) > -1 && $("#userId1").val().length > 3){
-            alert("비밀번호에 아이디가 포함되어 있습니다");
-             $("#pwd").focus();
-             return false;
-          }
-         
-         if($("#nickname").val().indexOf(" ") >= 0){
-            alert("별명에 공백은 입력할 수 없습니다");
-            $("#nickname").focus();
-            return false;
-         }
-         
-         if(!/^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]*$/.test($("#nickname").val())){
-            alert("별명은 한글, 영문, 숫자만 입력 가능합니다");
-            $("#nickname").focus();
-            return false;
-         }
-         
-         if($("#nickname").val().length > 15){
-             alert("별명은 15자 이하여야 합니다");
-             $("#nickname").focus();
-             return false;
-          }
-         
-         return true;
-      } --%>
+
+		// 가입 버튼 클릭했을 때 유효성 검사 함수 실행
+		$(function() {
+			$("#joinBtn").click(function() {
+				return invalidJoin();
+			})
+		});
+
+		// 가입버튼 클릭했을 때 유효성 검사
+		function invalidJoin() {
+			var pattern1 = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,16}$/;
+			var pattern2 = /(\w)\1\1\1/;
+
+			if ($("#userId1").val().length == 0) {
+				alert("이메일을 입력하세요");
+				$("#userId1").focus();
+				return false;
+			}
+			
+			if ($("#userId1").val().length < 4) {
+				alert("이메일 아이디는 4자 이상 입력하세요");
+				$("#userId1").focus();
+				return false;
+			}
+
+			if ($("#lastName").val().length == 0) {
+				alert("성(last name)을 입력하세요");
+				$("#lastName").focus();
+				return false;
+			}
+
+			if ($("#firstName").val().length == 0) {
+				alert("이름(first name)을 입력하세요");
+				$("#firstName").focus();
+				return false;
+			}
+
+			if ($("#userPhone2").val().length == 0) {
+				alert("휴대폰 가운데 자리를 입력하세요");
+				$("#userPhone2").focus();
+				return false;
+			}
+
+			if ($("#userPhone3").val().length == 0) {
+				alert("휴대폰 끝자리를 입력하세요");
+				$("#userPhone3").focus();
+				return false;
+			}
+
+			if (idUsable == false) {
+				alert("이미 가입된 이메일입니다.");
+				$("#userId1").focus();
+				return false;
+			}
+
+			if (!/^[a-zA-Z0-9]*$/.test($("#userId1").val())) {
+				alert("이메일에 한글 및 특수문자는 입력하실 수 없습니다");
+				$("#userId1").focus();
+				return false;
+			}
+
+			if ($("#userId1").val().indexOf(" ") >= 0) {
+				alert("이메일에 공백은 입력할 수 없습니다");
+				$("#userId1").focus();
+				return false;
+			}
+
+			if ($("#lastName").val().indexOf(" ") >= 0) {
+				alert("이름에 공백은 입력할 수 없습니다");
+				$("#lastName").focus();
+				return false;
+			}
+
+			if ($("#firstName").val().indexOf(" ") >= 0) {
+				alert("이름에 공백은 입력할 수 없습니다");
+				$("#firstName").focus();
+				return false;
+			}
+
+			if (!/^[a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]*$/.test($("#lastName").val())) {
+				alert("이름은 한글, 영문만 입력 가능합니다");
+				$("#lastName").focus();
+				return false;
+			}
+
+			if (!/^[a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]*$/.test($("#firstName").val())) {
+				alert("이름은 한글, 영문만 입력 가능합니다");
+				$("#firstName").focus();
+				return false;
+			}
+
+			return true;
+		}
+		
    </script>
 
 

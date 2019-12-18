@@ -16,6 +16,12 @@ $(document).ready(function() {
 });
 
 function jsList() {
+	$("#form1").attr("action", "noticeListA.do");
+	$("#form1").attr("method", "post");
+	$("#form1").submit();
+}
+
+function jsList1() {
 	$("#form1").attr("action", "noticeList.do");
 	$("#form1").attr("method", "post");
 	$("#form1").submit();
@@ -44,9 +50,14 @@ function jsDelete(nId) {
 			<p>${notice.nContent }</p>
 		</div>
 		<div style="text-align:center;">
-			<a href="javascript:jsList();" class="btn btnFull"><span>목록</span></a>
-			<a href="#pop1" class="btn btnFull layerPopOpen"><span>수정</span></a>
-			<a href="javascript:jsDelete('${notice.nId }');" class="btn btnFull"><span>삭제</span></a>
+			<c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 1 || empty sessionScope.loginUser}">
+				<a href="javascript:jsList1();" class="btn btnFull"><span>목록</span></a>
+			</c:if>
+			<c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 2}">
+				<a href="javascript:jsList();" class="btn btnFull"><span>목록</span></a>
+				<a href="#pop1" class="btn btnFull layerPopOpen"><span>수정</span></a>
+				<a href="javascript:jsDelete('${notice.nId }');" class="btn btnFull"><span>삭제</span></a>
+			</c:if>
 		</div>
 	</div>
 </section>
@@ -112,7 +123,7 @@ function jsSave() {
         success : function(data, status, xhr) {
             if (status == "success") {
             	alert("공지사항 작성 완료");
-               location.href="noticeList.do";
+               location.href="noticeListA.do";
             }
         },
 		error:function(request, status, errorData){
@@ -155,7 +166,12 @@ function jsSave() {
                         </dd>
                     </dl>
                     <div class="checkbox">
-                    	<input type="checkbox" id="nStatus" name="nStatus" value="Y"><label for="nStatus">공개</label>
+                    	<c:if test="${notice.nStatus eq 'N'}">
+                    		<input type="checkbox" id="nStatus" name="nStatus" value="Y"><label for="nStatus">공개</label>
+                    	</c:if>
+                    	<c:if test="${notice.nStatus eq 'Y'}">
+                    		<input type="checkbox" id="nStatus" name="nStatus" value="Y" checked><label for="nStatus">공개</label>
+                    	</c:if>
                     </div>
             	</div>
             </form>
@@ -164,7 +180,7 @@ function jsSave() {
                 <a href="javascript:jsSave();" class="btn btnFull small"><span>등록</span></a>
             </div>
         </div>
-        <a href="#" class="layerPopClose btnPopClose">레이어 팝업 닫기</a>
+        <a href="#" class="layerPopClose btnPopClose" style="background: url('resources/pcPub/static/images/common/btn/btn_pop_close.png') no-repeat;">레이어 팝업 닫기</a>
     </div>
     <!-- //layerPopCont -->
 </div>

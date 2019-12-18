@@ -91,7 +91,7 @@
 		AND USERPHONE=#{userPhone}
 	</select>
 	
-	<select id="findUser" parameterType="Member" resultMap="memberResultSet">
+	<select id="findMember" parameterType="Member" resultMap="memberResultSet">
 		SELECT *
 		FROM MEMBER
 		WHERE USERID=#{userId}
@@ -109,6 +109,7 @@
 		FROM MEMBER
 		WHERE USERID=#{userId}
 		AND KAKAO IS NOT NULL
+		AND M_STATUS='Y'
 	</select>
 	
 	<select id="getListCount" resultType="_int">
@@ -170,4 +171,25 @@
 			SEQ_MID.NEXTVAL, DEFAULT, #{userId}, null, #{userName}, #{userPhone}, DEFAULT, DEFAULT,NULL
 		)
 	</insert>
+
+	<update id="deleteMember" parameterType="string">
+		UPDATE MEMBER
+		SET M_STATUS='N'
+		WHERE USERID=#{userId}
+	</update>
+	
+	<select id="getNoReplyListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM INQUIRY
+		WHERE I_STATUS='Y'
+		AND RE_STATUS='N'
+	</select>
+	
+	<select id="selectNoReplyList" resultMap="inquiryResultSet">
+		SELECT *
+		FROM INQUIRY
+		WHERE I_STATUS='Y'
+		AND RE_STATUS='N'
+	</select>
+	
 </mapper>
