@@ -27,6 +27,5 @@ public interface ReservationService {
 	/* 예약 상세 가져오기 */
 	Reservation selectResOne(int res_no);
 
-
 	
 }

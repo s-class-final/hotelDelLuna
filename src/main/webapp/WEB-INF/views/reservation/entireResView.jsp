@@ -76,6 +76,7 @@
 	border-bottom: none;
 }
 
+
 .table-fill  tr:nth-child(odd) td {
 	background: #EBEBEB;
 }
@@ -205,6 +206,8 @@
 				</thead>	
 			
 				<tbody class="table-hover">
+				
+				
 				</tbody>
 			</table>
 			<br><br><br>

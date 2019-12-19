@@ -5,18 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<!-- datepicker 한국어로 -->
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/datepicker-ko.js"></script>
-       
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
 <title>Insert title here</title>
         <style>
-            /*datepicker에서 사용한 이미지 버튼 style적용*/
-            img.ui-datepicker-trigger {
-                margin-left:5px; vertical-align:middle; cursor:pointer;
-			}
+
        #rtInsertTitle{
        font-size : 30px;
        text-align : center;
@@ -25,7 +19,6 @@
         .rtTable{
         margin : auto;
         width : 1000px;
-        height : 500px;
        	font-weight: 400;
         }
         
@@ -37,9 +30,11 @@
    			 margin-top: 7px;
   			 margin-bottom: 7px;
         }
-        .tdWidth{
+        .tdsize{
         	width: 240px;
+        	height : 60px;
         }
+		
         </style>
 </head>
 <body>
@@ -48,12 +43,12 @@
 <hr>
 	<form action="Roomtypeinsert.do" id="insertForm" method="post" enctype="multipart/form-data">
 		<table class= "rtTable" border = "1px solid black;">
-			<tr>
+			<tr class = "trH">
 				<td class="nameTd">룸 타입</td>
-				<td class="tdWidth"><select name="type">
+				<td class="tdsize"><select name="type">
 						<optgroup label="슈페리어">
-							<option value="superior">슈페리어</option>
-							<option value="superior_terrace">슈페리어 테라스</option>
+							<option value="SUPERIOR">슈페리어</option>
+							<option value="SUPERIOR_TERRACE">슈페리어 테라스</option>
 						</optgroup>
 						<optgroup label="디럭스">
 							<option value="DELUXE">디럭스</option>
@@ -69,52 +64,53 @@
 						</optgroup>
 					</select>
 				<td class="nameTd" >최대 수용 인원</td>
-				<td class="tdWidth"><input type="number" min=1 max=10 value=2 name="capacity"></td>
+				<td class="tdsize"><input type="number" min=1 max=10 value=2 name="capacity"></td>
 				<td class="nameTd" >배드 추가 여부</td>
 				<td ><input type="radio" name="addBed" value="Y">Y 
 					<input type="radio" name="addBed" value="N" checked="checked">N</td>
 			</tr>
-			<tr>
+			<tr class = "trH">
 				<td class="nameTd" >싱글배드 수</td>
 				<td><input type="number" min=0 max=4 value=1 name="singleBed"></td>
 				<td class="nameTd" >더블배드 수</td>
 				<td><input type="number" min=0 max=4 value=1 name="doubleBed"></td>
 				<td class="nameTd" >흡연 가능 여부</td>
-				<td class="tdWidth">
+				<td class="tdsize">
 				<input type="radio" name="smoking" value="Y">Y 
 				<input type="radio" name="smoking" value="N" checked="checked">N
 				</td>
 			</tr>
-				<tr>
+			<tr class = "trH">
 			  <td class="nameTd" >판매 시작일</td>
-			  <td><input type="text" id="onSaleDate"  name="startDay" readonly>  </td>
+			  <td class="tdsize"><input type="text" id="onSaleDate"  name="startDay" readonly>  </td>
 			  <td class="nameTd" >판매 종료일</td>
 			  <td colspan ="3"><input type="text" id="offSaleDate"  name="endDay" readonly></td>
 			</tr>
-			<tr>
-				<td class="nameTd" >주중가</td><td><input type="text" id="payment" name ="weekDay">원</td>
+			<tr class = "trH">
+				<td class="nameTd" >주중가</td><td class="tdsize"><input type="text" id="payment" name ="weekDay">원</td>
 				<td class="nameTd" >주말가</td><td><input type="text" id="weekendPay" value = "0" name ="weekEnd" style="background-color:#c8c8c8;" readonly >원</td> 
 				<td class="nameTd" >어린이 요금</td><td><input type="text" id="childPay" value = "0" name ="childRate" style="background-color:#c8c8c8;" readonly >원</td>
 			</tr>
-			<tr>
+			<tr class = "trH">
 				<td class="nameTd">대표 사진</td>
-				<td colspan ="5"></td>
+				<td colspan ="5" class="tdsize"></td>
 			</tr>
-			<tr>
+			<tr class = "trH">
 				<td class="nameTd" >첨부파일</td>
-				<td colspan="5"><input type="File" name = "file" id = "mainImg" onchange="fileTypeCheck(this)"></td>
+				<td colspan="5" class="tdsize"><input type="File" name = "file" id = "mainImg" onchange="fileTypeCheck(this)"></td>
 			</tr>
-			<tr>
+			<tr class = "trH">
 				<td class="nameTd" colspan ="1">상세 사진</td>
-				<td  colspan ="5"><button type="button"onclick="button1_click();">상세 사진 추가</button></td>
+				<td  colspan ="5" class="tdsize"><button type="button"onclick="button1_click();">상세 사진 추가</button></td>
 			</tr>
-			<tr>
+			<tr class = "trH">
 				<td class="nameTd" >첨부파일</td>
-			<td colspan="5" id ="filetd">
+			<td colspan="5" id ="filetd" class="tdsize"> 
 				<input type="File" name= "file" id = "subImg_1" onchange="fileTypeCheck(this)"><br> 
+			</td>
 			</tr>
-			<tr>
-				<td colspan="5"></td><td colspan="1"> <input type="submit" id="submit" value="룸 등록하기" style= "float : right;"></td>
+			<tr >
+				<td colspan="5" class="tdsize"></td><td colspan="1"> <input type="submit" id="submit" value="룸 등록하기" style= "float : right;"></td>
 			</tr>
 			
 		</table>
@@ -129,6 +125,7 @@
 			BtnCount++
 			if(BtnCount >= 10){
 				alert("상세사진은 8장까지 추가가능합니다");
+				BtnCount--
 			}else{
 			//동적 스크립트로 태그추가
 			var addtag = "<p id ='addinput'><input type='file' name='file' onchange='fileTypeCheck(this)'>"+"<button type='button' onclick='delBtn(this);'>삭제하기</button><br></p>"
@@ -168,7 +165,7 @@
                     //buttonText: "날짜선택",             // 버튼의 대체 텍스트
                     dateFormat: "yy-mm-dd",             // 날짜의 형식
                     changeMonth: true,                  // 월을 이동하기 위한 선택상자 표시여부
-                    //minDate: 0,                       // 선택할수있는 최소날짜, ( 0 : 오늘 이전 날짜 선택 불가)
+                    minDate: 0,                       // 선택할수있는 최소날짜, ( 0 : 오늘 이전 날짜 선택 불가)
                     onClose: function( selectedDate ) {    
                         // 시작일(onSaleDate) datepicker가 닫힐때
                         // 종료일(offSaleDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
@@ -218,7 +215,7 @@
 			
 			});
 		});
-		
+		//인풋 이미지파일 필터
 		function fileTypeCheck(f){
 			// files 로 해당 파일 정보 얻기.
 			var file = f.files;

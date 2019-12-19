@@ -12,6 +12,7 @@
 		<typeAlias type="com.kh.hotelDelLuna.reservation.model.vo.ResSearchCondition" alias="ResSearchCondition"/>
 		<typeAlias type="com.kh.hotelDelLuna.room.model.vo.Attachment" alias="Attachment"/>
 		<typeAlias type="com.kh.hotelDelLuna.room.model.vo.RoomType" alias="RoomType"/>
+		<typeAlias type="com.kh.hotelDelLuna.room.model.vo.Room" alias="Room"/>
 		<typeAlias type="com.kh.hotelDelLuna.admin.model.vo.Invoice" alias="Invoice"/>
 	</typeAliases>
 	
@@ -20,6 +21,7 @@
 		<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/reservation-mapper.xml"/>
 		<mapper resource="mappers/roomtype-mapper.xml"/>
+		<mapper resource="mappers/room-mapper.xml"/>
 		<mapper resource="mappers/admin-mapper.xml"/>
 	</mappers>
 	
