@@ -45,8 +45,6 @@
 				<h1>${res.res_roomType }</h1>
 				<br>
 				<a href="#detailPop1" class="btn small" onclick="popModal()"><span>자세히 보기</span></a>
-				<label>흡연 여부</label><input id="smoking" class="check" type="checkbox" name="res_smoking"<c:if test="${res.res_payStatus eq '입금완료' }">  
-						 disabled </c:if> >
 				<label>베드 추가</label><input id="addBed" class="check" type="checkbox" name="res_addBed"<c:if test="${res.res_payStatus eq '입금완료' }">  
 						 disabled </c:if> >
 			</div>
@@ -63,7 +61,7 @@
 						</c:if>
 						<c:if test="${res.res_payStatus eq '입금완료' }">
 							<input  name="checkInOut" type="text" value="${res.res_checkIn} ~ ${res.res_checkOut}" readonly="readonly"
-							style="">
+							style="height:48px;width:245px;border: 1px solid #e6e3df;background: #f9f9f9">
 						</c:if>
 					</dd>
 				</dl>
@@ -105,7 +103,7 @@
 				<dl>
 					<dt>총 인원</dt>
 					<dd>
-						<input type="text" id="calTotal" value="${res.res_child + res.res_adult} " readonly>
+						<input type="text" id="calTotal" value="${res.res_child + res.res_adult} " readonly disabled>
 					</dd>
 				</dl>
 			</div>
@@ -146,7 +144,6 @@
 							<p id="checkInOut">${res.res_checkIn} ~ ${res.res_checkOut}</p>			
 							<p id="total">성인 ${res.res_adult} / 어린이 ${res.res_child}</p>			
 							<p>${res.res_roomType} 룸</p>	
-							<p id="res_smoking">흡연 여부  ${res.res_smoking}</p>	
 							<p id="res_addBed">베드 추가  ${res.res_addBed}</p>	
 							<div class="casyBox">
 								<dl>
@@ -271,17 +268,14 @@ $(function(){
 
 });
 
-	/***** 흡연여부 베드추가여부 결과창에 담기 *****/
+	/***** 베드추가여부 결과창에 담기 *****/
 	$(document).on("click",".check",function(){
 		if ($(this).is(":checked")){ 
 	        $(this).val("Y");
 	    }else{
 	        $(this).val("N");
 	    }
-		
-		if($(this).attr("name")=="res_smoking"){
-			$("#res_smoking").text("흡연 여부  "+$(this).val());
-		}
+
 		if($(this).attr("name")=="res_addBed"){
 			$("#res_addBed").text("베드 추가  "+$(this).val());			
 		}
@@ -302,7 +296,13 @@ $(function(){
 		var res_child = $("select[name=res_child]").val();
 		var checkInOut = $("input[name=checkInOut]").val();
 		
-		location.href="resModify.do?&res_no="+res_no+"&res_adult="+res_adult+"&res_child="+res_child+"&checkInOut="+checkInOut;
+		calTotal
+		if($("#calTotal").val()!=0){
+			
+			location.href="resModify.do?&res_no="+res_no+"&res_adult="+res_adult+"&res_child="+res_child+"&checkInOut="+checkInOut;
+		}else{
+			alert("인원 수가 잘못 되었습니다.")
+		}
 				
 	}
 

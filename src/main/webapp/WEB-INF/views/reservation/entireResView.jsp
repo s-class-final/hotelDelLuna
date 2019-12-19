@@ -239,13 +239,13 @@
 			<div class="reservationAside">
 			<section class="reservationSection" style="width:400px;right:30px">
 				<br><br>
-				<form class="resInsertForm" action="resInsert.do">
+				<form class="resInsertForm" action="resInsert.do" onsubmit="return formCheck()">
 				<div class="resInp">
 				<table style="margin:30px;border-spacing:10px;border-collapse: separate;">
 				<tr>
 					<td >예약자: </td>
-					<td><input type="text" name="userName1" placeholder="성" required></td>
-					<td colspan="2"><input type="text" name="userName2" placeholder="이름" required></td>
+					<td><input type="text" id="userName1" name="userName1" placeholder="성" required></td>
+					<td colspan="2"><input type="text" id="userName2" name="userName2" placeholder="이름" required></td>
 					<td></td>
 				</tr>
 				<tr>
@@ -281,8 +281,8 @@
 							<option value = "017">017</option>
 							<option value = "019">019</option>
 						</select>&nbsp;
-						<input type="text" name="phone2"  style="display:inline;width:25%" required>
-						<input type="text" name="phone3"  style="display:inline;width:25%" required>
+						<input type="text" id="phone2" name="phone2"  style="display:inline;width:25%" required maxlength="4" oninput="nextPhone(); this.value=this.value.replace(/[^0-9]/g,'');">
+						<input type="text" id="phone3" name="phone3"  style="display:inline;width:25%" required maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
 					</td>
 				</tr>
 				<tr>
@@ -290,7 +290,7 @@
 					<td colspan=3>
 						<select name="res_roomType" style="width:100%;height:32px;border: 1px solid #e6e3df;">
 							<c:forEach var="room" items="${roomList}">
-								<option value="${room}">${room}</option>
+								<option value="${room.type}">${room.type}</option>
 							</c:forEach>
 													
 						</select>
@@ -308,7 +308,7 @@
 				<tr>
 					<td>성인: </td>
 					<td><input type="number" id="adult"name="res_adult" min=0 max=10 value=0 style="width:50px;display:inline"></td>
-					<td colspan=3>흡연여부  <input id="smoking" class="check" type="checkbox" name="res_smoking" style="width:auto;display:inline;">
+					<td colspan=3>
 					&nbsp;&nbsp;베드추가  <input id="addBed" class="check" type="checkbox" name="res_addBed" style="width:auto;display:inline;"></td>
 					
 				</tr>
@@ -365,6 +365,7 @@
 	<script>
 	var nowPage;   //현재 페이지를 담을 변수
 	var resNo;	   //예약 번호를 담을 변수
+	var totalNum=0;
 	$(function(){	
  		 pagingAjax(1);
 		
@@ -376,7 +377,7 @@
  */
 
 		 
-		var totalNum=0;
+		
 		var nowDate = new Date().toISOString().substring(0, 10);
 
 		/* 체크인 날짜 최소 오늘 */
@@ -452,6 +453,8 @@
 			}
 			pagingAjax(nowPage,null,null,sort_no,false);
 		})
+		
+
 		
 		
 	});
@@ -640,6 +643,102 @@
 			$("#checkId").html('');
 			
 		}
+		
+		// 전화번호 4자리 입력시 다음 입력칸으로 넘어가게
+		function nextPhone() {
+			if ($("#phone2").val().length >= 4) {
+				$("#phone3").focus();
+			}
+		};
+		
+		
+		/**** 폼 서브밋 전에 전부 검사 ****/
+		function formCheck(){
+			
+			var roomType = $("select[name=res_roomType]").val();
+			var list = new Array();
+			
+			<c:forEach items="${roomList}" var="item1">
+				list.push("${item1.type}");
+				list.push("${item1.capacity}");
+			</c:forEach>
+
+			
+			for(var i=0;i<${roomList.size()*2};i++){
+				if(list[i]==roomType){
+					maxCap = list[i+1];
+				}
+			}
+		
+			// 이름 체크
+			if ($("#userName1").val().length == 0) {
+				alert("성(last name)을 입력하세요");
+				$("#userName1").focus();
+				return false;
+			}
+
+			if ($("#userName2").val().length == 0) {
+				alert("이름(first name)을 입력하세요");
+				$("#userName2").focus();
+				return false;
+			}
+			if ($("#userName1").val().indexOf(" ") >= 0) {
+				alert("이름에 공백은 입력할 수 없습니다");
+				$("#userName1").focus();
+				return false;
+			}
+
+			if ($("#userName2").val().indexOf(" ") >= 0) {
+				alert("이름에 공백은 입력할 수 없습니다");
+				$("#userName2").focus();
+				return false;
+			}
+
+			if (!/^[a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]*$/.test($("#userName1").val())) {
+				alert("이름은 한글, 영문만 입력 가능합니다");
+				$("#userName1").focus();
+				return false;
+			}
+
+			if (!/^[a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]*$/.test($("#userName2").val())) {
+				alert("이름은 한글, 영문만 입력 가능합니다");
+				$("#userName2").focus();
+				return false;
+			}
+			
+			
+			
+			// 이메일 체크
+			if (!/^[a-zA-Z0-9]*$/.test($("#email1").val())) {
+				alert("이메일에 한글 및 특수문자는 입력하실 수 없습니다");
+				$("#email1").focus();
+				return false;
+			}
+
+			if ($("#email1").val().indexOf(" ") >= 0) {
+				alert("이메일에 공백은 입력할 수 없습니다");
+				$("#email1").focus();
+				return false;
+			}
+
+			// 날짜체크
+			if($("input[name=checkInOut]").val()==null || $("input[name=checkInOut]").val()==""){
+				alert("날짜를 입력해야 합니다.");
+				return false;
+			}
+			
+			// 인원체크
+			 if(totalNum==0){
+				 alert("인원 수가 잘못 되었습니다.");
+				 return false;
+			 }
+			 if(totalNum>maxCap){
+				 alert("최대인원 초과! 해당 방의 최대인원은 "+maxCap+"명 입니다.");
+				 return false;
+			 }
+			
+		}
+		
 		// 메일 바뀌게 하는 함수(바뀔 때마다 아이디 중복체크 함수 실행)
 		$('#email').change(function() {
 			$("#email option:selected").each(function() {

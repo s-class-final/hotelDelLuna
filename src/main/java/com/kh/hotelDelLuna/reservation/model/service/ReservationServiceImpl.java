@@ -12,6 +12,7 @@ import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.reservation.model.dao.ReservationDao;
 import com.kh.hotelDelLuna.reservation.model.vo.ResSearchCondition;
 import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
+import com.kh.hotelDelLuna.room.model.vo.RoomType;
 
 @Service("rService")
 public class ReservationServiceImpl implements ReservationService{
@@ -129,6 +130,30 @@ public class ReservationServiceImpl implements ReservationService{
 	public int roomStatusDelete(int resNo) {
 
 		return rDao.roomStatusDelete(resNo);
+	}
+
+	@Override
+	public List<Integer> selectRoomTypeCount() {
+
+		return rDao.selectRoomTypeCount();
+	}
+
+	@Override
+	public List<Map<String, Object>> getRoomList() {
+
+		return rDao.getRoomList();
+	}
+
+	@Override
+	public int getResRoomCount(Reservation searchRes) {
+
+		return rDao.getResRoomCount(searchRes);
+	}
+
+	@Override
+	public ArrayList<RoomType> selectRoomList() {
+
+		return rDao.selectRoomList();
 	}
 
 

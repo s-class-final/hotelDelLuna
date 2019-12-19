@@ -116,7 +116,7 @@ function jsSave() {
 	var nStatus = $("#nStatus").val();
 	
 	
-     $.ajax({
+  	$.ajax({
         url : "noticeUpdate.do",
         method : "post",
         data : {nId:nId, user_T:user_T, nTitle:nTitle, nContent:nContent, nStatus:nStatus},

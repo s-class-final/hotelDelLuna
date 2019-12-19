@@ -35,6 +35,7 @@ import com.kh.hotelDelLuna.reservation.model.service.ReservationService;
 import com.kh.hotelDelLuna.reservation.model.vo.DateData;
 import com.kh.hotelDelLuna.reservation.model.vo.ResSearchCondition;
 import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
+import com.kh.hotelDelLuna.room.model.vo.RoomType;
 
 @Controller
 public class ReservationController {
@@ -44,6 +45,7 @@ public class ReservationController {
 	
 	@Autowired
 	MemberService mService;
+	
 	
 	/********** 처음 예약 페이지 뿌려줄 때 **********/
 	@RequestMapping(value = "entireResList.do", method = RequestMethod.GET)
@@ -60,13 +62,17 @@ public class ReservationController {
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		ArrayList<Reservation> rlist = rService.selectResList(pi);
 
-		List<String> roomTypeList = rService.selectRoomTypeList();
-		System.out.println("뽑아온 roomTypeList : "+roomTypeList);
+		ArrayList <RoomType> roomList = rService.selectRoomList();
+		//룸타입과 타입별 개수 한번에 받기
 
+		System.out.println("진짜마지막 : "+roomList);
+		
+		
+		
 		if (rlist != null && rlist.size() > 0) { // 게시글이 있다면
 			mv.addObject("list", rlist);
 			mv.addObject("pi", pi);
-			mv.addObject("roomList",roomTypeList);
+			mv.addObject("roomList",roomList);
 			
 			mv.setViewName("reservation/tabResMenu");
 		
@@ -234,10 +240,11 @@ public class ReservationController {
 	}
 
 	
-	/********** 예약 내역 생성하기 **********/
+	/********** 예약 내역 생성하기 
+	 * @throws IOException **********/
 	
 	@RequestMapping(value = "resInsert.do")
-	public ModelAndView resInsert(ModelAndView mv,Reservation res,
+	public void resInsert(HttpServletResponse response,Reservation res,
 			@RequestParam(value = "userName1", required = false) String userName1,
 			@RequestParam(value = "userName2", required = false) String userName2,			
 			@RequestParam(value = "email1", required = false) String email1,
@@ -245,13 +252,12 @@ public class ReservationController {
 			@RequestParam(value = "phone1", required = false) String phone1,
 			@RequestParam(value = "phone2", required = false) String phone2,
 			@RequestParam(value = "phone3", required = false) String phone3,
-			@RequestParam(value = "checkInOut", required = false) String checkInOut) {
+			@RequestParam(value = "checkInOut", required = false) String checkInOut) throws IOException {
 
+		response.setContentType("text/html; charset=UTF-8");
 
-		System.out.println("넘어온 값: "+checkInOut);
-		System.out.println("넘어온 값: "+res);
-		
-		
+    	PrintWriter out = response.getWriter();
+
 		// 아이디 합치기
 		res.setRes_userId(email1 + '@' + email2);
 		// 이름 합치기
@@ -280,55 +286,96 @@ public class ReservationController {
 			e.printStackTrace();
 		}
 		
-		// 1_1. 예약자 아이디가 회원에 있는지 확인!
-		Member member = mService.findMember(m);
-		// 1_2. 예약자 아이디가 비회원에 있는지 확인!
-		/*
-		 * if(member==null) {
-		 * 
-		 * }
-		 */
 		
-		int mInsert=1;
-		int result;
-		// 2. 예약자 아이디가 회원,비회원에 없으면 비회원 테이블에 예약자 정보 삽입
-		
-		if(member==null){
-			mInsert = mService.insertNonMember(m);
-		}
-
-		// 3. 예약 내역 생성
-		if(mInsert>0) {
-			result = rService.resInsert(res);
-			int res_no = rService.getResNo(res);
-			res.setRes_no(res_no);
-			
-    		for(int i=0;i<diffDay;i++) {
-	            Calendar cal = Calendar.getInstance();
-
-	            cal.setTime(startDate);
-	            cal.add(Calendar.DATE, i);
-
-	            String strResult = sdf.format(cal.getTime());
-	            
-	            java.sql.Date checkIn = new java.sql.Date(Date.valueOf(strResult).getTime());
-	            res.setRes_checkIn(checkIn);
-	            result= rService.resRoomStatusInsert(res);
-    		}
-    		
-			System.out.println("됐나? :"+result);
-			if(result>0) {
-				System.out.println("예약 삽입 성공!");
-			}else {
-				throw new ReservationException("예약 내역 생성 실패!");
+		//룸타입과 타입별 개수 한번에 받기
+		List<Map<String, Object>> roomList = rService.getRoomList();
+		System.out.println("룸타입과 개수 동시 : "+roomList);
+		int ftotalCount=0;
+		for(int i=0;i<roomList.size();i++){
+			if(roomList.get(i).get("ROOMTYPE").equals(res.getRes_roomType())) {
+				System.out.println(res.getRes_roomType()+"의 개수 : "+roomList.get(i).get("COUNT"));
+				ftotalCount = Integer.valueOf(String.valueOf(roomList.get(i).get("COUNT")));
+				break;
 			}
-		}else {
-			throw new ReservationException("예약 내역 생성할 비회원 정보 생성 실패!");
 		}
+		java.sql.Date checkIn = new java.sql.Date(4);
+		
+		boolean checkDate = true;
 
+		for(int i=0;i<diffDay;i++) {
+            Calendar cal = Calendar.getInstance();
 
-		mv.setView(new RedirectView("entireResList.do"));
-		return mv;
+            cal.setTime(startDate);
+            cal.add(Calendar.DATE, i);
+
+            String strResult = sdf.format(cal.getTime());
+            
+            checkIn = new java.sql.Date(Date.valueOf(strResult).getTime());
+            Reservation searchRes = new Reservation();
+            searchRes.setRes_checkIn(checkIn);
+            searchRes.setRes_roomType(res.getRes_roomType());
+            // 체크인 날짜. 룸타입으로 roomStatus테이블에서 검색.
+            int resRoomCount = rService.getResRoomCount(searchRes);
+            System.out.println(i+"번째 : "+resRoomCount);
+            // 룸타입 총 개수 - 해당날짜 룸타입 개수 . 0일 시 브레이크 하고 예약 입력 취소
+            System.out.println("방 개수 빼기 : "+(ftotalCount - resRoomCount));
+            if(ftotalCount-resRoomCount<=0) {
+            	     
+        		checkDate = false;
+        		break;
+            }
+           
+		}
+		
+		if(checkDate) {
+			// 1_1. 예약자 아이디가 회원에 있는지 확인!
+			Member member = mService.findMember(m);		
+
+			
+			int mInsert=1;
+			int result;
+			// 2. 예약자 아이디가 회원,비회원에 없으면 비회원 테이블에 예약자 정보 삽입
+			
+			if(member==null){
+				mInsert = mService.insertNonMember(m);
+			}
+
+			// 3. 예약 내역 생성
+			if(mInsert>0) {
+				result = rService.resInsert(res);
+				int res_no = rService.getResNo(res);
+				res.setRes_no(res_no);
+				
+	    		for(int i=0;i<diffDay;i++) {
+		            Calendar cal = Calendar.getInstance();
+
+		            cal.setTime(startDate);
+		            cal.add(Calendar.DATE, i);
+
+		            String strResult = sdf.format(cal.getTime());
+		            
+		            checkIn = new java.sql.Date(Date.valueOf(strResult).getTime());
+		            res.setRes_checkIn(checkIn);
+		            result= rService.resRoomStatusInsert(res);
+	    		}
+	    		
+				System.out.println("됐나? :"+result);
+				if(result>0) {
+					System.out.println("예약 삽입 성공!");
+					out.println("<script>alert('예약 삽입 성공!');location.href='entireResList.do'; </script>");
+	        		out.flush();
+				}else {
+					throw new ReservationException("예약 내역 생성 실패!");
+				}
+			}else {
+				throw new ReservationException("예약 내역 생성할 비회원 정보 생성 실패!");
+			}
+
+		}else {
+    		out.println("<script>alert('해당 "+ checkIn +" 날짜의 예약하려는 룸이 가득찼습니다.');location.href='entireResList.do'; </script>");
+    		out.flush();
+		}
+	
 	}
 	
 	/********** 생성할 예약내역 유저 검사 **********/
@@ -343,6 +390,7 @@ public class ReservationController {
 		
 		// 아이디 찾기
 		Member member = mService.findMember(m);
+		
 		Gson gson = new Gson();
 
 		if(member!=null) {
@@ -387,24 +435,116 @@ public class ReservationController {
 		
 		res = settingDate(res,checkInOut);
 
-		System.out.println(res);
+		System.out.println("수정될 정보 : "+res);
+			
+		Reservation nowRes = rService.selectResOne(res.getRes_no());
 		
-		int result = rService.resModify(res);
-	
-		// roomStatus 테이블의 예약 상황도 변경!!!, 같은 예약 번호를 찾아
+		System.out.println("바꿀 예약찍어본다 : "+nowRes);
+		// roomStatus 테이블의 예약 상황도 변경!!!, 같은 예약 번호를 찾아 삭제 후 다시 생성하자.
 		// 날짜 변경
+		
+
+		
+		String strFormat = "yyyy-MM-dd"; // strStartDate 와 strEndDate 의 format
+		long diffDay = 0;
+		java.util.Date startDate = new java.util.Date();
+		// SimpleDateFormat 을 이용하여 startDate와 endDate의 Date 객체를 생성한다.
+		SimpleDateFormat sdf = new SimpleDateFormat(strFormat);
+		try {
+			startDate = sdf.parse(res.getRes_checkIn().toString());
+			java.util.Date endDate = sdf.parse(res.getRes_checkOut().toString());
+
+			// 두날짜 사이의 시간 차이(ms)를 하루 동안의 ms(24시*60분*60초*1000밀리초) 로 나눈다.
+			diffDay = (endDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000);
+			System.out.println(diffDay + "일");
+			res.setRes_count((int) diffDay);
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		
+		//룸타입과 타입별 개수 한번에 받기
+		List<Map<String, Object>> roomList = rService.getRoomList();
+		System.out.println("룸타입과 개수 동시 : "+roomList);
+		int ftotalCount=0;
+		for(int i=0;i<roomList.size();i++){
+			if(roomList.get(i).get("ROOMTYPE").equals(nowRes.getRes_roomType())) {
+				System.out.println(nowRes.getRes_roomType()+"의 개수 : "+roomList.get(i).get("COUNT"));
+				ftotalCount = Integer.valueOf(String.valueOf(roomList.get(i).get("COUNT")));
+				break;
+			}
+		}
+		java.sql.Date checkIn = new java.sql.Date(4);	
+		boolean checkDate = true;
+		
+		for(int i=0;i<diffDay;i++) {
+            Calendar cal = Calendar.getInstance();
+
+            cal.setTime(startDate);
+            cal.add(Calendar.DATE, i);
+
+            String strResult = sdf.format(cal.getTime());
+            
+            checkIn = new java.sql.Date(Date.valueOf(strResult).getTime());
+            
+            Reservation searchRes = new Reservation();
+            searchRes.setRes_checkIn(checkIn);
+            searchRes.setRes_roomType(nowRes.getRes_roomType());
+            // 체크인 날짜. 룸타입으로 roomStatus테이블에서 검색.
+            int resRoomCount = rService.getResRoomCount(searchRes);
+            System.out.println(i+"번째 : "+resRoomCount);
+            // 룸타입 총 개수 - 해당날짜 룸타입 개수 . 0일 시 브레이크 하고 예약 입력 취소
+            System.out.println("방 개수 빼기 : "+(ftotalCount - resRoomCount));
+            if(ftotalCount-resRoomCount<=0) {
+            	     
+        		checkDate = false;
+        		break;
+            }
+		}
 		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-	
-		if(result>0) {
+		
+		if(checkDate) {
 			
-			out.println("<script>alert('예약 내역이 수정되었습니다'); location.href='entireResList.do'=;</script>");
+			// 수정!
+			int result = rService.resModify(res);
+			res.setRes_roomType(nowRes.getRes_roomType());
+			// 일단 배정상태에서 삭제
+			int dResult = rService.roomStatusDelete(nowRes.getRes_no());
+			int iResult=0;
+			
+    		for(int i=0;i<diffDay;i++) {
+	            Calendar cal = Calendar.getInstance();
 
-			out.flush();
+	            cal.setTime(startDate);
+	            cal.add(Calendar.DATE, i);
+
+	            String strResult = sdf.format(cal.getTime());
+	            
+	            checkIn = new java.sql.Date(Date.valueOf(strResult).getTime());
+	            res.setRes_checkIn(checkIn);
+	            iResult= rService.resRoomStatusInsert(res);
+    		}
+    		
+			
+			if(result>0&&dResult>0&&iResult>0) {
+				
+				out.println("<script>alert('예약 내역이 수정되었습니다'); location.href='entireResList.do';</script>");
+				out.flush();
+			}else {
+				throw new ReservationException("예약 내역 수정 실패!!");
+			}
+			
 		}else {
-			throw new ReservationException("예약 내역 수정 실패!!");
+			out.println("<script>alert('수정하려는 날짜에 방이 가득 찼습니다.'); location.href='entireResList.do';</script>");
+
 		}
+		
+
+	
+		
 
 	} 
 	
@@ -482,7 +622,7 @@ public class ReservationController {
 			if(i==today_info.get("today")){
 				calendarData= new DateData(String.valueOf(dateData.getYear()), 
 						String.valueOf(dateData.getMonth()), String.valueOf(i), 
-						"today",totalRoomCount-resRoomCount,superiorRoom-superiorCount,deluxeRoom- deluxeCount,suiteRoom - suiteCount);
+						"today",totalRoomCount-resRoomCount,superiorRoom,deluxeRoom,suiteRoom,superiorCount,deluxeCount,suiteCount);
 			}else if(i<today_info.get("today")) {
 				calendarData= new DateData(String.valueOf(dateData.getYear()), String.valueOf(dateData.getMonth()), String.valueOf(i), "before_date");
 			}else if(today_info.get("today")==-1) {
@@ -491,7 +631,7 @@ public class ReservationController {
 		
 				calendarData= new DateData(String.valueOf(dateData.getYear()),
 						String.valueOf(dateData.getMonth()), String.valueOf(i), 
-						"normal_date",totalRoomCount-resRoomCount,superiorRoom-superiorCount,deluxeRoom- deluxeCount,suiteRoom - suiteCount);
+						"normal_date",totalRoomCount-resRoomCount,superiorRoom,deluxeRoom,suiteRoom,superiorCount,deluxeCount,suiteCount);
 			}
 			
 			dateList.add(calendarData);
@@ -545,6 +685,9 @@ public class ReservationController {
 	
 	
 	
+	/****
+		
+		
 	
 	/******* 날짜 데이터 재구성 *******/
 	public Reservation settingDate(Reservation res,String checkInOut) {
