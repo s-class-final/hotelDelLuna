@@ -229,15 +229,18 @@ body {
                   url:"idcheck.do",
                   data:{userId:userId.val()},
                   success:function(data){
-                     if(data == "true"){
-                        $("#checkId").html('');
-                        $("#checkId").html("이미 가입된 이메일입니다").css("color", "red");
-                        idUsable = false;
-                     }else{
-                        $("#checkId").html('');
-                        $("#checkId").html("이메일 사용 가능합니다").css("color", "green");
-                        idUsable = true;
-                     }
+                	  if (data == "false"){
+ 	                     $("#checkId").html('');
+ 	                     $("#checkId").html("아이디 사용 가능합니다").css("color","green");
+ 	                     idUsable = true;
+ 	                  }else if(data == "false1"){
+ 	                     $("#checkId").html('');
+ 	                     $("#checkId").html("아이디 사용 가능합니다 (예약 내역 존재)").css("color","green");
+ 	                     idUsable = true;
+ 	                  }else if(data == "nope"){
+ 	                     $("#checkId").html('');
+ 	                     $("#checkId").html("이미 탈퇴한 이메일입니다. 다른 이메일을 이용해주세요").css("color","red");
+ 	                  }
                   },
                   error:function(request, status, errorData){
 						alert("error code: " + request.status + "\n"

@@ -279,6 +279,22 @@ body .container .content .signup-cont {
   text-decoration: none;
 }
 
+.selectB{
+  font-size: 14px;
+  display: block;
+  width: 100%;
+  height: 42px;
+  margin-bottom: 12px;
+  padding: 5px 13px;
+  color: #999999;
+  border: 1px solid #d9d9d9;
+  background: transparent;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  width: 31%;
+  display: inline-block;
+}
 </style>
 </head>
 <body onkeydown="javascript:onEnterLogin();">
@@ -301,24 +317,35 @@ body .container .content .signup-cont {
 					                    <input type="checkbox" id="saveId" name="saveId" class="checkbox">
 					                    <label for="saveId">Remember id</label>
 					                    <div class="submit-wrap">
-						                        <input type="button" id="loginBtn" value="Login" class="submit" onclick="checkLogin()"><br>
-						                        <input type="button" id="kakao" value="kakao login" class="submit">
-						                        <a href="mjoin.do" class="more">Join us</a>&nbsp;
-						                        <a href="findpwd.do" class="more">Forgot your password?</a>
+					                        <input type="button" id="loginBtn" value="Login" class="submit" onclick="checkLogin()"><br>
+					                        <input type="button" id="kakao" value="kakao login" class="submit">
+					                        <a href="mjoin.do" class="more">Join us</a>&nbsp;
+					                        <a href="findpwd.do" class="more">Forgot your password?</a>
 					                    </div>
        					        </form>
    				        </div>
    				        <div class="signup-cont cont">
-               <form action="#" method="post" enctype="multipart/form-data">
-                   						<input type="email" name="email" id="email" class="inpt" required="required" placeholder="Your email">
+              					 <form action="scmyres.do">
+                   						<input type="email" name="findMail" id="findMail" class="inpt" required="required" placeholder="Your email">
 					                    <label for="email">Your email</label>
-					                    <input type="text" name="email" id="name" class="inpt" required="required" placeholder="Your name">
-					                    <label for="name">Your name</label>
-					                    <input type="number" name="password" id="password" class="inpt" required="required" placeholder="Your phone">
-               						    <label for="password">Your phone</label>
+					                    <input type="text" name="findName1" id="findName1" class="inpt" required="required" placeholder="Last name" style="width:49%; display:inline-block;">
+					                    <label for="name">Last name</label>
+					                    <input type="text" name="findName2" id="findName2" class="inpt" required="required" placeholder="First name" style="width:49%; display:inline-block;">
+					                    <label for="name">First name</label>
+					                    <select class="selectB" id = "findPhone1" name = "findPhone1">
+											<option value="010">010</option>
+											<option value="011">011</option>
+											<option value="016">016</option>
+											<option value="017">017</option>
+											<option value="018">018</option>
+											<option value="019">019</option>
+										</select>
+					                    <input type="text" name="findPhone2" id="findPhone2" class="inpt" required="required" style="width:33%; display:inline-block;">
+               						    <label for="findPhone2">Your phone</label>
+               						    <input type="text" name="findPhone3" id="findPhone3" class="inpt" required="required" style="width:33%; display:inline-block;">
+               						    <label for="findPhone3">Your phone</label>
 					                    <div class="submit-wrap">
-						                        <input type="submit" value="confirm" class="submit">
-						                        <a href="#" class="more">Terms and conditions</a>
+					                        <input type="submit" value="confirm" class="submit">
 					                    </div>
        					        </form>
            </div>
@@ -460,41 +487,41 @@ function checkLogin(){
 	}
 	
 	$.ajax({
-		url:"idcheck.do",
-		data:{userId:userId},
-		success:function(data){
-			if(data == "true"){
-				$.ajax({
-					url:"pwdcheck.do",
-					type:"post",
-					data:{userId:userId, userPwd:userPwd},
-					success:function(data){
-						if(data == "true"){
-							$("#loginForm").submit();
-						}else if(data == "nope"){
-							alert("회원 정보를 불러올 수 없습니다");
-						}else{
-							alert("비밀번호를 확인해 주세요");
-							$("#userPwd").focus();
-						}
-					},
-					error : function(request, status, errorData) {
-						alert("error code: " + request.status + "\n"
-								+ "message: " + request.responseText
-								+ "error: " + errorData);
-					}
-				});
-			}else{
-				alert("아이디를 확인해 주세요");
-				$("#userId").focus();
-			}
-		},
-		error : function(request, status, errorData) {
-			alert("error code: " + request.status + "\n"
-					+ "message: " + request.responseText
-					+ "error: " + errorData);
-		}
-	})
+	      url:"idcheck.do",
+	      data:{userId:userId},
+	      success:function(data){
+	         if(data == "true"){
+	            $.ajax({
+	               url:"pwdcheck.do",
+	               type:"post",
+	               data:{userId:userId, userPwd:userPwd},
+	               success:function(data){
+	                  if(data == "true"){
+	                     $("#loginForm").submit();
+	                  }else{
+	                     alert("비밀번호를 확인해 주세요");
+	                     $("#userPwd").focus();
+	                  }
+	               },
+	               error : function(request, status, errorData) {
+	                  alert("error code: " + request.status + "\n"
+	                        + "message: " + request.responseText
+	                        + "error: " + errorData);
+	               }
+	            });
+	         }else if(data == "nope"){
+	            alert("회원 정보를 불러올 수 없습니다");
+	         }else{
+	            alert("아이디를 확인해 주세요");
+	            $("#userId").focus();
+	         }
+	      },
+	      error : function(request, status, errorData) {
+	         alert("error code: " + request.status + "\n"
+	               + "message: " + request.responseText
+	               + "error: " + errorData);
+	      }
+	   })
 }
 </script>
 

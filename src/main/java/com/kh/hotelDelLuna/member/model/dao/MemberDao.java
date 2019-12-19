@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.member.model.vo.Inquiry;
 import com.kh.hotelDelLuna.member.model.vo.Member;
+import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
 
 @Repository("mDao")
 public class MemberDao {
@@ -26,7 +27,7 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.insertMember", m);
 	}
 
-	public int idCheck(String userId) {
+	public Member idCheck(String userId) {
 		
 		return sqlSession.selectOne("memberMapper.idCheck", userId);
 	}
@@ -140,6 +141,33 @@ public class MemberDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.selectNoReplyList", pi, rowBounds);
+	}
+
+	public int getMyRListCount(String userId) {
+		
+		return sqlSession.selectOne("memberMapper.getMyRListCount", userId);
+	}
+
+	public ArrayList<Reservation> selectMyResList(String userId, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectMyResList", userId, rowBounds);
+	}
+
+	public int insertNMember(Member m) {
+		
+		return sqlSession.update("memberMapper.insertNMember", m);
+	}
+
+	public int searchRes(Member m) {
+		
+		return sqlSession.selectOne("memberMapper.searchRes", m);
+	}
+
+	public int insertNKMember(Member m) {
+		
+		return sqlSession.update("memberMapper.insertNKMember", m);
 	}
 	
 }

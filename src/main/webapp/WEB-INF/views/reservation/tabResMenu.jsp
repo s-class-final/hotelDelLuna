@@ -84,7 +84,7 @@ body {
 				</li>
 				<li id="tab1" class="btnCon btn small"> 
 					<input type="radio" name="tabmenu" id="tabmenu2" onclick="tabMenuCheck()"> 
-					<label for="tabmenu2">달력</label> 
+					<label for="tabmenu2">달력</label>
 
 				</li>
 			</ul>

@@ -122,6 +122,8 @@ body {
 <body>
 	<jsp:include page="../common/menubar.jsp"/>
 	
+	<input type="hidden" id="userId" value="${m1.userId}">
+	
 	<div class="loginWrap">
 		<div class="innerBox"> <!-- 가로값이 1280으로 설정되어진 아이 -->
 			<h1><span>예약 내역</span>회원님께서 예약하신 내역을<br />확인하실 수 있습니다.</h1>
@@ -308,9 +310,10 @@ body {
 			var $res_status;
 	
 			$.ajax({
-				url:"myrList.do",
+				url:"myrList2.do",
 				data:{page:page,
-					sort_no:sort_no},
+					sort_no:sort_no,
+					userId:$("#userId").val()},
 				dataType:"json",
 				success:function(data){
 					console.log(data.length);
@@ -364,12 +367,13 @@ body {
 			var searchValue = searchValue;
 			var search = bool;
 			$.ajax({
-				url:"myrPage.do",
+				url:"myrPage2.do",
 				data:{page:cPage,
 					searchCondition:searchCondition,
 					searchValue:searchValue,
 					search:search,
-					sort_no:sort_no},
+					sort_no:sort_no,
+					userId:$("#userId").val()},
 				dataType:"json",
 				success:function(data){
 					console.log(data);

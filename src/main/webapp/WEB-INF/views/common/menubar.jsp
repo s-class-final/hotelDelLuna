@@ -252,7 +252,12 @@
 			<c:if test="${ !empty sessionScope.loginUser and !empty loginUser.kakao}">
 				<li><a href="mypage.do"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
 			</c:if>
-         <li><a href="mmyres.do"><em class="icon4"><i></i></em><p><span>RESERVATION</span>MY RESERVATION</p></a></li>
+		 <c:if test="${ !empty sessionScope.loginUser }">	
+         	<li><a href="mmyres.do"><em class="icon4"><i></i></em><p><span>RESERVATION</span>MY RESERVATION</p></a></li>
+         </c:if>
+         <c:if test="${ empty sessionScope.loginUser }">	
+         	<li><a href="nologinres.do"><em class="icon4"><i></i></em><p><span>RESERVATION</span>MY RESERVATION</p></a></li>
+         </c:if>
          <li><a href="#"><em class="icon5"><i></i></em><p><span>MAP</span>DELLUNA MAP</p></a></li>
          <c:if test="${ empty sessionScope.loginUser }">
          	<li><a id="pppop" href="#poppop" class="layerPopOpen"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1문의</p></a></li>

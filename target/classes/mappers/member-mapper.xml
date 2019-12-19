@@ -26,6 +26,25 @@
 		<result property="reStatus" column="RE_STATUS"/> 
 	</resultMap>
 	
+	<resultMap type="Reservation" id="ResListResultSet">
+		<id property="res_no" column="RES_NO"/>
+		<result property="res_roomNo" column="RES_ROOMNO"/>
+		<result property="res_roomType" column="RES_ROOMTYPE"/>
+		<result property="res_userId" column="RES_USERID"/>
+		<result property="res_userName" column="USERNAME"/>
+		<result property="res_breakfast" column="RES_BREAKFAST"/> 
+		<result property="res_dinner" column="RES_DINNER"/>
+		<result property="res_smoking" column="RES_SMOKING"/>
+		<result property="res_addBed" column="RES_ADDBED"/>
+		<result property="res_adult" column="RES_ADULT"/>
+		<result property="res_child" column="RES_CHILD"/>
+		<result property="res_checkIn" column="RES_CHECKIN"/>
+		<result property="res_checkOut" column="RES_CHECKOUT"/>
+		<result property="res_status" column="RES_STATUS"/>
+		<result property="res_payStatus" column="RES_PAYSTATUS"/>
+		<result property="res_require" column="RES_REQUIRE"/>
+	</resultMap>
+	
 	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
 		<!-- SELECT *
 		FROM MEMBER
@@ -46,11 +65,11 @@
 		)
 	</insert>
 	
-	<select id="idCheck" parameterType="string" resultType="_int">
-		SELECT COUNT(*)
-		FROM MEMBER
-		WHERE USERID=#{userId}
-	</select>
+	<select id="idCheck" parameterType="string" resultMap="memberResultSet">
+      SELECT *
+      FROM MEMBER
+      WHERE USERID=#{userId}
+   </select>
 	
 	<select id="kakaoIdCheck" parameterType="string" resultType="_int">
 		SELECT COUNT(*)
@@ -168,7 +187,7 @@
 	
 	<insert id="insertNonMember" parameterType="Member">
 		INSERT INTO MEMBER VALUES(
-			SEQ_MID.NEXTVAL, DEFAULT, #{userId}, null, #{userName}, #{userPhone}, DEFAULT, DEFAULT,NULL
+			SEQ_MID.NEXTVAL, DEFAULT, #{userId}, null, #{userName}, #{userPhone}, 0, 'B' ,NULL
 		)
 	</insert>
 
@@ -191,5 +210,42 @@
 		WHERE I_STATUS='Y'
 		AND RE_STATUS='N'
 	</select>
+	
+	<select id="getMyRListCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM RESERVATION
+		WHERE RES_USERID=#{userId}
+	</select>
+	
+	<select id="selectMyResList" resultMap="ResListResultSet">
+		<!-- SELECT *
+		FROM RESERVATION
+		ORDER BY RES_NO DESC -->
+		SELECT *
+		FROM RESERVATION R
+		JOIN MEMBER M ON(R.RES_USERID=M.USERID)
+		WHERE RES_USERID=#{userId}
+		ORDER BY RES_NO DESC
+	</select>
+	
+	<update id="insertNMember" parameterType="Member">
+		UPDATE MEMBER SET
+		USERPWD=#{userPwd}, USERNAME=#{userName}, USERPHONE=#{userPhone}, M_STATUS='Y'
+		WHERE USERID=#{userId}
+	</update>
+	
+	<select id="searchRes" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USERID=#{userId}
+		AND USERNAME=#{userName}
+		AND USERPHONE=#{userPhone}
+	</select>
+	
+	<update id="insertNKMember" parameterType="Member">
+		UPDATE MEMBER SET
+		USERPWD=#{userPwd}, USERNAME=#{userName}, USERPHONE=#{userPhone}, KAKAO=${kakao}, M_STATUS='Y'
+		WHERE USERID=#{userId}
+	</update>
 	
 </mapper>
