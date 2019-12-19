@@ -44,7 +44,7 @@ body.hidden { overflow:hidden;}
 
 .radioBox { display:inline-block; position:relative; min-height:20px; padding-left:25px;}
 .radioBox input { position:absolute; top:0; left:0; z-index:1; opacity:0;}
-.radioBox label:after { content:''; display:block; position:absolute; top:50%; left:0; width:20px; height:20px; margin-top:-10px; background:url('/pcPub/static/images/common/icon/icon_radio.gif') no-repeat;}
+.radioBox label:after { content:''; display:block; position:absolute; top:50%; left:0; width:20px; height:20px; margin-top:-10px; background:url('/resources/pcPub/static/images/common/icon/icon_radio.gif') no-repeat;}
 .radioBox input:checked + label:after { background-position:0 -20px;}
 
 .ui-select-wrapper{ position:relative;display:inline-block; min-width:100px; user-select:none; vertical-align:middle; background:#fff;}
@@ -132,7 +132,7 @@ body.hidden { overflow:hidden;}
 .layerPopWrap { visibility:hidden; overflow-y: auto; position:fixed; top:0; left:0; width:100%; height:100%; z-index:100; opacity:0; transition:all .2s ease}
 .layerPopWrap .bg {position:fixed; top:0; right:0; width:100%; height:100%; background:rgba(0,0,0,0.8);}
 .layerPopWrap .layerPopCont { position:absolute; top:50%; left:50%; width:568px; padding:24px 64px 0; margin-left:-284px; background:#fff; -webkit-font-smoothing: antialiased; transform:translateY(-30px); transition:transform .4s ease .2s;  opacity:0;}
-.layerPopWrap .layerPopCont .layerPopClose { position:absolute; top:-26px; right:0; width:18px; height:18px; font-size:0;}
+.layerPopWrap .layerPopCont .layerPopClose { position:absolute; top:-26px; right:0; width:18px; height:18px; font-size:0; background: url('resources/pcPub/static/images/common/btn/btn_pop_close.png') no-repeat;}
 
 .layerPopWrap.normalLayer {}
 .layerPopWrap.normalLayer .layerPopCont { opacity:0; top:0; left:50%; width:800px; padding:0 32px; margin-left:0; margin-top:0; margin-bottom:50px; transform:translateX(-50%) translateY(-30px); transition:transform .4s ease .2s;}
@@ -484,8 +484,8 @@ body.reservation #headerWrap .btnClose { display:block; position:absolute; top:2
 .roomSelectBox .swiperArrow { position:absolute; top:43px; right:0;}
 .roomSelectBox .swiperArrow [class*=btn] { width:19px; height:19px;}
 .roomSelectBox .swiperArrow [class*=btn].slick-disabled span { background-position:0 0;}
-.roomSelectBox .swiperArrow .btnLeft span { display:inline-block; width:6px; height:10px; font-size:0; vertical-align: middle; background:url('/pcPub/static/images/common/btn/btn_slick_arrow.png') no-repeat 0 -10px;}
-.roomSelectBox .swiperArrow .btnRight span { display:inline-block; width:6px; height:10px; font-size:0; vertical-align: middle; transform:rotate(180deg); background:url('/pcPub/static/images/common/btn/btn_slick_arrow.png') no-repeat 0 -10px;}
+.roomSelectBox .swiperArrow .btnLeft span { display:inline-block; width:6px; height:10px; font-size:0; vertical-align: middle; background:url('/resources/pcPub/static/images/common/btn/btn_slick_arrow.png') no-repeat 0 -10px;}
+.roomSelectBox .swiperArrow .btnRight span { display:inline-block; width:6px; height:10px; font-size:0; vertical-align: middle; transform:rotate(180deg); background:url('/resources/pcPub/static/images/common/btn/btn_slick_arrow.png') no-repeat 0 -10px;}
 .roomSelectBox .swiperArrow .number { display:inline-block; width:75px; text-align:center; vertical-align: middle; font-weight:300; color:#999;}
 .roomSelectBox .swiperArrow .number em { color:#9c836a;}
 
@@ -586,12 +586,12 @@ body.reservation #headerWrap .btnClose { display:block; position:absolute; top:2
 .reservationSection .casyBox .tooltipBox p { margin-bottom:0;}
 .reservationSection .casyBox .tooltipBox:after { left:88%;}
 
-.reservationSection .productFooter { padding:24px 0px 16px;}
+.reservationSection .productFooter { padding:10px 0px 16px;}
 .reservationSection .productFooter dl { overflow:hidden; font-size:14px; color:rgba(0,0,0,0.7);}
 .reservationSection .productFooter dl + dl { margin-top:5px;}
 .reservationSection .productFooter dt { float:left; width:70px;}
 .reservationSection .productFooter dd { float:right; width:170px; text-align:right;}
-.reservationSection .productTotal { padding:10px 0; border-top:1px solid #f4f2ef;}
+.reservationSection .productTotal { padding-bottom:20px; border-top:1px solid #f4f2ef;}
 .reservationSection .productTotal dl { overflow:hidden; color:#9c836a;}
 .reservationSection .productTotal dt { float:left; width:70px; line-height:33px;}
 .reservationSection .productTotal dd { float:right; width:170px; line-height:33px; font-weight:bold; text-align:right;}
@@ -601,7 +601,7 @@ body.reservation #headerWrap .btnClose { display:block; position:absolute; top:2
 .reservationSection .productTotal .smallText dd { line-height:1.5; font-weight:200;}
 .reservationSection > .btn { display:block; width:100%; border-radius:5px; margin-bottom:24px; box-shadow:3px 3px 15px rgba(0,0,0,0.25);}
 .reservationSection > .btn:disabled { cursor: pointer}
-
+.reservationSection > .btn:hover { cursor:pointer}
 
 .settingD_reservation { position:relative; margin:40px 0 20px;}
 .settingD_reservation.type1 { height:300px;}
@@ -2015,7 +2015,7 @@ ul.diningTab li.on a{color: #9c836a; text-decoration: underline;}
 	.noticeWrap div.paginate{margin-top: 60px;}
 
 	div.noticeList table{width: 100%; margin-top: 56px; text-align: center; font-size: 16px; font-weight: 300; border-top: 1px solid #9c836a; border-bottom: 1px solid #c6b5a4;}
-	div.noticeList table th{position: relative; height: 60px; font-weight: 300; color: #9c836a;}
+	div.noticeList table th{position: relative; height: 60px; font-weight: 300; color: #9c836a; width: 100%;}
 	div.noticeList table thead th:before{display: block; content: ''; position: absolute; top: 23px; right: 0px; height: 16px; width: 1px; background-color: #e6e3df;}
 	div.noticeList table thead th:last-child:before{display: none;}
 	div.noticeList table tbody tr{border-top: 1px solid #f4f2ef;}

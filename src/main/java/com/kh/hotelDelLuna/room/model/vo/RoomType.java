@@ -6,7 +6,6 @@ public class RoomType {
 	private String type;		//객실 타입
 	private int capacity;		//수용인원
 	private String addBed;		//배드 추가 여부
-	private String rImg;			//겍실 사진
 	private int singleBed;		//싱글베드 수
 	private int doubleBed;		//더블베드 수
 	private String smoking;		//흡연객실 여부
@@ -19,12 +18,11 @@ public class RoomType {
 	public RoomType() {
 	}
 
-	public RoomType(String type, int capacity, String addBed, String rImg, int singleBed, int doubleBed, String smoking,
+	public RoomType(String type, int capacity, String addBed, int singleBed, int doubleBed, String smoking,
 			int weekDay, int weekEnd, Date startDay, Date endDay, int childRate) {
 		this.type = type;
 		this.capacity = capacity;
 		this.addBed = addBed;
-		this.rImg = rImg;
 		this.singleBed = singleBed;
 		this.doubleBed = doubleBed;
 		this.smoking = smoking;
@@ -57,14 +55,6 @@ public class RoomType {
 
 	public void setAddBed(String addBed) {
 		this.addBed = addBed;
-	}
-
-	public String getrImg() {
-		return rImg;
-	}
-
-	public void setrImg(String rImg) {
-		this.rImg = rImg;
 	}
 
 	public int getSingleBed() {
@@ -133,7 +123,7 @@ public class RoomType {
 
 	@Override
 	public String toString() {
-		return "RoomType [type=" + type + ", capacity=" + capacity + ", addBed=" + addBed + ", rImg=" + rImg
+		return "RoomType [type=" + type + ", capacity=" + capacity + ", addBed=" + addBed
 				+ ", singleBed=" + singleBed + ", doubleBed=" + doubleBed + ", smoking=" + smoking + ", weekDay="
 				+ weekDay + ", weekEnd=" + weekEnd + ", startDay=" + startDay + ", endDay=" + endDay + ", childRate="
 				+ childRate + "]";

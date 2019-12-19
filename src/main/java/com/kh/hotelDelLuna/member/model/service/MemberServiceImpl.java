@@ -1,10 +1,15 @@
 package com.kh.hotelDelLuna.member.model.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.member.model.dao.MemberDao;
+import com.kh.hotelDelLuna.member.model.vo.Inquiry;
 import com.kh.hotelDelLuna.member.model.vo.Member;
+import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
 
 @Service("mService")
 public class MemberServiceImpl implements MemberService{
@@ -24,7 +29,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public int idCheck(String userId) {
+	public Member idCheck(String userId) {
 		
 		return mDao.idCheck(userId);
 	}
@@ -66,9 +71,122 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public Member findUser(Member m) {
+	public Member findMember(Member m) {
 		
-		return mDao.findUser(m);
+		return mDao.findMember(m);
+	}
+
+	@Override
+	public int updateMember(Member m) {
+		
+		return mDao.updateMember(m);
+	}
+
+	@Override
+	public int findKakao(Member m) {
+		
+		return mDao.findKakao(m);
+	}
+
+	@Override
+	public int getListCount() {
+		
+		return mDao.getListCount();
+	}
+
+	@Override
+	public ArrayList<Inquiry> selectList(PageInfo pi) {
+		
+		return mDao.selectList(pi);
+	}
+	
+	@Override
+	public int getMListCount(String userId) {
+		
+		return mDao.getMListCount(userId);
+	}
+
+	@Override
+	public ArrayList<Inquiry> selectMList(String userId, PageInfo pi) {
+		
+		return mDao.selectMList(userId, pi);
+	}
+
+	@Override
+	public int insertInquiry(Inquiry i) {
+		
+		return mDao.insertInquiry(i);
+	}
+
+	@Override
+	public Inquiry selectInquiry(int iId) {
+		
+		return mDao.selectInquiry(iId);
+	}
+
+	@Override
+	public int deleteInquiry(int iId) {
+		
+		return mDao.deleteInquiry(iId);
+	}
+
+	@Override
+	public int updateInquiry(Inquiry i) {
+		
+		return mDao.updateInquiry(i);
+	}
+
+	@Override
+	public int deleteMember(String userId) {
+
+		return mDao.deleteMember(userId);
+	}
+
+	@Override
+	public int getNoReplyListCount() {
+		
+		return mDao.getNoReplyListCount();
+	}
+
+	@Override
+	public ArrayList<Inquiry> selectNoReplyList(PageInfo pi) {
+		
+		return mDao.selectNoReplyList(pi);
+	}
+
+	@Override
+	public int insertNonMember(Member m) {
+		return mDao.insertNonMember(m);
+	}
+
+	@Override
+	public int getMyRListCount(String userId) {
+		
+		return mDao.getMyRListCount(userId);
+	}
+	
+	@Override
+	public ArrayList<Reservation> selectMyResList(String userId, PageInfo pi) {
+		
+		return mDao.selectMyResList(userId, pi);
+	}
+
+	@Override
+	public int insertNMember(Member m) {
+		
+		return mDao.insertNMember(m);
+	}
+
+	@Override
+	public int searchRes(Member m) {
+		
+		return mDao.searchRes(m);
+	}
+
+	@Override
+	public int insertNKMember(Member m) {
+		
+		return mDao.insertNKMember(m);
 	}
 
 

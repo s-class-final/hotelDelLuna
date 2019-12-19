@@ -20,6 +20,7 @@ body {
 }
 body .container {
   position: relative;
+  top:10%;
   overflow: hidden;
   width: 900px;
   height: 650px;
@@ -183,7 +184,7 @@ body .container .content .checkbox {
   clip: rect(0 0 0 0);
   width: 0;
   height: 0;
-  margin: 17px -1px;
+  margin: 5px -1px;
   padding: 0;
   border: 0;
 }
@@ -220,6 +221,7 @@ body .container .content .submit-wrap {
   bottom: 0;
   width: 100%;
   text-align: center;
+  line-height: 0.5em;
 }
 body .container .content .submit-wrap a {
   font-size: 12px;
@@ -277,53 +279,82 @@ body .container .content .signup-cont {
   text-decoration: none;
 }
 
+.selectB{
+  font-size: 14px;
+  display: block;
+  width: 100%;
+  height: 42px;
+  margin-bottom: 12px;
+  padding: 5px 13px;
+  color: #999999;
+  border: 1px solid #d9d9d9;
+  background: transparent;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  width: 31%;
+  display: inline-block;
+}
 </style>
 </head>
-<body>
+<body onkeydown="javascript:onEnterLogin();">
+	<jsp:include page="../common/menubar.jsp"/>
+
 <section class="container">
-		    <article class="half">
-			        <h1>Hotel del luna</h1>
-			        <div class="tabs">
-				            <span class="tab signin active"><a href="#signin">로그인</a></span>
-				            <span class="tab signup"><a href="#signup">비회원(예약 확인)</a></span>
-			        </div>
-			        <div class="content">
-				            <div class="signin-cont cont">
-					                <form action="login.do" onsubmit="return validate();" method="post">
-						                    <input type="text" name="userId" id="userId" class="inpt" required="required" placeholder="Your email">
-						                    <label for="email">Your email</label>
-						                    <input type="password" name="userPwd" id="userPwd" class="inpt" required="required" placeholder="Your password">
-                						    <label for="password">Your password</label>
-						                    <input type="checkbox" id="saveId" name="saveId" class="checkbox">
-						                    <label for="saveId">Remember id</label>
-						                    <div class="submit-wrap">
-							                        <input type="submit" value="Login" class="submit"><br>
-							                        <input type="button" id="kakao" value="kakao login" class="submit">
-							                        <a href="mjoin.do" class="more">Sign up</a>&nbsp;
-							                        <a href="findpwd.do" class="more">Forgot your password?</a>
-						                    </div>
-        					        </form>
-    				        </div>
-    				        <div class="signup-cont cont">
-                <form action="#" method="post" enctype="multipart/form-data">
-                    						<input type="email" name="email" id="email" class="inpt" required="required" placeholder="Your email">
-						                    <label for="email">Your email</label>
-						                    <input type="text" name="email" id="name" class="inpt" required="required" placeholder="Your name">
-						                    <label for="name">Your name</label>
-						                    <input type="number" name="password" id="password" class="inpt" required="required" placeholder="Your password">
-                						    <label for="password">Your phone</label>
-						                    <div class="submit-wrap">
-							                        <input type="submit" value="confirm" class="submit">
-							                        <a href="#" class="more">Terms and conditions</a>
-						                    </div>
-        					        </form>
-            </div>
-			        </div>
-		    </article>
-		    <div class="half bg"></div>
-	</section>
-
-
+	    <article class="half">
+		        <h1>Hotel del luna</h1>
+		        <div class="tabs">
+			            <span class="tab signin active"><a href="#signin">로그인</a></span>
+			            <span class="tab signup"><a href="#signup">비회원(예약 확인)</a></span>
+		        </div>
+		        <div class="content">
+			            <div class="signin-cont cont">
+				                <form id="loginForm" action="login.do" method="post">
+					                    <input type="text" name="userId" id="userId" class="inpt" required="required" placeholder="Your email">
+					                    <label for="email">Your email</label>
+					                    <input type="password" name="userPwd" id="userPwd" class="inpt" required="required" placeholder="Your password">
+               						    <label for="password">Your password</label>
+					                    <input type="checkbox" id="saveId" name="saveId" class="checkbox">
+					                    <label for="saveId">Remember id</label>
+					                    <div class="submit-wrap">
+					                        <input type="button" id="loginBtn" value="Login" class="submit" onclick="checkLogin()"><br>
+					                        <input type="button" id="kakao" value="kakao login" class="submit">
+					                        <a href="mjoin.do" class="more">Join us</a>&nbsp;
+					                        <a href="findpwd.do" class="more">Forgot your password?</a>
+					                    </div>
+       					        </form>
+   				        </div>
+   				        <div class="signup-cont cont">
+              					 <form action="scmyres.do">
+                   						<input type="email" name="findMail" id="findMail" class="inpt" required="required" placeholder="Your email">
+					                    <label for="email">Your email</label>
+					                    <input type="text" name="findName1" id="findName1" class="inpt" required="required" placeholder="Last name" style="width:49%; display:inline-block;">
+					                    <label for="name">Last name</label>
+					                    <input type="text" name="findName2" id="findName2" class="inpt" required="required" placeholder="First name" style="width:49%; display:inline-block;">
+					                    <label for="name">First name</label>
+					                    <select class="selectB" id = "findPhone1" name = "findPhone1">
+											<option value="010">010</option>
+											<option value="011">011</option>
+											<option value="016">016</option>
+											<option value="017">017</option>
+											<option value="018">018</option>
+											<option value="019">019</option>
+										</select>
+					                    <input type="text" name="findPhone2" id="findPhone2" class="inpt" required="required" style="width:33%; display:inline-block;">
+               						    <label for="findPhone2">Your phone</label>
+               						    <input type="text" name="findPhone3" id="findPhone3" class="inpt" required="required" style="width:33%; display:inline-block;">
+               						    <label for="findPhone3">Your phone</label>
+					                    <div class="submit-wrap">
+					                        <input type="submit" value="confirm" class="submit">
+					                    </div>
+       					        </form>
+           </div>
+		        </div>
+	    </article>
+	    <div class="half bg"></div>
+</section>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<jsp:include page="../common/footer.jsp"/>
 
 <script type="text/javascript">
 $('.tabs .tab').click(function(){
@@ -429,9 +460,72 @@ $(function(){
 		$(".half.bg").css("background-image", "url('resources/images/login2.jpg')");
 	});
 });
+
+//엔터 입력 시 로그인 버튼 클릭
+function onEnterLogin(){
+   var keyCode = window.event.keyCode;
+   if (keyCode == 13) {
+      $("#loginBtn").click();
+   }
+}
+
+// 로그인 버튼 클릭 시 아이디, 비번 체크
+function checkLogin(){
+	var userId = $("#userId").val();
+	var userPwd = $("#userPwd").val();
+	
+	if(userId.trim().length == 0){
+		alert("아이디를 입력하세요");
+		$("#userId").focus();
+		return false;
+	}
+	
+	if(userPwd.trim().length == 0){
+		alert("비밀번호를 입력하세요");
+		$("#userPwd").focus();
+		return false;
+	}
+	
+	$.ajax({
+	      url:"idcheck.do",
+	      data:{userId:userId},
+	      success:function(data){
+	         if(data == "true"){
+	            $.ajax({
+	               url:"pwdcheck.do",
+	               type:"post",
+	               data:{userId:userId, userPwd:userPwd},
+	               success:function(data){
+	                  if(data == "true"){
+	                     $("#loginForm").submit();
+	                  }else{
+	                     alert("비밀번호를 확인해 주세요");
+	                     $("#userPwd").focus();
+	                  }
+	               },
+	               error : function(request, status, errorData) {
+	                  alert("error code: " + request.status + "\n"
+	                        + "message: " + request.responseText
+	                        + "error: " + errorData);
+	               }
+	            });
+	         }else if(data == "nope"){
+	            alert("회원 정보를 불러올 수 없습니다");
+	         }else{
+	            alert("아이디를 확인해 주세요");
+	            $("#userId").focus();
+	         }
+	      },
+	      error : function(request, status, errorData) {
+	         alert("error code: " + request.status + "\n"
+	               + "message: " + request.responseText
+	               + "error: " + errorData);
+	      }
+	   })
+}
 </script>
 
-<script type='text/javascript'>
+<script type='text/javascript'>	// 카카오 로그인
 	$(function(){
 		$("#kakao").click(function(){
 		   Kakao.init('de55ce2e9e0330e7281dfe9da45b537b');
@@ -449,10 +543,8 @@ $(function(){
 		               data:{kakaoId:kakaoId},
 		               success:function(data){
 		                  if(data == "true"){
-		                	 alert("가입 되어 있음")
 		                     location.href = "kakaologin.do?" + kakaoId;
 		                  }else{
-		                	 alert("가입 안되어 있음")
 		                     location.href = "kakaojoin.do?" + kakaoId;
 		                  }
 		               },

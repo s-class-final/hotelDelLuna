@@ -63,7 +63,7 @@
 	                    <c:url var="roomView" value="roomView.do">
 	                  	<c:param name="type" value="superior_terrace"/>
 	                  </c:url>
-	                     <li><a href="${roomView }">슈페리어 테라스</a></li>
+	                     <li><a href="${roomView}">슈페리어 테라스</a></li>
 	                  </ul>
                </div>
                <div>
@@ -118,9 +118,9 @@
                <div>
                   <h2><a href="#"><span>entertainment</span>즐길거리</a></h2>
                   <ul>
-                     <li><a href="#">Swimming Pool</a></li>
-                     <li><a href="#">CASINO</a></li>
-                     <li class="on"><a href="#">가격 및 이용안내</a></li>
+                     <li class="on"><a href="facility.do">부대시설</a></li>
+                     <li><a href="casino.do">CASINO</a></li>
+                     <li><a href="plaza.do">PLAZA</a></li>
                      <li><a href="around.do">주변 즐길거리</a></li>
                   </ul>
                </div>
@@ -153,8 +153,18 @@
                <div>
                   <h2><a href="support.do"><span>Service Center</span>고객센터</a></h2>
                   <ul>
-                     <li><a href="notice.do">공지사항</a></li>
-                     <li><a href="voc.do">1:1문의</a></li>
+                  	<c:if test="${ empty sessionScope.loginUser }">
+                  		<li><a href="noticeList.do">공지사항</a></li>
+		         		<li><a id="pppop" href="#poppop" class="layerPopOpen">1:1문의</a></li>
+		         	</c:if>
+                     <c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 2}">
+                     	<li><a href="noticeListA.do">공지사항</a></li>
+                     	<li><a href="allinquiry.do">1:1문의</a></li>
+                     </c:if>
+                     <c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 1}">
+                     	<li><a href="noticeList.do">공지사항</a></li>
+                     	<li><a href="minquiry.do">1:1문의</a></li>
+                     </c:if>
                   </ul>
                </div>
             </div>
@@ -169,6 +179,13 @@
 							<li><a href="roomstatus.do">방 상태</a></li>
 						</ul>
 					</div>
+					<div>
+	               	<h2>&nbsp;<span>&nbsp;</span>&nbsp;&nbsp;</h2>
+	               	<h2>&nbsp;<span>&nbsp;</span>&nbsp;&nbsp;</h2>
+		               <ul>
+	                     <li><a href="entireResList.do">예약 내역 관리</a></li>
+	                  </ul>	
+	               </div>
 				</div>
 			</li>
       </ul>
@@ -207,7 +224,7 @@
 <!-- quick Bar 퀵메뉴 퀵 메뉴 -->
 <aside class="quickBar view">
    <div class="quickH">
-      <a href="#">
+      <a href="ReservationGuest.do">
          <h1><img src="resources/pcPub/static/images/common/Reservation_icon_100.png" />reservation</h1>
          <p>호텔 델루나의 시설과 <br />상품을 한번에 예약하세요.</p>
 <!--          <span class="newCount">99</span> : PC는 갯수 불요-->
@@ -223,15 +240,34 @@
 			<c:if test="${ !empty sessionScope.loginUser }">
 				<li><a href="logout.do"><em class="icon1"><i></i></em><p>Logout</p></a></li>
 			</c:if>
-			<li><a href="mjoin.do"><em class="icon2"><i></i></em><p><span>HOTEL</span>JOIN US</p></a></li>
+			<c:if test="${ empty sessionScope.loginUser }">
+				<li><a href="mjoin.do"><em class="icon2"><i></i></em><p><span>HOTEL</span>JOIN US</p></a></li>
+			</c:if>
 			<c:if test="${ empty sessionScope.loginUser }">
 				<li><a href="void(0);" onclick="alert('로그인 후 이용해 주세요');return false;"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
 			</c:if>
-			<c:if test="${ !empty sessionScope.loginUser }">
+			<c:if test="${ !empty sessionScope.loginUser and empty loginUser.kakao}">
 				<li><a href="mconfirm.do"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
 			</c:if>
-         <li><a href="entireResList.do"><em class="icon4"><i></i></em><p><span>RESERVATION</span>MY RESERVATION</p></a></li>
+			<c:if test="${ !empty sessionScope.loginUser and !empty loginUser.kakao}">
+				<li><a href="mypage.do"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
+			</c:if>
+		 <c:if test="${ !empty sessionScope.loginUser }">	
+         	<li><a href="mmyres.do"><em class="icon4"><i></i></em><p><span>RESERVATION</span>MY RESERVATION</p></a></li>
+         </c:if>
+         <c:if test="${ empty sessionScope.loginUser }">	
+         	<li><a href="nologinres.do"><em class="icon4"><i></i></em><p><span>RESERVATION</span>MY RESERVATION</p></a></li>
+         </c:if>
          <li><a href="#"><em class="icon5"><i></i></em><p><span>MAP</span>DELLUNA MAP</p></a></li>
+         <c:if test="${ empty sessionScope.loginUser }">
+         	<li><a id="pppop" href="#poppop" class="layerPopOpen"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1문의</p></a></li>
+         </c:if>
+         <c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 2}">
+         	<li><a href="allinquiry.do"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1문의</p></a></li>
+         </c:if>
+         <c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 1}">
+         	<li><a href="minquiry.do"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1문의</p></a></li>
+         </c:if>
       </ul>
    </div>
 </aside>
@@ -274,6 +310,144 @@ $(window).load(function(){
 <!-- //quick Bar -->
 
 </div>
+
+<script>
+var title1 = "비회원 1:1 문의";
+
+$(window).load(function(){
+    //최초 로딩시 스크롤바 조정
+    $("#FACILITY1").siblings("div.selectBox").find("ul.ui-select-options").eq(0).css("right", "4px");
+    
+});
+
+$("#pppop").click(function(){
+    // 팝업 제목 설정
+    $(".popHeaderInq").text(title1);
+    
+    $("#PI_VOC_CN").val("");   //에러 발생 시 에러 메시지 출력칸
+})
+
+// 1:1 문의 submit 함수
+function jsSave() {
+    
+    rtn = $("#nminquiry").validate();
+    
+    if (rtn.isValid == false) {
+        var sub_fix = "을 입력하세요.";
+        if (rtn.chkType == "type") {
+            sub_fix = "형식이 올바르지 않습니다.";
+        }
+        
+        if (rtn.msg != "") {
+            alert(rtn.msg + sub_fix);
+        } else {
+            alert(sub_fix);
+        }
+        
+        return;     
+    }
+    
+    $("#PI_REG_EMPNO").val($("#PI_CUST_NM1").val());
+    // 로딩
+    fullLoding($("#container"));
+    
+    $("#nminquiry").submit();
+}
+
+</script>
+
+<div class="layerPopWrap normalLayer" id="poppop">
+    <div class="bg"></div>
+    <!-- layerPopCont -->
+    <div class="layerPopCont">
+        <h1 class="popHeader popHeaderInq"></h1>
+        <div class="inquiryPopCont">
+        <p>문의하신 내용은 호텔 델루나 관리자 메일로 전송되며,</p>
+        <p>입력하신 이메일로 답변을 받으실 수 있습니다.</p>
+        <p style="font-weight: 600;">회원가입을 하시면 좀 더 편리하게 문의 및 문의 내역 확인을 하실 수 있습니다.</p>
+            <form action="sendinquiry.do" method="post" id="nminquiry" name="form_inquiry">
+                <div class="formInquiryWrap">
+                    <dl class="title">
+                        <dt>
+                            <label for="iTitle">제목 <span class="color">*</span></label>
+                            <p class="imp"><span class="color">*</span> 필수 입력 항목</p>
+                        </dt>
+                        <dd>
+                            <div class="inp">
+                                <input type="text" name="iTitle" required title="제목">
+                            </div>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><label for="iContent">내용 <span class="color">*</span></label></dt>
+                        <dd>
+                            <textarea class="textarea" cols="0" rows="0" name="iContent" required title="내용"></textarea>
+                        </dd>
+                    </dl>
+                    <div class="clearFixed">
+                        <dl class="name">
+                            <dt><label for="PI_CUST_NM1">이름 <span class="color">*</span></label></dt>
+                            <!-- 에러시 dd의 error 클래스 추가 -->
+                            <dd>
+                                <div class="inp">
+                                    <input type="text" id="PI_CUST_NM1" name="PI_CUST_NM" required title="이름">
+                                </div>
+                                
+                                <div class="errorText">
+                                    <!-- 에러 메시지 -->
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl class="pwd">
+                            <dt><label for="EMAIL">이메일 <span class="color">*</span></label></dt>
+                            <!-- 에러시 dd의 error 클래스 추가 -->
+                            <dd>
+                                <div class="inp">
+                                    <input type="email" class="inqEmailValidation" name="EMAIL" required title="이메일">
+                                </div>
+                                <div class="errorText">
+                                    <!-- 에러 메시지 -->
+                                </div>  
+                            </dd>
+                        </dl>
+                    </div>
+                    <dl class="phone">
+                        
+                        <dt><label for="TEL1">휴대폰 번호 <span class="color">*</span></label></dt>
+                        <dd>
+                            <select class="selectBox" id="TEL1" name="TEL1" required title="핸드폰 첫째자리 선택" >
+                                <option value="010">010</option>
+                                <option value="011" >011</option>
+                                <option value="016" >016</option>
+                                <option value="017" >017</option>
+                                <option value="018" >018</option>
+                                <option value="019" >019</option>
+                            </select>
+                            <div class="inp">
+                                <input type="tel" id="TEL2" name="TEL2" required onkeydown="return inputNumCheck(event)" onkeyup="removeChar(event)" title="핸드폰 가운데자리 입력" maxlength="4">
+                            </div>
+                            <span>-</span>
+                            <div class="inp">
+                                <input type="tel" id="TEL3" name="TEL3" required onkeydown="return inputNumCheck(event)" onkeyup="removeChar(event)" title="핸드폰 끝자리 입력" maxlength="4">
+                            </div>
+                        
+                            <div class="errorText">
+                                <!-- 에러 메시지 -->
+                            </div>
+                        </dd>
+                    </dl>
+               </div>
+            </form>
+            
+            <div class="btnGroup">
+                <a href="javascript:jsSave();" class="btn btnFull small"><span>메일 전송</span></a>
+            </div>
+        </div>
+        <a href="#" class="layerPopClose btnPopClose" style="background: url('resources/pcPub/static/images/common/btn/btn_pop_close.png') no-repeat;">레이어 팝업 닫기</a>
+    </div>
+</div>
+
+
 </body>
 
 </html>

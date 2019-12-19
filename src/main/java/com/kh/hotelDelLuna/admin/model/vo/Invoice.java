@@ -6,24 +6,35 @@ public class Invoice {
 
 	
 	private int ivId;
-	private String userId;
+	private String userName;
+	private String userPhone;
 	private int rType;
 	private Date ckinDate;
 	private int price;
 	private Date rqDate;
+	private int quantity;
+	private int totalPrice;
+	private String userEmail;
+	private String iStatus;
 	
 	public Invoice() {
 		super();
 	}
 
-	public Invoice(int ivId, String userId, int rType, Date ckinDate, int price, Date rqDate) {
+	public Invoice(int ivId, String userName, String userPhone, int rType, Date ckinDate, int price, Date rqDate,
+			int quantity, int totalPrice, String userEmail, String iStatus) {
 		super();
 		this.ivId = ivId;
-		this.userId = userId;
+		this.userName = userName;
+		this.userPhone = userPhone;
 		this.rType = rType;
 		this.ckinDate = ckinDate;
 		this.price = price;
 		this.rqDate = rqDate;
+		this.quantity = quantity;
+		this.totalPrice = totalPrice;
+		this.userEmail = userEmail;
+		this.iStatus = iStatus;
 	}
 
 	public int getIvId() {
@@ -34,12 +45,20 @@ public class Invoice {
 		this.ivId = ivId;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserPhone() {
+		return userPhone;
+	}
+
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
 	}
 
 	public int getrType() {
@@ -74,11 +93,47 @@ public class Invoice {
 		this.rqDate = rqDate;
 	}
 
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	public String getiStatus() {
+		return iStatus;
+	}
+
+	public void setiStatus(String iStatus) {
+		this.iStatus = iStatus;
+	}
+
 	@Override
 	public String toString() {
-		return "Invoice [ivId=" + ivId + ", userId=" + userId + ", rType=" + rType + ", ckinDate=" + ckinDate
-				+ ", price=" + price + ", rqDate=" + rqDate + "]";
+		return "Invoice [ivId=" + ivId + ", userName=" + userName + ", userPhone=" + userPhone + ", rType=" + rType
+				+ ", ckinDate=" + ckinDate + ", price=" + price + ", rqDate=" + rqDate + ", quantity=" + quantity
+				+ ", totalPrice=" + totalPrice + ", userEmail=" + userEmail + ", iStatus=" + iStatus + "]";
 	}
+
+	
+	
 	
 	
 }

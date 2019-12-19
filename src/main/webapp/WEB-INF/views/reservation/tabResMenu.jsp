@@ -74,7 +74,7 @@ body {
  <jsp:include page="../common/menubar.jsp"/>
 	<!-- 섹션 영역 -->
 	<section id="container">	
-	<div class="reservationWrap">
+	<div class="reservationWrap" style="padding-top:130px">
 		<div class="tabmenu">
 			<ul>
 				<li id="tab1" class="btnCon btn small"> 
@@ -84,7 +84,7 @@ body {
 				</li>
 				<li id="tab1" class="btnCon btn small"> 
 					<input type="radio" name="tabmenu" id="tabmenu2" onclick="tabMenuCheck()"> 
-					<label for="tabmenu2">달력</label> 
+					<label for="tabmenu2">달력</label>
 
 				</li>
 			</ul>
@@ -94,6 +94,8 @@ body {
 		</div>
 		<div id="calendarRes" hidden="true">
 			<c:import url="calendarResView.jsp"/>
+			<div id="impScript">
+			</div>
 		</div>		
 	</div>
 	</section>
@@ -102,9 +104,10 @@ body {
 
 <script>
 
+
 // 탭 메뉴 체크시 변경 기능
 function tabMenuCheck(){
-	
+
 	for(var i=0;i<$("input[name=tabmenu]").length;i++){
 		console.log($("input[name=tabmenu]").eq(i).prop("checked"));
 		if($("input[name=tabmenu]").eq(i).prop("checked")==true){
@@ -115,6 +118,10 @@ function tabMenuCheck(){
 			 sessionStorage.removeItem("sc");
 			 $("#entireRes").prop("hidden",true);	
 			 $("#calendarRes").prop("hidden",false);
+				
+			initDate();
+			 /// 달력 형식으로 데이터를 불러와야 겠다.
+		
 		 /** 테이블 메뉴일 때 **/
 		 }else{
 			 $("#entireRes").prop("hidden",false);	

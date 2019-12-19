@@ -14,6 +14,37 @@
 		<result property="kakao" column="KAKAO"/>
 	</resultMap>
 	
+	<resultMap type="Inquiry" id="inquiryResultSet">
+		<id property="iId" column="IID"/>
+		<result property="iTitle" column="ITITLE"/>
+		<result property="iWriter" column="IWRITER"/>
+		<result property="iContent" column="ICONTENT"/>
+		<result property="iCreateDate" column="I_CREATE_DATE"/>
+		<result property="iModifyDate" column="I_MODIFY_DATE"/>
+		<result property="iStatus" column="I_STATUS"/>
+		<result property="reContent" column="RE_CONTENT"/>
+		<result property="reStatus" column="RE_STATUS"/> 
+	</resultMap>
+	
+	<resultMap type="Reservation" id="ResListResultSet">
+		<id property="res_no" column="RES_NO"/>
+		<result property="res_roomNo" column="RES_ROOMNO"/>
+		<result property="res_roomType" column="RES_ROOMTYPE"/>
+		<result property="res_userId" column="RES_USERID"/>
+		<result property="res_userName" column="USERNAME"/>
+		<result property="res_breakfast" column="RES_BREAKFAST"/> 
+		<result property="res_dinner" column="RES_DINNER"/>
+		<result property="res_smoking" column="RES_SMOKING"/>
+		<result property="res_addBed" column="RES_ADDBED"/>
+		<result property="res_adult" column="RES_ADULT"/>
+		<result property="res_child" column="RES_CHILD"/>
+		<result property="res_checkIn" column="RES_CHECKIN"/>
+		<result property="res_checkOut" column="RES_CHECKOUT"/>
+		<result property="res_status" column="RES_STATUS"/>
+		<result property="res_payStatus" column="RES_PAYSTATUS"/>
+		<result property="res_require" column="RES_REQUIRE"/>
+	</resultMap>
+	
 	<select id="selectOne" parameterType="Member" resultMap="memberResultSet">
 		<!-- SELECT *
 		FROM MEMBER
@@ -34,11 +65,11 @@
 		)
 	</insert>
 	
-	<select id="idCheck" parameterType="string" resultType="_int">
-		SELECT COUNT(*)
-		FROM MEMBER
-		WHERE USERID=#{userId}
-	</select>
+	<select id="idCheck" parameterType="string" resultMap="memberResultSet">
+      SELECT *
+      FROM MEMBER
+      WHERE USERID=#{userId}
+   </select>
 	
 	<select id="kakaoIdCheck" parameterType="string" resultType="_int">
 		SELECT COUNT(*)
@@ -79,11 +110,142 @@
 		AND USERPHONE=#{userPhone}
 	</select>
 	
-	<select id="findUser" parameterType="Member" resultMap="memberResultSet">
+	<select id="findMember" parameterType="Member" resultMap="memberResultSet">
 		SELECT *
 		FROM MEMBER
 		WHERE USERID=#{userId}
 		AND M_STATUS='Y'
 	</select>
+	
+	<update id="updateMember" parameterType="Member">
+		UPDATE MEMBER SET
+		USERNAME=#{userName}, USERPHONE=#{userPhone}
+		WHERE USERID=#{userId}
+	</update>
+	
+	<select id="findKakao" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USERID=#{userId}
+		AND KAKAO IS NOT NULL
+		AND M_STATUS='Y'
+	</select>
+	
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM INQUIRY
+		WHERE I_STATUS='Y'
+	</select>
+	
+	<select id="selectList" resultMap="inquiryResultSet">
+		SELECT *
+		FROM INQUIRY
+		WHERE I_STATUS='Y'
+		ORDER BY IID DESC
+	</select>
+	
+	<select id="getMListCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM INQUIRY
+		WHERE I_STATUS='Y'
+		AND IWRITER=#{userId}
+	</select>
+	
+	<select id="selectMList" resultMap="inquiryResultSet">
+		SELECT *
+		FROM INQUIRY
+		WHERE I_STATUS='Y'
+		AND IWRITER=#{userId}
+		ORDER BY IID DESC
+	</select>
+	
+	<insert id="insertInquiry" parameterType="Inquiry">
+		INSERT INTO INQUIRY VALUES(
+			SEQ_IID.NEXTVAL, #{iTitle}, #{iWriter}, #{iContent}, SYSDATE, SYSDATE, DEFAULT, NULL, DEFAULT
+		)
+	</insert>
+	
+	<select id="selectInquiry" parameterType="_int" resultMap="inquiryResultSet">
+		SELECT *
+		FROM INQUIRY
+		WHERE IID=#{iId}
+		AND I_STATUS='Y'
+	</select>
+	
+	<update id="deleteInquiry" parameterType="_int">
+		UPDATE INQUIRY SET
+		I_STATUS='N'
+		WHERE IID=#{iId}
+	</update>
+	
+	<update id="updateInquiry" parameterType="Inquiry">
+		UPDATE INQUIRY
+		SET RE_CONTENT=#{reContent}, RE_STATUS='Y', I_MODIFY_DATE=SYSDATE
+		WHERE IID=#{iId}
+	</update>
+
+	
+	<insert id="insertNonMember" parameterType="Member">
+		INSERT INTO MEMBER VALUES(
+			SEQ_MID.NEXTVAL, DEFAULT, #{userId}, null, #{userName}, #{userPhone}, 0, 'B' ,NULL
+		)
+	</insert>
+
+	<update id="deleteMember" parameterType="string">
+		UPDATE MEMBER
+		SET M_STATUS='N'
+		WHERE USERID=#{userId}
+	</update>
+	
+	<select id="getNoReplyListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM INQUIRY
+		WHERE I_STATUS='Y'
+		AND RE_STATUS='N'
+	</select>
+	
+	<select id="selectNoReplyList" resultMap="inquiryResultSet">
+		SELECT *
+		FROM INQUIRY
+		WHERE I_STATUS='Y'
+		AND RE_STATUS='N'
+	</select>
+	
+	<select id="getMyRListCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM RESERVATION
+		WHERE RES_USERID=#{userId}
+	</select>
+	
+	<select id="selectMyResList" resultMap="ResListResultSet">
+		<!-- SELECT *
+		FROM RESERVATION
+		ORDER BY RES_NO DESC -->
+		SELECT *
+		FROM RESERVATION R
+		JOIN MEMBER M ON(R.RES_USERID=M.USERID)
+		WHERE RES_USERID=#{userId}
+		ORDER BY RES_NO DESC
+	</select>
+	
+	<update id="insertNMember" parameterType="Member">
+		UPDATE MEMBER SET
+		USERPWD=#{userPwd}, USERNAME=#{userName}, USERPHONE=#{userPhone}, M_STATUS='Y'
+		WHERE USERID=#{userId}
+	</update>
+	
+	<select id="searchRes" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USERID=#{userId}
+		AND USERNAME=#{userName}
+		AND USERPHONE=#{userPhone}
+	</select>
+	
+	<update id="insertNKMember" parameterType="Member">
+		UPDATE MEMBER SET
+		USERPWD=#{userPwd}, USERNAME=#{userName}, USERPHONE=#{userPhone}, KAKAO=${kakao}, M_STATUS='Y'
+		WHERE USERID=#{userId}
+	</update>
 	
 </mapper>
