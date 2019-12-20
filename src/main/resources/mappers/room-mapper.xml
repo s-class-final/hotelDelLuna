@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="roomMapper">
+	<resultMap id="RRS" type = "Room">
+		<id property = "roomNo" column= "ROOMNO"/>
+		<result property = "roomType" column= "ROOMTYPE"/> 
+		<result property = "res_No" column= "RES_NO"/>
+		<result property = "condition" column= "CONDITION"/>
+		<result property = "inTime" column= "INTIME"/>
+		<result property = "outTime" column= "OUTTIME"/>
+		<result property = "requirement" column= "REQUIRE"/>
+	</resultMap>	
+	
+	<!-- 룸 카드 리스트 -->
+	<select id="selectRcList" resultMap="RRS">
+		SELECT * 
+		FROM ROOM
+		ORDER BY ROOMNO
+	</select>
+	<!-- ajax용 sql문 -->
+	<!-- 슈페리어 룸 카드 리스트 -->
+	<select id="selectSURcList" resultMap="RRS">
+		SELECT * 
+		FROM ROOM
+        WHERE ROOMTYPE LIKE 'SUPERIOR%'
+        ORDER BY ROOMNO
+	</select>
+	
+	<select id="selectDUXRoomCardList" resultMap="RRS">
+		SELECT * 
+		FROM ROOM
+        WHERE ROOMTYPE LIKE 'DELUXE%'
+        ORDER BY ROOMNO
+	</select>
+		<select id="selectSUIRoomCardList" resultMap="RRS">
+		SELECT * 
+		FROM ROOM
+        WHERE ROOMTYPE LIKE 'SUITE%'
+        ORDER BY ROOMNO
+	</select>
+	
+	<!-- 카운트용 sql문 시작 -->
+	<!-- 슈페리어 룸 카운트 -->
+	<select id ="selectSPWaitingCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ROOM
+		WHERE ROOMTYPE LIKE 'SUPERIOR%'
+		AND CONDITION = 'WAITING'
+	</select>
+	<select id ="selectSPCleaningCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ROOM
+		WHERE ROOMTYPE LIKE 'SUPERIOR%'
+		AND CONDITION = 'CLEANING'
+	</select>
+	<select id ="selectSPStayingCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ROOM
+		WHERE ROOMTYPE LIKE 'SUPERIOR%'
+		AND CONDITION = 'STAYING'
+	</select>
+	
+	<!-- 디락스 룸 카운트 -->
+	<select id ="selectDeluxeWaitingCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ROOM
+		WHERE ROOMTYPE LIKE 'DELUXE%'
+		AND CONDITION = 'WAITING'
+	</select>
+	<select id ="selectDeluxeCleaningCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ROOM
+		WHERE ROOMTYPE LIKE 'DELUXE%'
+		AND CONDITION = 'CLEANING'
+	</select>
+	<select id ="selectDeluxeStayingCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ROOM
+		WHERE ROOMTYPE LIKE 'DELUXE%'
+		AND CONDITION = 'STAYING'
+	</select>
+	
+	<!-- 스위트 룸 카운트 -->
+	<select id ="selectSUWaitingCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ROOM
+		WHERE ROOMTYPE LIKE 'SUITE%'
+		AND CONDITION = 'WAITING'
+	</select>
+	<select id ="selectSUCleaningCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ROOM
+		WHERE ROOMTYPE LIKE 'SUITE%'
+		AND CONDITION = 'CLEANING'
+	</select>
+	<select id ="selectSUStayingCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ROOM
+		WHERE ROOMTYPE LIKE 'SUITE%'
+		AND CONDITION = 'STAYING'
+	</select>
+	
+	<!-- 카운트용 sql문 끝 -->
+</mapper>

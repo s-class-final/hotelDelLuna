@@ -198,43 +198,51 @@ body {
 	// 아이디 중복체크
 	var idUsable = false;
 	function checkId() {
-		var userId = $("#userId3");
-		var userId1 = $("#userId1");
+	      var userId = $("#userId3");
+	      var userId1 = $("#userId1");
 
-		if (userId1.val().indexOf(" ") >= 0) {
-			alert("공백은 입력할 수 없습니다");
-			userId1.val("");
-			$("#checkId").html('');
+	      if (userId1.val().indexOf(" ") >= 0) {
+	         alert("공백은 입력할 수 없습니다");
+	         userId1.val("");
+	         $("#checkId").html('');
 
-		} else {
-			$("#userId3").val(
-					$("#userId1").val() + '@' + $("#userId2").val());
+	      } else {
+	         $("#userId3").val(
+	               $("#userId1").val() + '@' + $("#userId2").val());
 
-			if (userId1.val().length <= 3) {
-				$("#checkId").html('');
-			} else {
-				$.ajax({
-					url : "idcheck.do",
-					data : {userId : userId.val()},
-					success : function(data) {
-						if (data == "true") {
-							idUsable = false;
-							kakaoCheck();
-						} else {
-							$("#checkId").html('');
-							$("#checkId").html("아이디 사용 가능합니다").css("color","green");
-							idUsable = true;
-						}
-					},
-					error : function(request, status, errorData) {
-						alert("error code: " + request.status + "\n"
-								+ "message: " + request.responseText
-								+ "error: " + errorData);
-					}
-				});
-			}
-		}
-	};
+	         if (userId1.val().length <= 3) {
+	            $("#checkId").html('');
+	         } else {
+	            $.ajax({
+	               url : "idcheck.do",
+	               data : {userId : userId.val()},
+	               success : function(data) {
+	                  if (data == "false"){
+	                     $("#checkId").html('');
+	                     $("#checkId").html("아이디 사용 가능합니다").css("color","green");
+	                     idUsable = true;
+	                  }else if(data == "false1"){
+	                     $("#checkId").html('');
+	                     $("#checkId").html("아이디 사용 가능합니다 (예약 내역 존재)").css("color","green");
+	                     idUsable = true;
+	                  }else if(data == "nope"){
+	                     $("#checkId").html('');
+	                     $("#checkId").html("이미 탈퇴한 이메일입니다. 동일한 이메일로 재가입을 원하시면 따로 문의해주세요").css("color","red");
+	                     idUsable = false;
+	                  }else{
+	                     idUsable = false;
+	                     kakaoCheck();
+	                  }
+	               },
+	               error : function(request, status, errorData) {
+	                  alert("error code: " + request.status + "\n"
+	                        + "message: " + request.responseText
+	                        + "error: " + errorData);
+	               }
+	            });
+	         }
+	      }
+	   };
 	
 	// 카카오 이메일 체크
 	function kakaoCheck(){
@@ -246,7 +254,7 @@ body {
 		  success:function(data){
 			  if(data == "true"){
 				  $("#checkId").html('');
-                     $("#checkId").html("카카오 아이디로 가입된 이메일입니다. 카카오 아이디로 로그인 해주세요").css("color", "#ffec42");
+                     $("#checkId").html("카카오 아이디로 가입된 이메일입니다. 카카오 아이디로 로그인 해주세요").css("color", "#ebd700");
                      kakaoUsable = false;
 			  }else{
 				  $("#checkId").html('');
@@ -572,7 +580,7 @@ body {
 		}
 
 		if (idUsable == false) {
-			alert("이미 가입된 이메일입니다.");
+			alert("이메일을 확인해주세요.");
 			$("#userId1").focus();
 			return false;
 		}
@@ -661,6 +669,7 @@ body {
 			$("#emailCode").focus();
 			return false;
 		}
+		
 		return true;
 	}
 </script>

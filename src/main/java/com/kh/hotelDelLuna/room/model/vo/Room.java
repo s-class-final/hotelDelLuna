@@ -3,89 +3,71 @@ package com.kh.hotelDelLuna.room.model.vo;
 import java.sql.Date;
 
 public class Room {
-	private int num;			//객실 번호
-	private String type;		//객실 타입
-	private int res_no;			//예약번호
+	private int roomNo;			//객실 번호
+	private String roomType;	//객실 타입
+	private int res_No;			//예약번호
 	private String condition;	//객실 상태
 	private Date inTime;		//체크인 시간
 	private Date outTime;		//체크아웃시간
 	private String requirement;	//요청사항
-	
 	public Room() {
-		super();
 	}
-
-	public Room(int num, String type, int res_no, String condition, Date inTime, Date outTime, String requirement) {
-		super();
-		this.num = num;
-		this.type = type;
-		this.res_no = res_no;
+	public Room(int roomNo, String roomType, int res_No, String condition, Date inTime, Date outTime,
+			String requirement) {
+		this.roomNo = roomNo;
+		this.roomType = roomType;
+		this.res_No = res_No;
 		this.condition = condition;
 		this.inTime = inTime;
 		this.outTime = outTime;
 		this.requirement = requirement;
 	}
-
-	public int getNum() {
-		return num;
+	public int getRoomNo() {
+		return roomNo;
 	}
-
-	public void setNum(int num) {
-		this.num = num;
+	public void setRoomNo(int roomNo) {
+		this.roomNo = roomNo;
 	}
-
-	public String getType() {
-		return type;
+	public String getRoomType() {
+		return roomType;
 	}
-
-	public void setType(String type) {
-		this.type = type;
+	public void setRoomType(String roomType) {
+		this.roomType = roomType;
 	}
-
-	public int getRes_no() {
-		return res_no;
+	public int getRes_No() {
+		return res_No;
 	}
-
-	public void setRes_no(int res_no) {
-		this.res_no = res_no;
+	public void setRes_No(int res_No) {
+		this.res_No = res_No;
 	}
-
 	public String getCondition() {
 		return condition;
 	}
-
 	public void setCondition(String condition) {
 		this.condition = condition;
 	}
-
 	public Date getInTime() {
 		return inTime;
 	}
-
 	public void setInTime(Date inTime) {
 		this.inTime = inTime;
 	}
-
 	public Date getOutTime() {
 		return outTime;
 	}
-
 	public void setOutTime(Date outTime) {
 		this.outTime = outTime;
 	}
-
 	public String getRequirement() {
 		return requirement;
 	}
-
 	public void setRequirement(String requirement) {
 		this.requirement = requirement;
 	}
-
 	@Override
 	public String toString() {
-		return "Room [num=" + num + ", type=" + type + ", res_no=" + res_no + ", condition=" + condition + ", inTime="
-				+ inTime + ", outTime=" + outTime + ", requirement=" + requirement + "]";
+		return "Room [roomNo=" + roomNo + ", roomType=" + roomType + ", res_No=" + res_No + ", condition=" + condition
+				+ ", inTime=" + inTime + ", outTime=" + outTime + ", requirement=" + requirement + "]";
 	}
 	
 	

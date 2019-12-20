@@ -18,40 +18,7 @@ body {
 </head>
 <body onkeydown="javascript:confirmMail();">
 	<jsp:include page="../common/menubar.jsp"/>
-	<!-- 
-	<div id="outer">
-		<br>
-		<h2 align="center">비밀번호 찾기</h2>
-		<br>
-		<br>
-		<form id="findForm" action="sendmail.do">
-			<h3>이메일 입력</h3>
-			<input type="text"	id="findMail" name="findMail" oninput="checkId();" placeholder="이메일">
-			<div id = "checkId" class="check"></div>
-			
-			<h3>이름</h3>
-			<input type="text"	id="findName1" name="findName1" oninput="checkId();" placeholder="성 (last name)">
-			 &nbsp;<input type="text"	id="findName2" name="findName2" oninput="checkId();" placeholder="이름 (first name)">
-			<br>
-			
-			<h3>전화번호 입력</h3>
-			<select id = "findPhone1" name = "findPhone1" class = "join" oninput="checkId();">
-				<option value = "010">010</option>
-				<option value = "011">011</option>
-				<option value = "016">016</option>
-				<option value = "017">017</option>
-				<option value = "019">019</option>
-			</select>&nbsp;
-			<input type="text" id="findPhone2" name="findPhone2" class = "join" maxlength="4" oninput="nextPhone(); checkId(); this.value=this.value.replace(/[^0-9]/g,'');" required>&nbsp;
-			<input type="text" id="findPhone3" name="findPhone3" class = "join" maxlength="4" oninput="checkId(); this.value=this.value.replace(/[^0-9]/g,'');" required>
-				<input type="hidden" id="randomPwd" name="randomPwd"> <br>
-				<br>
-			<div class="findBtn">
-				<button id="findBtn" type="button">이메일로 비밀번호 찾기</button>
-			</div>
-		</form>
-	</div>
-	 -->
+	
 	<form id="findForm" action="sendmail.do">
 		<div class="loginWrap">
 			<div class="innerBox"> <!-- 가로값이 1280으로 설정되어진 아이 -->
@@ -62,7 +29,7 @@ body {
 					<div class="loginBox">
 						<div class="inp">
 							<h3 style="padding: 10px;">아이디(이메일)</h3>
-							<input type="text"	id="findMail" name="findMail" oninput="checkId();" placeholder="이메일">
+							<input type="text"	id="findMail" name="findMail" oninput="checkId();" placeholder="Email">
 						</div>
 						<div id = "checkId" class="check"></div>
 						
@@ -212,7 +179,7 @@ body {
 			  success:function(data){
 				  if(data == "true"){
 					  $("#checkId").html('');
-                      $("#checkId").html("카카오 아이디로 가입된 이메일입니다").css({"color" : "#ffec42", "text-shadow" : "1px 1px 2px brown"});
+                      $("#checkId").html("카카오 아이디로 가입된 이메일입니다").css({"color" : "#ebd700"});
                       kakaoUsable = false;
 				  }else{
 					  $("#checkId").html('');
@@ -318,7 +285,7 @@ body {
          
       }
       
-    //엔터 입력 시 가입 버튼 클릭
+    //엔터 입력 시 버튼 클릭
 	function confirmMail(){
 	   var keyCode = window.event.keyCode;
 	   if (keyCode == 13) {

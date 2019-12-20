@@ -44,7 +44,7 @@
       <textarea id="reContent" name="reContent">${inquiry.reContent}</textarea>
       <br><br><br><br>
       <div style="text-align:center;">
-         <a onclick="replyInquiry();" class="btn btnFull layerPopOpen"><span>답변하기</span></a>
+         <a onclick="replyInquiry();" class="btn btnFull layerPopOpen"><span>수정</span></a>
       </div>
    </div>   
 	</form>

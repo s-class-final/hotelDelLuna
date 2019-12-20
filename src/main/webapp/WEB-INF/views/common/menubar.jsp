@@ -119,9 +119,6 @@
                   <h2><a href="#"><span>entertainment</span>즐길거리</a></h2>
                   <ul>
                      <li class="on"><a href="facility.do">부대시설</a></li>
-                     <li><a href="casino.do">CASINO</a></li>
-                     <li><a href="plaza.do">PLAZA</a></li>
-                     <li><a href="around.do">주변 즐길거리</a></li>
                   </ul>
                </div>
             </div>
@@ -193,11 +190,24 @@
    
    <div class="topLink">
       <div class="more">
-         <a href="#" class="topMore">LANGUAGE</a>
+         <a href="#" class="topMore">More</a>
          <ul>
-            <li><a href="#">KR</a></li>
-            <li><a href="#">EN</a></li>
-
+         	<c:if test="${ empty sessionScope.loginUser }">
+	            <li><a href="loginForm.do">로그인</a></li>
+	            <li><a href="mjoin.do">회원가입</a></li>
+	            <li><a href="nologinres.do">예약확인</a></li>
+            </c:if>
+			<c:if test="${ !empty sessionScope.loginUser }">
+	            <li><a href="logout.do">로그아웃</a></li>
+	            <c:if test="${empty loginUser.kakao}">
+	            	<li><a href="mconfirm.do">마이페이지</a></li>
+	            </c:if>
+	            <c:if test="${!empty loginUser.kakao}">
+	            	<li><a href="mypage.do">마이페이지</a></li>
+	            </c:if>
+	            <li><a href="mmyres.do">예약확인</a></li>
+            </c:if>
+            
          </ul>
       </div>
 
@@ -235,33 +245,38 @@
       <%--    <c:url var="entireResList" value="entireResList.do"/>
        --%>
         	<c:if test="${ empty sessionScope.loginUser }">
-				<li><a href="loginForm.do"><em class="icon1"><i></i></em><p>Login</p></a></li>
+				<li><a href="loginForm.do"><em class="icon6"><i></i></em><p>Login</p></a></li>
 			</c:if>
 			<c:if test="${ !empty sessionScope.loginUser }">
-				<li><a href="logout.do"><em class="icon1"><i></i></em><p>Logout</p></a></li>
+				<li><a href="logout.do"><em class="icon6"><i></i></em><p>Logout</p></a></li>
 			</c:if>
 			<c:if test="${ empty sessionScope.loginUser }">
 				<li><a href="mjoin.do"><em class="icon2"><i></i></em><p><span>HOTEL</span>JOIN US</p></a></li>
 			</c:if>
 			<c:if test="${ empty sessionScope.loginUser }">
-				<li><a href="void(0);" onclick="alert('로그인 후 이용해 주세요');return false;"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
+				<li><a href="void(0);" onclick="alert('로그인 후 이용해 주세요');return false;"><em class="icon10"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
 			</c:if>
 			<c:if test="${ !empty sessionScope.loginUser and empty loginUser.kakao}">
-				<li><a href="mconfirm.do"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
+				<li><a href="mconfirm.do"><em class="icon10"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
 			</c:if>
 			<c:if test="${ !empty sessionScope.loginUser and !empty loginUser.kakao}">
-				<li><a href="mypage.do"><em class="icon3"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
+				<li><a href="mypage.do"><em class="icon10"><i></i></em><p><span>MEMBER</span>MY PAGE</p></a></li>
 			</c:if>
-         <li><a href="mmyres.do"><em class="icon4"><i></i></em><p><span>RESERVATION</span>MY RESERVATION</p></a></li>
-         <li><a href="#"><em class="icon5"><i></i></em><p><span>MAP</span>DELLUNA MAP</p></a></li>
+		 <c:if test="${ !empty sessionScope.loginUser }">	
+         	<li><a href="mmyres.do"><em class="icon8"><i></i></em><p><span>RESERVATION</span>MY RESERVATION</p></a></li>
+         </c:if>
+         <c:if test="${ empty sessionScope.loginUser }">	
+         	<li><a href="nologinres.do"><em class="icon8"><i></i></em><p><span>RESERVATION</span>MY RESERVATION</p></a></li>
+         </c:if>
+         <li><a href="location.do"><em class="icon1"><i></i></em><p><span>MAP</span>DELLUNA MAP</p></a></li>
          <c:if test="${ empty sessionScope.loginUser }">
-         	<li><a id="pppop" href="#poppop" class="layerPopOpen"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1문의</p></a></li>
+         	<li><a id="pppop" href="#poppop" class="layerPopOpen"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1 INQUIRY</p></a></li>
          </c:if>
          <c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 2}">
-         	<li><a href="allinquiry.do"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1문의</p></a></li>
+         	<li><a href="allinquiry.do"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1 INQUIRY</p></a></li>
          </c:if>
          <c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 1}">
-         	<li><a href="minquiry.do"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1문의</p></a></li>
+         	<li><a href="minquiry.do"><em class="icon9"><i></i></em><p><span>INQUIRY</span>1:1 INQUIRY</p></a></li>
          </c:if>
       </ul>
    </div>

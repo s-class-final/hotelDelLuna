@@ -97,7 +97,7 @@ function jsDownImg(F_SEQ){
 	
 	<div class="hotelParadiseWrap pb0">
 		<div class="innerBox">
-			<h1 class="contTitle"><span>다이닝</span>미슐랭 스타 레스토랑부터 트렌디한 Bar까지, <br />호텔 파라다이스에서 펼쳐지는 미식의 세계로 초대합니다.</h1>
+			<h1 class="contTitle"><span>다이닝</span>미슐랭 스타 레스토랑부터 트렌디한 Bar까지, <br />호텔 델루나에서 펼쳐지는 미식의 세계로 초대합니다.</h1>
 			
 			<section class="jsSwiperMotion">
 				<div class="swiperWrap">
@@ -139,11 +139,7 @@ function jsDownImg(F_SEQ){
 				<h2>La Scala</h2>
 				<p class="subTit">밀라노의 감성으로 이탈리아 본연의 맛을 추구하는 Italian Gourmet Restaurant</p>
 				<p class="text">이탈리아의 풍부하고 화려한 맛을 느낄 수 있는 레스토랑 라 스칼라는 합리적인 가격에 수준 높은 이탈리안<br />요리를 제공합니다. 밀라노의 감성으로 재해석된 라 스칼라의 심플하고 세련된 풍미를 경험할 수 있습니다.</p>
-				<div class="btnGroup">
-					<a href="#popReservation" class="btn small layerPopOpen"><span>예약하기</span></a>
-					<!-- 2018.07.09 수정 -->
-					<a href="#pop1" class="btn small btnFull layerPopOpen"><span>문의하기</span></a>
-				</div>
+				
 			</div>
 			
 			<div class="detailInfo">
@@ -166,7 +162,7 @@ function jsDownImg(F_SEQ){
 					</dl>
 					<dl>
 						<dt>위치</dt>
-						<dd>HOTEL PARADISE 1F<br />
+						<dd>HOTEL DELLUNA 1F<br />
 							<!-- 오픈시점 삭제 
 							<a href="#" class="link">+ 위치 보기</a>
 							-->
@@ -287,7 +283,7 @@ function jsDownImg(F_SEQ){
 							</c:url>
 							<a href="${diningView }">
 								<p class="img"><img src="resources/pcPub/static/images/dining/list/dining_list6.jpg" alt="" /></p>
-								<h4>LOUNGE PARADISE</h4>
+								<h4>LOUNGE DELLUNA</h4>
 								<p class="text">음악이 흐르는 로비라운지</p>
 							</a>
 						</li>
@@ -333,7 +329,7 @@ function jsDownImg(F_SEQ){
 
 <!-- 1:1 문의 (레이어 팝업) -->
 
-
+<jsp:include page="../../../common/footer.jsp"/>
 
 
 

@@ -28,6 +28,7 @@ body {
 }
 
 .table-fill  th {
+	width:155px;
 	color: WHITE;
 	background: #1b1e24;;
 	border-bottom: 4px solid #9ea7af;
@@ -36,7 +37,7 @@ body {
 	font-weight: 100;
 	padding: 10px;
 	cursor:pointer;
-	text-align: left;
+	text-align: center;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 	vertical-align: middle;
 }
@@ -115,45 +116,56 @@ body {
     background: url(resources/pcPub/static/images/common/bg_topArrow.png) no-repeat 0 -5px;
 
 }
+
+/* 삭제버튼 */
+.btnOptionClose {
+  border:none;
+  width:18px; 
+  height:18px; 
+  font-size:0; 
+  background:url('../hotelDelLuna/resources/pcPub/static/images/reservation/btn_option_close.png')   no-repeat;
+  cursor:pointer;
+ }
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
 <body>
 	<jsp:include page="../common/menubar.jsp"/>
-	<div class="mypageWrap pos">
+	
+	<div class="loginWrap">
 		<div class="innerBox"> <!-- 가로값이 1280으로 설정되어진 아이 -->
-			<h1 class="contTitle"><span>예약 내역</span>회원님께서 예약하신 내역을 <br />확인하실 수 있습니다.</h1>
-			
-			<div class="reservationBox">
-			<br><br><br><br>
-			<table class="table-fill">
-				<thead>
-					<tr>
-						<th class="sortHead" style="width:100px">예약번호<button id="sort_no" class="toggle off"></button></th>
-						<th class="sortHead">예약자<button id="sort_name" class="toggle off"></button></th>
-						<th style="width:50px">인원</th>
-						<th class="sortHead">체크인<button id="sort_checkIn" class="toggle off"></button></th>
-						<th class="sortHead" style="width:95px">체크아웃<button id="sort_checkOut" class="toggle off"></button></th>
-						<th>입금상태</th>
-						<th>예약상태</th>
-					</tr>
-				</thead>
-			
-				<tbody class="table-hover">
-				</tbody>
-			</table>
-			<br><br><br>
-			
-			<br>
-			<!-- 페이징 영역 -->
-			<div class="pagingArea" align="center" style="padding-right:150px">
-				<ul class="pagination  justify-content-center">
+			<h1><span>예약 내역</span>회원님께서 예약하신 내역을<br />확인하실 수 있습니다.</h1>
+		</div>
+		<div class="fullBg">
+			<div class="innerBox bg"> <!-- 가로값이 1280으로 설정되어진 아이 -->
+				<table class="table-fill" align="center">
+					<thead>
+						<tr>
+							<th>예약자</th>
+							<th>인원</th>
+							<th class="sortHead">체크인<button id="sort_checkIn" class="toggle off"></button></th>
+							<th class="sortHead">체크아웃<button id="sort_checkOut" class="toggle off"></button></th>
+							<th>입금상태</th>
+							<th>예약상태</th>
+							<th>요청사항</th>
+						</tr>
+					</thead>
 				
-				</ul>		
+					<tbody class="table-hover">
+					</tbody>
+				</table>
+				<br><br><br>
+				
+				<br>
+				<!-- 페이징 영역 -->
+				<div class="pagingArea" align="center">
+					<ul class="pagination  justify-content-center">
+					
+					</ul>		
+				</div>
+				<!-- //페이징 영역 -->
 			</div>
-			<!-- //페이징 영역 -->
 			
-			</div>
 		</div>
 	</div>
 	
@@ -285,22 +297,6 @@ body {
 		    }
 
 		});
-
-		/* 상세 정보 가져오기 */
-		$(document).on("click",".text-left",function(){
-			var res_no=$(this).parents().children("td").eq(0).text();
-			console.log(res_no);
-			location.href="resDetail.do?res_no="+res_no;
-		});
-		
-		
-		/* 예약 삭제하기 */
-		$(document).on("click",".deleteRes",function(event){
-			var res_no=$(this).parents().children("td").eq(0).text();
-			console.log(res_no);
-		    event.stopPropagation();
-		});
-
 		
 		/***** 테이블 ajax 처리 *****/
 		function loadData(code,sort_no){
@@ -320,10 +316,9 @@ body {
 			var $res_checkOut;
 			var $res_payStatus;
 			var $res_status;
-			var $deleteBtn;
 	
 			$.ajax({
-				url:"rList.do",
+				url:"myrList.do",
 				data:{page:page,
 					sort_no:sort_no},
 				dataType:"json",
@@ -332,13 +327,13 @@ body {
 					if(data.length>0){
 						for(var i in data){
 							$tr=$("<tr>");
-							$res_no = $("<td class='text-left'>").text(data[i].res_no);
-							$res_name = $("<td class='text-left'>").text(data[i].res_userName);
-							$res_adult = $("<td class='text-left'>").text(Number(data[i].res_adult)+Number(data[i].res_child));
-							$res_checkIn = $("<td class='text-left'>").text(data[i].res_checkIn);
-							$res_checkOut = $("<td class='text-left'>").text(data[i].res_checkOut);
-							$res_payStatus = $("<td class='text-left'>").text(data[i].res_payStatus);
-							$res_status = $("<td class='text-left'>").text(data[i].res_status);
+							$res_name = $("<td class='text-center' style='cursor:default'>").text(data[i].res_userName);
+							$res_adult = $("<td class='text-center' style='cursor:default'>").text(Number(data[i].res_adult)+Number(data[i].res_child));
+							$res_checkIn = $("<td class='text-center' style='cursor:default'>").text(data[i].res_checkIn);
+							$res_checkOut = $("<td class='text-center' style='cursor:default'>").text(data[i].res_checkOut);
+							$res_payStatus = $("<td class='text-center' style='cursor:default'>").text(data[i].res_payStatus);
+							$res_status = $("<td class='text-center' style='cursor:default'>").text(data[i].res_status);
+							$res_require = $("<td class='text-center' style='cursor:default; overflow:auto;'>").text(data[i].res_require);
 							$deleteBtn = $("<button class='btnOptionClose deleteRes' onclick='deletePopModal("+(data[i].res_no)+","+'"'+(data[i].res_userName)+'"'+")'>");
 							
 							/*** 입금 대기 상태일 때 예약 삭제버튼 추가 ***/
@@ -347,15 +342,20 @@ body {
 							}
 							
 							
-							$tr.append($res_no);
 							$tr.append($res_name);
 							$tr.append($res_adult);
 							$tr.append($res_checkIn);
 							$tr.append($res_checkOut);
 							$tr.append($res_payStatus);
 							$tr.append($res_status);
+							$tr.append($res_require);
 							$tableBody.append($tr);
 						}	
+					}else{
+						$tr=$("<tr>");
+						$td=$("<td colspan='7' height='40px' style='text-align:center; font-size:17px; cursor:default;'>").text("예약 내역이 없습니다.");
+						$tr.append($td);
+						$tableBody.append($tr);
 					}
 				},error:function(request, status, errorData){
 					alert("error code: " + request.status + "\n"
@@ -380,7 +380,7 @@ body {
 			var searchValue = searchValue;
 			var search = bool;
 			$.ajax({
-				url:"rPage.do",
+				url:"myrPage.do",
 				data:{page:cPage,
 					searchCondition:searchCondition,
 					searchValue:searchValue,
@@ -456,10 +456,6 @@ body {
 			});
 		}
 		
-		
-		
-		
-		
 		/** 예약 삭제 확인창 띄우기 **/
 		function deletePopModal(res_no,res_userName){
 			console.log(res_no);
@@ -472,9 +468,8 @@ body {
 		
 		function closePopModal(){
 			layerPopClose("#loginPop");
+			
 		};
-
-
 	</script>
 </body>
 </html>

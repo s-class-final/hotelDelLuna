@@ -168,7 +168,7 @@ function jsList(CATE) {
 				<a href="${diningView }">
 				<img src="resources/pcPub/static/images/dining/dining6.jpg" alt="" /></a></p>
 				<div class="textBox">
-					<h2>LOUNGE PARADISE</h2>
+					<h2>LOUNGE DELLUNA</h2>
 					<p class="text">음악이 흐르는 로비라운지</p>
 				</div>
 			</div>
@@ -935,7 +935,7 @@ function jsSingleDayFilter(date, obj) {
 
 
 
-
+<jsp:include page="../../common/footer.jsp"/>
 
 
 

@@ -9,6 +9,7 @@ import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.member.model.dao.MemberDao;
 import com.kh.hotelDelLuna.member.model.vo.Inquiry;
 import com.kh.hotelDelLuna.member.model.vo.Member;
+import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
 
 @Service("mService")
 public class MemberServiceImpl implements MemberService{
@@ -28,7 +29,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public int idCheck(String userId) {
+	public Member idCheck(String userId) {
 		
 		return mDao.idCheck(userId);
 	}
@@ -156,6 +157,36 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int insertNonMember(Member m) {
 		return mDao.insertNonMember(m);
+	}
+
+	@Override
+	public int getMyRListCount(String userId) {
+		
+		return mDao.getMyRListCount(userId);
+	}
+	
+	@Override
+	public ArrayList<Reservation> selectMyResList(String userId, PageInfo pi) {
+		
+		return mDao.selectMyResList(userId, pi);
+	}
+
+	@Override
+	public int insertNMember(Member m) {
+		
+		return mDao.insertNMember(m);
+	}
+
+	@Override
+	public int searchRes(Member m) {
+		
+		return mDao.searchRes(m);
+	}
+
+	@Override
+	public int insertNKMember(Member m) {
+		
+		return mDao.insertNKMember(m);
 	}
 
 

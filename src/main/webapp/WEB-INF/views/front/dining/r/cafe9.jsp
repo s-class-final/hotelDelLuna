@@ -97,7 +97,7 @@ function jsDownImg(F_SEQ){
 	
 	<div class="hotelParadiseWrap pb0">
 		<div class="innerBox">
-			<h1 class="contTitle"><span>다이닝</span>미슐랭 스타 레스토랑부터 트렌디한 Bar까지, <br />호텔 파라다이스에서 펼쳐지는 미식의 세계로 초대합니다.</h1>
+			<h1 class="contTitle"><span>다이닝</span>미슐랭 스타 레스토랑부터 트렌디한 Bar까지, <br />호텔 델루나에서 펼쳐지는 미식의 세계로 초대합니다.</h1>
 			
 			<section class="jsSwiperMotion">
 				<div class="swiperWrap">
@@ -120,11 +120,7 @@ function jsDownImg(F_SEQ){
 				<h2>On the Plate</h2>
 				<p class="subTit">유럽, 뉴욕, 상해의 최신 Trend를 반영, 다섯가지 Station으로 구성된 Premium Buffet Restaurant</p>
 				<p class="text">다섯개의 Station으로 구성된 프리미엄 뷔페 레스토랑 On The Plate 에서는 신선하면서도 질 좋은 식재료를 선별하여 요리 하나하나가<br />최고의 맛을 자랑합니다.  광동식 오리를 포함한 다채로운 전채요리에서부터 화려한 디저트 코너까지 세계 각국 동 ·서양 음식을<br />한자리에서 만끽할 수 있습니다. </p>
-				<div class="btnGroup">
-					<!-- <a href="#popReservation" class="btn small layerPopOpen"><span>예약하기</span></a> -->
-					<!-- 2018.07.09 수정 -->
-					<a href="#pop1" class="btn small btnFull layerPopOpen"><span>문의하기</span></a>
-				</div>
+				
 			</div>
 			
 			<div class="detailTextBox">
@@ -148,7 +144,7 @@ function jsDownImg(F_SEQ){
                     </dl>
                     <dl>
                         <dt>위치</dt>
-                        <dd>Paradise Casino</dd>
+                        <dd>Hotel Delluna</dd>
                     </dl>
                     <dl>
                         <dt>연락처</dt>
@@ -274,7 +270,7 @@ function jsDownImg(F_SEQ){
 							</c:url>
 							<a href="${diningView }">
 								<p class="img"><img src="resources/pcPub/static/images/dining/list/dining_list6.jpg" alt="" /></p>
-								<h4>LOUNGE PARADISE</h4>
+								<h4>LOUNGE DELLUNA</h4>
 								<p class="text">음악이 흐르는 로비라운지</p>
 							</a>
 						</li>
@@ -321,7 +317,7 @@ function jsDownImg(F_SEQ){
 <!-- 1:1 문의 (레이어 팝업) -->
 
 
-
+<jsp:include page="../../../common/footer.jsp"/>
 
 
 
@@ -1063,7 +1059,7 @@ function addValue(objTitle, objNm1, objNm2, objNm3, isSelectBox) {
                     <div>
                         <h2>필수적 개인정보 수집 및 이용에 대한 동의 <span>(필수)</span></h2>
                         <div class="termTxt" tabindex="0">
-                            <p>파라다이스시티는 귀하의 개인정보를 소중하게 생각하며, 서비스제공을 위해 개인정보보호법 제 15조 및 제22조에 따라 귀하의 동의를 받고자 합니다.<br />
+                            <p>델루나는 귀하의 개인정보를 소중하게 생각하며, 서비스제공을 위해 개인정보보호법 제 15조 및 제22조에 따라 귀하의 동의를 받고자 합니다.<br />
 <br />
 [개인정보 수집 및 이용 동의]<br />
 1. 수집 및 이용 목적 : 회원제 서비스에 따른 본인 확인 절차, 고객 공지 사항 전달 및 불만 처리 등<br />
