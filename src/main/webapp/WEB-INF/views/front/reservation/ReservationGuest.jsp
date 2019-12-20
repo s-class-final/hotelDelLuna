@@ -23,12 +23,57 @@
     padding: 0 39px 0 15px;
     line-height: 48px;
     font-size: 15px;
-}
+    }
+    
+.meal {
+    position: relative;
+    padding: 40px 0;
+    border-top: 1px dotted #e6e3df;
+	}
+	
+.meal .info {
+    font-size: 12px;
+    color: #666666;
+    margin-left: 6px;
+
+.requirement {
+    position: relative;
+    padding: 40px 0;
+    border-top: 1px dotted #e6e3df;
+	}
+	
+.requirement .info {
+    font-size: 12px;
+    color: #666666;
+    margin-left: 6px;
+    }
+    
 </style>
 
 <body>
 	<jsp:include page="../../common/menubar.jsp"/> 
 	
+	
+<script>	
+//결제 넘어가기 전에 예약테이블에 기록할 form 값 저장하기
+function payment() {
+	/* <input type="hidden" id="roomType" name="roomType"/>	<!-- 객실타입 -->
+	<input type="hidden" id="checkIn" name="checkIn"/>		<!-- 체크인 -->
+	<input type="hidden" id="checkOut" name="checkOut"/>	<!-- 체크아웃 -->
+	<input type="hidden" id="adult" name="adult"/>			<!-- 성인 수 -->
+	<input type="hidden" id="child" name="child"/>			<!-- 아동 수 -->
+	<input type="hidden" id="breakfast" name="breakfast"/>	<!-- 조식여부 -->
+	<input type="hidden" id="dinner" name="dinner"/>		<!-- 석식여부 -->
+	<input type="hidden" id="require" name="require"/>		<!-- 요청사항 -->
+	<input type="hidden" id="allpay" name="allpay"/>		<!-- 총금액 --> 
+	
+	$("#roomType").val()
+	
+	$('#CATE').val(CATE);
+	$("#form1").attr("action", "dining.do");
+	$("#form1").submit();*/
+}
+</script>
 
 	<!-- 컨텐츠 영역 -->
 	<section id="container">
@@ -85,8 +130,17 @@
 					</dl>
 				</div>
 				
+				<br><br>
+				<div class="requirement">
+					<h2>요청사항
+						<span class="info" style="font-size: 12px; color: #666666; margin-left: 6px;">투숙 시 추가로 요청할 사항을 적어주십시오.</span>
+					</h2>
+					
+					<textarea style="resize: none; width:99%; height:100%;"></textarea>
+				</div>
 				
-				
+				<br>
+				<br>
 				<div class="cautionBox">
 					<h2 class="cautionH2">유의사항</h2>
 					<ul>
@@ -103,11 +157,7 @@
 						<li>체크인은 오후 3시부터, 체크아웃은 11시까지이며 얼리체크인 또는 레이트체크아웃의 경우 별도 요금이 부과될 수 있습니다.</li>
 					</ul>
 				</div>
-				
-				<input type="hidden" class="itemDtlData" data-std_adult_cnt="2" data-std_child_cnt="2" data-addable_adult_cnt="1" data-addable_child_cnt="0" data-adult_rpo_amt="55000" data-child_rpo_amt="0" data-salestype_seq="455673" data-salestype="HPHP1912003" data-adult_add_roseq="221" data-child_add_roseq="0" data-adult_bf_roseq="162" data-child_bf_roseq="163" data-adult_bf_rpo_amt="50000" data-child_bf_rpo_amt="29000" data-period="1" data-adult_bf_max_cnt="3" data-child_bf_max_cnt="3" />
 			</div>
-		
-		<input type="hidden" id="BADGE_TYPE2_CNT" value="0"/>
 		
 		<!-- 우측메뉴 -->
 		<div class="reservationAside">
@@ -119,127 +169,117 @@
 					<a href="javascript:jsAllDelFromCart();" class="btnDeleteAll">전체삭제</a>
 				</div>
 				
-				<div class="productWrap mCustomScrollbar" data-mcs-theme="dark">
-					<div class="productNone" style="display: none;">
-						담긴 상품이 없습니다.
-					</div>
+				<div class="productWrap mCustomScrollbar" data-mcs-theme="dark" style="height:380px;!important">
+				<div class="productListBox">
+					<article class="productItem">
+						<div class="productListH">
+							<h2>
+								<span>상품명 : Hotel Delluna</span>
+							</h2>
 					
-					<div class="productListBox" style="display: none;">
-					
-						<article class="productItem">
-							<div class="productListH">
-								<h2>
-									<span>상품명 : Hotel Delluna</span>
-								</h2>
-								<!-- <a onclick="#" class="btnDelete"></a> -->
-								<a onclick="javascript:jsDelFromCart(this);" class="btnDelete"></a>
-							</div>
-							<div class="productListC">
-								<!-- <h3>HOTEL PARADISE</h3>
-								<p>체크인 / 체크아웃</p>
-								<p>성인 / 어린이 / 유아</p>
-								<p>객실</p>
-								<p>베드타입</p>
-								 -->
-								<div class="productListC">
-								<h3>HOTEL DELLUNA</h3>		
-								<p id="checkInOut">${res.res_checkIn} ~ ${res.res_checkOut}</p>			
-								<p id="total">성인 ${res.res_adult} / 어린이 ${res.res_child}</p>			
-								<p>${res.res_roomType} 룸</p>	
-								<p id="res_smoking">흡연 여부  ${res.res_smoking}</p>	
-								<p id="res_addBed">베드 추가  ${res.res_addBed}</p>	
+						</div>
+						<div class="productListC">
+							<h3 id="hotelName">HOTEL DELLUNA</h3>		
+							<p id="checkInOut">${res.res_checkIn} ~ ${res.res_checkOut}</p>			
+							<p id="total">성인 ${res.res_adult} / 어린이 ${res.res_child}</p>			
+							<p>${res.res_roomType} 룸</p>	
+							<p id="res_smoking">흡연 여부  ${res.res_smoking}</p>	
+							<p id="res_addBed">베드 추가  ${res.res_addBed}</p>
 							
-								<div class="casyBox">
-									<dl>
-										<dt>
-											총액
-										</dt>
-										<dd class="totalAmt">원</dd>
-									</dl>
-								</div>
-							
-							</div>
-							
-							<input type="hidden" class="summaryItemData" data-product_item='{"RP_SEQ":3182,"OFFER_TYPE":"TA","OFFER_TYPE_CD":"000001","OFFER_CONT":{"PRICE_INFO":{"TOTAL_AMT":0,"DISC_AMT":0}},"OFFER_ORD":0,"OFFER_NAME":"Winter Getaway"}' />
-						</article>
-						
-					</div>
+						</div>
+					</article>
 				</div>
-		
-				<!-- 토탈 설정 -->
-				<div class="productFooter">
+			</div>
+				<div class="casyBox">
 					<dl>
-						<dt>총액</dt>
-						<dd id="f_total">원</dd>
+						<dt>
+							총액
+						</dt>
+						<dd class="totalAmt">원</dd>
 					</dl>
-					
-					<dl>
-						<dt>할인액</dt>
-						<dd id="f_discount" class="txtRed">원</dd>
-					</dl>
-					
-					<dl>
-						<dt>포인트</dt>
-						<dd id="f_point">P</dd>
-					</dl>
-				</div>
+				</div>	
 				
-				<div class="productTotal productLen">
-					<dl>
-						<dt>최종금액</dt>
-						<dd id="f_final">
-							<span></span>
-							원
-						</dd>
-					</dl>
-				</div>
-				
-				<button class="btn btnFull" disabled="disabled" onclick="javascript:jsPaymentView();">
+				<button class="btn btnFull" disabled="disabled" onclick="javascript:payment();">
 					<span>결제정보 입력하기</span>
 				</button>
-				
 			</section>
 		</div>
+		
 	<!-- Side Form 영역 -->
-	<form id="frmSidePage" name="frmSidePage" method="post">
-		<input type="hidden" name="TAB_CD" value=""/> <!-- 탭 구분 -->
+	<form id="reservationGuest" name="reservationGuest" method="post">
+		<input type="hidden" id="roomType" name="roomType"/>	<!-- 객실타입 -->
+		<input type="hidden" id="checkIn" name="checkIn"/>		<!-- 체크인 -->
+		<input type="hidden" id="checkOut" name="checkOut"/>	<!-- 체크아웃 -->
+		<input type="hidden" id="adult" name="adult"/>			<!-- 성인 수 -->
+		<input type="hidden" id="child" name="child"/>			<!-- 아동 수 -->
+		<input type="hidden" id="breakfast" name="breakfast"/>	<!-- 조식여부 -->
+		<input type="hidden" id="dinner" name="dinner"/>		<!-- 석식여부 -->
+		<input type="hidden" id="require" name="require"/>		<!-- 요청사항 -->
+		<input type="hidden" id="allpay" name="allpay"/>		<!-- 총금액 -->
 	</form>
 	<!-- //Side Form 영역 -->
 	
 	
-	
 	<script type="text/javascript">
-
+	
+	function stayDay(){
+		var cIn = $('.start-day').text();
+		var cOut = $('.end-day').text();
+		
+		var inY = cIn.substr(0,4);
+		var inM = cIn.substr(5,2);
+		var inD = cIn.substr(8,2);
+		
+		var inDate = new Date(inY, inM-1, inD);
+		
+		var outY = cOut.substr(0,4);
+		var outM = cOut.substr(5,2);
+		var outD = cOut.substr(8,2);
+		
+		var outDate = new Date(outY, outM-1, outD);
+		
+		$("#checkIn").val(inDate);
+		$("#checkOut").val(outDate);
+		
+		var stay = (((((outDate.getTime()-inDate.getTime())/1000)/60)/60)/24);
+		
+		return stay;
+	}
+	
+	
 	function selectRoom(li){
 		//선택된 li에 대한 값들 불러다가 따로 저장하기, 선택된 li에 대해 표시하기 (테두리를 두른다던가)
 		alert("li click event");
 		
-		var list = $(li).val();
+		var index = $(li).val();
 		
 		//기존에 선택된 값이 다시 클릭된 경우라면 삭제해야 함
-		console.log(li);
-		//li.find("label").text("취소");
-		//li.remove();
-
-		//var label = $("<label>").text("선택");
-		
-		
 		if(li.find("label").length){
 			li.find("label").remove();
 			//선택 후 summary에도 값 제거(사이드메뉴)
 		}else{
-			var label = $("<label>").attr({id : list}).text("선택");
+			var label = $("<label>").attr({id : index}).text("선택");
 			//선택 후 summary에도 값 추가(사이드메뉴)
 		}
 		
-		console.log("li는!");
-		console.log(li);
+		console.log("inTypeIndex");
+		console.log($("#inType"+index).val());
+		$("#roomType").val($("#inType"+index).val());
+		console.log($("#inCapacity"+index).val());
+		console.log("inWeekDay");
+		console.log($("#inWeekDay"+index).val());
+		$("#inWeekDay"+index).val();
 		
+		var inWeekDay = $("#inWeekDay"+index).val();
+		var stay = stayDay();
 		
+		$("#allpay").val(Number(inWeekDay) * Number(stay));
 		
+		//console.log($("#inWeekEnd"+index).val());
 		
 		li.append(label);
 	};
+	
 	
 	$(function(){
 		
@@ -250,11 +290,10 @@
 		
 		/**** 날짜 변경 감지 ****/
 		$('.date-picker-wrapper').on("change click",function(){
+			
 			if($('.start-day').text()!="..."){
 				if($('.end-day').text()!="..."){
-					console.log($('.start-day').text());
 					var cIn = $('.start-day').text();
-					console.log($('.end-day').text());
 					var cOut = $('.end-day').text();
 					
 					//날짜를 선택하면 해당 날짜에 예약 가능한 방 리스트를 뽑아옴.(사람 수는 고려하지 않는다.)
@@ -272,14 +311,9 @@
 									if(data !=null){
                                         //객실 목록 생성
 										jsMakeRoomList(data);
-                                        
-										$("input:radio[name='RR_SEQ_SUITE_DELUXE']").prop('checked', true); // 선택하기
-										//slide 이벤트 활성화
-										reservationSlick($(".reservationBox").find(".roomSelectBox"));
-                                        
-										//초기 로딩시만 객실 선택
-										jsSelectedRoom();
 									}
+										//조식석식
+										
 					            }else {
 									//객실 목록이 없으면, 해당 날짜 초기화
 									alert("해당 투숙 일정에 예약 가능한 객실이 없습니다.");
@@ -306,8 +340,8 @@
 		function jsMakeRoomList(list) {	//list는 DB에서 받아온 룸타입이 들어가있는 data[i] 리스트
 			
 			//현재 노출 중인 객실 목록이 존재하면, 초기화(기존것을 없앤다)
-			$("#roomSelectBox").remove();
-			
+			$(".roomSelectBox").remove();
+		
 			//기본 구성 요소 생성
 			var roomSelectBox = $("<div>").addClass("roomSelectBox typeInfo");
 			var h2Desc = $("<h2>" + "객실 선택" + "<span class=\"info\">" + "해당 일자에 투숙 가능한 객실 타입만 표시됩니다." + "</span></h2>");
@@ -322,17 +356,30 @@
 				
 				//객실 유형별 요소 작성	(객실 사진, 소개내용, 1박에 얼마인지 가격)
 				if(rrRoomType != list[i].type) {
+					
 					rrRoomType   = list[i].type;
 					var li       = $("<li>").attr({text : list[i].type
 												,value : i
 												,id : list[i].type
 												,onclick : "javascript:selectRoom($(this));"});
+					var inType	 = $("<input>").attr({type:"hidden"
+													, value:list[i].type
+													, id:"inType"+i});
+					var inCapacity = $("<input>").attr({type:"hidden"
+														, value:list[i].capacity
+														, id:"inCapacity"+i});
+					var inWeekDay = $("<input>").attr({type:"hidden"
+													, value:list[i].weekDay
+													, id:"inWeekDay"+i});
+					var inWeekEnd = $("<input>").attr({type:"hidden"
+													, value:list[i].weekEnd
+													, id:"inWeekEnd"+i});
 					var roomInfo = $("<div>").addClass("roomInfo");
 					var img      = $("<p>").addClass("img").append($("<img>").attr({src     : "resources/pcPub/static/images/room/list/room_list1.jpg"}));
 					var h3       = $("<h3>").text(list[i].type);
-					var pAmt1    = $("<p>").text("주중 : " + list[i].weekDay + "~" + " / " + "박");
-					var pAmt2	 = $("<p>").text("주말 : " + list[i].weekEnd + "~" + " / " + "박");	//주중 주말가 따로 보여줘야됨.
-					ul.append(drag.append(li.append(roomInfo.append(img).append(h3).append(pAmt1).append(pAmt2))));
+					var pAmt1    = $("<p>").attr({style:"font-size : 13px;"}).text("주중 : " + list[i].weekDay + "~" + " / " + "박");
+					var pAmt2	 = $("<p>").attr({style:"font-size : 13px;"}).text("주말 : " + list[i].weekEnd + "~" + " / " + "박");	//주중 주말가 따로 보여줘야됨.
+					ul.append(drag.append(li.append(roomInfo.append(img).append(h3).append(pAmt1).append(pAmt2).append(inType).append(inCapacity).append(inWeekDay).append(inWeekEnd))));
 				} else {
 					ul.find("#" + "RR_SEQ_" + list[i].type).closest("div.choice").append(radioBox);
 				}
@@ -341,7 +388,17 @@
 			roomSelectBox.append(h2Desc).append(swiperWrap.append(ul));
 			
 			//cautionbox 앞에 객실 목록 뿌려주는 div 추가할것임
-			$('.cautionBox').before(roomSelectBox);
+			$('.requirement').before(roomSelectBox);
+			
+			//객실목록 위에 조식석식 고르는 거 있으면 안되니까 없애버리기
+			var adult = $("#aCnt").val();
+			var child = $("#cCnt").val();
+			var total = Number(adult) + Number(child);
+			
+			console.log("total");
+			console.log(total);
+			
+			meal(total);
 		}
 		
 		
@@ -359,8 +416,6 @@
 			var pNumber     = $("<p>").addClass("number").append($("<em>").text("1")).append($("<span>"));
 			var btnRight    = $("<button>").addClass("btnRight").append($("<span>"));
 			$(".reservationBox").find(".roomSelectBox").find("ul").after(swiperArrow.append(btnLeft).append(pNumber).append(btnRight));
-			
-			/* 	$(".reservationBox").find("swiperWrap").text("aaaaaaaaa"); */
 			
 			$(".swiperWrap").each(function(){
 				
@@ -391,276 +446,80 @@
 
 		
 		
-
-
-		//초기 로딩시 방 선택 Action
-		function jsSelectedRoom() {
-			//선택된 방이 있으면
-			if("RR_SEQ" in data.OFFER_CONT) {
-				var target  = "RR_SEQ_" + list[i].type
-				var ul      = $(target).closest("ul.slick-initialized.slick-slider");
-				var arrow   = ul.siblings("div.swiperArrow");
-				var pageIdx = 0;
-				//표시할 객실의 INDEX를 추출
-				ul.find("li.slick-slide").each(function(index) {
-					if($(this).find(target).length > 0) {
-						pageIdx = index;
-						return false;
-					}
-				});
-				//SLIDE 페이지 이동
-				ul.slick('slickGoTo', pageIdx);
-				//객실 선택
-				if (!loginCallFlag) {
-					$(target).prop('checked', true);
-				} else {
-					$(target).click();
-				}
-			}
-		}
 		
 		
-		//금액환산 : 숫자 -> 문자 + 단위
-		function jsToStringAmt(amt, exchange) {
-			if (isNullOrEmpty(exchange)) exchange  = "원";  //금액 단위
+		function meal(total){
+			var h2Desc = $("<h2>" + "식사 선택" + "<span class=\"info\">" + "투숙객에게 제공되는 조식/석식 이용 여부를 선택합니다." + "</span></h2><br>");
 			
-			if (toNotNull(amt) == "" || isNaN(amt)) {
-				return exchange;
-			} else {
-				return addCommaStr(amt.toString()) + " " + exchange;
-			}
-		}
-		
-		
-		
-		
-		//*예약 관련 공통 Function STEP1 END  *//
-
-		//*예약 관련 공통 Function START*//
-		//요약상품목록 화면 설정 > changeFlag : none/add/del)
-		function jsSectionView(changeFlag) {
-			//우측메뉴 상품 목록 수
-			var articleLen = $('article.productItem').length;
+			$(".meal").remove();
 			
-			if (articleLen == 0) jsSearchView();
+			var mealBox = $("<div>").addClass("meal");
 			
-			//최초 화면 로드 시점
-			if ("none" == changeFlag) {
-				//요약영역에 담긴게 하나도 없으면
-				if (articleLen == 0) {
-					//담긴 상품이 없습니다.
-					$('div.productNone').css("display", "table-cell");
-				} else {
-					//요약영역 내용 활성화
-					$('div.productListBox').show();
-					
-					
-				}
-			//상품 추가 시점
-			} else if ("add" == changeFlag) {
-				if (articleLen > 0) {
-					$('div.productNone').hide();
-					$('div.productListBox').show();
-					//하단 버튼영역 활성화
-					$("section.reservationSection > button.btn.btnFull").prop('disabled', false);
-				}
-			//상품 삭제 시점
-			} else if ("del" == changeFlag) {
-				if (articleLen == 0) {
-					$('div.productListBox').hide();
-					$('div.productNone').css("display", "table-cell");
-					//하단 버튼영역 비활성화
-					$("section.reservationSection > button.btn.btnFull").prop('disabled', true);
-				} else {
-					
-					$("section.reservationSection > button.btn.btnFull").prop('disabled', jsDisabledPayment());
-					
-				}
-			} else if ("mod" == changeFlag) {
-				$("section.reservationSection > button.btn.btnFull").prop('disabled', jsDisabledPayment());
-			}
-		}
-
-		//*예약 관련 공통 Function STEP2 START*//
-		//상품 설정(상품설정 화면 : 정상 반영 시 true)
-		function jsSetInfoToCart(eleObj) {
-			var rtnFlag = true;
-			var rtnChgFlag = false;
-			var resBox = eleObj.closest("div.reservationBox");//예약상품 상세 ELEMENT
-			var tgtIndex = $("div.reservationBox").index(resBox);//우측메뉴 Index(정렬순서)
-			var itemInfo = $("article.productItem").eq(tgtIndex);//담은상품 요약정보 ELEMENT
-			var offerType = itemInfo.data().OFFER_TYPE;
-			var offerTypeCd = itemInfo.data().OFFER_TYPE_CD;
+			mealBox.append(h2Desc);
 			
-			//상품설정정보가 하나도 없으면 , 상품설정정보 추가
-			if (!("OFFER_CONT" in itemInfo.data())) itemInfo.data("OFFER_CONT",{});
+			stay=stayDay();
 			
-			var pTag = itemInfo.find("div.productListC").find("p");
-			var offerCont = itemInfo.data().OFFER_CONT;
-			
-			//호텔상품
-			if (offerType == "TA") {
-				if(eleObj.hasClass("calendar")) {
-					//우측메뉴 상품 기본정보 P태그 Index (1. 체크인&체크아웃)
-					var pIndex = 1;
-					//입력값 변경확인용 Param
-					var param  = jsGetParamObject(eleObj, "CALENDAR");
-					//객실 선택 초기화가 필요한 경우(값이 변경되었을 때)
-					rtnFlag = jsIsChange(resBox, param);
-					if (rtnFlag) {
-						if (param.CHECK_IN.length > 0 && param.CHECK_OUT.length > 0) {
-							//날짜가 설정되었으면 설정값 우측메뉴에 설정
-							pTag.eq(pIndex-1).text(param.STAY_TERM.join(" ~ "));
-							offerCont.CHECK_IN  = param.CHECK_IN;
-							offerCont.CHECK_OUT = param.CHECK_OUT;
-							offerCont.PER_DAY   = jsCalcPerDay(param.CHECK_IN, param.CHECK_OUT);
-							//객실목록 초기화
-							jsInitSelectRoom(resBox);
-							//설정값이 생기면, 객실목록 조회
-							jsSelectRoom(resBox, true);
-							//조식 설정
-							jsBreakfastView(eleObj, true);
-						} else {
-							//초기화되었으면 우측메뉴에 기본값 설정
-							pTag.eq(pIndex-1).text(jsGetSettingText(offerType, offerTypeCd, pIndex));
-							delete offerCont.CHECK_IN;
-							delete offerCont.CHECK_OUT;
-							delete offerCont.PER_DAY;
-							//객실목록 초기화
-							jsInitSelectRoom(resBox);
-							//조식 설정(초기화)
-							jsBreakfastView(eleObj, false);
-						}
-					} 
-				} else if (eleObj.hasClass("ui-select-option")) {
-					//객실 인원 선택
-					if (eleObj.closest("div.selectChoice").length) {
-						//우측메뉴 상품 기본정보 P태그 Index (2. 인원)
-						var pIndex = 2;
-						//입력값 변경확인용 Param
-						var param = jsGetParamObject(eleObj, "STAYPEOPLE");
-						//입력값 변동 확인
-						rtnFlag = jsIsChange(resBox, param);
-						if (rtnFlag) {
-							//유효한 인원정보를 저장
-							var targetObj  = param.TARGET.substring(0,1).toUpperCase() + "_COUNT";
-							eval("offerCont." + targetObj + "=" + param.CHG_VAL);
-							//문구 설정
-							var titArr = new Array();
-							if (offerCont.A_COUNT > 0) titArr.push("성인" + " " + offerCont.A_COUNT);
-							if (offerCont.C_COUNT > 0) titArr.push("어린이" + " " + offerCont.C_COUNT);
-							if (offerCont.B_COUNT > 0) titArr.push("유아" + " " + offerCont.B_COUNT);
-							//설정된 인원 수에 따른 문구 노출
-							if (titArr.length > 0) pTag.eq(pIndex-1).text(titArr.join(" / "));
-							else pTag.eq(pIndex-1).text(jsGetSettingText(offerType, offerTypeCd, pIndex));
+			var breakfast = $("<input>").attr({id : "breakfast"
+											, name : "breakfast"
+											, type : "number"
+											, min : "0"
+											, max : "10"});
 							
-							//객실선택이 가능한 상태면 추가옵션에 대한 설정
-							if (resBox.find("div.roomSelectBox").length) {
-								//조식 설정
-								jsBreakfastView(eleObj, true);
-								//객실이 선택된 경우 추가인원 옵션 설정
-								if ("RR_SEQ" in offerCont) {
-									var optParam = jsGetParamObject(resBox, "ADDPEOPLE");
-									//현재 등록된 옵션이 있으면 초기화
-									jsInitAddOption(resBox, "ADDPEOPLE");
-									//옵션 등록
-									jsAddOptionToCart(eleObj, optParam);
-								}
-							}
-						}
-					//옵션 변경(조식)
-					} else if (eleObj.closest("div.optionSelectBox").length) {
-						var key      = eleObj.closest("div.optionSelectBox").data("key");
-						var optParam = jsGetParamObject(eleObj, key);
-						rtnFlag      = jsIsChange(resBox, optParam);
-						if (rtnFlag) {
-							//현재 등록된 옵션이 있으면 초기화
-							jsInitAddOption(resBox, key);
-							//옵션 등록
-							jsAddOptionToCart(eleObj, optParam);
-						}
-					}
-				} else if (eleObj.is("input:radio") && eleObj.closest("div.roomSelectBox").length) {
-					//객실 정보(객실,침대)
-					var param  = jsGetParamObject(eleObj, "ROOMINFO");
-					rtnFlag    = jsIsChange(resBox, param);
-					if (rtnFlag) {
-						//우측메뉴 상품 기본정보 P태그 Index (3. 객실)
-						var pIndex = 3;
-						//객실정보 저장
-						offerCont.RR_ROOM_CATEGORY = param.RR_ROOM_CATEGORY;
-						offerCont.RR_ROOM_TYPE     = param.RR_ROOM_TYPE;
-						offerCont.RR_SEQ           = param.RR_SEQ;
-						offerCont.RMTYPE           = param.RMTYPE;
-						offerCont.SALESTYPE_SEQ    = resBox.data().salestype_seq;
-						//문구 설정
-						pTag.eq(pIndex-1).text(param.RR_ROOM_TYPE_NM);
-						
-						//우측메뉴 상품 기본정보 P태그 Index (4. 침대)
-						pIndex = 4;
-						//침대정보 저장
-						offerCont.RR_BED_TYPE = param.RR_BED_TYPE;
-						//문구 설정
-						pTag.eq(pIndex-1).text(param.RR_BED_TYPE_NM);
-						
-						//상품 금액정보 저장
-						jsCalcProdAmt(resBox, itemInfo, offerCont, param);
-						
-						//인원추가 관련 파리미터
-						var optParam = jsGetParamObject(resBox, "ADDPEOPLE");
-						//현재 등록된 인원추가가 있으면 초기화
-						jsInitAddOption(resBox, "ADDPEOPLE");
-						//인원추가 발생시 옵션 추가
-						jsAddOptionToCart(eleObj, optParam);
-					}
-				}
-			} 
+			var dinner = $("<input>").attr({id : "dinner"
+										, name : "dinner"
+										, type : "number"
+										, min : "0"
+										, max : "10"});
 			
-			//버튼 전환
-			jsSectionView("mod");
+			var bfLabel = $("<label>").attr({id : bfLabel}).text("조식 : ");
+			var dnLabel = $("<label>").attr({id : dnLabel}).text("석식 : ");
 			
-			//초기로딩시점과 로그인 콜 시점이 아니면, 
-			if (!initPageFlag && !loginCallFlag) {
-				//입력값 변동이 유효할 때 JSON DATA 저장 (정상변경 OR 보정변경)
-				if (rtnFlag || rtnChgFlag) {
-					jsPreSaveJsonData();
-				}
-			}
+			mealBox.append(bfLabel).append(breakfast).append("<br>").append(dnLabel).append(dinner).append("<br>");
+				
+			//cautionbox 앞에 조식석식 목록 뿌려주는 div 추가할것임
+			$('.requirement').before(mealBox);
 			
-			return rtnFlag;
+			//$('.meal').append("<br><br>");
 		}
-		
-		
-		
-
-		
-	
-	
-		
-		
-		
 		
 		
 		/**** 인원수 변경 감지 ****/
 		$('.aCnt .ui-select-option').on("click change", function(){			
+			
 			var adult = $(this).data('value');
 			var child = $("#cCnt").val();
 			var total = Number(adult) + Number(child);
 			
+			$("#adult").val(adult);
 			$("#pTotal").val(total+"명");
-		})
+			
+			meal(total); 
+			
+		});
 		
 		$('.cCnt .ui-select-option').on("click change", function(){
+			
 			var adult = $("#aCnt").val();
 			var child = $(this).data('value');
 			var total = Number(adult) + Number(child);
 			
+			$("#child").val(child);
 			$("#pTotal").val(total+"명");
-		})
+
+			meal(total);
+		});
+		
+		
+		$("#breakfast").on("change click", function(){
+			var sel = $("#breakfast option:selected").val();
+			
+			alert(sel);
+			console.log("sel");
+			console.log(sel);
+		});
+		
 	});
-
 	
-
 
 	</script>
 </body>

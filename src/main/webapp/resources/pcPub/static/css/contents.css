@@ -469,7 +469,7 @@ body.reservation #headerWrap .btnClose { display:block; position:absolute; top:2
 
 .roomSelectBox { position:relative; padding:40px 0; border-top:1px dotted #e6e3df;}
 .roomSelectBox h2 { font-size:16px;}
-.roomSelectBox .swiperWrap { overflow:hidden; height:235px; margin-bottom:32px;}
+.roomSelectBox .swiperWrap { overflow:hidden; height:280px; margin-bottom:32px;}
 .roomSelectBox .swiperWrap ul { overflow:hidden; margin-left:-16px;}
 .roomSelectBox .swiperWrap li { float:left; width:256px; margin-left:16px; outline:0;}
 .roomSelectBox .roomInfo {}
