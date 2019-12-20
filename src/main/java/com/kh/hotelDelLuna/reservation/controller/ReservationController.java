@@ -405,7 +405,7 @@ public class ReservationController {
 	
 	/********** 예약 내역 삭제하기 **********/
 	@RequestMapping(value = "resDelete.do")
-	public ModelAndView resDelete(ModelAndView mv, @RequestParam(value = "res_no", required = false) String res_no) {
+	public ModelAndView resDelete(ModelAndView mv, @RequestParam(value = "res_no", required = false) String res_no, HttpSession session) {
 
 		System.out.println("넘어온 res_no : "+res_no);
 		
@@ -420,8 +420,13 @@ public class ReservationController {
 		}else {
 			throw new ReservationException("예약 내역 삭제 실패!!");
 		}
-
-		mv.setView(new RedirectView("entireResList.do"));
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		if(loginUser.getUserT() == 2) {
+			mv.setView(new RedirectView("entireResList.do"));
+		}else {
+			mv.setView(new RedirectView("mmyres.do"));
+		}
 		return mv;
 
 	}

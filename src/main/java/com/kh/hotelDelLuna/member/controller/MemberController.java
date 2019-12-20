@@ -569,7 +569,7 @@ public class MemberController {
 		int result = mService.updateInquiry(i);
 		
 		if(result > 0) {
-			mv.addObject("page", page).setViewName("redirect:noreply.do");
+			mv.addObject("page", page).setViewName("redirect:allinquiry.do");
 		}else {
 			throw new MemberException("문의글 답변 실패!!");
 		}
@@ -727,7 +727,7 @@ public class MemberController {
 		
 		if(m1 != null) {
 			mv.addObject("m1", m1);
-			mv.setViewName("member/nonMemberMyRes");
+			mv.setViewName("member/noLoginMyRes");
 		}
 		return mv;
 	}

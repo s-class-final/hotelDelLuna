@@ -100,7 +100,7 @@ function jsViewDtl(nId, currentPage) {		//게시글 번호를 가지고 디테�
 	</div>
 </section>
 
-
+<jsp:include page="../../common/footer.jsp"/>
 
 
 

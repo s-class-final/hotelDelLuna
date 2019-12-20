@@ -179,7 +179,7 @@ body {
 			  success:function(data){
 				  if(data == "true"){
 					  $("#checkId").html('');
-                      $("#checkId").html("카카오 아이디로 가입된 이메일입니다").css({"color" : "#ffec42", "text-shadow" : "1px 1px 2px brown"});
+                      $("#checkId").html("카카오 아이디로 가입된 이메일입니다").css({"color" : "#ebd700"});
                       kakaoUsable = false;
 				  }else{
 					  $("#checkId").html('');

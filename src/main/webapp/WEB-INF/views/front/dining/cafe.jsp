@@ -58,8 +58,7 @@ function jsList(CATE) {
 	
 	<div class="dindDrinkwrap innerBox">
 		
-		<h1 class="contTitle"><span>다이닝</span>미슐랭 스타 레스토랑부터 트렌디한 Bar까지, <br />호텔 파라다이스에서 펼쳐지는 미식의 세계로 초대합니다.</h1>
-		<div class="rightButton"><a href="/front/dining" class="btn small arrow"><span>파라다이스시티 모든 식음시설 보기</span></a></div>
+		<h1 class="contTitle"><span>다이닝</span>미슐랭 스타 레스토랑부터 트렌디한 Bar까지, <br />호텔 델루나에서 펼쳐지는 미식의 세계로 초대합니다.</h1>
 		
 		<div class="utilMenu">
 			
@@ -99,7 +98,7 @@ function jsList(CATE) {
 				<a href="${diningView }">
 				<img src="resources/pcPub/static/images/dining/dining6.jpg" alt="" /></a></p>
 				<div class="textBox">
-					<h2>LOUNGE PARADISE</h2>
+					<h2>LOUNGE DELLUNA</h2>
 					<p class="text">음악이 흐르는 로비라운지</p>
 				</div>
 			</div>
@@ -839,7 +838,7 @@ function jsSingleDayFilter(date, obj) {
 </form>
 
 
-
+<jsp:include page="../../common/footer.jsp"/>
 
 
 </body>

@@ -121,10 +121,6 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 					<tr align="center" height="20">
 						<td colspan="6">
 							<!-- 처음으로 -->
-							<c:if test="${ pi.currentPage <= 1 }">
-								<<&nbsp;
-							</c:if>
-							
 							<c:if test="${ pi.currentPage > 1 }">
 								<c:url var="iliststart" value="/allinquiry.do">
 									<c:param name="page" value="${ pi.startPage }"/>
@@ -133,10 +129,6 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 							</c:if>
 						
 							<!-- [이전] -->
-							<c:if test="${ pi.currentPage <= 1 }">
-								<&nbsp;
-							</c:if>
-							
 							<c:if test="${ pi.currentPage > 1 }">
 								<c:url var="ilistBack" value="allinquiry.do">
 									<c:param name="page" value="${ pi.currentPage - 1 }"/>
@@ -159,10 +151,6 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 							</c:forEach>
 							
 							<!-- [다음] -->
-							<c:if test="${ pi.currentPage >= pi.maxPage }">
-								&nbsp;>
-							</c:if>
-							
 							<c:if test="${ pi.currentPage < pi.maxPage }">
 								<c:url var="ilistEnd" value="allinquiry.do">
 									<c:param name="page" value="${ pi.currentPage + 1 }"/>
@@ -171,10 +159,6 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 							</c:if>
 							
 							<!-- 끝으로 -->
-							<c:if test="${ pi.currentPage >= pi.maxPage }">
-								&nbsp;>>
-							</c:if>
-							
 							<c:if test="${ pi.currentPage < pi.maxPage }">
 								<c:url var="ilistend" value="/allinquiry.do">
 									<c:param name="page" value="${ pi.maxPage }"/>

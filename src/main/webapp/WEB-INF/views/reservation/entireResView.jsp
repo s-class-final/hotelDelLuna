@@ -669,7 +669,7 @@
 					maxCap = list[i+1];
 				}
 			}
-		
+			
 			// 이름 체크
 			if ($("#userName1").val().length == 0) {
 				alert("성(last name)을 입력하세요");

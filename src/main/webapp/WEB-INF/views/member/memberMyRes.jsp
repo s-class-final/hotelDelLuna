@@ -116,6 +116,16 @@ body {
     background: url(resources/pcPub/static/images/common/bg_topArrow.png) no-repeat 0 -5px;
 
 }
+
+/* 삭제버튼 */
+.btnOptionClose {
+  border:none;
+  width:18px; 
+  height:18px; 
+  font-size:0; 
+  background:url('../hotelDelLuna/resources/pcPub/static/images/reservation/btn_option_close.png')   no-repeat;
+  cursor:pointer;
+ }
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
@@ -324,6 +334,12 @@ body {
 							$res_payStatus = $("<td class='text-center' style='cursor:default'>").text(data[i].res_payStatus);
 							$res_status = $("<td class='text-center' style='cursor:default'>").text(data[i].res_status);
 							$res_require = $("<td class='text-center' style='cursor:default; overflow:auto;'>").text(data[i].res_require);
+							$deleteBtn = $("<button class='btnOptionClose deleteRes' onclick='deletePopModal("+(data[i].res_no)+","+'"'+(data[i].res_userName)+'"'+")'>");
+							
+							/*** 입금 대기 상태일 때 예약 삭제버튼 추가 ***/
+							if(data[i].res_payStatus=='입금대기'&&data[i].res_status!='예약취소'){
+								$res_status.append($deleteBtn);
+							}
 							
 							
 							$tr.append($res_name);
@@ -337,7 +353,7 @@ body {
 						}	
 					}else{
 						$tr=$("<tr>");
-						$td=$("<td colspan='7' height='40px' style='text-align:center; font-size:17px, cursor:default'>").text("예약 내역이 없습니다.");
+						$td=$("<td colspan='7' height='40px' style='text-align:center; font-size:17px; cursor:default;'>").text("예약 내역이 없습니다.");
 						$tr.append($td);
 						$tableBody.append($tr);
 					}
@@ -439,6 +455,21 @@ body {
 				}
 			});
 		}
+		
+		/** 예약 삭제 확인창 띄우기 **/
+		function deletePopModal(res_no,res_userName){
+			console.log(res_no);
+			console.log(res_userName);
+			$(".loginWrap h1 span").text(res_userName+"님의 예약 정보");
+			$(".btn.small2").prop("href","resDelete.do?res_no="+res_no);
+			layerPopOpen("#loginPop");
+
+		};
+		
+		function closePopModal(){
+			layerPopClose("#loginPop");
+			
+		};
 	</script>
 </body>
 </html>
