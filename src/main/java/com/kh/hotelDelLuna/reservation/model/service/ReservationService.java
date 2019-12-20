@@ -1,13 +1,13 @@
 package com.kh.hotelDelLuna.reservation.model.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.reservation.model.vo.ResSearchCondition;
 import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
+import com.kh.hotelDelLuna.room.model.vo.RoomType;
 
 public interface ReservationService {
 
@@ -67,6 +67,21 @@ public interface ReservationService {
 
 	/* 방 상태 정보 삭제하기 */
 	int roomStatusDelete(int resNo);
+
+	/* 방 타입별 개수 구하기 */
+	List<Integer> selectRoomTypeCount();
+
+	/* 방 타입, 개수 한번에 구하기 */
+	List<Map<String, Object>> getRoomList();
+
+	/* 날짜별 예약할 방타입 예약된 개수 구하기 */
+	int getResRoomCount(Reservation searchRes);
+
+	/* 방타입 리스트 전부 받기 */
+	ArrayList<RoomType> selectRoomList();
+
+	/* 룸타입 정보 골라서 받기 */
+	RoomType getRoomType(String res_roomType);
 
 
 	

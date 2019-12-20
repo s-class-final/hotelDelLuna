@@ -7,6 +7,7 @@
 
 <head>
     <title>FullCalendar Example</title>
+ <script src="https://d3js.org/d3.v4.min.js"></script>
  
 <style TYPE="text/css">
 
@@ -213,11 +214,26 @@
 	opacity: 1;
 }
 
+<!-- 그래프용 스크립트 -->
+
+.amountGraphDiv{
+	 margin :5px auto;
+	 width : 180px;
+	 height : 180px;
+	 border : 1px solid black;
+}
+.amountGraphDiv:hover{
+	 background : lightblue;
+	 cursor  : pointer;
+	 transition : 0.5s;
+}
+
+
 </style>
 </head>
 
 <body>
-	<div class="reservationBox">
+	<div class="reservationBox" style="width:90%">
 	<form name="calendarFrm" id="calendarFrm" action="" method="GET">
 	
 	<div class="calendar" >
@@ -271,15 +287,24 @@
 	<div class="layerPopWrap" id="loginPop3">
 		<div class="bg"></div>
 		<!-- layerPopCont -->
-		<div class="layerPopCont">
+		<div class="layerPopCont" style="width:42%;left:45%">
 			<div class="loginWrap">
 				<h1><span>예약 정보</span></h1>
-				<img src="#" style="width:100%;height:300px">
+				<label style="width:32%;text-align:center;">디럭스</label>
+				<label style="width:33%;text-align:center;">슈페리어</label>
+				<label style="width:33%;text-align:center;">스위트</label>
+				<br>
+				<div class="amountGraphDiv" id= "superiorAmount" style="display:inline-block;">
+				</div>
+				<div class="amountGraphDiv" id= "deluxeAmount" style="display:inline-block;">
+				</div>
+				<div class="amountGraphDiv" id= "suiteAmount" style="display:inline-block;">
+				</div>
 				<br><br>
 
 				<div class="popJoinBox">
 					<div class="wrap">
-						<p>삭제 버튼을 누르면 <br />해당 예약 내역이 삭제됩니다. </p>
+						<p>방 배정 확인을 누르면 <br />배정 상태를 확인할 수 있습니다. </p>
 						<a href="roomstatus.do" class="btn small2" style="display:inline;right:65px"><span>방 배정 확인</span></a>
 						<a href="javascript:void(0);" class="btnPopClose btn small2" style="display:inline;right:200px"><span>취소</span></a>
 					</div>
@@ -360,8 +385,8 @@ function initDate(year,month){
 					if(data[i].value=='today'){
 						
 						$datediv = $("<div class='date'>"+data[i].date+"</div>");
-						$td = $("<td class='today' onclick='detailModal("+data[i].year+data[i].month+data[i].date+")'>");
-						$innerDiv = $("<span class='roomInfo' data-tooltip-text='SUPERIOR-"+data[i].superiorCount+"  DELUXE-"+data[i].deluxeCount+"   SUITE-"+data[i].suiteCount+"   ' >").text("남은객실 "+data[i].emptyRoom);
+						$td = $("<td class='today' onclick='detailModal("+data[i].date+","+data[i].superiorCount+","+data[i].deluxeCount+","+data[i].suiteCount+","+data[i].superiorRes+","+data[i].deluxeRes+","+data[i].suiteRes+")'>");
+						$innerDiv = $("<span class='roomInfo' data-tooltip-text='SUPERIOR-"+(data[i].superiorCount-data[i].superiorRes)+"  DELUXE-"+(data[i].deluxeCount-data[i].deluxeRes)+"   SUITE-"+(data[i].suiteCount-data[i].suiteRes)+"   ' >").text("남은객실 "+data[i].emptyRoom);
 						$td.append($datediv);
 						$td.append($innerDiv);
 						$tr.append($td);
@@ -376,8 +401,8 @@ function initDate(year,month){
 							$td = $("<td class='before_date'>");
 							$td.append($datediv);						
 						}else{
-							$td = $("<td class='sat_day' onclick='detailModal("+data[i].year+data[i].month+data[i].date+")'>");
-							$innerDiv = $("<span class='roomInfo' data-tooltip-text='SUPERIOR-"+data[i].superiorCount+"  DELUXE-"+data[i].deluxeCount+"   SUITE-"+data[i].suiteCount+"   '>").text("남은객실 "+data[i].emptyRoom);
+							$td = $("<td class='sat_day' onclick='detailModal("+data[i].date+","+data[i].superiorCount+","+data[i].deluxeCount+","+data[i].suiteCount+","+data[i].superiorRes+","+data[i].deluxeRes+","+data[i].suiteRes+")'>");
+							$innerDiv = $("<span class='roomInfo' data-tooltip-text='SUPERIOR-"+(data[i].superiorCount-data[i].superiorRes)+"  DELUXE-"+(data[i].deluxeCount-data[i].deluxeRes)+"   SUITE-"+(data[i].suiteCount-data[i].suiteRes)+"   '>").text("남은객실 "+data[i].emptyRoom);
 							$td.append($datediv);						
 							$td.append($innerDiv);
 						}
@@ -396,8 +421,8 @@ function initDate(year,month){
 							$td = $("<td class='before_date'>");
 							$td.append($datediv);						
 						}else{
-							$td = $("<td class='sun_day' onclick='detailModal("+data[i].year+data[i].month+data[i].date+")'>");
-							$innerDiv = $("<span class='roomInfo' data-tooltip-text='SUPERIOR-"+data[i].superiorCount+"  DELUXE-"+data[i].deluxeCount+"   SUITE-"+data[i].suiteCount+"   '>").text("남은객실 "+data[i].emptyRoom);
+							$td = $("<td class='sun_day' onclick='detailModal("+data[i].date+","+data[i].superiorCount+","+data[i].deluxeCount+","+data[i].suiteCount+","+data[i].superiorRes+","+data[i].deluxeRes+","+data[i].suiteRes+")'>");
+							$innerDiv = $("<span class='roomInfo' data-tooltip-text='SUPERIOR-"+(data[i].superiorCount-data[i].superiorRes)+"  DELUXE-"+(data[i].deluxeCount-data[i].deluxeRes)+"   SUITE-"+(data[i].suiteCount-data[i].suiteRes)+"   '>").text("남은객실 "+data[i].emptyRoom);
 							$td.append($datediv);						
 							$td.append($innerDiv);
 						}
@@ -412,8 +437,8 @@ function initDate(year,month){
 							$td = $("<td class='before_date'>");
 							$td.append($datediv);						
 						}else{
-							$td = $("<td class='normal_day' onclick='detailModal("+data[i].year+data[i].month+data[i].date+")'>");
-							$innerDiv = $("<span class='roomInfo' data-tooltip-text='SUPERIOR-"+data[i].superiorCount+"  DELUXE-"+data[i].deluxeCount+"   SUITE-"+data[i].suiteCount+"   '>").text("남은객실 "+data[i].emptyRoom);
+							$td = $("<td class='normal_day' onclick='detailModal("+data[i].date+","+data[i].superiorCount+","+data[i].deluxeCount+","+data[i].suiteCount+","+data[i].superiorRes+","+data[i].deluxeRes+","+data[i].suiteRes+")'>");
+							$innerDiv = $("<span class='roomInfo' data-tooltip-text='SUPERIOR-"+(data[i].superiorCount-data[i].superiorRes)+"  DELUXE-"+(data[i].deluxeCount-data[i].deluxeRes)+"   SUITE-"+(data[i].suiteCount-data[i].suiteRes)+"   '>").text("남은객실 "+data[i].emptyRoom);
 							$td.append($datediv);						
 							$td.append($innerDiv);
 						}
@@ -437,11 +462,13 @@ function initDate(year,month){
 }
 
 /** 확인창 띄우기 **/
-function detailModal(date){
+function detailModal(date,superiorCount,deluxeCount,suiteCount,superiorRes,deluxeRes,suiteRes){
 		console.log(date);
 		
-		$(".loginWrap h1 span").text(date+" 객실 정보");
+		$(".loginWrap h1 span").text(date+"일 객실 정보");
+		makeGraph(superiorCount-superiorRes,deluxeCount-deluxeRes,suiteCount-suiteRes,superiorRes,deluxeRes,suiteRes);
 		layerPopOpen("#loginPop3");
+		
 	};
 
 function closePopModal(){
@@ -449,7 +476,241 @@ function closePopModal(){
 	
 };
 
+function makeGraph(superiorCount,deluxeCount,suiteCount,superiorRes,deluxeRes,suiteRes){
+	
+	$("#superiorAmount").html("");
+	$("#deluxeAmount").html("");
+	$("#suiteAmount").html("");
+	
+	// 슈페리어
+	var w = 100, h = 100;
+		//들어갈수 있는방 없는 방 카운트
+	var graphData = [superiorCount,superiorRes];
+	var colorData = ["lightgreen", "lightgray"];
+	var pie = d3.pie();
+	var arc = d3.arc().innerRadius(50).outerRadius(70); 
+	
+	var svg = d3.select("#superiorAmount")
+	.append("svg")
+	.attr("width", 170)
+	.attr("height", 170)
+	.attr("id", "graphWrap");
+	
+	var g = svg.selectAll(".pie")
+	.data(pie(graphData))
+	.enter()
+	.append("g")
+	.attr("class", "pie")
+	.attr("transform","translate("+85+","+90+")");
+	
+	g.append("path")
+	.style("fill", function(d, i) {
+	return colorData[i];
+	}) 
+	.transition()
+	.duration(500)
+	.delay(function(d, i) { 
+	return i * 500;
+	})
+	.attrTween("d", function(d, i) { 
+	var interpolate = d3.interpolate(
+	    {startAngle : d.startAngle, endAngle : d.startAngle}, 
+	    {startAngle : d.startAngle, endAngle : d.endAngle} 
+	);
+	return function(t){
+	    return arc(interpolate(t)); 
+	}
+	});
+	//그래프 안 텍스트
+	g.append("text")
+	.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+	.attr("dy", ".35em")
+	.style("text-anchor", "middle")
+	.text(function(d, i) {
+	return graphData[i];
+	});
+	//그래프 중앙 텍스트들
+	
+	//일단 타입별 입실 가능 갯수 와 총 방 갯수를 var로 받아 .toㄴtring으로 문자열 변환 후 
+	//lenth로 길이 세서 if(var.length == 1 or 2 or 3)으로 나눠서 중앙 정렬
+	//값 넣어줌 
+	
+	//남은 방수 카운트 최대 두자릿수까지 이건 자릿수당 translate(-5씩(좌우간격) , 80 고정)
+	svg.append("text")
+	.attr("class", "total")
+	.attr("font-size","18")
+	.attr("font-weight","800")
+	.attr("transform", "translate("+75+", "+80+")")
+	//들어갈 수있는 방의 수 배열로 꺼내와
+	.text(graphData[0]);
+	
+	//총 방 갯수    최대 3자릿수 까지 if문으로  이건 자릿수당 translate(-5씩(좌우간격) , 90(높이) 고정)
+	svg.append("text")
+	.attr("class", "total")
+	.attr("font-weight","300")
+	.attr("transform", "translate("+50+", "+95+")")
+	.text("OUT OF " + d3.sum(graphData));
+	
+	//방 타입 텍스트
+	svg.append("text")
+	.attr("class", "total")
+	.attr("font-size","15")
+	.attr("font-weight","600")
+	.attr("transform", "translate("+47.5+", "+110+")")
+	.text("SUPERIOR");
+
+	
+	
+	//디럭스 
+	var w = 100, h = 100;
+				//들어갈수 있는방 없는 방 카운트
+	var graphData = [deluxeCount, deluxeRes];
+	var colorData = ["lightgreen", "lightgray"];
+	var pie = d3.pie();
+	var arc = d3.arc().innerRadius(50).outerRadius(70); 
+	 
+	var svg = d3.select("#deluxeAmount")
+    .append("svg")
+    .attr("width", 170)
+    .attr("height", 170)
+    .attr("id", "graphWrap");
+	 
+	var g = svg.selectAll(".pie")
+	    .data(pie(graphData))
+	    .enter()
+	    .append("g")
+	    .attr("class", "pie")
+	    .attr("transform","translate("+85+","+90+")");
+	 
+	g.append("path")
+	    .style("fill", function(d, i) {
+	        return colorData[i];
+	    }) 
+	    .transition()
+	    .duration(500)
+	    .delay(function(d, i) { 
+	        return i * 500;
+	    })
+	    .attrTween("d", function(d, i) { 
+	        var interpolate = d3.interpolate(
+	            {startAngle : d.startAngle, endAngle : d.startAngle}, 
+	            {startAngle : d.startAngle, endAngle : d.endAngle} 
+	        );
+	        return function(t){
+	            return arc(interpolate(t)); 
+	        }
+	    });
+	//그래프 안 텍스트
+	g.append("text")
+    .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+    .attr("dy", ".35em")
+    .style("text-anchor", "middle")
+    .text(function(d, i) {
+        return graphData[i];
+    });
+	//그래프 중앙 텍스트들
+	//남은 방수 카운트
+	svg.append("text")
+		.attr("class", "total")
+		.attr("font-size","18")
+		.attr("font-weight","800")
+		.attr("transform", "translate("+75+", "+80+")")
+		//들어갈 수있는 방의 수 배열로 꺼내와
+	.text(graphData[0]);
+ 
+ 	//총 방 갯수 
+	svg.append("text")
+    	.attr("class", "total")
+    	.attr("font-weight","300")
+    	.attr("transform", "translate("+50+", "+95+")")
+    .text("OUT OF " + d3.sum(graphData));
+    
+	//방 타입 텍스트
+	svg.append("text")
+		.attr("class", "total")
+		.attr("font-size","15")
+		.attr("font-weight","600")
+		.attr("transform", "translate("+55+", "+110+")")
+	.text("DELUXE");
+	
+	//스위트
+	var w = 100, h = 100;
+				//들어갈수 있는방 없는 방 카운트
+	var graphData = [suiteCount, suiteRes];
+	var colorData = ["lightgreen", "lightgray"];
+	var pie = d3.pie();
+	var arc = d3.arc().innerRadius(50).outerRadius(70); 
+	 
+	var svg = d3.select("#suiteAmount")
+    .append("svg")
+    .attr("width", 170)
+    .attr("height", 170)
+    .attr("id", "graphWrap");
+	 
+	var g = svg.selectAll(".pie")
+	    .data(pie(graphData))
+	    .enter()
+	    .append("g")
+	    .attr("class", "pie")
+	    .attr("transform","translate("+85+","+90+")");
+	 
+	g.append("path")
+	    .style("fill", function(d, i) {
+	        return colorData[i];
+	    }) 
+	    .transition()
+	    .duration(500)
+	    .delay(function(d, i) { 
+	        return i * 500;
+	    })
+	    .attrTween("d", function(d, i) { 
+	        var interpolate = d3.interpolate(
+	            {startAngle : d.startAngle, endAngle : d.startAngle}, 
+	            {startAngle : d.startAngle, endAngle : d.endAngle} 
+	        );
+	        return function(t){
+	            return arc(interpolate(t)); 
+	        }
+	    });
+	//그래프 안 텍스트
+	g.append("text")
+    .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+    .attr("dy", ".35em")
+    .style("text-anchor", "middle")
+    .text(function(d, i) {
+        return graphData[i];
+    });
+	
+		
+	//남은 방수 카운트
+ 	svg.append("text")
+		.attr("class", "total")
+		.attr("font-size","18")
+		.attr("font-weight","800")
+		.attr("transform", "translate("+80+", "+80+")")
+		//들어갈 수있는 방의 수 배열로 꺼내와
+	.text(graphData[0]);
+ 
+ 	//총 방 갯수 
+	svg.append("text")
+    	.attr("class", "total")
+    	.attr("font-weight","300")
+    	.attr("transform", "translate("+50+", "+95+")")
+    .text("OUT OF " + d3.sum(graphData));
+    
+	//방 타입 텍스트
+	svg.append("text")
+		.attr("class", "total")
+		.attr("font-size","15")
+		.attr("font-weight","600")
+		.attr("transform", "translate("+62+", "+110+")")
+	.text("SUITE");
+
+	
+}
+
 </script>
+
 </body>
 
 </html>

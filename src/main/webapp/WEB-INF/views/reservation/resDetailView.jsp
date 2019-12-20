@@ -45,8 +45,6 @@
 				<h1>${res.res_roomType }</h1>
 				<br>
 				<a href="#detailPop1" class="btn small" onclick="popModal()"><span>자세히 보기</span></a>
-				<label>흡연 여부</label><input id="smoking" class="check" type="checkbox" name="res_smoking"<c:if test="${res.res_payStatus eq '입금완료' }">  
-						 disabled </c:if> >
 				<label>베드 추가</label><input id="addBed" class="check" type="checkbox" name="res_addBed"<c:if test="${res.res_payStatus eq '입금완료' }">  
 						 disabled </c:if> >
 			</div>
@@ -63,7 +61,7 @@
 						</c:if>
 						<c:if test="${res.res_payStatus eq '입금완료' }">
 							<input  name="checkInOut" type="text" value="${res.res_checkIn} ~ ${res.res_checkOut}" readonly="readonly"
-							style="">
+							style="height:48px;width:245px;border: 1px solid #e6e3df;background: #f9f9f9">
 						</c:if>
 					</dd>
 				</dl>
@@ -105,7 +103,7 @@
 				<dl>
 					<dt>총 인원</dt>
 					<dd>
-						<input type="text" id="calTotal" value="${res.res_child + res.res_adult} " readonly>
+						<input type="text" id="calTotal" value="${res.res_child + res.res_adult} " readonly disabled>
 					</dd>
 				</dl>
 			</div>
@@ -146,14 +144,13 @@
 							<p id="checkInOut">${res.res_checkIn} ~ ${res.res_checkOut}</p>			
 							<p id="total">성인 ${res.res_adult} / 어린이 ${res.res_child}</p>			
 							<p>${res.res_roomType} 룸</p>	
-							<p id="res_smoking">흡연 여부  ${res.res_smoking}</p>	
 							<p id="res_addBed">베드 추가  ${res.res_addBed}</p>	
 							<div class="casyBox">
 								<dl>
 									<dt>
 										총액
 									</dt>
-									<dd class="totalAmt">원</dd>
+									<dd class="totalAmt">${res.res_allPay}원</dd>
 								</dl>
 							</div>	
 						</div>
@@ -166,7 +163,7 @@
 			<div class="productFooter">
 				<dl>
 					<dt>총액</dt>
-					<dd id="f_total">원</dd>
+					<dd id="f_total">${res.res_allPay}원</dd>
 				</dl>
 				
 				<dl>
@@ -184,12 +181,12 @@
 				<dl>
 					<dt>최종금액</dt>
 					<dd id="f_final">
-						<span></span>
+						<span>${res.res_allPay}</span>
 						원
 					</dd>
 				</dl>
 				<c:if test="${res.res_payStatus eq '입금대기' }">
-					<button  onclick="payStatusCheck()" class="btn btnFull" style="display: block;width: 100%;border-radius: 5px;margin-bottom: 10px;box-shadow: 3px 3px 15px rgba(0,0,0,0.25)">
+					<button  onclick="payPopModal()" class="btn btnFull" style="display: block;width: 100%;border-radius: 5px;margin-bottom: 10px;box-shadow: 3px 3px 15px rgba(0,0,0,0.25)">
 					입금 완료</button>
 				</c:if>
 			</div>
@@ -209,20 +206,19 @@
 
 <!-------------------- 팝업창  ---------------------->
 <form>
-	<div class="layerPopWrap" id="loginPop">
+	<div class="layerPopWrap" id="roomDetail">
 		<div class="bg"></div>
 		<!-- layerPopCont -->
 		<div class="layerPopCont">
 			<div class="loginWrap">
-				<h1><span>예약 정보</span></h1>
-				<img src="#" style="width:100%;height:300px">
+				<h1><span>룸 정보</span></h1>
 				<br><br>
 
 				<div class="popJoinBox">
 					<div class="wrap">
-						<p>삭제 버튼을 누르면 <br />해당 예약 내역이 삭제됩니다. </p>
-						<a href="#" class="btn small2" style="display:inline;right:65px"><span>삭제</span></a>
-						<a href="javascript:void(0);" class="btnPopClose btn small2" style="display:inline;right:150px"><span>취소</span></a>
+						<p>룸 관리 버튼을 누르면 <br />룸 정보를 페이지로 이동합니다. </p>
+						<a href="iRoomtypeView.do" class="btn small2" style="display:inline;right:65px"><span>룸 관리</span></a>
+						<a href="javascript:void(0);" class="btnPopClose btn small2" style="display:inline;right:170px"><span>취소</span></a>
 					</div>
 				</div>
 			</div>
@@ -232,8 +228,35 @@
 	</div>
 </form>
 <!-------------------- //팝업창  ---------------------->
-<script>
+<!-------------------- 팝업창  ---------------------->
+<form>
+	<div class="layerPopWrap" id="checkPay">
+		<div class="bg"></div>
+		<!-- layerPopCont -->
+		<div class="layerPopCont">
+			<div class="loginWrap">
+					<div>
+						<h1 style="padding-bottom:0px"><span style="display:inline">적립 예정 포인트 </span><input type="text" value="0" style="width:100px;border:0px;text-align:right;">p</h1>
+						<h1 style="padding-bottom:0px"><span style="display:inline">인보이스 발행 </span><input type="checkBox"></h1> 
+					</div>
+				<div class="popJoinBox">
+					<div class="wrap">
+						<p>입금 처리를 하면 <br />더 이상 예약정보를 변경할 수 없습니다. </p>
+						<a href="payStatusCheck()" class="btn small2" style="display:inline;right:65px"><span>입금확인</span></a>
+						<a href="javascript:void(0);" class="btnPopClose btn small2" style="display:inline;right:170px"><span>취소</span></a>
+					</div>
+				</div>
+			</div>
+			<a href="#" class="layerPopClose btnPopClose">레이어 팝업 닫기</a>
+		</div>
+		<!-- //layerPopCont -->
+	</div>
+</form>
+<!-------------------- //팝업창  ---------------------->
 
+<script>
+var maxCap = ${roomType.capacity};
+console.log(maxCap);
 $(function(){
 	var smoking = "${res.res_smoking}";
 	var addBed = "${res.res_addBed}";
@@ -266,22 +289,20 @@ $(function(){
 		var total = Number(adult) + Number(child);
 		$("#total").text("성인 "+adult+"  /  어린이 "+child);
 		$("#calTotal").val(total);
+
 	});
 	
 
 });
 
-	/***** 흡연여부 베드추가여부 결과창에 담기 *****/
+	/***** 베드추가여부 결과창에 담기 *****/
 	$(document).on("click",".check",function(){
 		if ($(this).is(":checked")){ 
 	        $(this).val("Y");
 	    }else{
 	        $(this).val("N");
 	    }
-		
-		if($(this).attr("name")=="res_smoking"){
-			$("#res_smoking").text("흡연 여부  "+$(this).val());
-		}
+
 		if($(this).attr("name")=="res_addBed"){
 			$("#res_addBed").text("베드 추가  "+$(this).val());			
 		}
@@ -302,13 +323,22 @@ $(function(){
 		var res_child = $("select[name=res_child]").val();
 		var checkInOut = $("input[name=checkInOut]").val();
 		
-		location.href="resModify.do?&res_no="+res_no+"&res_adult="+res_adult+"&res_child="+res_child+"&checkInOut="+checkInOut;
-				
+		if($("#calTotal").val()==0){
+			alert("인원 수가 잘못 되었습니다.\n ")
+		}else if($("#calTotal").val()>maxCap){
+			alert("최대 수용인원을 넘었습니다.\n 해당 룸의 최대인원은 "+maxCap+"명 입니다.");
+		}else{
+			location.href="resModify.do?&res_no="+res_no+"&res_adult="+res_adult+"&res_child="+res_child+"&checkInOut="+checkInOut;
+		}
+
 	}
 
 	function popModal(){
-		layerPopOpen("#loginPop");
+		layerPopOpen("#roomDetail");
 	};
+	function payPopModal(){
+		layerPopOpen("#checkPay");
+	}
 
 </script>
 </body>

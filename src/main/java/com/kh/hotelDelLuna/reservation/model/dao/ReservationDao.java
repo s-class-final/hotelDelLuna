@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.reservation.model.vo.ResSearchCondition;
 import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
+import com.kh.hotelDelLuna.room.model.vo.RoomType;
 
 @Repository("rDao")
 public class ReservationDao {
@@ -118,6 +119,31 @@ public class ReservationDao {
 	public int roomStatusDelete(int resNo) {
 
 		return sqlSession.delete("reservationMapper.roomStatusDelete",resNo);
+	}
+
+	public List<Integer> selectRoomTypeCount() {
+
+		return sqlSession.selectList("reservationMapper.selectRoomTypeCount");
+	}
+
+	public List<Map<String, Object>> getRoomList() {
+
+		return sqlSession.selectList("reservationMapper.getRoomList");
+	}
+
+	public int getResRoomCount(Reservation searchRes) {
+
+		return sqlSession.selectOne("reservationMapper.getResRoomCount",searchRes);
+	}
+
+	public ArrayList<RoomType> selectRoomList() {
+
+		return (ArrayList)sqlSession.selectList("reservationMapper.selectRoomList");
+	}
+
+	public RoomType getRoomType(String res_roomType) {
+
+		return sqlSession.selectOne("reservationMapper.getRoomType",res_roomType);
 	}
 
 

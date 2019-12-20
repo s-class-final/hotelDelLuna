@@ -97,7 +97,7 @@ function jsDownImg(F_SEQ){
 	
 	<div class="hotelParadiseWrap pb0">
 		<div class="innerBox">
-			<h1 class="contTitle"><span>다이닝</span>미슐랭 스타 레스토랑부터 트렌디한 Bar까지, <br />호텔 파라다이스에서 펼쳐지는 미식의 세계로 초대합니다.</h1>
+			<h1 class="contTitle"><span>다이닝</span>미슐랭 스타 레스토랑부터 트렌디한 Bar까지, <br />호텔 델루나에서 펼쳐지는 미식의 세계로 초대합니다.</h1>
 			
 			<section class="jsSwiperMotion">
 				<div class="swiperWrap">
@@ -126,13 +126,10 @@ function jsDownImg(F_SEQ){
 			</section>
 			
 			<div class="detailTextBox">
-				<h2>Lounge Paradise</h2>
+				<h2>Lounge Delluna</h2>
 				<p class="subTit">음악이 흐르는 로비라운지</p>
-				<p class="text">은은하게 흐르는 음악과 어우러지는 여유로운 시간이 매력적인 라운지 파라다이스는 고급스럽고 여유롭게 즐길 수 있는 커피, 차, 스낵 라인 구성이 가장 큰 특징으로<br />다양한 고객의 취향을 반영하였습니다.훌륭한 맛과 품질을 선사하는 점보버거는 라운지 파라다이스가 자랑하는 시그니처 메뉴입니다.</p>
-				<div class="btnGroup">
-					<!-- 2018.07.09 수정 -->
-					<a href="#pop1" class="btn small btnFull layerPopOpen"><span>문의하기</span></a>
-				</div>
+				<p class="text">은은하게 흐르는 음악과 어우러지는 여유로운 시간이 매력적인 라운지 델루나는 고급스럽고 여유롭게 즐길 수 있는 커피, 차, 스낵 라인 구성이 가장 큰 특징으로<br />다양한 고객의 취향을 반영하였습니다.훌륭한 맛과 품질을 선사하는 점보버거는 라운지 델루나가 자랑하는 시그니처 메뉴입니다.</p>
+				
 			</div>
 			
 			<div class="detailInfo">
@@ -167,7 +164,7 @@ function jsDownImg(F_SEQ){
 					</dl>
 					<dl>
 						<dt>위치</dt>
-						<dd>HOTEL PARADISE 1층<br />
+						<dd>HOTEL DELLUNA 1층<br />
 							<!-- 오픈시점 삭제 
 							<a href="#" class="link">+ 위치 보기</a>
 							-->
@@ -288,7 +285,7 @@ function jsDownImg(F_SEQ){
 							</c:url>
 							<a href="${diningView }">
 								<p class="img"><img src="resources/pcPub/static/images/dining/list/dining_list6.jpg" alt="" /></p>
-								<h4>LOUNGE PARADISE</h4>
+								<h4>LOUNGE DELLUNA</h4>
 								<p class="text">음악이 흐르는 로비라운지</p>
 							</a>
 						</li>
@@ -334,7 +331,7 @@ function jsDownImg(F_SEQ){
 
 <!-- 1:1 문의 (레이어 팝업) -->
 
-
+<jsp:include page="../../../common/footer.jsp"/>
 
 
 

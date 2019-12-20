@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.member.model.vo.Inquiry;
 import com.kh.hotelDelLuna.member.model.vo.Member;
+import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
 
 public interface MemberService {
 	// 로그인
@@ -14,7 +15,7 @@ public interface MemberService {
 	int insertMember(Member m);
 	
 	// 아이디 중복 확인
-	int idCheck(String userId);
+	Member idCheck(String userId);
 	
 	// 카카오 가입 여부 확인
 	int kakaoIdCheck(String kakaoId);
@@ -78,6 +79,21 @@ public interface MemberService {
 	
 	// 문의 게시판 답변 대기 조회(관리자)
 	ArrayList<Inquiry> selectNoReplyList(PageInfo pi);
+	
+	// 내 예약 내역 전체 수 조회
+	int getMyRListCount(String userId);
+	
+	// 내 예약 내역 조회
+	ArrayList<Reservation> selectMyResList(String userId, PageInfo pi);
+	
+	// 예약 내역 존재하는 비회원 회원가입 해주기
+	int insertNMember(Member m);
+	
+	// 회원 테이블에서 등록 돼있는지 조회
+	int searchRes(Member m);
+	
+	// 예약 내역 존재하는 비회원 카카오 회원가입 해주기
+	int insertNKMember(Member m);
 	
 
 }

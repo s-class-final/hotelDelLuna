@@ -296,7 +296,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 									<a href="${roomView }">
 										<p class="img"><img src="resources/pcPub/static/images/room/list/room_list10.jpg" alt="" /></p>
 										<h4>DELUXE SUITE</h4>
-										<p class="text">호텔 파라다이스만의 예술적 감성이 묻어나는 호텔 델루나의 대표 스위트 객실, 디럭스 스위트</p>
+										<p class="text">호텔 델루나만의 예술적 감성이 묻어나는 호텔 델루나의 대표 스위트 객실, 디럭스 스위트</p>
 									</a>
 								</li>
 								<li>
@@ -777,7 +777,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 <!-- //2018.07.30 위성 채널 -->
 
 <!-- 1:1 문의 (레이어 팝업) -->
-
+<jsp:include page="../../../common/footer.jsp"/>
 <script>
 var title = "1:1 문의";
 

@@ -15,6 +15,10 @@ public class DateData {
 	private int superiorCount;
 	private int deluxeCount;
 	private int suiteCount;
+	private int superiorRes;
+	private int deluxeRes;
+	private int suiteRes;
+	
 	
 	//스케쥴 추가시 아래처럼 
 	//		1. 변수 추가
@@ -37,6 +41,23 @@ public class DateData {
 
 	}
 	
+	public DateData(String year, String month, String date, String value, int emptyRoom, int superiorCount,
+			int deluxeCount, int suiteCount, int superiorRes, int deluxeRes, int suiteRes) {
+		if ((month != null && month != "") && (date != null && date != "")) {		
+			this.year = year;
+			this.month = month;
+			this.date = date;
+			this.value = value;
+			this.emptyRoom = emptyRoom;
+			this.superiorCount = superiorCount;
+			this.deluxeCount = deluxeCount;
+			this.suiteCount = suiteCount;
+			this.superiorRes = superiorRes;
+			this.deluxeRes = deluxeRes;
+			this.suiteRes = suiteRes;
+		}
+	}
+
 	public DateData(String year, String month, String date, String value, int emptyRoom, int superiorCount,
 			int deluxeCount, int suiteCount) {
 		if ((month != null && month != "") && (date != null && date != "")) {
@@ -74,6 +95,30 @@ public class DateData {
 		}
 	}
 
+
+	public int getSuperiorRes() {
+		return superiorRes;
+	}
+
+	public void setSuperiorRes(int superiorRes) {
+		this.superiorRes = superiorRes;
+	}
+
+	public int getDeluxeRes() {
+		return deluxeRes;
+	}
+
+	public void setDeluxeRes(int deluxeRes) {
+		this.deluxeRes = deluxeRes;
+	}
+
+	public int getSuiteRes() {
+		return suiteRes;
+	}
+
+	public void setSuiteRes(int suiteRes) {
+		this.suiteRes = suiteRes;
+	}
 
 	public DateData() {
 	}
@@ -242,7 +287,9 @@ public class DateData {
 	@Override
 	public String toString() {
 		return "DateData [year=" + year + ", month=" + month + ", date=" + date + ", value=" + value + ", emptyRoom="
-				+ emptyRoom + "]";
+				+ emptyRoom + ", superiorCount=" + superiorCount + ", deluxeCount=" + deluxeCount + ", suiteCount="
+				+ suiteCount + ", superiorRes=" + superiorRes + ", deluxeRes=" + deluxeRes + ", suiteRes=" + suiteRes
+				+ "]";
 	}
 
 }

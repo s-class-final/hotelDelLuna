@@ -22,12 +22,17 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.common.Pagination;
 import com.kh.hotelDelLuna.member.model.exception.MemberException;
 import com.kh.hotelDelLuna.member.model.service.MemberService;
 import com.kh.hotelDelLuna.member.model.vo.Inquiry;
 import com.kh.hotelDelLuna.member.model.vo.Member;
+import com.kh.hotelDelLuna.reservation.model.vo.ResSearchCondition;
+import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
 
 @SessionAttributes("loginUser")
 @Controller
@@ -85,7 +90,7 @@ public class MemberController {
 
 		return "member/memberJoin";
 	}
-	
+
 	@RequestMapping("minsert.do")
 	public String memberInsert(Member m, Model model, HttpSession session,
 								@RequestParam("userId1") String userId1,
@@ -101,7 +106,8 @@ public class MemberController {
 		m.setUserPwd(encPwd);
 		
 		// 아이디 합치기
-		m.setUserId(userId1 + '@' + userId2);
+		String userId = userId1 + '@' + userId2;
+		m.setUserId(userId);
 		
 		// 이름 합치기
 		m.setUserName(lastName + " " + firstName);
@@ -109,15 +115,29 @@ public class MemberController {
 		// 휴대폰 번호 합치기
 		m.setUserPhone(userPhone1 + "-"  + userPhone2 + "-"  + userPhone3);
 		
-		int result = mService.insertMember(m);
+		Member m1 = mService.idCheck(userId);	// 비회원 예약 내역 있는지 확인하기 위한 m1
 		
-		if(result > 0) {
-			Member loginUser = mService.loginUser(m);
-			model.addAttribute("loginUser", loginUser);
-			return "home";
-		}else {
-			throw new MemberException("회원 가입 실패!!");
+		if(m1 == null) {
+			int result = mService.insertMember(m);
+			
+			if(result > 0) {
+				Member loginUser = mService.loginUser(m);
+				model.addAttribute("loginUser", loginUser);
+			}else {
+				throw new MemberException("회원 가입 실패!!");
+			}
+			
+		}else if(m1.getmStatus().equals("B")) {
+			int result = mService.insertNMember(m);
+			
+			if(result > 0) {
+				Member loginUser = mService.loginUser(m);
+				model.addAttribute("loginUser", loginUser);
+			}else {
+				throw new MemberException("회원 가입 실패!!");
+			}
 		}
+		return "../../index";
 	}
 	
 	@RequestMapping("mdrop.do")
@@ -140,12 +160,22 @@ public class MemberController {
 	}
 	
 	@RequestMapping("idcheck.do")
-	public void idCheck(HttpServletResponse response, String userId) throws IOException {
-		
-		boolean isUsable = mService.idCheck(userId) == 0 ? false : true;
-		
-		response.getWriter().print(isUsable);
-	}
+	   @ResponseBody
+	   public String idCheck(HttpServletResponse response, String userId) throws IOException {
+	      
+	      Member m = mService.idCheck(userId);
+	      
+	      if(m == null) {
+	         return "false";
+	      }else if(m.getmStatus().equals("B")) {
+	         return "false1";
+	      }else if(m.getmStatus().equals("N")) {
+	         return "nope";
+	      }else {
+	         return "true";
+	      }
+	      
+	   }
 	
 	@RequestMapping(value="pwdcheck.do", method=RequestMethod.POST)
 	@ResponseBody
@@ -191,7 +221,8 @@ public class MemberController {
 							@RequestParam("userPhone2") String userPhone2,
 							@RequestParam("userPhone3") String userPhone3) {
 		// 아이디 합치기
-		m.setUserId(userId1 + '@' + userId2);
+		String userId = userId1 + '@' + userId2;
+		m.setUserId(userId);
 				
 		// 이름 합치기
 		m.setUserName(lastName + " " + firstName);
@@ -203,15 +234,28 @@ public class MemberController {
 		
 		m.setKakao(kakaoId);
 		
-		int result = mService.insertKMember(m);
+		Member m1 = mService.idCheck(userId);	// 비회원 예약 내역 있는지 확인하기 위한 m1
 		
-		if(result > 0) {
-			Member loginUser = mService.kakaoLogin(kakaoId);
-			session.setAttribute("loginUser", loginUser);
-			return "home";	
-		}else {
-			throw new MemberException("카카오 회원 가입 실패!!");
+		if(m1 == null) {
+			int result = mService.insertKMember(m);
+			
+			if(result > 0) {
+				Member loginUser = mService.kakaoLogin(kakaoId);
+				session.setAttribute("loginUser", loginUser);
+			}else {
+				throw new MemberException("카카오 회원 가입 실패!!");
+			}
+		}else if(m1.getmStatus().equals("B")){
+			int result = mService.insertNKMember(m);
+			
+			if(result > 0) {
+				Member loginUser = mService.loginUser(m);
+				model.addAttribute("loginUser", loginUser);
+			}else {
+				throw new MemberException("회원 가입 실패!!");
+			}
 		}
+		return "../../index";
 	}
 	
 	@RequestMapping("kakaologin.do")
@@ -525,7 +569,7 @@ public class MemberController {
 		int result = mService.updateInquiry(i);
 		
 		if(result > 0) {
-			mv.addObject("page", page).setViewName("redirect:noreply.do");
+			mv.addObject("page", page).setViewName("redirect:allinquiry.do");
 		}else {
 			throw new MemberException("문의글 답변 실패!!");
 		}
@@ -612,6 +656,113 @@ public class MemberController {
 	public String memberMyRes() {
 
 		return "member/memberMyRes";
+	}
+	
+	@RequestMapping("myrList.do")
+	@ResponseBody
+	public void getMyResList(HttpServletResponse response, HttpSession session, int page)
+			throws JsonIOException, IOException {
+
+		response.setContentType("application/json;charset=utf-8");
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		String userId = loginUser.getUserId();
+		
+		int listCount;
+		
+		listCount = mService.getMyRListCount(userId);
+		
+		PageInfo pi = Pagination.getPageInfo(page, listCount);
+		ArrayList<Reservation> rList;
+		
+		rList = mService.selectMyResList(userId, pi);
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(rList, response.getWriter());
+
+	}
+	
+	@RequestMapping("myrPage.do")
+	@ResponseBody
+	public void getMyResPage(HttpServletResponse response, HttpSession session, int page, String searchCondition,
+		String searchValue,Integer sort_no,boolean search) throws JsonIOException, IOException {
+
+		response.setContentType("application/json;charset=utf-8");
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		String userId = loginUser.getUserId();
+		
+		int listCount;
+		
+		listCount = mService.getMyRListCount(userId);
+		
+		PageInfo pi = Pagination.getPageInfo(page, listCount);
+
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(pi, response.getWriter());
+	}
+	
+	@RequestMapping("nologinres.do")
+	public String noLoginRes() {
+		return "member/noLoginSearchRes";
+	}
+	
+	@RequestMapping("searchRes.do")
+	public void searchRes(Member m, HttpServletResponse response, String userId, String lastName, String firstName, String userPhone) throws IOException {
+		m.setUserId(userId);
+		m.setUserName(lastName + " " + firstName);
+		m.setUserPhone(userPhone);
+		
+		boolean isUsable = mService.searchRes(m) == 0 ? false : true;
+		
+		response.getWriter().print(isUsable);
+	}
+	
+	@RequestMapping("scmyres.do")
+	public ModelAndView searchMyRes(Member m, ModelAndView mv, HttpSession session, String findMail) {
+		m.setUserId(findMail);
+		Member m1 = mService.findMember(m);
+		
+		if(m1 != null) {
+			mv.addObject("m1", m1);
+			mv.setViewName("member/noLoginMyRes");
+		}
+		return mv;
+	}
+	
+	@RequestMapping("myrList2.do")
+	@ResponseBody
+	public void getMyResList(HttpServletResponse response, HttpSession session, int page, String userId)
+			throws JsonIOException, IOException {
+		response.setContentType("application/json;charset=utf-8");
+		int listCount;
+		
+		listCount = mService.getMyRListCount(userId);
+		
+		PageInfo pi = Pagination.getPageInfo(page, listCount);
+		ArrayList<Reservation> rList;
+		
+		rList = mService.selectMyResList(userId, pi);
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(rList, response.getWriter());
+	}
+	
+	@RequestMapping("myrPage2.do")
+	@ResponseBody
+	public void getMyResPage(HttpServletResponse response, HttpSession session, int page, String searchCondition,
+		String searchValue,Integer sort_no,boolean search,String userId) throws JsonIOException, IOException {
+		response.setContentType("application/json;charset=utf-8");
+		int listCount;
+		
+		listCount = mService.getMyRListCount(userId);
+		
+		PageInfo pi = Pagination.getPageInfo(page, listCount);
+
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(pi, response.getWriter());
 	}
 	
 }

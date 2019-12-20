@@ -223,6 +223,9 @@ body .container .content .submit-wrap {
   text-align: center;
   line-height: 0.5em;
 }
+body .container .content .finding{
+	height: 30%;
+}
 body .container .content .submit-wrap a {
   font-size: 12px;
   display: inline-block;
@@ -279,9 +282,25 @@ body .container .content .signup-cont {
   text-decoration: none;
 }
 
+.selectB{
+  font-size: 14px;
+  display: block;
+  width: 100%;
+  height: 42px;
+  margin-bottom: 12px;
+  padding: 5px 13px;
+  color: #999999;
+  border: 1px solid #d9d9d9;
+  background: transparent;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  width: 31%;
+  display: inline-block;
+}
 </style>
 </head>
-<body onkeydown="javascript:onEnterLogin();">
+<body>
 	<jsp:include page="../common/menubar.jsp"/>
 
 <section class="container">
@@ -289,10 +308,10 @@ body .container .content .signup-cont {
 		        <h1>Hotel del luna</h1>
 		        <div class="tabs">
 			            <span class="tab signin active"><a href="#signin">로그인</a></span>
-			            <span class="tab signup"><a href="#signup">비회원(예약 확인)</a></span>
+			            <span class="tab signup"><a href="#signup">비회원 (예약 확인)</a></span>
 		        </div>
 		        <div class="content">
-			            <div class="signin-cont cont">
+			            <div class="signin-cont cont" onkeydown="javascript:onEnterLogin();">
 				                <form id="loginForm" action="login.do" method="post">
 					                    <input type="text" name="userId" id="userId" class="inpt" required="required" placeholder="Your email">
 					                    <label for="email">Your email</label>
@@ -301,24 +320,36 @@ body .container .content .signup-cont {
 					                    <input type="checkbox" id="saveId" name="saveId" class="checkbox">
 					                    <label for="saveId">Remember id</label>
 					                    <div class="submit-wrap">
-						                        <input type="button" id="loginBtn" value="Login" class="submit" onclick="checkLogin()"><br>
-						                        <input type="button" id="kakao" value="kakao login" class="submit">
-						                        <a href="mjoin.do" class="more">Join us</a>&nbsp;
-						                        <a href="findpwd.do" class="more">Forgot your password?</a>
+					                        <input type="button" id="loginBtn" value="Login" class="submit" onclick="checkLogin()"><br>
+					                        <input type="button" id="kakao" value="kakao login" class="submit">
+					                        <a href="mjoin.do" class="more">Join us</a>&nbsp;
+					                        <a href="findpwd.do" class="more">Forgot your password?</a>
 					                    </div>
        					        </form>
    				        </div>
-   				        <div class="signup-cont cont">
-               <form action="#" method="post" enctype="multipart/form-data">
-                   						<input type="email" name="email" id="email" class="inpt" required="required" placeholder="Your email">
+   				        <div class="signup-cont cont" onkeydown="javascript:onEnterConfirm();">
+              					 <form id="findForm" action="scmyres.do">
+                   						<input type="email" name="findMail" id="findMail" class="inpt" required="required" placeholder="Your email">
 					                    <label for="email">Your email</label>
-					                    <input type="text" name="email" id="name" class="inpt" required="required" placeholder="Your name">
-					                    <label for="name">Your name</label>
-					                    <input type="number" name="password" id="password" class="inpt" required="required" placeholder="Your phone">
-               						    <label for="password">Your phone</label>
-					                    <div class="submit-wrap">
-						                        <input type="submit" value="confirm" class="submit">
-						                        <a href="#" class="more">Terms and conditions</a>
+					                    <input type="text" name="findName1" id="findName1" class="inpt" required="required" placeholder="Last name" style="width:49%; display:inline-block;">
+					                    <label for="name">Last name</label>
+					                    <input type="text" name="findName2" id="findName2" class="inpt" required="required" placeholder="First name" style="width:49%; display:inline-block;">
+					                    <label for="name">First name</label>
+					                    <br>
+					                    <select class="selectB" id = "findPhone1" name = "findPhone1">
+											<option value="010">010</option>
+											<option value="011">011</option>
+											<option value="016">016</option>
+											<option value="017">017</option>
+											<option value="018">018</option>
+											<option value="019">019</option>
+										</select>
+					                    <input type="text" name="findPhone2" id="findPhone2" class="inpt" required="required" maxlength="4" oninput="nextPhone(); this.value=this.value.replace(/[^0-9]/g,'');" style="width:33%; display:inline-block;">
+               						    <label for="findPhone2">Your phone</label>
+               						    <input type="text" name="findPhone3" id="findPhone3" class="inpt" required="required" maxlength="4" this.value=this.value.replace(/[^0-9]/g,'');" style="width:33%; display:inline-block;">
+               						    <label for="findPhone3">Your phone</label>
+					                    <div class="submit-wrap finding">
+					                        <input type="button" id="findBtn" value="find" class="submit">
 					                    </div>
        					        </form>
            </div>
@@ -442,6 +473,15 @@ function onEnterLogin(){
    }
 }
 
+// 엔터 입력 시 예약 내역 조회
+function onEnterConfirm(){
+	   var keyCode = window.event.keyCode;
+	   if (keyCode == 13) {
+	      $("#findBtn").click();
+	   }
+	}
+
+
 // 로그인 버튼 클릭 시 아이디, 비번 체크
 function checkLogin(){
 	var userId = $("#userId").val();
@@ -460,42 +500,132 @@ function checkLogin(){
 	}
 	
 	$.ajax({
-		url:"idcheck.do",
-		data:{userId:userId},
-		success:function(data){
-			if(data == "true"){
-				$.ajax({
-					url:"pwdcheck.do",
-					type:"post",
-					data:{userId:userId, userPwd:userPwd},
-					success:function(data){
-						if(data == "true"){
-							$("#loginForm").submit();
-						}else if(data == "nope"){
-							alert("회원 정보를 불러올 수 없습니다");
-						}else{
-							alert("비밀번호를 확인해 주세요");
-							$("#userPwd").focus();
-						}
-					},
-					error : function(request, status, errorData) {
-						alert("error code: " + request.status + "\n"
-								+ "message: " + request.responseText
-								+ "error: " + errorData);
-					}
-				});
-			}else{
-				alert("아이디를 확인해 주세요");
-				$("#userId").focus();
-			}
-		},
-		error : function(request, status, errorData) {
-			alert("error code: " + request.status + "\n"
-					+ "message: " + request.responseText
-					+ "error: " + errorData);
-		}
-	})
+	      url:"idcheck.do",
+	      data:{userId:userId},
+	      success:function(data){
+	         if(data == "true"){
+	            $.ajax({
+	               url:"pwdcheck.do",
+	               type:"post",
+	               data:{userId:userId, userPwd:userPwd},
+	               success:function(data){
+	                  if(data == "true"){
+	                     $("#loginForm").submit();
+	                  }else{
+	                     alert("비밀번호를 확인해 주세요");
+	                     $("#userPwd").focus();
+	                  }
+	               },
+	               error : function(request, status, errorData) {
+	                  alert("error code: " + request.status + "\n"
+	                        + "message: " + request.responseText
+	                        + "error: " + errorData);
+	               }
+	            });
+	         }else if(data == "nope"){
+	            alert("회원 정보를 불러올 수 없습니다");
+	         }else{
+	            alert("아이디를 확인해 주세요");
+	            $("#userId").focus();
+	         }
+	      },
+	      error : function(request, status, errorData) {
+	         alert("error code: " + request.status + "\n"
+	               + "message: " + request.responseText
+	               + "error: " + errorData);
+	      }
+	   })
 }
+
+$(function(){
+ 	 // 비밀번호 찾기 버튼 클릭했을 때 유효성 검사 함수 실행
+    $("#findBtn").click(function(){
+       return find();
+    });
+ 	 
+ 	 $("#findMail").focus();
+ });
+ 
+ // 유효성 검사
+ function find(){
+	var userId = $("#findMail");
+	var lastName = $("#findName1");
+		var firstName = $("#findName2");
+		var userPhone = $("#findPhone1").val() + "-" + $("#findPhone2").val() + "-" + $("#findPhone3").val();
+	  
+	  if($("#findMail").val().length == 0){
+         alert("이메일을 입력하세요");
+         $("#findMail").focus();
+         return false;
+      }
+	  
+	  if ($("#findMail").val().indexOf("@") == -1) {
+			alert("이메일을 정확히 입력해 주세요");
+			$("#findMail").focus();
+           return false;
+		}
+	  
+	  if ($("#findMail").val().indexOf(".") == -1) {
+			alert("이메일을 정확히 입력해 주세요");
+			$("#findMail").focus();
+           return false;
+		}
+	  
+	  if($("#findName1").val().length == 0){
+         alert("성을 입력하세요");
+         $("#findName1").focus();
+         return false;
+      }
+	  
+	  if($("#findName2").val().length == 0){
+         alert("이름을 입력하세요");
+         $("#findName2").focus();
+         return false;
+      }
+	  
+	  if($("#findPhone2").val().length == 0){
+         alert("전화번호를 입력하세요");
+         $("#findPhone2").focus();
+         return false;
+      }
+	  
+	  if($("#findPhone3").val().length == 0){
+         alert("전화번호를 입력하세요");
+         $("#findPhone3").focus();
+         return false;
+      }
+	
+	  $.ajax({
+		  url : "searchRes.do",
+         data:{
+         	userId:userId.val(),
+         	lastName:lastName.val(),
+         	firstName:firstName.val(),
+         	userPhone:userPhone
+         },
+         success:function(data){
+              if(data == "true"){
+                $("#findForm").submit();
+              }else{
+             	 alert("예약 정보가 존재하지 않습니다.");
+             	 return false;
+              }
+           },
+           error:function(request, status, errorData){
+					alert("error code: " + request.status + "\n"
+							+"message: " + request.responseText
+							+"error: " + errorData);
+			 }
+       });
+    
+ }
+
+// 전화번호 4글자 입력 시 다음 칸 넘어가게
+function nextPhone() {
+	if ($("#findPhone2").val().length >= 4) {
+		$("#findPhone3").focus();
+	}
+};
 </script>
 
 <script type='text/javascript'>	// 카카오 로그인
