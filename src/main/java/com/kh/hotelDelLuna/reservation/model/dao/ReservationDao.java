@@ -141,5 +141,10 @@ public class ReservationDao {
 		return (ArrayList)sqlSession.selectList("reservationMapper.selectRoomList");
 	}
 
+	public RoomType getRoomType(String res_roomType) {
+
+		return sqlSession.selectOne("reservationMapper.getRoomType",res_roomType);
+	}
+
 
 }

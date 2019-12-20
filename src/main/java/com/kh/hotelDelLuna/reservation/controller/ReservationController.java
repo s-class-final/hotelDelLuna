@@ -90,16 +90,26 @@ public class ReservationController {
 	@RequestMapping(value = "resDetail.do")
 	public ModelAndView resDetail(ModelAndView mv, @RequestParam(value = "res_no", required = false) int res_no) {
 
-		Reservation reservation = rService.selectResOne(res_no);
+		Reservation res = rService.selectResOne(res_no);
 		
 		/****** 객실 타입에 해당하는 사진 가져오기 ******/
-		String fileName = rService.getRoomFileName(reservation.getRes_roomType());
+		String fileName = rService.getRoomFileName(res.getRes_roomType());
 		
 		System.out.println(fileName);
-		System.out.println("가져온 예약 상세 : " + reservation);
-		if (reservation != null) {
-			mv.addObject("res", reservation);
+		System.out.println("가져온 예약 상세 : " + res);
+		
+		/*** 룸타입 정보를 가져오자 ***/
+		RoomType roomType = rService.getRoomType(res.getRes_roomType());
+		
+		System.out.println("가져온 룸타입 정보 : "+roomType);
+		
+		/*** 룸타입 정보만큼 요금 계산을 해볼까 ***/
+		// 예약 번호와 룸타입을 넘기면 총 요금을 계산할 수 있다.
+		
+		if (res != null) {
+			mv.addObject("res", res);
 			mv.addObject("fileName",fileName);
+			mv.addObject("roomType",roomType);
 			mv.setViewName("reservation/resDetailView");
 		} else {
 			throw new ReservationException("예약 상세 가져오기 실패!");
@@ -268,6 +278,9 @@ public class ReservationController {
 		
 		res = settingDate(res,checkInOut);
 
+		
+		/*********** 체크인 - 체크아웃 일자 차이 구함! 2일,3일 등등 **************/
+		
 		String strFormat = "yyyy-MM-dd"; // strStartDate 와 strEndDate 의 format
 		long diffDay = 0;
 		java.util.Date startDate = new java.util.Date();
@@ -280,7 +293,6 @@ public class ReservationController {
 			// 두날짜 사이의 시간 차이(ms)를 하루 동안의 ms(24시*60분*60초*1000밀리초) 로 나눈다.
 			diffDay = (endDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000);
 			System.out.println(diffDay + "일");
-			res.setRes_count((int) diffDay);
 
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -298,10 +310,18 @@ public class ReservationController {
 				break;
 			}
 		}
-		java.sql.Date checkIn = new java.sql.Date(4);
 		
+		
+		java.sql.Date checkIn = new java.sql.Date(4); // 의미없는 초기화
 		boolean checkDate = true;
+		
+		
+		// 식사 값 계산
+        int totalPay = calTotalMeal(res);
 
+        // 룸타입 요금 받아오기
+        RoomType roomType = rService.getRoomType(res.getRes_roomType()); 
+        
 		for(int i=0;i<diffDay;i++) {
             Calendar cal = Calendar.getInstance();
 
@@ -309,25 +329,36 @@ public class ReservationController {
             cal.add(Calendar.DATE, i);
 
             String strResult = sdf.format(cal.getTime());
-            
             checkIn = new java.sql.Date(Date.valueOf(strResult).getTime());
             Reservation searchRes = new Reservation();
+
             searchRes.setRes_checkIn(checkIn);
             searchRes.setRes_roomType(res.getRes_roomType());
             // 체크인 날짜. 룸타입으로 roomStatus테이블에서 검색.
             int resRoomCount = rService.getResRoomCount(searchRes);
-            System.out.println(i+"번째 : "+resRoomCount);
+           
             // 룸타입 총 개수 - 해당날짜 룸타입 개수 . 0일 시 브레이크 하고 예약 입력 취소
-            System.out.println("방 개수 빼기 : "+(ftotalCount - resRoomCount));
             if(ftotalCount-resRoomCount<=0) {
             	     
         		checkDate = false;
         		break;
             }
+
+            
+            // 주말 요금
+            if(checkIn.getDay()==0||checkIn.getDay()==6) {
+            	totalPay += roomType.getWeekEnd();
+            }else { // 평일 요금
+            	totalPay += roomType.getWeekDay();
+            }
            
 		}
 		
 		if(checkDate) {
+			// 계산된 요금 합산
+			res.setRes_allPay(totalPay);
+			System.out.println("예약 내역의 총 요금 "+totalPay);
+			
 			// 1_1. 예약자 아이디가 회원에 있는지 확인!
 			Member member = mService.findMember(m);		
 
@@ -361,8 +392,8 @@ public class ReservationController {
 	    		
 				System.out.println("됐나? :"+result);
 				if(result>0) {
-					System.out.println("예약 삽입 성공!");
-					out.println("<script>alert('예약 삽입 성공!');location.href='entireResList.do'; </script>");
+					System.out.println("예약 생성 성공!");
+					out.println("<script>alert('예약 내역 생성 성공!');location.href='entireResList.do'; </script>");
 	        		out.flush();
 				}else {
 					throw new ReservationException("예약 내역 생성 실패!");
@@ -442,9 +473,8 @@ public class ReservationController {
 		System.out.println("바꿀 예약찍어본다 : "+nowRes);
 		// roomStatus 테이블의 예약 상황도 변경!!!, 같은 예약 번호를 찾아 삭제 후 다시 생성하자.
 		// 날짜 변경
-		
+			
 
-		
 		String strFormat = "yyyy-MM-dd"; // strStartDate 와 strEndDate 의 format
 		long diffDay = 0;
 		java.util.Date startDate = new java.util.Date();
@@ -457,7 +487,6 @@ public class ReservationController {
 			// 두날짜 사이의 시간 차이(ms)를 하루 동안의 ms(24시*60분*60초*1000밀리초) 로 나눈다.
 			diffDay = (endDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000);
 			System.out.println(diffDay + "일");
-			res.setRes_count((int) diffDay);
 
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -475,9 +504,20 @@ public class ReservationController {
 				break;
 			}
 		}
+		
+		
+		
 		java.sql.Date checkIn = new java.sql.Date(4);	
 		boolean checkDate = true;
 		
+		
+		// 식사 값 계산
+        int totalPay = calTotalMeal(res);
+
+        // 룸타입 요금 받아오기
+        RoomType roomType = rService.getRoomType(nowRes.getRes_roomType()); 
+	
+        
 		for(int i=0;i<diffDay;i++) {
             Calendar cal = Calendar.getInstance();
 
@@ -501,15 +541,24 @@ public class ReservationController {
         		checkDate = false;
         		break;
             }
+            
+            // 주말 요금
+            if(checkIn.getDay()==0||checkIn.getDay()==6) {
+            	totalPay += roomType.getWeekEnd();
+            }else { // 평일 요금
+            	totalPay += roomType.getWeekDay();
+            }
+           
 		}
 		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		
 		if(checkDate) {
-			
-			// 수정!
+			// 요금 다시 수정해서 update!
+			res.setRes_allPay(totalPay);
 			int result = rService.resModify(res);
+			
 			res.setRes_roomType(nowRes.getRes_roomType());
 			// 일단 배정상태에서 삭제
 			int dResult = rService.roomStatusDelete(nowRes.getRes_no());
@@ -703,6 +752,8 @@ public class ReservationController {
 		
 		return res;
 	}
+	
+	
 	/******* 검색 필터 ********/
 	public ResSearchCondition checkSearch(String searchCondition, String searchValue) {
 
@@ -716,5 +767,24 @@ public class ReservationController {
 			sc.setUserPhone(searchValue);
 		}
 		return sc;
+	}
+	
+	public int calTotalMeal(Reservation res) {
+		
+		int totalPay=0;
+		int breakfast= 18000;
+		int dinner = 25000;
+		
+		// 성인 조식 디너 계산
+		totalPay += Integer.valueOf(res.getRes_adult())* res.getRes_breakfast() *breakfast;
+		totalPay += Integer.valueOf(res.getRes_adult())* res.getRes_dinner() *dinner;
+		
+		// 유아 조식 디너 계산..
+		totalPay += Integer.valueOf(res.getRes_child())* res.getRes_breakfast() *breakfast;
+		totalPay += Integer.valueOf(res.getRes_child())* res.getRes_dinner() *dinner;
+				
+		System.out.println("방 요금 계산 전 요금 : "+totalPay);
+		
+		return totalPay;
 	}
 }

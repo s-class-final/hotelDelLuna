@@ -153,7 +153,7 @@
 .resSearchArea{
 	display: inline-block;
 	height : 40px;
-	width: 248px;
+	width: 255px;
 	border: 1px solid #8a7057;
 	background: #ffffff
 }
@@ -344,9 +344,8 @@
 		<div class="layerPopCont">
 			<div class="loginWrap">
 				<h1><span>예약 정보</span></h1>
-				<img src="#" style="width:100%;height:300px">
-				<br><br>
-
+				<p class="pb15i fw500 pd0i tc"> 해당 예약 내역은 삭제되지만 해당 회원의 정보는  </p>
+				<p class="pb15i fw500 pd0i tc"> 호텔 델루나에 그대로 남아있을 것입니다.</p>
 				<div class="popJoinBox">
 					<div class="wrap">
 						<p>삭제 버튼을 누르면 <br />해당 예약 내역이 삭제됩니다. </p>

@@ -156,5 +156,11 @@ public class ReservationServiceImpl implements ReservationService{
 		return rDao.selectRoomList();
 	}
 
+	@Override
+	public RoomType getRoomType(String res_roomType) {
+
+		return rDao.getRoomType(res_roomType);
+	}
+
 
 }

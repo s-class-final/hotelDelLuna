@@ -80,6 +80,9 @@ public interface ReservationService {
 	/* 방타입 리스트 전부 받기 */
 	ArrayList<RoomType> selectRoomList();
 
+	/* 룸타입 정보 골라서 받기 */
+	RoomType getRoomType(String res_roomType);
+
 
 	
 }
