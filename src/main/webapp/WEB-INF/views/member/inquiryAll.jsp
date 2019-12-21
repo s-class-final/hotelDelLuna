@@ -73,7 +73,8 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 						<button>
 							<h2>${i.iTitle}</h2>
 							<p class="location">
-								작성자 : ${i.iWriter}
+								아이디 : ${i.iWriter}<br>
+								이름 : ${i.iUserName}
 							</p>
 							<p class="text">
 							${i.iContent}

@@ -523,7 +523,7 @@ function checkLogin(){
 	               }
 	            });
 	         }else if(data == "nope"){
-	            alert("회원 정보를 불러올 수 없습니다");
+	        	 alert("이미 탈퇴한 회원입니다. 동일한 아이디로 재가입을 원하시면 고객센터에 문의해주세요.");
 	         }else{
 	            alert("아이디를 확인해 주세요");
 	            $("#userId").focus();
@@ -538,12 +538,15 @@ function checkLogin(){
 }
 
 $(function(){
- 	 // 비밀번호 찾기 버튼 클릭했을 때 유효성 검사 함수 실행
     $("#findBtn").click(function(){
        return find();
     });
- 	 
- 	 $("#findMail").focus();
+ 	
+    if($("#userId").val().length == 0){
+ 		$("#userId").focus();
+	}else{
+		$("#userPwd").focus();
+	}
  });
  
  // 유효성 검사
@@ -630,8 +633,8 @@ function nextPhone() {
 
 <script type='text/javascript'>	// 카카오 로그인
 	$(function(){
+		Kakao.init('de55ce2e9e0330e7281dfe9da45b537b');
 		$("#kakao").click(function(){
-		   Kakao.init('de55ce2e9e0330e7281dfe9da45b537b');
 		   Kakao.Auth.login({
 		      success: function(authObj) {
 		      // 로그인 성공시, API를 호출합니다.
@@ -647,8 +650,10 @@ function nextPhone() {
 		               success:function(data){
 		                  if(data == "true"){
 		                     location.href = "kakaologin.do?" + kakaoId;
+		                  }else if(data == "nope"){
+		                	  alert("이미 탈퇴한 회원입니다. 동일한 아이디로 재가입을 원하시면 고객센터에 문의해주세요");
 		                  }else{
-		                     location.href = "kakaojoin.do?" + kakaoId;
+		                	 location.href = "kakaojoin.do?" + kakaoId; 
 		                  }
 		               },
 		               error:function(data){
@@ -670,7 +675,7 @@ function nextPhone() {
 		});
 	});
    
-   </script>
+</script>
 
 </body>
 </html>

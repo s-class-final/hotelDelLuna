@@ -372,7 +372,7 @@ function jsSave() {
     <div class="layerPopCont">
         <h1 class="popHeader popHeaderInq"></h1>
         <div class="inquiryPopCont">
-        <p>문의하신 내용은 호텔 델루나 관리자 메일로 전송되며,</p>
+        <p>문의하신 내용은 호텔 델루나 고객센터 메일로 전송되며,</p>
         <p>입력하신 이메일로 답변을 받으실 수 있습니다.</p>
         <p style="font-weight: 600;">회원가입을 하시면 좀 더 편리하게 문의 및 문의 내역 확인을 하실 수 있습니다.</p>
             <form action="sendinquiry.do" method="post" id="nminquiry" name="form_inquiry">

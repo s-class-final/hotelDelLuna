@@ -345,7 +345,6 @@ $(function(){
 
 	function payStatusCheck(){
 		var res_no = ${res.res_no};
-		alert(res_no);
 		location.href="payStatusCheck.do?res_no="+res_no;
 		
 	}

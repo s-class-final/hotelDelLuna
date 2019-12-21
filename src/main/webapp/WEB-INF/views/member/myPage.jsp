@@ -30,7 +30,7 @@ body {
 				<c:if test="${empty loginUser.kakao}">
 					<!-- 아이디 및 비밀번호 -->
 					<form name="form1" id="form1">
-					<div class="formJoin">
+					<div class="formJoin" onkeydown="javascript:confirmPwd();">
 						<h2>아이디 및 비밀번호</h2>
 						<dl class="id">
 							<dt><label for="userId">아이디 (이메일)</label></dt>
@@ -52,7 +52,7 @@ body {
 							<!-- 에러시 dd의 error 클래스 추가 -->
 							<dd>
 								<div class="inp">
-									<input type="password" id="userPwd" name="userPwd" maxlength="16" title="비밀번호" placeholder="영문, 숫자 조합 8~16자 이내" onkeydown="javascript:confirmPwd();">
+									<input type="password" id="userPwd" name="userPwd" maxlength="16" title="비밀번호" placeholder="영문, 숫자 조합 8~16자 이내">
 								</div>
 							</dd>
 						</dl>
@@ -61,7 +61,7 @@ body {
 							<!-- 에러시 dd의 error 클래스 추가 -->
 							<dd>
 								<div class="inp">
-									<input type="password" id="checkPwd" name="checkPwd" maxlength="16" title="비밀번호 확인" onkeydown="javascript:confirmPwd();">
+									<input type="password" id="checkPwd" name="checkPwd" maxlength="16" title="비밀번호 확인">
 								</div>	
 							</dd>
 						</dl>
@@ -78,7 +78,7 @@ body {
 					<form id="form2" name="form2">
 					
 					<!-- 회원정보 -->
-					<div class="formInfo clearFixed">
+					<div class="formInfo clearFixed" onkeydown="javascript:confirmInfo();">
 						<h2>회원 정보</h2>
 						
 						<div class="left">
@@ -88,12 +88,12 @@ body {
 									<c:forTokens var="userName" items="${loginUser.userName}" delims=" " varStatus="status">
 										<c:if test="${status.index eq 0}">
 											<div class="inp">
-												<input type="text" id="lastName" name="lastName" value="${userName}" maxlength="50" placeholder="Last Name(성)" title="Last Name(성)" onkeydown="javascript:confirmInfo();">
+												<input type="text" id="lastName" name="lastName" value="${userName}" maxlength="50" placeholder="Last Name(성)" title="Last Name(성)">
 											</div>
 										</c:if>
 										<c:if test="${status.index eq 1}">
 											<div class="inp">
-												<input type="text" id="firstName" name="firstName" value="${userName}" maxlength="50" placeholder="First Name(이름)" title="First Name(이름)" onkeydown="javascript:confirmInfo();">
+												<input type="text" id="firstName" name="firstName" value="${userName}" maxlength="50" placeholder="First Name(이름)" title="First Name(이름)">
 											</div>
 										</c:if>
 									</c:forTokens>
@@ -374,12 +374,12 @@ body {
 		jsSecessionLyInitialize();
 	})
 	
-	//회원 탈퇴 프로세스 실행
+	//카카오회원 탈퇴 프로세스 실행
 	function jsMemberDrop() {
 		//로딩바 활성화
 		fullLoding($("#container"));
 		
-		var userId = $("#userId").val();
+		var userId = "${loginUser.userId}";
 		
 		$.ajax({
 			url:"mdelete.do",
@@ -396,7 +396,7 @@ body {
 		})
 	}
 	
-	var cTxtIqr = "문의 <span class='fw500'>010-9979-4655</span> (월~금 03:30 ~ 22:00)";
+	var cTxtIqr = "문의 <span class='fw500'>1577-1577</span> (월~금 03:30 ~ 22:00)";
 
 	function jsSecessionLyInitialize() {
 		//레이어 팝업 초기화 설정값 변수 선언
@@ -416,9 +416,9 @@ body {
 					  ,"tc"              //6
 					  ,"fw500 fs16p tc"];//7
 		var btnObj  = new Object();
-		btnObj.leftBtnNm  = "취소";
+		btnObj.leftBtnNm  = "확인";
 		btnObj.leftBtnAct = "javascript:jsLeftBtnAction();";
-		btnObj.rightBtnNm = "확인";
+		btnObj.rightBtnNm = "취소";
 		btnObj.rightBtnAct= "javascript:jsRightBtnAction();";
 		btnObj.btnTrId    = "#btnTwoTr"; 
 		
@@ -426,18 +426,18 @@ body {
 		jsInitInfoPop(true, "#SECESSION_USER", title, ctxtArr, tClsArr, btnObj);
 	}
 
-	//레이어 팝업 좌측 버튼 클릭 이벤트 (취소)
+	//레이어 팝업 좌측 버튼 클릭 이벤트
 	function jsLeftBtnAction() {
-		//레이어 팝업 닫기
-		$(".btnPopClose").click();
-	}
-
-	//레이어 팝업 우측 버튼 클릭 이벤트
-	function jsRightBtnAction() {
 		//레이어 팝업 닫기
 		$(".btnPopClose").click();
 		//회원 탈퇴 프로세스 진행
 		jsMemberDrop();
+	}
+
+	//레이어 팝업 우측 버튼 클릭 이벤트 (취소)
+	function jsRightBtnAction() {
+		//레이어 팝업 닫기
+		$(".btnPopClose").click();
 	}
 	</script>
 	

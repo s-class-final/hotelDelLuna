@@ -239,7 +239,7 @@ body {
  	                     idUsable = true;
  	                  }else if(data == "nope"){
  	                     $("#checkId").html('');
- 	                     $("#checkId").html("이미 탈퇴한 이메일입니다. 동일한 이메일로 재가입을 원하시면 따로 문의해주세요").css("color","red");
+ 	                     $("#checkId").html("이미 탈퇴한 회원입니다. 동일한 이메일로 재가입을 원하시면 고객센터에 문의해주세요.").css("color","red");
  	                     idUsable = false;
  	                  }else{
 	 	   				  $("#checkId").html('');
@@ -312,7 +312,7 @@ body {
 			}
 
 			if (idUsable == false) {
-				alert("이미 가입된 이메일입니다.");
+				alert("사용할 수 없는 이메일입니다.");
 				$("#userId1").focus();
 				return false;
 			}

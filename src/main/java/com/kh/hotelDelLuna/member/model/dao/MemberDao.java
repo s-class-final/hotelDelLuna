@@ -32,7 +32,7 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.idCheck", userId);
 	}
 
-	public int kakaoIdCheck(String kakaoId) {
+	public Member kakaoIdCheck(String kakaoId) {
 		
 		return sqlSession.selectOne("memberMapper.kakaoIdCheck", kakaoId);
 	}
