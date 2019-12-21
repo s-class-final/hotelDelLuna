@@ -202,21 +202,6 @@
 		AND ROOMTYPE LIKE 'SUITE'||'%'
 	</select>
 	
-	<!-- 룸 타입 이름들 가져오기 -->
-	<select id="selectRoomTypeList" resultType="java.lang.String">
-		SELECT DISTINCT ROOMTYPE
-		FROM ROOM
-		ORDER BY ROOMTYPE ASC
-	</select>
-	
-	<!-- 룸 타입별 총 개수 구해오기 -->
-	<select id="selectRoomTypeCount" resultType="java.lang.Integer">
-		SELECT COUNT(*)
-		FROM ROOM
-		GROUP BY ROOMTYPE
-		ORDER BY ROOMTYPE ASC
-	</select>
-	
 	<select id="getRoomList" resultType="map">
 		SELECT ROOMTYPE,COUNT(*) AS COUNT
 		FROM ROOM
