@@ -18,7 +18,7 @@ public interface MemberService {
 	Member idCheck(String userId);
 	
 	// 카카오 가입 여부 확인
-	int kakaoIdCheck(String kakaoId);
+	Member kakaoIdCheck(String kakaoId);
 	
 	// 카카오 회원 가입
 	int insertKMember(Member m);

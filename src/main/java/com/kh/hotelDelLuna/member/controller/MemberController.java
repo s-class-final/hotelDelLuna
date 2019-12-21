@@ -160,22 +160,22 @@ public class MemberController {
 	}
 	
 	@RequestMapping("idcheck.do")
-	   @ResponseBody
-	   public String idCheck(HttpServletResponse response, String userId) throws IOException {
-	      
-	      Member m = mService.idCheck(userId);
-	      
-	      if(m == null) {
-	         return "false";
-	      }else if(m.getmStatus().equals("B")) {
-	         return "false1";
-	      }else if(m.getmStatus().equals("N")) {
-	         return "nope";
-	      }else {
-	         return "true";
-	      }
-	      
-	   }
+	@ResponseBody
+	public String idCheck(HttpServletResponse response, String userId) throws IOException {
+		      
+		Member m = mService.idCheck(userId);
+	
+		if(m == null) {
+			return "false";
+		}else if(m.getmStatus().equals("B")) {
+			return "false1";
+		}else if(m.getmStatus().equals("N")) {
+			return "nope";
+		}else {
+			return "true";
+		}
+			
+	}
 	
 	@RequestMapping(value="pwdcheck.do", method=RequestMethod.POST)
 	@ResponseBody
@@ -195,11 +195,19 @@ public class MemberController {
 	}
 	
 	@RequestMapping("kakaocheck.do")
-	public void kakaoIdCheck(HttpServletResponse response, String kakaoId) throws IOException {
+	@ResponseBody
+	public String kakaoIdCheck(HttpServletResponse response, String kakaoId) throws IOException {
 		
-		boolean isUsable = mService.kakaoIdCheck(kakaoId) == 0 ? false : true;
+		Member m = mService.kakaoIdCheck(kakaoId);
 		
-		response.getWriter().print(isUsable);
+		if(m == null) {
+			return "false";
+		}else if(m.getmStatus().equals("N")) {
+			return "nope";
+		}else {
+			return "true";
+		}
+		
 	}
 	
 	@RequestMapping("kakaojoin.do")
