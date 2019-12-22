@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Delluna Boutique</title>
 <style>
 /* reset */
 button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:transparent; overflow:visible; cursor:pointer; line-height:1; }
@@ -90,7 +90,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 			</section>
 			
 			<div class="detailTextBox">
-				<h2>PARADISE BOUTIQUE</h2>
+				<h2>DELLUNA BOUTIQUE</h2>
 				<p class="subTit">호텔 델루나의 시그니처 아이템을 <br />만나는 공간</p>
 				<p class="text">호텔 델루나의 대표적인 기념품과 엄선된 시그니처 아이템을 만나볼 수 있는 공간입니다.</p>
 				
