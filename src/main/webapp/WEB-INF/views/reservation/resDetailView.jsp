@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <!DOCTYPE html>
 <html>
@@ -45,7 +47,7 @@
 				<h1>${res.res_roomType }</h1>
 				<br>
 				<a href="#detailPop1" class="btn small" onclick="popModal()"><span>자세히 보기</span></a>
-				<label>베드 추가</label><input id="addBed" class="check" type="checkbox" name="res_addBed"<c:if test="${res.res_payStatus eq '입금완료' }">  
+				<label>베드 추가</label><input id="addBed" class="check" type="checkbox" name="res_addBed" value="${res.res_addBed}" <c:if test="${res.res_payStatus eq '입금완료' }">  
 						 disabled </c:if> >
 			</div>
 				
@@ -128,7 +130,7 @@
 				<h1>
 					<span>Summary</span>
 				</h1>
-				<a href="entireResList.do" class="btnDeleteAll">이전으로</a>
+				<a href="resDetail.do?res_no=${res.res_no}" class="btnDeleteAll">초기화</a>
 			</div>
 			<div class="productWrap mCustomScrollbar" data-mcs-theme="dark" style="height:380px;!important">
 				<div class="productListBox">
@@ -150,7 +152,7 @@
 									<dt>
 										총액
 									</dt>
-									<dd class="totalAmt">${res.res_allPay}원</dd>
+									<dd id="totalAmt" class="totalAmt"><fmt:formatNumber value="${res.res_allPay}" pattern="#,##0" />원</dd>
 								</dl>
 							</div>	
 						</div>
@@ -163,7 +165,7 @@
 			<div class="productFooter">
 				<dl>
 					<dt>총액</dt>
-					<dd id="f_total">${res.res_allPay}원</dd>
+					<dd id="f_total"><fmt:formatNumber value="${res.res_allPay}" pattern="#,##0" />원</dd>
 				</dl>
 				
 				<dl>
@@ -173,7 +175,7 @@
 		
 				<dl>
 					<dt>포인트</dt>
-					<dd id="f_point">${res.res_allPay /100}p</dd>
+					<dd id="f_point">${res.res_allPay *0.01}p</dd>
 				</dl>
 			</div>
 			
@@ -181,17 +183,17 @@
 				<dl>
 					<dt>최종금액</dt>
 					<dd id="f_final">
-						<span>${res.res_allPay}</span>
+						<span><fmt:formatNumber value="${res.res_allPay}" pattern="#,##0" /></span>
 						원
 					</dd>
 				</dl>
 				<c:if test="${res.res_payStatus eq '입금대기'}">
-					<button  onclick="payPopModal()" class="btn btnFull" style="display: block;width: 100%;border-radius: 5px;margin-bottom: 10px;box-shadow: 3px 3px 15px rgba(0,0,0,0.25)">
+					<button id="payBtn" onclick="payPopModal()" class="btn btnFull" style="display: block;width: 100%;border-radius: 5px;margin-bottom: 10px;box-shadow: 3px 3px 15px rgba(0,0,0,0.25)">
 					입금 완료</button>
 				</c:if>
 			</div>
 			<c:if test="${res.res_payStatus eq '입금대기'}">
-				<button class="btn btnFull"  onclick="resModify()">
+				<button id="modifyBtn" class="btn btnFull"  onclick="resModify()" disabled>
 					<span>예약정보 수정</span>
 				</button>
 			</c:if>
@@ -219,11 +221,11 @@
 				<br>
 				<br>
 				<p class="pb15i fw500 pd0i " style="display:inline;padding-right:95px">주중가  </p>
-				<input type="text" value="${roomType.weekDay}" style="text-align:right" readonly> 원
+				<input type="text" value="<fmt:formatNumber value="${roomType.weekDay}" pattern="#,##0" />" style="text-align:right" readonly> 원
 				<br>
 				<br>
 				<p class="pb15i fw500 pd0i " style="display:inline;padding-right:95px">주말가  </p>
-				<input type="text" value=" ${roomType.weekEnd}"style="text-align:right" readonly> 원
+				<input type="text" value="<fmt:formatNumber value="${roomType.weekEnd}" pattern="#,##0" />"style="text-align:right" readonly> 원
 				<br>
 				<br>
 				<p class="pb15i fw500 pd0i " style="display:inline;padding-right:178px">싱글베드    ${roomType.singleBed}개</p>
@@ -231,7 +233,7 @@
 				</div>
 				<div class="popJoinBox">
 					<div class="wrap">
-						<p>룸 관리 버튼을 누르면 <br />룸 정보를 페이지로 이동합니다. </p>
+						<p>룸 관리 버튼을 누르면 <br />룸 정보 페이지로 이동합니다. </p>
 						<a href="iRoomtypeView.do" class="btn small2" style="display:inline;right:65px"><span>룸 관리</span></a>
 						<a href="javascript:void(0);" class="btnPopClose btn small2" style="display:inline;right:170px"><span>취소</span></a>
 					</div>
@@ -251,10 +253,10 @@
 		<div class="layerPopCont">
 			<div class="loginWrap">
 					<div>
-						<h1 style="padding-bottom:0px;text-align:center;"><span style="display:inline">입금 총액 </span><input name="r_total" type="text" value="0" style="width:100px;border:0px;text-align:right;">원</h1>
+						<h1 style="padding-bottom:0px;text-align:center;"><span style="display:inline">입금 총액 </span><input name="r_total" type="text" value="0" style="width:100px;border:0px;text-align:right;" readonly>원</h1>
 						<h1 style="padding-bottom:0px">
 							<span style="display:inline">적립 예정 포인트 </span>
-							<input name="r_point" type="text" value="0" style="width:100px;border:0px;text-align:right;">p
+							<input name="r_point" type="text" value="0" style="width:100px;border:0px;text-align:right;" readonly>p
 							<span style="display:inline;padding-left: 50px;padding-right: 15px;">인보이스 발행 </span>
 							<input name="r_invoice" type="checkBox" style="padding-left: 20px;width: 25px;height: 25px">	
 						</h1> 
@@ -337,7 +339,9 @@ $(function(){
 	    }
 
 		if($(this).attr("name")=="res_addBed"){
-			$("#res_addBed").text("베드 추가  "+$(this).val());			
+			$("#res_addBed").text("베드 추가  "+$(this).val());
+			$("#payBtn").prop("disabled",true);
+			$("#modifyBtn").prop("disabled",false);
 		}
 		
 	});
@@ -355,20 +359,21 @@ $(function(){
 		var res_adult = $("select[name=res_adult]").val();
 		var res_child = $("select[name=res_child]").val();
 		var checkInOut = $("input[name=checkInOut]").val();
-		
+		var res_addBed = $("input[name=res_addBed]").val();
 		if($("#calTotal").val()==0){
 			alert("인원 수가 잘못 되었습니다.\n ")
 		}else if($("#calTotal").val()>maxCap){
 			alert("최대 수용인원을 넘었습니다.\n 해당 룸의 최대인원은 "+maxCap+"명 입니다.");
 		}else{
-			location.href="resModify.do?&res_no="+res_no+"&res_adult="+res_adult+"&res_child="+res_child+"&checkInOut="+checkInOut;
+			location.href="resModify.do?&res_no="+res_no+"&res_adult="+res_adult+"&res_child="+res_child+"&res_addBed="+res_addBed+"&checkInOut="+checkInOut;
 		}
 
 	};
 
 	
 	function reCalTotal(){
-		
+		$("#payBtn").prop("disabled",true);
+		$("#modifyBtn").prop("disabled",false);
 		var res_no = ${res.res_no};
 		var res_roomType = "${res.res_roomType}";
 		var res_adult = $("select[name=res_adult]").val();	
@@ -394,10 +399,12 @@ $(function(){
 				$("#checkInOut").html(data.res_checkIn+" ~ "+data.res_checkOut);
 				$("#total").html("성인 "+data.res_adult+" / 어린이 "+data.res_child);
 				$("#meal").html("조식 "+data.res_breakfast+"회 / 디너 "+data.res_dinner+"회");
-				$("#f_total").html(data.res_allPay+"원");
+				
+				$("#totalAmt").text((data.res_allPay).toLocaleString()+"원");
+				$("#f_total").html((data.res_allPay).toLocaleString()+"원");
 				$("#f_point").html(Number(data.res_allPay*0.01)+"p");
 				$("#f_final").html("");
-				$span = $("<span>").text(data.res_allPay);
+				$span = $("<span>").text((data.res_allPay).toLocaleString());
 				$("#f_final").prepend($span).append("원");
 				
 				
@@ -416,7 +423,7 @@ $(function(){
 	};
 	function payPopModal(){
 		$("input[name=r_total]").val($("#f_final span").text());
-		$("input[name=r_point]").val(Number($("#f_final span").text())*0.01);
+		$("input[name=r_point]").val(${res.res_allPay *0.01});
 
 		layerPopOpen("#checkPay");
 	}

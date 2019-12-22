@@ -251,4 +251,11 @@
 		WHERE USERID=#{userId}
 	</update>
 	
+	<!-- 회원에게 포인트 적립 -->
+	<update id="plusPoint" parameterType="Reservation">
+		UPDATE MEMBER SET
+		POINT = #{res_allPay}*0.01
+		WHERE USERID=#{res_userId}
+	</update>
+	
 </mapper>

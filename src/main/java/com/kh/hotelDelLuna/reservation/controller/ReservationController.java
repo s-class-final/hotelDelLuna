@@ -88,7 +88,7 @@ public class ReservationController {
 	
 
 	@RequestMapping(value = "resDetail.do")
-	public ModelAndView resDetail(ModelAndView mv, @RequestParam(value = "res_no", required = false) int res_no) {
+	public ModelAndView resDetail(ModelAndView mv, @RequestParam(value = "res_no", required = false) Integer res_no) {
 
 		Reservation res = rService.selectResOne(res_no);
 		
@@ -536,7 +536,7 @@ public class ReservationController {
 			
 			if(result>0&&dResult>0&&iResult>0) {
 				
-				out.println("<script>alert('예약 내역이 수정되었습니다'); location.href='entireResList.do';</script>");
+				out.println("<script>alert('예약 내역이 수정되었습니다'); location.href='resDetail.do?res_no="+res.getRes_no()+"';</script>");
 				out.flush();
 			}else {
 				throw new ReservationException("예약 내역 수정 실패!!");
@@ -565,14 +565,12 @@ public class ReservationController {
 		checkAllRequest(request);
 		response.setContentType("text/html; charset=UTF-8");
 
-		////
 		res = settingDate(res,checkInOut);
 		
 		System.out.println("들어와잇나?:" +res);
 		// 식사 값 계산
         int totalPay = calTotalMeal(res);
         
-        //////
         // 룸타입 요금 받아오기
         RoomType roomType = rService.getRoomType(res.getRes_roomType()); 
 		
@@ -600,7 +598,6 @@ public class ReservationController {
 		
 		int ftotalCount = searchRoomTypeCount(res.getRes_roomType(),roomList);
 
-		/////////////
 		java.sql.Date checkIn = new java.sql.Date(4);	
 		boolean checkDate = true;
 		
@@ -634,11 +631,6 @@ public class ReservationController {
             }
            
 		}
-		/////////////
-
-        
-        //////
-		////
 
 		if(checkDate) {
 			res.setRes_allPay(totalPay);
@@ -654,6 +646,42 @@ public class ReservationController {
 			
 		}
 	} 
+	
+	
+	/******* 예약 내역 입금 완료로 변경 
+	 * @throws IOException *********/
+		@RequestMapping(value = "payStatusCheck.do")
+		public void payStatusCheck(ModelAndView mv,HttpServletResponse response,
+				@RequestParam(value = "res_no", required = false) int res_no) throws IOException {
+			
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+
+			System.out.println("예약번호 : "+res_no);
+			
+			int result = rService.payStatusCheck(res_no);
+			
+			Reservation res = rService.selectResOne(res_no);
+			
+			// 해당 멤버에 포인트 적립해주자
+			int pResult = mService.plusPoint(res);
+			
+			// 결제 테이블에 내역 생성해주자
+			
+			
+			
+			if(result>0&&pResult>0) {
+				out.println("<script>alert('입금 완료 처리 되었습니다'); location.href='entireResList.do';</script>");
+
+				out.flush();
+			}else {
+				throw new ReservationException("입금 완료 처리 실패!!");
+			}
+			
+		}
+	
+	
+	
 	
 	/******* 달력으로 예약내역 불러오기 *********/
 
@@ -761,34 +789,7 @@ public class ReservationController {
 		 
 	}
 	
-	
-	/******* 예약 내역 입금 완료로 변경 
-	 * @throws IOException *********/
-		@RequestMapping(value = "payStatusCheck.do")
-		public void payStatusCheck(ModelAndView mv,HttpServletResponse response,
-				@RequestParam(value = "res_no", required = false) int res_no) throws IOException {
-			
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
 
-			System.out.println("예약번호 : "+res_no);
-			
-			int result = rService.payStatusCheck(res_no);
-			
-			// 결제 테이블에 내역 생성해주자
-			
-			
-			
-			if(result>0) {
-				out.println("<script>alert('입금 완료 처리 되었습니다'); location.href='entireResList.do';</script>");
-
-				out.flush();
-			}else {
-				throw new ReservationException("입금 완료 처리 실패!!");
-			}
-			
-		}
-	
 	
 	
 	/**** 날짜 더해서 반환 ****/

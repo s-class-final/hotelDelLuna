@@ -189,6 +189,12 @@ public class MemberServiceImpl implements MemberService{
 		return mDao.insertNKMember(m);
 	}
 
+	@Override
+	public int plusPoint(Reservation res) {
+
+		return mDao.plusPoint(res);
+	}
+
 
 
 }

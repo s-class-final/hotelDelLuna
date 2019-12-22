@@ -383,7 +383,9 @@ function initDate(year,month){
 
 					// 오늘일 때
 					if(data[i].value=='today'){
-						
+						if(i%7==0){
+							$tr = $("<tr>");
+						}
 						$datediv = $("<div class='date'>"+data[i].date+"</div>");
 						$td = $("<td class='today' onclick='detailModal("+data[i].date+","+data[i].superiorCount+","+data[i].deluxeCount+","+data[i].suiteCount+","+data[i].superiorRes+","+data[i].deluxeRes+","+data[i].suiteRes+")'>");
 						$innerDiv = $("<span class='roomInfo' data-tooltip-text='SUPERIOR-"+(data[i].superiorCount-data[i].superiorRes)+"  DELUXE-"+(data[i].deluxeCount-data[i].deluxeRes)+"   SUITE-"+(data[i].suiteCount-data[i].suiteRes)+"   ' >").text("남은객실 "+data[i].emptyRoom);
@@ -412,7 +414,7 @@ function initDate(year,month){
 					}
 					// 일요일일 때
 					else if(i%7==0){
-
+						
 						$tr = $("<tr>");
 						$datediv = $("<div class='sun'>"+data[i].date+"</div>");	
 
@@ -445,7 +447,6 @@ function initDate(year,month){
 
 						$tr.append($td);
 					}
-			
 					
 					if(i==data.length-1){
 						$tableBody.append($tr);
