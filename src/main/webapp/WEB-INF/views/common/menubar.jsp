@@ -32,8 +32,13 @@
 	<!-- <link href="resources/pcPub/static/css/lib/swiper2.css" rel="stylesheet"/>  -->
 <body>
 
-<div id="main">
+<!-- 현재 주소에 따라 표시를 달리해주기 위해 -->
+<c:set var="fullURL" value="${pageContext.request.requestURL}"></c:set>
 
+<!-- 메인페이지가 아닐때만 상단, 사이드메뉴 표시 -->
+<c:if test="${fullURL ne 'http://localhost:8881/hotelDelLuna/index.jsp' }">
+
+<div id="main">
 <header id="headerWrap">
    <h1 style="margin-left:90px"><a href="index.jsp">HOTEL DELLUNA</a></h1>
    <nav class="gnb">
@@ -166,7 +171,8 @@
                </div>
             </div>
          </li>
-         <li>
+          <c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 2}">
+	         <li>
 				<a href="entireResList.do">관리자 페이지</a>
 				<div class="gnbDepth2">
 					<div>
@@ -185,6 +191,7 @@
 	               </div>
 				</div>
 			</li>
+		</c:if>
       </ul>
    </nav>
    
@@ -320,6 +327,10 @@ $(window).load(function(){
 <!-- //quick Bar -->
 
 </div>
+<!-- main div 종료 -->
+</c:if>
+
+
 
 <script>
 var title1 = "비회원 1:1 문의";

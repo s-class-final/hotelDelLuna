@@ -169,5 +169,10 @@ public class MemberDao {
 		
 		return sqlSession.update("memberMapper.insertNKMember", m);
 	}
+
+	public int plusPoint(Reservation res) {
+
+		return sqlSession.update("memberMapper.plusPoint", res);
+	}
 	
 }

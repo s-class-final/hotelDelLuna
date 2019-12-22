@@ -94,6 +94,9 @@ public interface MemberService {
 	
 	// 예약 내역 존재하는 비회원 카카오 회원가입 해주기
 	int insertNKMember(Member m);
+
+	// 회원의 해당 예약 내역 총액을 계산하여 포인트 적립
+	int plusPoint(Reservation res);
 	
 
 }
