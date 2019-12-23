@@ -97,11 +97,6 @@ public class ReservationServiceImpl implements ReservationService{
 		return rDao.getSuiteResCount(date);
 	}
 
-	@Override
-	public List<String>  selectRoomTypeList() {
-
-		return rDao.selectRoomTypeList();
-	}
 
 	@Override
 	public String getRoomFileName(String res_roomType) {
@@ -132,11 +127,6 @@ public class ReservationServiceImpl implements ReservationService{
 		return rDao.roomStatusDelete(resNo);
 	}
 
-	@Override
-	public List<Integer> selectRoomTypeCount() {
-
-		return rDao.selectRoomTypeCount();
-	}
 
 	@Override
 	public List<Map<String, Object>> getRoomList() {
@@ -154,6 +144,12 @@ public class ReservationServiceImpl implements ReservationService{
 	public ArrayList<RoomType> selectRoomList() {
 
 		return rDao.selectRoomList();
+	}
+
+	@Override
+	public RoomType getRoomType(String res_roomType) {
+
+		return rDao.getRoomType(res_roomType);
 	}
 
 

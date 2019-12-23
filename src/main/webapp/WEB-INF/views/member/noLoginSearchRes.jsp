@@ -83,7 +83,6 @@ body {
 		};
 
       $(function(){
-      	 // 비밀번호 찾기 버튼 클릭했을 때 유효성 검사 함수 실행
          $("#findBtn").click(function(){
             return find();
          });

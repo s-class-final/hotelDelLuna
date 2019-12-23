@@ -90,11 +90,6 @@ public class ReservationDao {
 		return sqlSession.selectOne("reservationMapper.getSuiteResCount",date);
 	}
 
-	public List<String> selectRoomTypeList() {
-
-		return sqlSession.selectList("reservationMapper.selectRoomTypeList");
-	}
-
 	
 	public String getRoomFileName(String res_roomType) {
 		
@@ -121,10 +116,6 @@ public class ReservationDao {
 		return sqlSession.delete("reservationMapper.roomStatusDelete",resNo);
 	}
 
-	public List<Integer> selectRoomTypeCount() {
-
-		return sqlSession.selectList("reservationMapper.selectRoomTypeCount");
-	}
 
 	public List<Map<String, Object>> getRoomList() {
 
@@ -139,6 +130,11 @@ public class ReservationDao {
 	public ArrayList<RoomType> selectRoomList() {
 
 		return (ArrayList)sqlSession.selectList("reservationMapper.selectRoomList");
+	}
+
+	public RoomType getRoomType(String res_roomType) {
+
+		return sqlSession.selectOne("reservationMapper.getRoomType",res_roomType);
 	}
 
 

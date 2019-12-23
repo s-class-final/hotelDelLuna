@@ -35,7 +35,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public int kakaoIdCheck(String kakaoId) {
+	public Member kakaoIdCheck(String kakaoId) {
 		
 		return mDao.kakaoIdCheck(kakaoId);
 	}
@@ -187,6 +187,12 @@ public class MemberServiceImpl implements MemberService{
 	public int insertNKMember(Member m) {
 		
 		return mDao.insertNKMember(m);
+	}
+
+	@Override
+	public int plusPoint(Reservation res) {
+
+		return mDao.plusPoint(res);
 	}
 
 
