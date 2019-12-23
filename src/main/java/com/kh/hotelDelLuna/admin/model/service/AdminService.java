@@ -21,13 +21,13 @@ public interface AdminService {
 
 	public ArrayList<Sales> selectSalesList(PageInfo pi);
 
-	public Sales salesDetail(String ckDate);
-
 	public List<Sales> selectSalesList();
 
 	public List<Sales> selectMonthSales();
 
-	public List<Sales> selectYearSales(); 
+	public List<Sales> selectYearSales();
+
+	public List<Sales> selectRtypeSales(); 
 
 
 

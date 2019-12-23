@@ -176,10 +176,8 @@ body {
 		<!-- layerPopCont -->
 		<div class="layerPopCont">
 			<div class="loginWrap">
-				<h1><span>예약 정보</span></h1>
-				<img src="#" style="width:100%;height:300px">
-				<br><br>
-
+			<br><br>
+				<p class="pb15i fw500 pd0i tc" style="font-size:20px"> 객실 예약을 취소하시겠습니까?  </p>
 				<div class="popJoinBox">
 					<div class="wrap">
 						<p>삭제 버튼을 누르면 <br />해당 예약 내역이 삭제됩니다. </p>

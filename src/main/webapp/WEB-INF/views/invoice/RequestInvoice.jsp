@@ -38,24 +38,30 @@
 	a:hover{
 		color:blue; text-decoration:none;
 	}
-	.previous {
-  background-color: #f1f1f1;
-  color: black;
-	}
-
-	.next {
-  background-color: #4CAF50;
-  color: white;
-	}
+	
 
 	.round {
   border-radius: 50%;
 	}
 	
+	#page-wrap {
+	 width: 1000px; 			
+	 margin-top: 350px; 
+	 margin-left: 200px;
+	 height: 500px;
+	}
+	
+	/* Button styles */
+
+	
 	
 </style>
 </head>
 <body>
+
+<jsp:include page="../common/menubar.jsp"/> 
+
+<div id="page-wrap">
 
 <table id = "request">
 	
@@ -66,7 +72,6 @@
 			<th>체크인 날짜</th>
 			<th>가격</th>
 			<th>요청 날짜</th>
-			<th>발행 여부</th>
 		</tr>
 	
 	
@@ -79,15 +84,14 @@
 			<td>${i.userName }</td>
 			<td>${i.rType }</td>
 			<td>${i.ckinDate }</td>
-			<td>${i.price }</td>
+			<td>${i.totalPrice }</td>
 			<td>${i.rqDate }</td>
-			<td>${i.iStatus }</td>
 		</tr>
 	</c:forEach>
 	
 	<!-- 페이징 부분 -->
  			<tr align="center" height="20">
- 				<td colspan="7">
+ 				<td colspan="6">
  				<!-- [이전] -->
  				<c:if test="${pi.currentPage == 1 }">
  					<a href="#" class="previous">[이전]&nbsp;</a>
@@ -128,10 +132,13 @@
  				</td>
  			</tr>
 
-
-
-
 </table>
+
+</div>
+
+
+
+
 
 
 

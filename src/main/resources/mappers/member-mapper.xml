@@ -218,6 +218,7 @@
 		SELECT COUNT(*)
 		FROM RESERVATION
 		WHERE RES_USERID=#{userId}
+		AND RES_STATUS='예약완료'
 	</select>
 	
 	<select id="selectMyResList" resultMap="ResListResultSet">
@@ -228,6 +229,7 @@
 		FROM RESERVATION R
 		JOIN MEMBER M ON(R.RES_USERID=M.USERID)
 		WHERE RES_USERID=#{userId}
+		AND RES_STATUS='예약완료'
 		ORDER BY RES_NO DESC
 	</select>
 	
