@@ -224,8 +224,7 @@ body {
 	         $("#checkId").html('');
 
 	      } else {
-	         $("#userId3").val(
-	               $("#userId1").val() + '@' + $("#userId2").val());
+	         $("#userId3").val( $("#userId1").val() + '@' + $("#userId2").val());
 
 	         if (userId1.val().length <= 3) {
 	            $("#checkId").html('');
@@ -325,7 +324,7 @@ body {
 	// 타이머 함수
 	function timer() {
 		
-		var timeLeft = 90; // 타이머 시간 설정, 초 단위
+		var timeLeft = 180; // 타이머 시간 설정, 초 단위
 		var num = function(str) {
 			if (str < 10)
 				return '0' + str;
@@ -389,7 +388,7 @@ body {
 			
 			setTimeout(function(){	// 인증코드 재설정하는 시간
 				makeRandom();
-			}, 90000);
+			}, 180000);
 		}
 
 	});
@@ -674,7 +673,7 @@ body {
 			$("#firstName").focus();
 			return false;
 		}
-		/* 
+		
 		if(sendCode == false){
 			alert("이메일을 인증해주세요");
 			$("#userId1").focus();
@@ -686,7 +685,7 @@ body {
 			$("#emailCode").focus();
 			return false;
 		}
-		 */
+		
 		return true;
 	}
 </script>

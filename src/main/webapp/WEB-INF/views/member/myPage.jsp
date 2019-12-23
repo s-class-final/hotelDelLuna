@@ -22,7 +22,7 @@ body {
 
 	<div class="loginWrap">
 			<div class="innerBox"> <!-- 가로값이 1280으로 설정되어진 아이 -->
-				<h1><span>회원정보 수정</span>호텔델루나 회원님의 개인 정보를 <br />수정 하실 수 있습니다.</h1>
+				<h1><span>마이 페이지</span>호텔델루나 회원님의 개인 정보를 <br />확인 및 수정 하실 수 있습니다.</h1>
 			</div>
 			
 			<div class="fullBg">
@@ -97,6 +97,15 @@ body {
 											</div>
 										</c:if>
 									</c:forTokens>
+								</dd>
+							</dl>
+							<dl class="namyType2" style="width:50%">
+								<dt><label for="point">나의 포인트</label></dt>
+								<dd>
+									<div class="inp">
+										<input type="text" id="point" name="point" value="${loginUser.point}" maxlength="50" readonly>
+									</div>
+									<span style="position:absolute; top:50%; right: 16px; transform: translateY(-50%); font-size: 14px; font-weight:600;">P	</span>
 								</dd>
 							</dl>
 						</div>
@@ -272,7 +281,7 @@ body {
 						$("#checkPwd").val("");
 						var conPwd = confirm("비밀번호가 변경되었습니다. 메인으로 돌아가시겠습니까?");
 						if(conPwd == true){
-							location.href="index.jsp";
+							location.href="main.jsp";
 						}
 					}else{
 						$("userPwd").val("");
@@ -343,7 +352,7 @@ body {
 					if(data == "true"){
 						var conPwd = confirm("회원정보가 변경되었습니다. 메인으로 돌아가시겠습니까?");
 						if(conPwd == true){
-							location.href="index.jsp";
+							location.href="main.jsp";
 						}
 					}else{
 						alert("회원정보 변경에 실패했습니다.");
@@ -386,7 +395,7 @@ body {
 			data:{userId:userId},
 			success:function(data){
 				alert("회원탈퇴 되었습니다.");
-				location.href="index.jsp";
+				location.href="main.jsp";
 			},
 			error : function(request, status, errorData) {
 				alert("error code: " + request.status + "\n"

@@ -74,7 +74,7 @@ function jsMemberDrop() {
 		data:{userId:userId},
 		success:function(data){
 			alert("회원탈퇴 되었습니다.");
-			location.href="index.jsp";
+			location.href="main.jsp";
 		},
 		error : function(request, status, errorData) {
 			alert("error code: " + request.status + "\n"

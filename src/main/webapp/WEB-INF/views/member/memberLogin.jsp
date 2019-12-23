@@ -349,7 +349,7 @@ body .container .content .signup-cont {
                						    <input type="text" name="findPhone3" id="findPhone3" class="inpt" required="required" maxlength="4" this.value=this.value.replace(/[^0-9]/g,'');" style="width:33%; display:inline-block;">
                						    <label for="findPhone3">Your phone</label>
 					                    <div class="submit-wrap finding">
-					                        <input type="button" id="findBtn" value="find" class="submit">
+					                        <input type="button" id="findBtn" value="view reservation" class="submit">
 					                    </div>
        					        </form>
            </div>

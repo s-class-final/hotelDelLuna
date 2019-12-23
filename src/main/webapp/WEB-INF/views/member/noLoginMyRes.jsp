@@ -133,7 +133,7 @@ body {
 				<table class="table-fill" align="center">
 					<thead>
 						<tr>
-							<th>예약자</th>
+							<th>이름</th>
 							<th>인원</th>
 							<th class="sortHead">체크인<button id="sort_checkIn" class="toggle off"></button></th>
 							<th class="sortHead">체크아웃<button id="sort_checkOut" class="toggle off"></button></th>
@@ -160,6 +160,8 @@ body {
 			
 		</div>
 	</div>
+	
+	<jsp:include page="../common/footer.jsp"/>
 	
 	<!-------------------- 팝업창  ---------------------->
 	<form>

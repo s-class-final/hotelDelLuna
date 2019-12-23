@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>The Spa at Delluna</title>
 <style>
 /* reset */
 button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:transparent; overflow:visible; cursor:pointer; line-height:1; }
@@ -108,10 +108,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
                 <p class="subTit">Esthetic Spa &amp; Anti-aging Clinic</p>
                 
                 <p class="text">The Spa at Delluna만이 제공하는 차별화된 럭셔리 프로그램과 최고급 제품을 통해 진정한 델루나를 경험할 수 있습니다.<br />Clinic Delluna는 국내 최고의 안티에이징 클리닉으로 최신의 미용시술 및 노화방지 프로그램을 본원과 동일하게 제공하고 있습니다.</p>
-                <div class="btnGroup">
-                    <!-- 2018.07.09 수정 -->
-                    <a href="#pop1" class="btn small btnFull layerPopOpen"><span>문의하기</span></a>
-                </div>
+                
             </div>
             
             <div class="detailInfo">
