@@ -141,7 +141,7 @@ body {
 				<table class="table-fill" align="center">
 					<thead>
 						<tr>
-							<th>예약자</th>
+							<th>이름</th>
 							<th>인원</th>
 							<th class="sortHead">체크인<button id="sort_checkIn" class="toggle off"></button></th>
 							<th class="sortHead">체크아웃<button id="sort_checkOut" class="toggle off"></button></th>
@@ -176,10 +176,8 @@ body {
 		<!-- layerPopCont -->
 		<div class="layerPopCont">
 			<div class="loginWrap">
-				<h1><span>예약 정보</span></h1>
-				<img src="#" style="width:100%;height:300px">
-				<br><br>
-
+			<br><br>
+				<p class="pb15i fw500 pd0i tc" style="font-size:20px"> 객실 예약을 취소하시겠습니까?  </p>
 				<div class="popJoinBox">
 					<div class="wrap">
 						<p>삭제 버튼을 누르면 <br />해당 예약 내역이 삭제됩니다. </p>

@@ -76,6 +76,12 @@ public interface ReservationService {
 	/* 룸타입 정보 골라서 받기 */
 	RoomType getRoomType(String res_roomType);
 
+	/* 인보이스 정보 생성하기 */
+	int insertInvoice(Reservation res);
+
+	/* 매출 정보 생성 */
+	int insertSales(Reservation res);
+
 
 	
 }

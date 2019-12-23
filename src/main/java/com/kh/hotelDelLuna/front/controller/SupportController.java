@@ -8,6 +8,7 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -77,6 +78,66 @@ public class SupportController {
 		}
 	}
 	
+	//소개 메인 이동
+	@RequestMapping(value="ReservationPayment.do", method = RequestMethod.POST)
+	public String ReservationPayment(String roomType, String checkIn, String checkOut,
+									String adult, String child, String breakfast, String dinner,
+									String addbed, String allpay,
+									HttpSession session,
+									Model model, String room) {
+		System.out.println("ReservationPayment서블릿 실행");
+		
+
+		String[] arrin = checkIn.split("\\.");
+		String[] arrout = checkOut.split("\\.");
+		
+		checkIn = arrin[0] + "-" + arrin[1] + "-" + arrin[2];
+		checkOut = arrout[0] + "-" + arrout[1] + "-" + arrout[2];
+		
+		Date res_checkIn = Date.valueOf(checkIn);
+		Date res_checkOut = Date.valueOf(checkOut);
+		
+		
+		Reservation r = new Reservation();
+		r.setRes_roomType(roomType);
+		r.setRes_checkIn(res_checkIn);
+		r.setRes_checkOut(res_checkOut);
+		r.setRes_adult(adult);
+		r.setRes_child(child);
+		r.setRes_breakfast(Integer.valueOf(breakfast));
+		r.setRes_dinner(Integer.valueOf(dinner));
+		r.setRes_addBed(addbed);
+//		r.setRes_require(require);
+		r.setRes_allPay(Integer.valueOf(allpay));
+		
+		System.out.println(roomType);
+		System.out.println(checkIn);
+		System.out.println(checkOut);
+		System.out.println(adult);
+		System.out.println(child);
+		System.out.println(breakfast);
+		System.out.println(dinner);
+		System.out.println(addbed);
+//		System.out.println(require);
+		System.out.println(allpay);
+		
+		System.out.println(r);
+		
+		
+		session.setAttribute("r", r);
+		
+		return "front/reservation/ReservationPayment";
+	}
+	
+	//사용자 예약페이지 이동
+		@RequestMapping(value="ReservationTest.do", method = RequestMethod.POST)
+		public String ReservationTest(Locale locale, Model model) {
+			System.out.println("ReservationTest서블릿 실행");
+			
+			
+			return "front/reservation/ReservationPayment";
+		}
+	
 	
 	
 	//소개 메인 이동
@@ -137,9 +198,15 @@ public class SupportController {
 	
 	// 즐길거리 부대시설 이동
 	@RequestMapping(value="facility.do", method = RequestMethod.GET)
-	public String facility(Model model, String room) {
+	public ModelAndView facility(ModelAndView mv, String room
+			,@RequestParam (value="focus", required=false) Integer focus) {
 		System.out.println("facility서블릿 실행");
-		return "front/entertainment/facility";
+		
+		if(focus!=null) {
+			mv.addObject("focus", focus);			
+		}
+		mv.setViewName("front/entertainment/facility");
+		return mv;
 	}
 	
 	// 즐길거리 부대시설 이동
@@ -171,7 +238,7 @@ public class SupportController {
 	@RequestMapping(value="dining.do", method = RequestMethod.GET)
 	public String dining(String CATE) {
 		System.out.println("dining서블릿 실행 : "+ CATE);
-		
+			
 		if(CATE!=null) {
 			switch(CATE) {
 			case "dining" : return "front/dining/dining"; 

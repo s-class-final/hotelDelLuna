@@ -152,5 +152,17 @@ public class ReservationServiceImpl implements ReservationService{
 		return rDao.getRoomType(res_roomType);
 	}
 
+	@Override
+	public int insertInvoice(Reservation res) {
+
+		return rDao.insertInvoice(res);
+	}
+
+	@Override
+	public int insertSales(Reservation res) {
+
+		return rDao.insertSales(res);
+	}
+
 
 }

@@ -17,7 +17,13 @@ body {
 </style>
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-<body>
+
+<script>
+window.history.forward();
+function noBack(){window.history.forward();}
+</script>
+
+<body onload="noBack();" onpageshow="if(event.persisted) noBack();">
 	<jsp:include page="../common/menubar.jsp"/>
 
 	<div class="loginWrap">
@@ -281,7 +287,7 @@ body {
 						$("#checkPwd").val("");
 						var conPwd = confirm("비밀번호가 변경되었습니다. 메인으로 돌아가시겠습니까?");
 						if(conPwd == true){
-							location.href="index.jsp";
+							location.href="main.jsp";
 						}
 					}else{
 						$("userPwd").val("");
@@ -352,7 +358,7 @@ body {
 					if(data == "true"){
 						var conPwd = confirm("회원정보가 변경되었습니다. 메인으로 돌아가시겠습니까?");
 						if(conPwd == true){
-							location.href="index.jsp";
+							location.href="main.jsp";
 						}
 					}else{
 						alert("회원정보 변경에 실패했습니다.");
@@ -395,7 +401,7 @@ body {
 			data:{userId:userId},
 			success:function(data){
 				alert("회원탈퇴 되었습니다.");
-				location.href="index.jsp";
+				location.href="main.jsp";
 			},
 			error : function(request, status, errorData) {
 				alert("error code: " + request.status + "\n"

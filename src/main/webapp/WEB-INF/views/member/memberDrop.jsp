@@ -15,7 +15,13 @@ body {
 }
 </style>
 </head>
-<body onkeydown="javascript:confirmPwd();">
+
+<script>
+window.history.forward();
+function noBack(){window.history.forward();}
+</script>
+
+<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onkeydown="javascript:confirmPwd();">
 <jsp:include page="../common/menubar.jsp"/>
 
 <script type="text/javascript">
@@ -74,7 +80,7 @@ function jsMemberDrop() {
 		data:{userId:userId},
 		success:function(data){
 			alert("회원탈퇴 되었습니다.");
-			location.href="index.jsp";
+			location.href="main.jsp";
 		},
 		error : function(request, status, errorData) {
 			alert("error code: " + request.status + "\n"
