@@ -39,8 +39,22 @@ body {
 	color: rgba(255,255,255,0.65);
 	cursor: text;
 }
+
+#kakao{
+	margin-top: 0;
+	font-size: 15px;
+	font-weight: 600;
+	cursor: pointer;
+	background: white;
+	border: 1px solid #ebd700;
+	color: #9c836a;
+}
+#kakao:hover{
+	background: rgb(250, 225, 0);
+}
 </style>
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 <body>
 	<jsp:include page="../common/menubar.jsp"/>
@@ -53,8 +67,11 @@ body {
 			<form id="joinForm" action="minsert.do" method="post" onsubmit = "toEnabled()">
 				<div class="fullBg">
 					<div class="innerBox formJoinWrap">
+						<div class="formJoin">
+							<h2>카카오로 간편하게 회원가입 하실 수 있습니다.</h2>
+							<button type="button" id="kakao" class="btn btnJoin">카카오로 회원가입</button>
+						</div>
 						<!-- 아이디 및 비밀번호 -->
-						
 						<div class="formJoin">
 							<h2>아이디 및 비밀번호</h2>
 							<p class="formImportant"><span class="color">*</span> 필수 입력항목</p>
@@ -227,7 +244,7 @@ body {
 	                     idUsable = true;
 	                  }else if(data == "nope"){
 	                     $("#checkId").html('');
-	                     $("#checkId").html("이미 탈퇴한 이메일입니다. 동일한 이메일로 재가입을 원하시면 따로 문의해주세요").css("color","red");
+	                     $("#checkId").html("이미 탈퇴한 회원입니다. 동일한 이메일로 재가입을 원하시면 고객센터에 문의해주세요.").css("color","red");
 	                     idUsable = false;
 	                  }else{
 	                     idUsable = false;
@@ -308,7 +325,7 @@ body {
 	// 타이머 함수
 	function timer() {
 		
-		var timeLeft = 90; // 타이머 시간 설정, 초 단위
+		var timeLeft = 180; // 타이머 시간 설정, 초 단위
 		var num = function(str) {
 			if (str < 10)
 				return '0' + str;
@@ -358,7 +375,7 @@ body {
 			$("#userId2").focus();
 			
 		}else if(idUsable == false){
-			alert("이미 가입된 이메일입니다.");
+			alert("사용할 수 없는 이메일입니다.");
 			
 		}else{
 			$("#emailCheck").attr({
@@ -372,7 +389,7 @@ body {
 			
 			setTimeout(function(){	// 인증코드 재설정하는 시간
 				makeRandom();
-			}, 90000);
+			}, 180000);
 		}
 
 	});
@@ -672,6 +689,52 @@ body {
 		
 		return true;
 	}
+</script>
+
+<script type='text/javascript'>	// 카카오 로그인
+	$(function(){
+		Kakao.init('de55ce2e9e0330e7281dfe9da45b537b');
+		$("#kakao").click(function(){
+		   Kakao.Auth.login({
+		      success: function(authObj) {
+		      // 로그인 성공시, API를 호출합니다.
+		      Kakao.API.request({
+		         url: '/v1/user/me',
+		         success: function(res) {
+		            console.log(JSON.stringify(res.id));
+		            var kakaoId = JSON.stringify(res.id);
+		            
+		            $.ajax({
+		               url:"kakaocheck.do",
+		               data:{kakaoId:kakaoId},
+		               success:function(data){
+		                  if(data == "true"){
+		                     location.href = "kakaologin.do?" + kakaoId;
+		                  }else if(data == "nope"){
+		                	  alert("이미 탈퇴한 회원입니다. 동일한 아이디로 재가입을 원하시면 고객센터에 문의해주세요");
+		                  }else{
+		                	 location.href = "kakaojoin.do?" + kakaoId; 
+		                  }
+		               },
+		               error:function(data){
+		                  console.log("서버 통신 안됨");
+		               }
+		            });
+		            
+		         },
+		         fail: function(error) {
+		            alert(JSON.stringify(error));
+		         }
+		      });
+		      },
+		      fail: function(err) {
+		         alert(JSON.stringify(err));
+		      }
+		   });
+	
+		});
+	});
+   
 </script>
 </body>
 </html>

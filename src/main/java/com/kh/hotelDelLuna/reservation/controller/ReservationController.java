@@ -7,6 +7,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.util.URLEncoder;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,10 +69,6 @@ public class ReservationController {
 		ArrayList <RoomType> roomList = rService.selectRoomList();
 		//룸타입과 타입별 개수 한번에 받기
 
-		System.out.println("진짜마지막 : "+roomList);
-		
-		
-		
 		if (rlist != null && rlist.size() > 0) { // 게시글이 있다면
 			mv.addObject("list", rlist);
 			mv.addObject("pi", pi);
@@ -88,7 +88,7 @@ public class ReservationController {
 	
 
 	@RequestMapping(value = "resDetail.do")
-	public ModelAndView resDetail(ModelAndView mv, @RequestParam(value = "res_no", required = false) int res_no) {
+	public ModelAndView resDetail(ModelAndView mv, @RequestParam(value = "res_no", required = false) Integer res_no) {
 
 		Reservation res = rService.selectResOne(res_no);
 		
@@ -99,12 +99,7 @@ public class ReservationController {
 		System.out.println("가져온 예약 상세 : " + res);
 		
 		/*** 룸타입 정보를 가져오자 ***/
-		RoomType roomType = rService.getRoomType(res.getRes_roomType());
-		
-		System.out.println("가져온 룸타입 정보 : "+roomType);
-		
-		/*** 룸타입 정보만큼 요금 계산을 해볼까 ***/
-		// 예약 번호와 룸타입을 넘기면 총 요금을 계산할 수 있다.
+		RoomType roomType = rService.getRoomType(res.getRes_roomType());	
 		
 		if (res != null) {
 			mv.addObject("res", res);
@@ -135,13 +130,6 @@ public class ReservationController {
 			throws JsonIOException, IOException {
 
 		response.setContentType("application/json;charset=utf-8");
-		/*
-		 * for(Reply r : rList) { r.setrContent(r.getrContent(),"utf-8"); }
-		 */
-		/*
-		 * System.out.println("세션의 컨디션 : "+session.getAttribute("searchCondition"));
-		 * System.out.println("세션의 검색값 : "+session.getAttribute("searchValue"));
-		 */
 
 		int listCount;
 		ResSearchCondition sc = new ResSearchCondition();
@@ -162,7 +150,6 @@ public class ReservationController {
 		ArrayList<Reservation> rList;
 		/** 검색 값이 있었다면!! **/
 		if (sc != null) {
-			System.out.println("검색값이 있다고 친다고???");
 			rList = rService.selectSearchResultList(sc, pi);
 		/** 검색 값이 없으면!! **/
 		} else {
@@ -302,16 +289,8 @@ public class ReservationController {
 		//룸타입과 타입별 개수 한번에 받기
 		List<Map<String, Object>> roomList = rService.getRoomList();
 		System.out.println("룸타입과 개수 동시 : "+roomList);
-		int ftotalCount=0;
-		for(int i=0;i<roomList.size();i++){
-			if(roomList.get(i).get("ROOMTYPE").equals(res.getRes_roomType())) {
-				System.out.println(res.getRes_roomType()+"의 개수 : "+roomList.get(i).get("COUNT"));
-				ftotalCount = Integer.valueOf(String.valueOf(roomList.get(i).get("COUNT")));
-				break;
-			}
-		}
-		
-		
+		int ftotalCount = searchRoomTypeCount(res.getRes_roomType(),roomList);
+	
 		java.sql.Date checkIn = new java.sql.Date(4); // 의미없는 초기화
 		boolean checkDate = true;
 		
@@ -322,14 +301,12 @@ public class ReservationController {
         // 룸타입 요금 받아오기
         RoomType roomType = rService.getRoomType(res.getRes_roomType()); 
         
+        
 		for(int i=0;i<diffDay;i++) {
-            Calendar cal = Calendar.getInstance();
-
-            cal.setTime(startDate);
-            cal.add(Calendar.DATE, i);
-
-            String strResult = sdf.format(cal.getTime());
-            checkIn = new java.sql.Date(Date.valueOf(strResult).getTime());
+			
+		    // 날짜 일수만큼 더해오는 함수
+			checkIn = addDate(startDate,i);
+			 
             Reservation searchRes = new Reservation();
 
             searchRes.setRes_checkIn(checkIn);
@@ -378,14 +355,8 @@ public class ReservationController {
 				res.setRes_no(res_no);
 				
 	    		for(int i=0;i<diffDay;i++) {
-		            Calendar cal = Calendar.getInstance();
+	    			checkIn = addDate(startDate,i);
 
-		            cal.setTime(startDate);
-		            cal.add(Calendar.DATE, i);
-
-		            String strResult = sdf.format(cal.getTime());
-		            
-		            checkIn = new java.sql.Date(Date.valueOf(strResult).getTime());
 		            res.setRes_checkIn(checkIn);
 		            result= rService.resRoomStatusInsert(res);
 	    		}
@@ -409,6 +380,7 @@ public class ReservationController {
 	
 	}
 	
+
 	/********** 생성할 예약내역 유저 검사 **********/
 	@RequestMapping(value = "resIdCheck.do")
 	public void resIdCheck(HttpServletResponse response, HttpSession session,String userId)
@@ -501,21 +473,12 @@ public class ReservationController {
 		//룸타입과 타입별 개수 한번에 받기
 		List<Map<String, Object>> roomList = rService.getRoomList();
 		System.out.println("룸타입과 개수 동시 : "+roomList);
-		int ftotalCount=0;
-		for(int i=0;i<roomList.size();i++){
-			if(roomList.get(i).get("ROOMTYPE").equals(nowRes.getRes_roomType())) {
-				System.out.println(nowRes.getRes_roomType()+"의 개수 : "+roomList.get(i).get("COUNT"));
-				ftotalCount = Integer.valueOf(String.valueOf(roomList.get(i).get("COUNT")));
-				break;
-			}
-		}
-		
-		
+		int ftotalCount = searchRoomTypeCount(nowRes.getRes_roomType(),roomList);
+
 		
 		java.sql.Date checkIn = new java.sql.Date(4);	
 		boolean checkDate = true;
-		
-		
+			
 		// 식사 값 계산
         int totalPay = calTotalMeal(res);
 
@@ -524,15 +487,9 @@ public class ReservationController {
 	
         
 		for(int i=0;i<diffDay;i++) {
-            Calendar cal = Calendar.getInstance();
+			
+			checkIn = addDate(startDate,i);
 
-            cal.setTime(startDate);
-            cal.add(Calendar.DATE, i);
-
-            String strResult = sdf.format(cal.getTime());
-            
-            checkIn = new java.sql.Date(Date.valueOf(strResult).getTime());
-            
             Reservation searchRes = new Reservation();
             searchRes.setRes_checkIn(checkIn);
             searchRes.setRes_roomType(nowRes.getRes_roomType());
@@ -570,14 +527,8 @@ public class ReservationController {
 			int iResult=0;
 			
     		for(int i=0;i<diffDay;i++) {
-	            Calendar cal = Calendar.getInstance();
+    			checkIn = addDate(startDate,i);
 
-	            cal.setTime(startDate);
-	            cal.add(Calendar.DATE, i);
-
-	            String strResult = sdf.format(cal.getTime());
-	            
-	            checkIn = new java.sql.Date(Date.valueOf(strResult).getTime());
 	            res.setRes_checkIn(checkIn);
 	            iResult= rService.resRoomStatusInsert(res);
     		}
@@ -585,7 +536,7 @@ public class ReservationController {
 			
 			if(result>0&&dResult>0&&iResult>0) {
 				
-				out.println("<script>alert('예약 내역이 수정되었습니다'); location.href='entireResList.do';</script>");
+				out.println("<script>alert('예약 내역이 수정되었습니다'); location.href='resDetail.do?res_no="+res.getRes_no()+"';</script>");
 				out.flush();
 			}else {
 				throw new ReservationException("예약 내역 수정 실패!!");
@@ -601,6 +552,133 @@ public class ReservationController {
 		
 
 	} 
+	
+	/******* ajax로 총액 재계산 하기 *********/
+
+	@RequestMapping(value = "reCalRes.do")
+	@ResponseBody
+
+	public void reCalRes(HttpServletResponse response,HttpServletRequest request,Reservation res,
+			@RequestParam(value = "checkInOut", required = false) String checkInOut) throws IOException {
+		
+
+		checkAllRequest(request);
+		response.setContentType("text/html; charset=UTF-8");
+
+		res = settingDate(res,checkInOut);
+		
+		System.out.println("들어와잇나?:" +res);
+		// 식사 값 계산
+        int totalPay = calTotalMeal(res);
+        
+        // 룸타입 요금 받아오기
+        RoomType roomType = rService.getRoomType(res.getRes_roomType()); 
+		
+        
+		String strFormat = "yyyy-MM-dd"; // strStartDate 와 strEndDate 의 format
+		long diffDay = 0;
+		java.util.Date startDate = new java.util.Date();
+		// SimpleDateFormat 을 이용하여 startDate와 endDate의 Date 객체를 생성한다.
+		SimpleDateFormat sdf = new SimpleDateFormat(strFormat);
+		try {
+			startDate = sdf.parse(res.getRes_checkIn().toString());
+			java.util.Date endDate = sdf.parse(res.getRes_checkOut().toString());
+
+			// 두날짜 사이의 시간 차이(ms)를 하루 동안의 ms(24시*60분*60초*1000밀리초) 로 나눈다.
+			diffDay = (endDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000);
+			System.out.println(diffDay + "일");
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		
+		}
+		
+		//룸타입과 타입별 개수 한번에 받기
+		List<Map<String, Object>> roomList = rService.getRoomList();
+		
+		int ftotalCount = searchRoomTypeCount(res.getRes_roomType(),roomList);
+
+		java.sql.Date checkIn = new java.sql.Date(4);	
+		boolean checkDate = true;
+		
+		
+		for(int i=0;i<diffDay;i++) {
+			
+			checkIn = addDate(startDate,i);
+
+            Reservation searchRes = new Reservation();
+           
+            searchRes.setRes_checkIn(checkIn);
+            searchRes.setRes_roomType(res.getRes_roomType());
+            // 체크인 날짜. 룸타입으로 roomStatus테이블에서 검색.
+            int resRoomCount = rService.getResRoomCount(searchRes);
+
+            System.out.println("룸 총개수 : "+ftotalCount);
+            System.out.println("남은 개수 : "+resRoomCount);
+            System.out.println("뺴면? : "+(ftotalCount-resRoomCount));
+            // 룸타입 총 개수 - 해당날짜 룸타입 개수 . 0일 시 브레이크 하고 예약 입력 취소
+            if(ftotalCount-resRoomCount<=0) {
+            	     
+        		checkDate = false;
+        		break;
+            }
+            
+            // 주말 요금
+            if(checkIn.getDay()==0||checkIn.getDay()==6) {
+            	totalPay += roomType.getWeekEnd();
+            }else { // 평일 요금
+            	totalPay += roomType.getWeekDay();
+            }
+           
+		}
+
+		if(checkDate) {
+			res.setRes_allPay(totalPay);
+			
+			// 총액, 적립 포인트 계산
+			System.out.println("계산한 총액 : "+totalPay);
+			System.out.println("적립예상 포인트 : "+(int)(totalPay*0.01));
+			
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			gson.toJson(res,response.getWriter());
+			
+		}else {
+			
+		}
+	} 
+	
+	
+	/******* 예약 내역 입금 완료로 변경 
+	 * @throws IOException *********/
+		@RequestMapping(value = "payStatusCheck.do")
+		public void payStatusCheck(ModelAndView mv,HttpServletResponse response,
+				@RequestParam(value = "res_no", required = false) int res_no) throws IOException {
+			
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+
+			System.out.println("예약번호 : "+res_no);
+			
+			int result = rService.payStatusCheck(res_no);
+			
+			Reservation res = rService.selectResOne(res_no);
+			
+			// 해당 멤버에 포인트 적립해주자
+			int pResult = mService.plusPoint(res);
+			
+			// 결제 테이블에 내역 생성해주자
+			
+			
+			
+			if(result>0&&pResult>0) {
+				out.println("<script>alert('입금 완료 처리 되었습니다'); location.href='entireResList.do';</script>");
+
+				out.flush();
+			}else {
+				throw new ReservationException("입금 완료 처리 실패!!");
+			}
+			
+		}
 	
 	
 	
@@ -644,13 +722,11 @@ public class ReservationController {
 		String yearMonth = date;
 		
 		//날짜 삽입
+		
+		
 		// 해당 날짜에 남아있는 방 개수를 구해야함
-
-		// 슈페리어 룸 개수
 		int superiorRoom = rService.getRoomCount("SUPERIOR");
-		// 디럭스 룸 개수
 		int deluxeRoom = rService.getRoomCount("DELUXE");
-		// 스위트 룸 개수
 		int suiteRoom = rService.getRoomCount("SUITE");
 
 		int totalRoomCount = superiorRoom+deluxeRoom+suiteRoom;
@@ -713,35 +789,26 @@ public class ReservationController {
 		 
 	}
 	
-	
-	/******* 예약 내역 입금 완료로 변경 
-	 * @throws IOException *********/
-		@RequestMapping(value = "payStatusCheck.do")
-		public void payStatusCheck(ModelAndView mv,HttpServletResponse response,int res_no) throws IOException {
-			
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
 
-			System.out.println("예약번호 : "+res_no);
-			
-			int result = rService.payStatusCheck(res_no);
-			
-			
-			if(result>0) {
-				out.println("<script>alert('입금 완료 처리 되었습니다'); location.href='entireResList.do';</script>");
+	
+	
+	/**** 날짜 더해서 반환 ****/
+		private Date addDate(java.util.Date startDate, int i) {
+        
+        String strFormat = "yyyy-MM-dd";
+		SimpleDateFormat sdf = new SimpleDateFormat(strFormat);
 
-				out.flush();
-			}else {
-				throw new ReservationException("예약 내역 수정 실패!!");
-			}
-			
-		}
+		Calendar cal = Calendar.getInstance();
+        
+        cal.setTime(startDate);
+        cal.add(Calendar.DATE, i);
+
+        String strResult = sdf.format(cal.getTime());
+        java.sql.Date checkIn = new java.sql.Date(Date.valueOf(strResult).getTime());
+        
+        return checkIn;
+	}
 	
-	
-	
-	/****
-		
-		
 	
 	/******* 날짜 데이터 재구성 *******/
 	public Reservation settingDate(Reservation res,String checkInOut) {
@@ -774,6 +841,8 @@ public class ReservationController {
 		return sc;
 	}
 	
+	
+	/***** 식사값 계산 *****/
 	public int calTotalMeal(Reservation res) {
 		
 		int totalPay=0;
@@ -791,5 +860,35 @@ public class ReservationController {
 		System.out.println("방 요금 계산 전 요금 : "+totalPay);
 		
 		return totalPay;
+	}
+	
+	/******** 특정 룸타입의 총 개수 ********/
+	public int searchRoomTypeCount(String roomType,List<Map<String, Object>> roomList){
+		
+		int ftotalCount=0;
+		for(int i=0;i<roomList.size();i++){
+			if(roomList.get(i).get("ROOMTYPE").equals(roomType)) {
+				System.out.println(roomType+"의 개수 : "+roomList.get(i).get("COUNT"));
+				ftotalCount = Integer.valueOf(String.valueOf(roomList.get(i).get("COUNT")));
+				break;
+			}
+		}
+		
+		return ftotalCount;
+	}
+	
+	
+	/********** 넘어온 리퀘스트 전부 체크 ************/
+	public void checkAllRequest(HttpServletRequest request) {
+		//날짜, 성인, 유아
+		Enumeration params = request.getParameterNames();
+		System.out.println("----------------------------");
+		while (params.hasMoreElements()){
+		    String name = (String)params.nextElement();
+		    System.out.println(name + " : " +request.getParameter(name));
+		}
+		System.out.println("----------------------------");
+
+		
 	}
 }

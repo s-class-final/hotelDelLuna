@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>호텔 소개</title>
 </head>
 <style>
 /* reset */
@@ -146,7 +146,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 				<div class="sectionH">
 					<h1 data-animation="fadeInUp">다이닝</h1>
 					<p data-animation="fadeInUp">미슐랭 스타 레스토랑부터 트렌디한 Bar까지, <br />호텔 델루나에서 펼쳐지는 미식의 세계로 초대합니다.</p>
-					<a href="dining.do" class="link" data-animation="fadeInUp">전체 보기</a>
+					<a href="dining.do?CATE=dining" class="link" data-animation="fadeInUp">전체 보기</a>
 				</div>
 				
 				<section class="mainSwiperMotion">
@@ -240,7 +240,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 				<div class="sectionH">
 					<h1 data-animation="fadeInUp">부대시설</h1>
 					<p data-animation="fadeInUp">다채로운 액티비티와 휴식을 함께 즐길 수 있는 <br />호텔 델루나의 시설을 즐겨보세요.</p>
-					<a href="#" class="link" data-animation="fadeInUp">전체 보기</a>
+					<a href="facility.do" class="link" data-animation="fadeInUp">전체 보기</a>
 				</div>
 				
 				<section class="mainSwiperMotion">

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>GARDEN CAFÉ</title>
 <style>
 /* reset */
 button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:transparent; overflow:visible; cursor:pointer; line-height:1; }
@@ -106,7 +106,7 @@ function jsDownImg(F_SEQ){
 							<p class="img"><img src="resources/pcPub/static/images/dining/gardenCafe/img_gardenCafe1.jpg" alt="" /></p>
 						</li>
 						<li>
-							<p class="img"><img src="resources/pcPub/static/images/dining/gardenCafe/img_gardenCafe2jpg" alt="" /></p>
+							<p class="img"><img src="resources/pcPub/static/images/dining/gardenCafe/img_gardenCafe2.jpg" alt="" /></p>
 						</li>
 					</ul>
 				</div>

@@ -73,7 +73,7 @@ body {
 		</div>
 		
 	</div>
-	
+	<jsp:include page="../common/footer.jsp"/>
 	<%-- 
 	임시비번 다시 바꾸는 곳
 	<form>

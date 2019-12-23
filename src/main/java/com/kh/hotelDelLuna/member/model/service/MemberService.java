@@ -18,7 +18,7 @@ public interface MemberService {
 	Member idCheck(String userId);
 	
 	// 카카오 가입 여부 확인
-	int kakaoIdCheck(String kakaoId);
+	Member kakaoIdCheck(String kakaoId);
 	
 	// 카카오 회원 가입
 	int insertKMember(Member m);
@@ -94,6 +94,9 @@ public interface MemberService {
 	
 	// 예약 내역 존재하는 비회원 카카오 회원가입 해주기
 	int insertNKMember(Member m);
+
+	// 회원의 해당 예약 내역 총액을 계산하여 포인트 적립
+	int plusPoint(Reservation res);
 	
 
 }

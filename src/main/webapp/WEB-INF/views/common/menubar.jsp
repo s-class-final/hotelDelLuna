@@ -32,8 +32,13 @@
 	<!-- <link href="resources/pcPub/static/css/lib/swiper2.css" rel="stylesheet"/>  -->
 <body>
 
-<div id="main">
+<!-- 현재 주소에 따라 표시를 달리해주기 위해 -->
+<c:set var="fullURL" value="${pageContext.request.requestURL}"></c:set>
 
+<!-- 메인페이지가 아닐때만 상단, 사이드메뉴 표시 -->
+<c:if test="${fullURL ne 'http://localhost:8881/hotelDelLuna/index.jsp' }">
+
+<div id="main">
 <header id="headerWrap">
    <h1 style="margin-left:90px"><a href="index.jsp">HOTEL DELLUNA</a></h1>
    <nav class="gnb">
@@ -166,7 +171,8 @@
                </div>
             </div>
          </li>
-         <li>
+          <c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 2}">
+	         <li>
 				<a href="entireResList.do">관리자 페이지</a>
 				<div class="gnbDepth2">
 					<div>
@@ -185,6 +191,7 @@
 	               </div>
 				</div>
 			</li>
+		</c:if>
       </ul>
    </nav>
    
@@ -320,6 +327,10 @@ $(window).load(function(){
 <!-- //quick Bar -->
 
 </div>
+<!-- main div 종료 -->
+</c:if>
+
+
 
 <script>
 var title1 = "비회원 1:1 문의";
@@ -372,7 +383,7 @@ function jsSave() {
     <div class="layerPopCont">
         <h1 class="popHeader popHeaderInq"></h1>
         <div class="inquiryPopCont">
-        <p>문의하신 내용은 호텔 델루나 관리자 메일로 전송되며,</p>
+        <p>문의하신 내용은 호텔 델루나 고객센터 메일로 전송되며,</p>
         <p>입력하신 이메일로 답변을 받으실 수 있습니다.</p>
         <p style="font-weight: 600;">회원가입을 하시면 좀 더 편리하게 문의 및 문의 내역 확인을 하실 수 있습니다.</p>
             <form action="sendinquiry.do" method="post" id="nminquiry" name="form_inquiry">

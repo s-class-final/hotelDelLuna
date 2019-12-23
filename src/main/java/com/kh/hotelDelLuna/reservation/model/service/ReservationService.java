@@ -50,9 +50,6 @@ public interface ReservationService {
 
 	int getSuiteResCount(String date);
 
-	/* 방 종류 이름별로 모두 뽑기 */
-	List<String>  selectRoomTypeList();
-
 	/* 방 사진 받아오기 */
 	String getRoomFileName(String res_roomType);
 
@@ -67,10 +64,6 @@ public interface ReservationService {
 
 	/* 방 상태 정보 삭제하기 */
 	int roomStatusDelete(int resNo);
-
-	/* 방 타입별 개수 구하기 */
-	List<Integer> selectRoomTypeCount();
-
 	/* 방 타입, 개수 한번에 구하기 */
 	List<Map<String, Object>> getRoomList();
 
