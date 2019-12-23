@@ -166,6 +166,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 						<h2 align="center" style="font-size:1.5em;">문의 내역이 없습니다</h2>
 					<br><br><br>
 					</div>
+					<br><br><br><br><br><br><br><br><br><br><br><br>
 				</c:if>
 			</div>
 		</div>

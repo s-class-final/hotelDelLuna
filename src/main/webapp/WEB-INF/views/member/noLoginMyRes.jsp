@@ -161,6 +161,8 @@ body {
 		</div>
 	</div>
 	
+	<jsp:include page="../common/footer.jsp"/>
+	
 	<!-------------------- 팝업창  ---------------------->
 	<form>
 	<div class="layerPopWrap" id="loginPop">

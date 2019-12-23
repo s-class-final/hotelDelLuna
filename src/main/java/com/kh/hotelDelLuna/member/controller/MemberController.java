@@ -149,7 +149,7 @@ public class MemberController {
 	@RequestMapping("mdelete.do")
 	public String deleteMember(HttpSession session, String userId) {
 		int result = mService.deleteMember(userId);
-		
+		System.out.println(userId);
 		if(result > 0) {
 			return "redirect:logout.do";
 			// 알아서 로그아웃을 해 주는 메소드를 활용하자
