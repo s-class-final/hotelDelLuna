@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>전체 회원 문의 내역</title>
 <style>
 body {
     position: relative;
-    top: 130px;
+    top: 80px;
 }
 /* 문의내역 버튼 */
 button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:transparent; overflow:visible; cursor:pointer; line-height:1; }
@@ -73,7 +73,8 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 						<button>
 							<h2>${i.iTitle}</h2>
 							<p class="location">
-								작성자 : ${i.iWriter}
+								아이디 : ${i.iWriter}<br>
+								이름 : ${i.iUserName}
 							</p>
 							<p class="text">
 							${i.iContent}
@@ -120,11 +121,15 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 				<div class='paginate'>
 					<tr align="center" height="20">
 						<td colspan="6">
-							<!-- [이전] -->
-							<c:if test="${ pi.currentPage <= 1 }">
-								<&nbsp;
+							<!-- 처음으로 -->
+							<c:if test="${ pi.currentPage > 1 }">
+								<c:url var="iliststart" value="/allinquiry.do">
+									<c:param name="page" value="${ pi.startPage }"/>
+								</c:url>
+								<a href="${ iliststart }"><<</a>
 							</c:if>
-							
+						
+							<!-- [이전] -->
 							<c:if test="${ pi.currentPage > 1 }">
 								<c:url var="ilistBack" value="allinquiry.do">
 									<c:param name="page" value="${ pi.currentPage - 1 }"/>
@@ -147,15 +152,19 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 							</c:forEach>
 							
 							<!-- [다음] -->
-							<c:if test="${ pi.currentPage >= pi.maxPage }">
-								&nbsp;>
-							</c:if>
-							
 							<c:if test="${ pi.currentPage < pi.maxPage }">
 								<c:url var="ilistEnd" value="allinquiry.do">
 									<c:param name="page" value="${ pi.currentPage + 1 }"/>
 								</c:url>
 								<a href="${ ilistEnd }">></a>
+							</c:if>
+							
+							<!-- 끝으로 -->
+							<c:if test="${ pi.currentPage < pi.maxPage }">
+								<c:url var="ilistend" value="/allinquiry.do">
+									<c:param name="page" value="${ pi.maxPage }"/>
+								</c:url>
+								<a href="${ ilistend }">>></a>
 							</c:if>
 						</td>
 					</tr>

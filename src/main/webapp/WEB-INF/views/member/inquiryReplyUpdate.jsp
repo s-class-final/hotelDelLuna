@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>문의 답변 수정</title>
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
 #reContent {
@@ -29,7 +29,7 @@
 <section id="container">
    
    <div class="noticeViewWrap inquiry">
-	<form id="reInquiry" action="reupdate2.do">
+	<form id="reInquiry" action="reupdate2.do" method="post">
 		<input type="hidden" id="iId" name="iId" value="${inquiry.iId}">
 		<input type="hidden" id="page" name="page" value="${currentPage}">
       <h1>1:1 문의</h1>
@@ -44,7 +44,7 @@
       <textarea id="reContent" name="reContent">${inquiry.reContent}</textarea>
       <br><br><br><br>
       <div style="text-align:center;">
-         <a onclick="replyInquiry();" class="btn btnFull layerPopOpen"><span>답변하기</span></a>
+         <a onclick="replyInquiry();" class="btn btnFull layerPopOpen"><span>수정</span></a>
       </div>
    </div>   
 	</form>

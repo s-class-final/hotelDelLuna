@@ -19,6 +19,21 @@
 		<result property="res_status" column="RES_STATUS"/>
 		<result property="res_payStatus" column="RES_PAYSTATUS"/>
 		<result property="res_require" column="RES_REQUIRE"/>
+		<result property="res_allPay" column="RES_ALLPAY"/>
+	</resultMap>
+	
+	<resultMap type ="RoomType" id="RoomTypeResultSet">
+		<id property="type" column="ROOMTYPE"/>  
+		<result property="capacity" column="CAPACITY"/>
+		<result property="addBed" column="ADDBED"/>
+		<result property="singleBed" column="SINGLEBED"/> 
+		<result property="doubleBed" column="DOUBLEBED"/>
+		<result property="smoking" column="SMOKING"/>
+		<result property="weekDay" column="WEEKDAY"/>
+		<result property="weekEnd" column="WEEKEND"/>
+		<result property="startDay" column="STARTDAY"/>
+		<result property="endDay" column="ENDDAY"/>
+		<result property="childRate" column="CHILDRATE"/>
 	</resultMap>
 	
 	<!-- 예약 리스트 갯수 -->
@@ -116,8 +131,25 @@
 		INSERT INTO
 		RESERVATION
 		VALUES(SEQ_RESNO.NEXTVAL,DEFAULT,#{res_roomType},#{res_userId},#{res_breakfast},#{res_dinner},
-				#{res_smoking},#{res_addBed},#{res_adult},#{res_child},#{res_checkIn},#{res_checkOut},DEFAULT,DEFAULT,#{res_require})
+				#{res_smoking},#{res_addBed},#{res_adult},#{res_child},#{res_checkIn},#{res_checkOut},DEFAULT,DEFAULT,#{res_require},#{res_allPay})
+		
+	</insert>
 	
+	<select id="getResNo" parameterType="Reservation" resultType="_int">
+		SELECT RES_NO
+		FROM RESERVATION
+		WHERE RES_USERID=#{res_userId}
+			AND RES_CHECKIN=#{res_checkIn}
+			AND RES_CHECKOUT=#{res_checkOut}
+	
+	</select>
+	
+	<!-- 날짜별 예약 정보 생성 -->
+	<insert id="resRoomStatusInsert" parameterType="Reservation">
+		INSERT INTO
+		ROOMSTATUS
+		VALUES(#{res_roomType},DEFAULT,#{res_checkIn},#{res_no})
+
 	</insert>
 	
 	<!-- 예약 내역 삭제 -->
@@ -127,10 +159,108 @@
 		WHERE RES_NO=#{res_no}
 	</update>
 	
-	
+	<!-- 예약 내역 수정 -->
 	<update id="resModify" parameterType="Reservation">
 		UPDATE RESERVATION
-		SET RES_ADULT=#{res_adult}, RES_CHILD=#{res_child}, RES_CHECKIN=#{res_checkIn}, RES_CHECKOUT=#{res_checkOut}
+		SET RES_ADULT=#{res_adult}, RES_CHILD=#{res_child}, RES_CHECKIN=#{res_checkIn},RES_ADDBED=#{res_addBed}, RES_CHECKOUT=#{res_checkOut}, RES_ALLPAY=#{res_allPay}
 		WHERE RES_NO = #{res_no}
 	</update>
+	
+	<!-- 날짜별 검색한 타입의 방 예약된  개수 구하기 -->
+	<select id="getResRoomCount" parameterType="Reservation" resultType="_int">
+		SELECT COUNT(*)
+		FROM ROOMSTATUS
+		WHERE RES_DATE = #{res_checkIn}
+		AND ROOMTYPE = #{res_roomType}
+	</select>
+	
+	<!-- 원하는 룸 타입별 개수 구하기 -->
+	<select id="getRoomCount" parameterType="String" resultType="_int">
+		SELECT COUNT(*)
+		FROM ROOM
+		WHERE ROOMTYPE LIKE #{string}||'%'
+	</select>
+	
+	<select id="getSuperiorResCount" parameterType="String" resultType="_int">
+		SELECT COUNT(*)
+		FROM ROOMSTATUS
+		WHERE RES_DATE = TO_DATE(#{date},'YYYYMMDD')
+		AND ROOMTYPE LIKE 'SUPERIOR'||'%'
+	</select>
+	
+	<select id="getDeluxeResCount" parameterType="String" resultType="_int">
+		SELECT COUNT(*)
+		FROM ROOMSTATUS
+		WHERE RES_DATE = TO_DATE(#{date},'YYYYMMDD')
+		AND ROOMTYPE LIKE 'DELUXE'||'%'
+	</select>
+	
+	<select id="getSuiteResCount" parameterType="String" resultType="_int">
+		SELECT COUNT(*)
+		FROM ROOMSTATUS
+		WHERE RES_DATE = TO_DATE(#{date},'YYYYMMDD')
+		AND ROOMTYPE LIKE 'SUITE'||'%'
+	</select>
+	
+	<select id="getRoomList" resultType="map">
+		SELECT ROOMTYPE,COUNT(*) AS COUNT
+		FROM ROOM
+		GROUP BY ROOMTYPE
+		ORDER BY ROOMTYPE ASC
+	</select>
+	
+	
+	
+	<!-- 룸 타입에 등록된 대표사진 이름 가져오기 -->
+	<select id="getRoomFileName" resultType="String">
+		SELECT CHANGENAME
+		FROM ATTACHMENT
+		WHERE ROOMTYPE = #{res_roomType}
+		AND IMGLV = 0
+	</select>
+	
+	<!-- 예약 입금 완료 처리 -->
+	<update id="payStatusCheck" parameterType="_int">
+		UPDATE RESERVATION
+		SET RES_PAYSTATUS='입금완료'
+		WHERE RES_NO = #{res_no}
+	</update>
+	
+	<!-- 방 배정 정보 삭제 -->
+	<delete id="roomStatusDelete" parameterType="_int">
+		DELETE FROM
+		ROOMSTATUS
+		WHERE RES_NO = #{resNo}
+	</delete>
+	
+	<select id="selectRoomList" resultMap="RoomTypeResultSet">
+		SELECT *
+		FROM ROOMTYPE
+		ORDER BY ROOMTYPE
+	</select>
+	
+	<select id="getRoomType" resultMap="RoomTypeResultSet" parameterType="String">
+		SELECT *
+		FROM ROOMTYPE
+		WHERE ROOMTYPE=#{res_roomType}
+	</select>
+	
+	
+	<!-- 예약 가능한 날짜 검색
+		1.선택된 날짜에서 예약되지 않은 방 정보 불러오기 -->
+		
+	<select id="guestSelectList" parameterType="Reservation" resultMap="RoomTypeResultSet">
+		SELECT * FROM ROOMTYPE
+		WHERE ROOMTYPE IN(
+		SELECT A.ROOMSRT ROOMTYPE
+		FROM   
+		(SELECT ROOMTYPE ROOMSRT, COUNT(*) ROOMSCNT FROM ROOM
+		GROUP BY ROOMTYPE) A
+		FULL JOIN
+		(SELECT ROOMTYPE RSRT, COUNT(DISTINCT(RES_NO)) RSRN FROM ROOMSTATUS
+		WHERE RES_DATE BETWEEN #{res_checkIn} AND #{res_checkOut}
+		GROUP BY ROOMTYPE) B
+		ON A.ROOMSRT = B.RSRT
+		WHERE A.ROOMSCNT - NVL(B.RSRN,0) > 0)
+	</select>
 </mapper>

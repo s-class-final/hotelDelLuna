@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>RUBIK</title>
 <style>
 /* reset */
 button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:transparent; overflow:visible; cursor:pointer; line-height:1; }
@@ -97,7 +97,7 @@ function jsDownImg(F_SEQ){
 	
 	<div class="hotelParadiseWrap pb0">
 		<div class="innerBox">
-			<h1 class="contTitle"><span>다이닝</span>미슐랭 스타 레스토랑부터 트렌디한 Bar까지, <br />호텔 파라다이스에서 펼쳐지는 미식의 세계로 초대합니다.</h1>
+			<h1 class="contTitle"><span>다이닝</span>미슐랭 스타 레스토랑부터 트렌디한 Bar까지, <br />호텔 델루나에서 펼쳐지는 미식의 세계로 초대합니다.</h1>
 			
 			<section class="jsSwiperMotion">
 				<div class="swiperWrap">
@@ -131,11 +131,8 @@ function jsDownImg(F_SEQ){
 			<div class="detailTextBox">
 				<h2>Rubik</h2>
 				<p class="subTit">색다른 공연을 만나는 라이브 뮤직 라운지</p>
-				<p class="text">국내외 정상급 재즈 리스트들의 공연이 진행되는 뮤직 라운지 루빅에는 파라다이스시티 믹솔로지스트 들의 화려한 칵테일과<br/>유러피안 스타일 다이닝 메뉴가 준비되어 있으며 입장하시는 순간부터 나가시는 순간까지 차별화된 경험을 약속 드립니다.</p>
-				<div class="btnGroup">
-					<!-- 2018.07.09 수정 -->
-					<a href="#pop1" class="btn small btnFull layerPopOpen"><span>문의하기</span></a>
-				</div>
+				<p class="text">국내외 정상급 재즈 리스트들의 공연이 진행되는 뮤직 라운지 루빅에는 델루나 믹솔로지스트 들의 화려한 칵테일과<br/>유러피안 스타일 다이닝 메뉴가 준비되어 있으며 입장하시는 순간부터 나가시는 순간까지 차별화된 경험을 약속 드립니다.</p>
+				
 			</div>
 			
 			<div class="detailInfo">
@@ -171,7 +168,7 @@ function jsDownImg(F_SEQ){
 					</dl>
 					<dl>
 						<dt>위치</dt>
-						<dd>HOTEL PARADISE 1층<br />
+						<dd>HOTEL DELLUNA 1층<br />
 							<!-- 오픈시점 삭제 
 							<a href="#" class="link">+ 위치 보기</a>
 							-->
@@ -293,7 +290,7 @@ function jsDownImg(F_SEQ){
 							</c:url>
 							<a href="${diningView }">
 								<p class="img"><img src="resources/pcPub/static/images/dining/list/dining_list6.jpg" alt="" /></p>
-								<h4>LOUNGE PARADISE</h4>
+								<h4>LOUNGE DELLUNA</h4>
 								<p class="text">음악이 흐르는 로비라운지</p>
 							</a>
 						</li>
@@ -340,7 +337,7 @@ function jsDownImg(F_SEQ){
 <!-- 1:1 문의 (레이어 팝업) -->
 
 
-
+<jsp:include page="../../../common/footer.jsp"/>
 
 
 

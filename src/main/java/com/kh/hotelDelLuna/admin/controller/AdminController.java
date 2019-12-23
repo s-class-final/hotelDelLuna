@@ -106,38 +106,7 @@ public class AdminController {
 		return mv;
 	}
 	
-	@RequestMapping("salesDetail.do")
-	public ModelAndView salesDetail(ModelAndView mv,Date ckinDate) {
-		
-		
-		
-		SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMMdd");
-
-		String ckDate = transFormat.format(ckinDate);
-		
-		
-		
-		Sales sales = aService.salesDetail(ckDate);
-		
-		
-		
 	
-		/* Sales sales = (Sales)aService.salesDetail(ckDate); */
-		
-		
-		
-		System.out.println("날짜 : " + sales);
-		System.out.println("inDate 변환 : " + ckDate);
-		
-		if(sales != null) {
-			mv.addObject("sales",sales).setViewName("sales/salesDetail");
-			
-		}else {
-			throw new AdminException("매출 조회 실패");
-		}
-		
-		return mv;
-	}
 	
 	@RequestMapping(value="sumSales.do")
 	public ModelAndView sumsales(ModelAndView mv,Date ckinDate) {
@@ -148,6 +117,9 @@ public class AdminController {
 		mv.addObject("list", list);
 		mv.setViewName("sales/sumSales");
 		
+		SimpleDateFormat format;
+		format = new SimpleDateFormat("yyyy년 MM월");
+		
 		System.out.println(" 리스트 사이즈  : " + list.size());
 		
 		String str ="[";
@@ -155,7 +127,7 @@ public class AdminController {
 		int num =0;
 		for(Sales dto : list){
 			str +="['";
-			str  += dto.getCkinDate();
+			str  += format.format(dto.getCkinDate());
 			str +="' , ";
 			str += dto.getPrice();
 			str +=" ]";
@@ -178,6 +150,9 @@ public class AdminController {
 		mv.addObject("list", list);
 		mv.setViewName("sales/sumSales");
 		
+		SimpleDateFormat format;
+		format = new SimpleDateFormat("yyyy년");
+		
 		System.out.println(" 리스트 사이즈  : " + list.size());
 		
 		String str ="[";
@@ -185,7 +160,7 @@ public class AdminController {
 		int num =0;
 		for(Sales dto : list){
 			str +="['";
-			str  += dto.getCkinDate();
+			str  += format.format(dto.getCkinDate());
 			str +="' , ";
 			str += dto.getPrice();
 			str +=" ]";

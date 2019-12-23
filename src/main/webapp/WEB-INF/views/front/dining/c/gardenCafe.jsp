@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>GARDEN CAFÉ</title>
 <style>
 /* reset */
 button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:transparent; overflow:visible; cursor:pointer; line-height:1; }
@@ -97,7 +97,7 @@ function jsDownImg(F_SEQ){
 	
 	<div class="hotelParadiseWrap pb0">
 		<div class="innerBox">
-			<h1 class="contTitle"><span>다이닝</span>미슐랭 스타 레스토랑부터 트렌디한 Bar까지, <br />호텔 파라다이스에서 펼쳐지는 미식의 세계로 초대합니다.</h1>
+			<h1 class="contTitle"><span>다이닝</span>미슐랭 스타 레스토랑부터 트렌디한 Bar까지, <br />호텔 델루나에서 펼쳐지는 미식의 세계로 초대합니다.</h1>
 			
 			<section class="jsSwiperMotion">
 				<div class="swiperWrap">
@@ -106,7 +106,7 @@ function jsDownImg(F_SEQ){
 							<p class="img"><img src="resources/pcPub/static/images/dining/gardenCafe/img_gardenCafe1.jpg" alt="" /></p>
 						</li>
 						<li>
-							<p class="img"><img src="resources/pcPub/static/images/dining/gardenCafe/img_gardenCafe2jpg" alt="" /></p>
+							<p class="img"><img src="resources/pcPub/static/images/dining/gardenCafe/img_gardenCafe2.jpg" alt="" /></p>
 						</li>
 					</ul>
 				</div>
@@ -119,11 +119,8 @@ function jsDownImg(F_SEQ){
 			<div class="detailTextBox">
 				<h2>GARDEN CAFÉ</h2>
 				<p class="subTit">유럽의 정취를 지닌 카페</p>
-				<p class="text">호텔 파라다이스만의 감성을 담아 정성스러운 손길로 준비되는 베이커리와 패스트리를 만나 보실 수 있는 유럽스타일 카페입니다. <br />예술적 감각을 담은 케이크와 신선한 베이커리류, 테이크 아웃 가능한 커피와 음료 등을 함께 즐겨보시기 바랍니다.</p>
-				<div class="btnGroup">
-					<!-- 2018.07.09 수정 -->
-					<a href="#pop1" class="btn small btnFull layerPopOpen"><span>문의하기</span></a>
-				</div>
+				<p class="text">호텔 델루나만의 감성을 담아 정성스러운 손길로 준비되는 베이커리와 패스트리를 만나 보실 수 있는 유럽스타일 카페입니다. <br />예술적 감각을 담은 케이크와 신선한 베이커리류, 테이크 아웃 가능한 커피와 음료 등을 함께 즐겨보시기 바랍니다.</p>
+				
 			</div>
 			
 			<div class="detailInfo">
@@ -139,7 +136,7 @@ function jsDownImg(F_SEQ){
 					</dl>
 					<dl>
 						<dt>위치</dt>
-						<dd>HOTEL PARADISE 1층<br />
+						<dd>HOTEL DELLUNA 1층<br />
 							<!-- 오픈시점 삭제 
 							<a href="#" class="link">+ 위치 보기</a>
 							-->
@@ -343,7 +340,7 @@ function jsDownImg(F_SEQ){
 							</c:url>
 							<a href="${diningView }">
 								<p class="img"><img src="resources/pcPub/static/images/dining/list/dining_list6.jpg" alt="" /></p>
-								<h4>LOUNGE PARADISE</h4>
+								<h4>LOUNGE DELLUNA</h4>
 								<p class="text">음악이 흐르는 로비라운지</p>
 							</a>
 						</li>
@@ -388,7 +385,7 @@ function jsDownImg(F_SEQ){
 <!-- //컨텐츠 영역 -->
 
 <!-- 1:1 문의 (레이어 팝업) -->
-
+<jsp:include page="../../../common/footer.jsp"/>
 
 
 

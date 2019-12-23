@@ -3,22 +3,22 @@ package com.kh.hotelDelLuna.admin.model.vo;
 import java.sql.Date;
 
 public class Sales {
-	private int rType;
+	private String rType;
 	private int price;
 	private Date ckinDate;
 	public Sales() {
 		super();
 	}
-	public Sales(int rType, int price, Date ckinDate) {
+	public Sales(String rType, int price, Date ckinDate) {
 		super();
 		this.rType = rType;
 		this.price = price;
 		this.ckinDate = ckinDate;
 	}
-	public int getrType() {
+	public String getrType() {
 		return rType;
 	}
-	public void setrType(int rType) {
+	public void setrType(String rType) {
 		this.rType = rType;
 	}
 	public int getPrice() {
@@ -37,6 +37,7 @@ public class Sales {
 	public String toString() {
 		return "Sales [rType=" + rType + ", price=" + price + ", ckinDate=" + ckinDate + "]";
 	}
+	
 	
 	
 }

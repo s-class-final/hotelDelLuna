@@ -774,6 +774,7 @@ function reservationSlick(obj){
 	if (!(obj == null || typeof obj == 'undefined')) {
 		slider = obj.find("div.roomSelectBox, div.swiperWrap");
 	}
+	
 	slider.each(function(){
 		var target = $(this),
 			ul = target.find('ul'),

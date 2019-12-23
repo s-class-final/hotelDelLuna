@@ -1,10 +1,16 @@
 package com.kh.hotelDelLuna.front.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +19,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.common.Pagination;
 import com.kh.hotelDelLuna.front.model.exception.SupportException;
 import com.kh.hotelDelLuna.front.model.service.SupportService;
 import com.kh.hotelDelLuna.front.model.vo.Notice;
+import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
+import com.kh.hotelDelLuna.room.model.vo.RoomType;
 
 @Controller
 public class SupportController {
@@ -26,11 +35,48 @@ public class SupportController {
 	private SupportService sService;
 	
 	//사용자 예약페이지 이동
-	@RequestMapping(value="entireResListGuest.do", method = RequestMethod.GET)
-	public String entireResListGuest(Locale locale, Model model) {
-		System.out.println("entireResListGuest서블릿 실행");
-		return "front/entireResListGuest";
+	@RequestMapping(value="ReservationGuest.do", method = RequestMethod.GET)
+	public String ReservationGuest(Locale locale, Model model) {
+		System.out.println("ReservationGuest서블릿 실행");
+		
+		
+		return "front/reservation/ReservationGuest";
 	}
+	
+	//예약 가능한 방 목록 조회하기
+	@RequestMapping(value="roomListGuest.do", method = RequestMethod.POST)
+	public void roomListGuest(HttpServletResponse response, String cIn, String cOut) throws IOException {
+		response.setContentType("application/json;charset=utf-8");
+//		System.out.println("roomListGuest서블릿 실행 cIn : " + cIn + ", cOut : " + cOut);
+		
+		Reservation res = new Reservation();
+		
+		String[] arrin = cIn.split("\\.");
+		String[] arrout = cOut.split("\\.");
+		
+		cIn = arrin[0] + "-" + arrin[1] + "-" + arrin[2];
+		cOut = arrout[0] + "-" + arrout[1] + "-" + arrout[2];
+		
+		Date res_checkIn = Date.valueOf(cIn);
+		Date res_checkOut = Date.valueOf(cOut);
+		
+		res.setRes_checkIn(res_checkIn);
+		res.setRes_checkOut(res_checkOut);
+		
+		//결과로 가져오는건 객실 종류만 불러옴 (예약은 한번에 객실 1개만!)
+		ArrayList<RoomType> resList = sService.selectReservationGst(res);
+		
+		System.out.println("roomListGuest.do서블릿 resList : " + resList);
+		if(resList != null) {
+
+			Gson gson = new Gson();
+			gson.toJson(resList, response.getWriter());
+			
+		}else {
+			throw new SupportException("빈 객실 정보 불러오기 실패");
+		}
+	}
+	
 	
 	
 	//소개 메인 이동
@@ -319,5 +365,54 @@ public class SupportController {
 	public String voc(Model model, String room) {
 		System.out.println("voc서블릿 실행");
 		return "front/support/voc";
+	}
+	
+	//부대시설1 outdoor pool
+	@RequestMapping("fac1.do")
+	public String facility1(Model model, String room) {
+		
+		return "front/entertainment/facilities/facilities1";
+	}
+	
+	//부대시설2 indoor pool
+	@RequestMapping("fac2.do")
+	public String facility2(Model model, String room) {
+		
+		return "front/entertainment/facilities/facilities2";
+	}
+	
+	//부대시설3 sauna
+	@RequestMapping("fac3.do")
+	public String facility3(Model model, String room) {
+		
+		return "front/entertainment/facilities/facilities3";
+	}
+	
+	//부대시설4 fitness
+	@RequestMapping("fac4.do")
+	public String facility4(Model model, String room) {
+		
+		return "front/entertainment/facilities/facilities4";
+	}
+	
+	//부대시설5 kids zone
+	@RequestMapping("fac5.do")
+	public String facility5(Model model, String room) {
+		
+		return "front/entertainment/facilities/facilities5";
+	}
+	
+	//부대시설6 spa
+	@RequestMapping("fac6.do")
+	public String facility6(Model model, String room) {
+		
+		return "front/entertainment/facilities/facilities6";
+	}
+	
+	//부대시설7 boutique
+	@RequestMapping("fac7.do")
+	public String facility7(Model model, String room) {
+		
+		return "front/entertainment/facilities/facilities7";
 	}
 }

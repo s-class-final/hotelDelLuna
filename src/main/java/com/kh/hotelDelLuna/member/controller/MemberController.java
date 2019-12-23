@@ -22,12 +22,17 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.common.Pagination;
 import com.kh.hotelDelLuna.member.model.exception.MemberException;
 import com.kh.hotelDelLuna.member.model.service.MemberService;
 import com.kh.hotelDelLuna.member.model.vo.Inquiry;
 import com.kh.hotelDelLuna.member.model.vo.Member;
+import com.kh.hotelDelLuna.reservation.model.vo.ResSearchCondition;
+import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
 
 @SessionAttributes("loginUser")
 @Controller
@@ -61,7 +66,7 @@ public class MemberController {
 			}else {
 				throw new MemberException("로그인 실패!!");
 			}
-			return "home";
+			return "../../index";
 		}
 		
 	}
@@ -76,7 +81,7 @@ public class MemberController {
 		// 로그아웃은 되는데 간혹 로그아웃 버튼을 두 번 눌러야 로그아웃 되는 경우가 있는데
 		// 그럴 때는 로그인 부분에서 미리 setComplete를 실행하고 로그아웃 해 주면 잘 됨
 
-		return "home";
+		return "../../index";
 		// 다 되는 거 확인 됐으면 menubar.jsp 가서 회원가입 만들자(a 태그에 urlmapping 경로 추가)
 	}
 	
@@ -85,7 +90,7 @@ public class MemberController {
 
 		return "member/memberJoin";
 	}
-	
+
 	@RequestMapping("minsert.do")
 	public String memberInsert(Member m, Model model, HttpSession session,
 								@RequestParam("userId1") String userId1,
@@ -101,7 +106,8 @@ public class MemberController {
 		m.setUserPwd(encPwd);
 		
 		// 아이디 합치기
-		m.setUserId(userId1 + '@' + userId2);
+		String userId = userId1 + '@' + userId2;
+		m.setUserId(userId);
 		
 		// 이름 합치기
 		m.setUserName(lastName + " " + firstName);
@@ -109,15 +115,29 @@ public class MemberController {
 		// 휴대폰 번호 합치기
 		m.setUserPhone(userPhone1 + "-"  + userPhone2 + "-"  + userPhone3);
 		
-		int result = mService.insertMember(m);
+		Member m1 = mService.idCheck(userId);	// 비회원 예약 내역 있는지 확인하기 위한 m1
 		
-		if(result > 0) {
-			Member loginUser = mService.loginUser(m);
-			model.addAttribute("loginUser", loginUser);
-			return "home";
-		}else {
-			throw new MemberException("회원 가입 실패!!");
+		if(m1 == null) {
+			int result = mService.insertMember(m);
+			
+			if(result > 0) {
+				Member loginUser = mService.loginUser(m);
+				model.addAttribute("loginUser", loginUser);
+			}else {
+				throw new MemberException("회원 가입 실패!!");
+			}
+			
+		}else if(m1.getmStatus().equals("B")) {
+			int result = mService.insertNMember(m);
+			
+			if(result > 0) {
+				Member loginUser = mService.loginUser(m);
+				model.addAttribute("loginUser", loginUser);
+			}else {
+				throw new MemberException("회원 가입 실패!!");
+			}
 		}
+		return "../../index";
 	}
 	
 	@RequestMapping("mdrop.do")
@@ -140,11 +160,21 @@ public class MemberController {
 	}
 	
 	@RequestMapping("idcheck.do")
-	public void idCheck(HttpServletResponse response, String userId) throws IOException {
-		
-		boolean isUsable = mService.idCheck(userId) == 0 ? false : true;
-		
-		response.getWriter().print(isUsable);
+	@ResponseBody
+	public String idCheck(HttpServletResponse response, String userId) throws IOException {
+		      
+		Member m = mService.idCheck(userId);
+	
+		if(m == null) {
+			return "false";
+		}else if(m.getmStatus().equals("B")) {
+			return "false1";
+		}else if(m.getmStatus().equals("N")) {
+			return "nope";
+		}else {
+			return "true";
+		}
+			
 	}
 	
 	@RequestMapping(value="pwdcheck.do", method=RequestMethod.POST)
@@ -165,11 +195,19 @@ public class MemberController {
 	}
 	
 	@RequestMapping("kakaocheck.do")
-	public void kakaoIdCheck(HttpServletResponse response, String kakaoId) throws IOException {
+	@ResponseBody
+	public String kakaoIdCheck(HttpServletResponse response, String kakaoId) throws IOException {
 		
-		boolean isUsable = mService.kakaoIdCheck(kakaoId) == 0 ? false : true;
+		Member m = mService.kakaoIdCheck(kakaoId);
 		
-		response.getWriter().print(isUsable);
+		if(m == null) {
+			return "false";
+		}else if(m.getmStatus().equals("N")) {
+			return "nope";
+		}else {
+			return "true";
+		}
+		
 	}
 	
 	@RequestMapping("kakaojoin.do")
@@ -191,7 +229,8 @@ public class MemberController {
 							@RequestParam("userPhone2") String userPhone2,
 							@RequestParam("userPhone3") String userPhone3) {
 		// 아이디 합치기
-		m.setUserId(userId1 + '@' + userId2);
+		String userId = userId1 + '@' + userId2;
+		m.setUserId(userId);
 				
 		// 이름 합치기
 		m.setUserName(lastName + " " + firstName);
@@ -203,15 +242,28 @@ public class MemberController {
 		
 		m.setKakao(kakaoId);
 		
-		int result = mService.insertKMember(m);
+		Member m1 = mService.idCheck(userId);	// 비회원 예약 내역 있는지 확인하기 위한 m1
 		
-		if(result > 0) {
-			Member loginUser = mService.kakaoLogin(kakaoId);
-			session.setAttribute("loginUser", loginUser);
-			return "home";	
-		}else {
-			throw new MemberException("카카오 회원 가입 실패!!");
+		if(m1 == null) {
+			int result = mService.insertKMember(m);
+			
+			if(result > 0) {
+				Member loginUser = mService.kakaoLogin(kakaoId);
+				session.setAttribute("loginUser", loginUser);
+			}else {
+				throw new MemberException("카카오 회원 가입 실패!!");
+			}
+		}else if(m1.getmStatus().equals("B")){
+			int result = mService.insertNKMember(m);
+			
+			if(result > 0) {
+				Member loginUser = mService.loginUser(m);
+				model.addAttribute("loginUser", loginUser);
+			}else {
+				throw new MemberException("회원 가입 실패!!");
+			}
 		}
+		return "../../index";
 	}
 	
 	@RequestMapping("kakaologin.do")
@@ -223,7 +275,7 @@ public class MemberController {
 			session.setAttribute("loginUser", loginUser);
 		}
 		
-		return "home";
+		return "../../index";
 	}
 	
 	@RequestMapping("findpwd.do")
@@ -237,8 +289,26 @@ public class MemberController {
 		
 		String setfrom = "hoteldelluna1226@gmail.com";
 		String tomail = request.getParameter("findMail"); // 받는 사람 이메일
-		String title = "호텔 델루나 임시 비번"; // 제목
-		String content = request.getParameter("randomPwd"); // 내용
+		String title = "호텔 델루나 임시 비밀번호입니다."; // 제목
+		String content =						// 내용
+				"<table style='border:1px solid #9c836a; border-collapse:collapse;'>"
+				+ "<tr>"
+				+ "<td style='background:url(https://i.imgur.com//JgOp9Sw.png)'>"
+				+ "<table width='620' height='218'>"
+				+ "<tr><td height='40' align='center' style='padding:65px 0 0 0; font-size:30px; font-weight:600; color:#fff;'>임시 비밀번호 발급</td></tr>"
+				+ "<tr><td align='center' style='color:#fff; font-size:18px;'>호텔 델루나 임시 비밀번호 발급 안내드립니다</td></tr>"
+				+ "<tr><td align='center' style='padding:5px;'></td></tr>"
+				+ "</table>"
+				+ "</td>"
+				+ "</tr>"
+				+ "<tr><td style='padding:50px;'></td></tr>"
+				+ "<tr><td align='center' style='padding:20px; border-top:1px solid #9c836a; border-bottom:1px solid #9c836a; color: #b28634; font-weight:600; font-size:20px;'>" + "고객님의 임시 비밀번호 : " + request.getParameter("randomPwd") + "</td>" + "</tr>"
+				+ "<tr><td align='center' style='font-size:14px; padding:20px;'>* 위의 임시 비밀번호로 로그인 후 비밀번호를 변경해주시기 바랍니다." + "</td>" + "</tr>"
+				+ "<tr><td style='padding:50px;'>" + "</td>" + "</tr>"
+				+ "<tr style='background-color:#443e39;'><td align='center' style='padding:10px 0 0 0; font-size:14px; color:#8d8a88;'>고객센터 : 1577-1577</td></tr>"
+				+ "<tr style='background-color:#443e39;'><td align='center' style='padding:5px; font-size:14px; color:#8d8a88;'>E-mail : hoteldelluna1226@gmail.com</td></tr>"
+				+ "<tr style='background-color:#443e39;'><td align='center' style='padding:0 0 10px 0; font-size:14px; color:#8d8a88;'>Copyright ⓒ 2019 HOTEL DELLUNA Co. Ltd. All rights reserved.</td></tr>"
+				+ "</table>";
 
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
@@ -261,7 +331,7 @@ public class MemberController {
 		int result = mService.changePwd(m);
 		
 		if(result > 0) {
-			return "home";
+			return "../../index";
 		}else {
 			throw new MemberException("임시 비밀번호 변경 실패!");
 		}
@@ -316,10 +386,17 @@ public class MemberController {
 	
 	@RequestMapping("changepwd.do")
 	@ResponseBody
-	public String changePwd(Member m, Model model, String userId, String userPwd) {
+	public String changePwd(HttpSession session, Member m, Model model, String userId, String userPwd) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
 		m.setUserId(userId);
 		String encPwd = bcryptPasswordEncoder.encode(userPwd);
 		m.setUserPwd(encPwd);
+		
+		m.setUserName(loginUser.getUserName());
+		m.setUserPhone(loginUser.getUserPhone());
+		m.setUserT(loginUser.getUserT());
+		m.setKakao(loginUser.getKakao());
+		m.setPoint(loginUser.getPoint());
 		
 		int result = mService.changePwd(m);
 		
@@ -338,6 +415,10 @@ public class MemberController {
 		m.setUserId(loginUser.getUserId());
 		m.setUserName(userName);
 		m.setUserPhone(userPhone);
+		
+		m.setUserT(loginUser.getUserT());
+		m.setKakao(loginUser.getKakao());
+		m.setPoint(loginUser.getPoint());
 		
 		int result = mService.updateMember(m);
 		
@@ -473,7 +554,7 @@ public class MemberController {
 	@RequestMapping("reinquiry.do")
 	public ModelAndView inquiryUpdateView(ModelAndView mv, int iId,
 										@RequestParam("page") Integer page) {
-		mv.addObject("inquiry", mService.selectInquiry(iId)).addObject("currentPage", page).setViewName("member/inquiryReply");
+		mv.addObject("inquiry", mService.selectInquiry(iId)).addObject("currentPage", page).setViewName("member/inquiryReplyInsert");
 		
 		return mv;
 	}
@@ -503,7 +584,7 @@ public class MemberController {
 		}
 	}
 
-	@RequestMapping("reupdate.do")
+	@RequestMapping(value="reupdate.do", method=RequestMethod.POST)
 	public ModelAndView inquiryUpdate(ModelAndView mv, Inquiry i,
 									HttpServletRequest request,
 									@RequestParam("iId") Integer iId,
@@ -514,7 +595,7 @@ public class MemberController {
 		int result = mService.updateInquiry(i);
 		
 		if(result > 0) {
-			mv.addObject("page", page).setViewName("redirect:noreply.do");
+			mv.addObject("page", page).setViewName("redirect:allinquiry.do");
 		}else {
 			throw new MemberException("문의글 답변 실패!!");
 		}
@@ -522,7 +603,7 @@ public class MemberController {
 		return mv;
 	}
 	
-	@RequestMapping("reupdate2.do")
+	@RequestMapping(value="reupdate2.do", method=RequestMethod.POST)
 	public ModelAndView replyUpdate(ModelAndView mv, Inquiry i,
 									HttpServletRequest request,
 									@RequestParam("iId") Integer iId,
@@ -568,7 +649,7 @@ public class MemberController {
 			System.out.println(e);
 		}
 		
-		return "home";
+		return "../../index";
 	}
 	
 	@RequestMapping("noreply.do")
@@ -595,6 +676,119 @@ public class MemberController {
 		}
 		
 		return mv;
+	}
+	
+	@RequestMapping("mmyres.do")
+	public String memberMyRes() {
+
+		return "member/memberMyRes";
+	}
+	
+	@RequestMapping("myrList.do")
+	@ResponseBody
+	public void getMyResList(HttpServletResponse response, HttpSession session, int page)
+			throws JsonIOException, IOException {
+
+		response.setContentType("application/json;charset=utf-8");
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		String userId = loginUser.getUserId();
+		
+		int listCount;
+		
+		listCount = mService.getMyRListCount(userId);
+		
+		PageInfo pi = Pagination.getPageInfo(page, listCount);
+		ArrayList<Reservation> rList;
+		
+		rList = mService.selectMyResList(userId, pi);
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(rList, response.getWriter());
+
+	}
+	
+	@RequestMapping("myrPage.do")
+	@ResponseBody
+	public void getMyResPage(HttpServletResponse response, HttpSession session, int page, String searchCondition,
+		String searchValue,Integer sort_no,boolean search) throws JsonIOException, IOException {
+
+		response.setContentType("application/json;charset=utf-8");
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		String userId = loginUser.getUserId();
+		
+		int listCount;
+		
+		listCount = mService.getMyRListCount(userId);
+		
+		PageInfo pi = Pagination.getPageInfo(page, listCount);
+
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(pi, response.getWriter());
+	}
+	
+	@RequestMapping("nologinres.do")
+	public String noLoginRes() {
+		return "member/noLoginSearchRes";
+	}
+	
+	@RequestMapping("searchRes.do")
+	public void searchRes(Member m, HttpServletResponse response, String userId, String lastName, String firstName, String userPhone) throws IOException {
+		m.setUserId(userId);
+		m.setUserName(lastName + " " + firstName);
+		m.setUserPhone(userPhone);
+		
+		boolean isUsable = mService.searchRes(m) == 0 ? false : true;
+		
+		response.getWriter().print(isUsable);
+	}
+	
+	@RequestMapping("scmyres.do")
+	public ModelAndView searchMyRes(Member m, ModelAndView mv, HttpSession session, String findMail) {
+		m.setUserId(findMail);
+		Member m1 = mService.findMember(m);
+		
+		if(m1 != null) {
+			mv.addObject("m1", m1);
+			mv.setViewName("member/noLoginMyRes");
+		}
+		return mv;
+	}
+	
+	@RequestMapping("myrList2.do")
+	@ResponseBody
+	public void getMyResList(HttpServletResponse response, HttpSession session, int page, String userId)
+			throws JsonIOException, IOException {
+		response.setContentType("application/json;charset=utf-8");
+		int listCount;
+		
+		listCount = mService.getMyRListCount(userId);
+		
+		PageInfo pi = Pagination.getPageInfo(page, listCount);
+		ArrayList<Reservation> rList;
+		
+		rList = mService.selectMyResList(userId, pi);
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(rList, response.getWriter());
+	}
+	
+	@RequestMapping("myrPage2.do")
+	@ResponseBody
+	public void getMyResPage(HttpServletResponse response, HttpSession session, int page, String searchCondition,
+		String searchValue,Integer sort_no,boolean search,String userId) throws JsonIOException, IOException {
+		response.setContentType("application/json;charset=utf-8");
+		int listCount;
+		
+		listCount = mService.getMyRListCount(userId);
+		
+		PageInfo pi = Pagination.getPageInfo(page, listCount);
+
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(pi, response.getWriter());
 	}
 	
 }

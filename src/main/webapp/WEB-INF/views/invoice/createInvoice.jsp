@@ -158,14 +158,14 @@
 
 <tr>
 	<th colspan="5">룸 타입</th>
-	<th>가격</th>
 	<th>인원</th>
+	<th></th>
 	<th>총가격</th>
 </tr>
 
 <tr>
 	<td>
-	<c:choose>
+	<%-- <c:choose>
 	<c:when test="${invoice.rType == '1' }">
 	Single Room<br>Non-Smoking
 	</c:when>
@@ -187,14 +187,15 @@
 	<c:otherwise>
 	룸타입이 선택되지 않았습니다.
 	</c:otherwise>
-	</c:choose>
+	</c:choose> --%>
+	${invoice.rType }
 	</td>
 	<td></td>
 	<td></td>
 	<td></td>
 	<td></td>
-	<td>${invoice.price }원</td>
 	<td>${invoice.quantity }명</td>
+	<td></td>
 	<td>${invoice.totalPrice }원</td>
 </tr>
 </table>

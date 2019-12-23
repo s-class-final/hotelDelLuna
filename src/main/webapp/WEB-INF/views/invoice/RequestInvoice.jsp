@@ -47,143 +47,12 @@
 	#page-wrap {
 	 width: 1000px; 			
 	 margin-top: 350px; 
-	 margin-left: 400px;
+	 margin-left: 200px;
 	 height: 500px;
 	}
 	
 	/* Button styles */
-.btn {
-  box-sizing:border-box;
-   -moz-box-sizing:border-box;
-   -webkit-box-sizing:border-box;
-  
-  position: relative;
-  display: inline-block;
-  overflow: hidden;
-  height: 53px;
-  
-  border-radius: 6px;
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
-    
-  line-height: 30px;
-  font-size: 16px;
-  font-weight: bold;
-}
 
-  .btn span.icon, .btn span.title {
-    display: block;
-    position: relative;
-    line-height: 50px;
-    padding: 0 30px;  
-    
-    border-radius: 6px;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;  
-  }
-    
-  .btn span.icon {
-    font-size: 23px;
-    background-color: #00967f;    
-    
-    -webkit-box-shadow: 0 3px 0 0 #007261;
-    box-shadow: 0 3px 0 0 #007261;
-  }
-  .btn span.title {        
-    -webkit-box-shadow: 0 3px 0 0 #1275b7;
-    box-shadow: 0 3px 0 0 #1275b7;
-    background-color: #1e88ce;
-  }
-  
-  .btn:active,
-  .btn.active {
-    height: 51px;
-  }
-
-.btn-small {
-  height: 30px;
-  font-size: 12px;
-  line-height: 10px;
-}
-  a.btn-small span.btn {
-    height: 30px;
-  }
-
-
-.btn-slide {
-  position: relative;
-  display: inline-block;
-  height: 50px;
-  width: 200px;
-  line-height: 50px;
-  padding: 0 20px;
-
-  border-radius: 50px;
-  -moz-border-radius: 50px;
-  -webkit-border-radius: 50px;  
-
-  transition: .5s;
-  -webkit-transition: .5s;
-
-  border: 2px solid #1275b7;
-}
-  .btn-slide:hover {
-    background-color: #1275b7;
-  }
-    .btn-slide:hover span.circle {
-      left: 100%;
-      margin-left: -45px;
-      background-color: #36a7f3;
-    }
-    .btn-slide:hover span.title {
-      left: 40px;
-      opacity: 0;
-    }
-    .btn-slide:hover span.title-hover {
-      opacity: 1;
-      left: 40px;
-    }
-
-  .btn-slide span.circle {
-    display: block;
-    background-color: #1275b7;
-    position: absolute;
-    float: left;
-    margin: 5px;
-    line-height: 42px;
-    height: 40px;
-    width: 40px;
-    top: 0;
-    left: 0;
-
-    transition: .5s;
-    -webkit-transition: .5s;
-
-    border-radius: 50%;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-  }
-
-  .btn-slide span.title,
-  .btn-slide span.title-hover { 
-    position: absolute;
-    left: 80px;
-    transition: .5s;
-    -webkit-transition: .5s;
-  }
-
-  .btn-slide span.title-hover {
-    left: 80px; 
-    opacity: 0;
-    color:#ffffff;
-  }
-   #returnpage {
-  
-  height: 100%;
-  width: 100%;
-  text-align: center;
-  
-} 
 	
 	
 </style>
@@ -215,7 +84,7 @@
 			<td>${i.userName }</td>
 			<td>${i.rType }</td>
 			<td>${i.ckinDate }</td>
-			<td>${i.price }</td>
+			<td>${i.totalPrice }</td>
 			<td>${i.rqDate }</td>
 		</tr>
 	</c:forEach>
@@ -268,14 +137,7 @@
 </div>
 
 
-<div id="returnpage">
-	 <a href="${blistCheck }" class="btn-slide">
-      <span class="circle"><span class="icon-long-arrow-right "></span></span>
-      <span class="title">밀어서 잠금 해제</span>
-      <span class="title-hover">메인 화면으로 돌아가기</span>
-    </a>
 
-</div>
 
 
 

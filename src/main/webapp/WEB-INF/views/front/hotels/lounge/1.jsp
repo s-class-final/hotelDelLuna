@@ -64,7 +64,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 
 </style>
 <body>
-	<jsp:include page="../../common/menubar.jsp"/>
+	<jsp:include page="../../../common/menubar.jsp"/>
 
 
 

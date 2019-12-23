@@ -74,6 +74,7 @@
 	border-bottom: none;
 }
 
+
 .table-fill  tr:nth-child(odd) td {
 	background: #EBEBEB;
 }
@@ -153,7 +154,7 @@
 .resSearchArea{
 	display: inline-block;
 	height : 40px;
-	width: 248px;
+	width: 255px;
 	border: 1px solid #8a7057;
 	background: #ffffff
 }
@@ -206,6 +207,8 @@
 				</thead>	
 			
 				<tbody class="table-hover">
+				
+				
 				</tbody>
 			</table>
 			<br><br><br>
@@ -239,20 +242,20 @@
 			<div class="reservationAside">
 			<section class="reservationSection" style="width:400px;right:30px">
 				<br><br>
-				<form class="resInsertForm" action="resInsert.do">
+				<form class="resInsertForm" action="resInsert.do" onsubmit="return formCheck()">
 				<div class="resInp">
 				<table style="margin:30px;border-spacing:10px;border-collapse: separate;">
 				<tr>
 					<td >예약자: </td>
-					<td><input type="text" name="userName1" placeholder="성"></td>
-					<td colspan="2"><input type="text" name="userName2" placeholder="이름"></td>
+					<td><input type="text" id="userName1" name="userName1" placeholder="성" required></td>
+					<td colspan="2"><input type="text" id="userName2" name="userName2" placeholder="이름" required></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>이메일: </td>
 					<td colspan="4">
-					<input type="text" id="email1" name="email1" size="7" oninput="checkId();" style="display:inline;width:25%">@
-					<input type="text" id="email2" name="email2" size="7" oninput="checkId();" style="display:inline;width:25%">
+					<input type="text" id="email1" name="email1" size="7" oninput="checkId();" style="display:inline;width:25%" required>@
+					<input type="text" id="email2" name="email2" size="7" oninput="checkId();" style="display:inline;width:25%" required>
 					<input type = "hidden" id = "email3" name = "email3">
 					
 					<select id = "email" name = "email" class = "join" style="display:inline;width:30%;height:30px">
@@ -274,32 +277,33 @@
 				<tr>
 					<td>핸드폰: </td>
 					<td colspan="3">
-						<select id = "userPhone1" name = "phone1" style="display:inline;width:23%;height:30px">
+						<select id = "userPhone1" name = "phone1" style="display:inline;width:23%;height:30px" required>
 							<option value = "010">010</option>
 							<option value = "011">011</option>
 							<option value = "016">016</option>
 							<option value = "017">017</option>
 							<option value = "019">019</option>
 						</select>&nbsp;
-						<input type="text" name="phone2"  style="display:inline;width:25%">
-						<input type="text" name="phone3"  style="display:inline;width:25%">
+						<input type="text" id="phone2" name="phone2"  style="display:inline;width:25%" required maxlength="4" oninput="nextPhone(); this.value=this.value.replace(/[^0-9]/g,'');">
+						<input type="text" id="phone3" name="phone3"  style="display:inline;width:25%" required maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
 					</td>
 				</tr>
 				<tr>
 					<td>객실타입: </td>
-					<td colspan=2>
-						<select name="res_roomType" style="width:80%;height:32px">
-							<option value="디럭스">디럭스</option>
-							<option value="스위트">스위트</option>							
-							<option value="슈페리어">슈페리어</option>														
+					<td colspan=3>
+						<select name="res_roomType" style="width:100%;height:32px;border: 1px solid #e6e3df;">
+							<c:forEach var="room" items="${roomList}">
+								<option value="${room.type}">${room.type}</option>
+							</c:forEach>
+													
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>날짜: </td>
 					<td colspan=3>
-							<b class="inp calendar">		
-							<input type="text" name="checkInOut" width=100% readonly="readonly" />
+							<b class="inp calendar" style="padding-left:0px">		
+							<input type="text" name="checkInOut" width=100% readonly="readonly" required/>
 							<a class="btnCalendar" style="right:-20px"></a>
 							</b>
 					</td>
@@ -307,7 +311,7 @@
 				<tr>
 					<td>성인: </td>
 					<td><input type="number" id="adult"name="res_adult" min=0 max=10 value=0 style="width:50px;display:inline"></td>
-					<td colspan=3>흡연여부  <input id="smoking" class="check" type="checkbox" name="res_smoking" style="width:auto;display:inline;">
+					<td colspan=3>
 					&nbsp;&nbsp;베드추가  <input id="addBed" class="check" type="checkbox" name="res_addBed" style="width:auto;display:inline;"></td>
 					
 				</tr>
@@ -343,9 +347,8 @@
 		<div class="layerPopCont">
 			<div class="loginWrap">
 				<h1><span>예약 정보</span></h1>
-				<img src="#" style="width:100%;height:300px">
-				<br><br>
-
+				<p class="pb15i fw500 pd0i tc"> 해당 예약 내역은 삭제되지만 해당 회원의 정보는  </p>
+				<p class="pb15i fw500 pd0i tc"> 호텔 델루나에 그대로 남아있을 것입니다.</p>
 				<div class="popJoinBox">
 					<div class="wrap">
 						<p>삭제 버튼을 누르면 <br />해당 예약 내역이 삭제됩니다. </p>
@@ -360,10 +363,32 @@
 	</div>
 	</form>
 	<!-------------------- //팝업창  ---------------------->
+	
+	<!-------------------- 취소된 내역 팝업  ---------------------->
+	<form>
+	<div class="layerPopWrap" id="cancelResStatus">
+		<div class="bg"></div>
+		<!-- layerPopCont -->
+		<div class="layerPopCont" style="width:25%">
+			<div class="loginWrap">
+			<br>
+				<h1 style="text-align:center"><span>해당 예약은 취소된 내역입니다.</span></h1>
+				<div class="popJoinBox">
+					<div class="wrap">
+						<a href="javascript:void(0);" class="btnPopClose btn small2" style="display:inline;top:-20px;"><span>확인</span></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //layerPopCont -->
+	</div>
+	</form>
+	<!-------------------- //취소된 내역 팝업  ---------------------->
 	<!-- //섹션 영역 -->
 	<script>
 	var nowPage;   //현재 페이지를 담을 변수
 	var resNo;	   //예약 번호를 담을 변수
+	var totalNum=0;
 	$(function(){	
  		 pagingAjax(1);
 		
@@ -375,7 +400,7 @@
  */
 
 		 
-		var totalNum=0;
+		
 		var nowDate = new Date().toISOString().substring(0, 10);
 
 		/* 체크인 날짜 최소 오늘 */
@@ -452,6 +477,8 @@
 			pagingAjax(nowPage,null,null,sort_no,false);
 		})
 		
+
+		
 		
 	});
 		/* 흡연여부 베드추가여부 체크 */
@@ -467,8 +494,13 @@
 		/* 상세 정보 가져오기 */
 		$(document).on("click",".text-left",function(){
 			var res_no=$(this).parents().children("td").eq(0).text();
-			console.log(res_no);
-			location.href="resDetail.do?res_no="+res_no;
+			var res_status = $(this).parents().children("td").eq(6).text();
+			console.log(res_status);
+			if(res_status!= '예약취소'){
+				location.href="resDetail.do?res_no="+res_no;				
+			}else{
+				cancelPopModal();
+			}
 		});
 		
 		
@@ -639,6 +671,102 @@
 			$("#checkId").html('');
 			
 		}
+		
+		// 전화번호 4자리 입력시 다음 입력칸으로 넘어가게
+		function nextPhone() {
+			if ($("#phone2").val().length >= 4) {
+				$("#phone3").focus();
+			}
+		};
+		
+		
+		/**** 폼 서브밋 전에 전부 검사 ****/
+		function formCheck(){
+			
+			var roomType = $("select[name=res_roomType]").val();
+			var list = new Array();
+			
+			<c:forEach items="${roomList}" var="item1">
+				list.push("${item1.type}");
+				list.push("${item1.capacity}");
+			</c:forEach>
+
+			
+			for(var i=0;i<${roomList.size()*2};i++){
+				if(list[i]==roomType){
+					maxCap = list[i+1];
+				}
+			}
+			
+			// 이름 체크
+			if ($("#userName1").val().length == 0) {
+				alert("성(last name)을 입력하세요");
+				$("#userName1").focus();
+				return false;
+			}
+
+			if ($("#userName2").val().length == 0) {
+				alert("이름(first name)을 입력하세요");
+				$("#userName2").focus();
+				return false;
+			}
+			if ($("#userName1").val().indexOf(" ") >= 0) {
+				alert("이름에 공백은 입력할 수 없습니다");
+				$("#userName1").focus();
+				return false;
+			}
+
+			if ($("#userName2").val().indexOf(" ") >= 0) {
+				alert("이름에 공백은 입력할 수 없습니다");
+				$("#userName2").focus();
+				return false;
+			}
+
+			if (!/^[a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]*$/.test($("#userName1").val())) {
+				alert("이름은 한글, 영문만 입력 가능합니다");
+				$("#userName1").focus();
+				return false;
+			}
+
+			if (!/^[a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]*$/.test($("#userName2").val())) {
+				alert("이름은 한글, 영문만 입력 가능합니다");
+				$("#userName2").focus();
+				return false;
+			}
+			
+			
+			
+			// 이메일 체크
+			if (!/^[a-zA-Z0-9]*$/.test($("#email1").val())) {
+				alert("이메일에 한글 및 특수문자는 입력하실 수 없습니다");
+				$("#email1").focus();
+				return false;
+			}
+
+			if ($("#email1").val().indexOf(" ") >= 0) {
+				alert("이메일에 공백은 입력할 수 없습니다");
+				$("#email1").focus();
+				return false;
+			}
+
+			// 날짜체크
+			if($("input[name=checkInOut]").val()==null || $("input[name=checkInOut]").val()==""){
+				alert("날짜를 입력해야 합니다.");
+				return false;
+			}
+			
+			// 인원체크
+			 if(totalNum==0){
+				 alert("인원 수가 잘못 되었습니다.");
+				 return false;
+			 }
+			 if(totalNum>maxCap){
+				 alert("최대인원 초과! 해당 방의 최대인원은 "+maxCap+"명 입니다.");
+				 return false;
+			 }
+			
+		}
+		
 		// 메일 바뀌게 하는 함수(바뀔 때마다 아이디 중복체크 함수 실행)
 		$('#email').change(function() {
 			$("#email option:selected").each(function() {
@@ -702,7 +830,11 @@
 			
 		}
 		
-		
+		/** 취소된 내역 클릭했을 때 창 **/
+		function cancelPopModal(){
+			$(".loginWrap h1 span").text("해당 예약은 취소된 내역입니다.");
+			layerPopOpen("#cancelResStatus");
+		}
 		
 		/** 예약 삭제 확인창 띄우기 **/
 		function deletePopModal(res_no,res_userName){
@@ -716,6 +848,7 @@
 		
 		function closePopModal(){
 			layerPopClose("#loginPop");
+			
 		};
 
 		/* 검색 필터 적용하여 검색 */

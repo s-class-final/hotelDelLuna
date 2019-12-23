@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>IMPERIAL TREASURE</title>
 <style>
 /* reset */
 button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:transparent; overflow:visible; cursor:pointer; line-height:1; }
@@ -97,7 +97,7 @@ function jsDownImg(F_SEQ){
 	
 	<div class="hotelParadiseWrap pb0">
 		<div class="innerBox">
-			<h1 class="contTitle"><span>다이닝</span>미슐랭 스타 레스토랑부터 트렌디한 Bar까지, <br />호텔 파라다이스에서 펼쳐지는 미식의 세계로 초대합니다.</h1>
+			<h1 class="contTitle"><span>다이닝</span>미슐랭 스타 레스토랑부터 트렌디한 Bar까지, <br />호텔 델루나에서 펼쳐지는 미식의 세계로 초대합니다.</h1>
 			
 			<section class="jsSwiperMotion">
 				<div class="swiperWrap">
@@ -126,10 +126,7 @@ function jsDownImg(F_SEQ){
 				<h2>Imperial Treasure</h2>
 				<p class="subTit">한국 최초로 선보이는 정통 광동식 Fine Dining Cuisine</p>
 				<p class="text">임페리얼 트레져는 미슐랭스타를 획득한 중식 파인 다이닝 레스토랑으로 정통 중국 요리에 임페리얼 트레져만의 깊이를 더해 프리미엄급 중식 요리를 완성하였습니다. <br />지금껏 해외에서만 맛볼 수 있었던 베이징덕, 딤섬 등의 고품격 광동식 요리를 경험할 수 있습니다.</p>
-				<div class="btnGroup">
-					<!-- 2018.07.09 수정 -->
-					<a href="#pop1" class="btn small btnFull layerPopOpen"><span>문의하기</span></a>
-				</div>
+				
 			</div>
 			
 			<div class="detailInfo">
@@ -152,7 +149,7 @@ function jsDownImg(F_SEQ){
 					</dl>
 					<dl>
 						<dt>위치</dt>
-						<dd>HOTEL PARADISE 1층<br />
+						<dd>HOTEL DELLUNA 1층<br />
 							<!-- 오픈시점 삭제 
 							<a href="#" class="link">+ 위치 보기</a>
 							-->
@@ -285,7 +282,7 @@ function jsDownImg(F_SEQ){
 							</c:url>
 							<a href="${diningView }">
 								<p class="img"><img src="resources/pcPub/static/images/dining/list/dining_list6.jpg" alt="" /></p>
-								<h4>LOUNGE PARADISE</h4>
+								<h4>LOUNGE DELLUNA</h4>
 								<p class="text">음악이 흐르는 로비라운지</p>
 							</a>
 						</li>
@@ -331,7 +328,7 @@ function jsDownImg(F_SEQ){
 
 <!-- 1:1 문의 (레이어 팝업) -->
 
-
+<jsp:include page="../../../common/footer.jsp"/>
 
 
 

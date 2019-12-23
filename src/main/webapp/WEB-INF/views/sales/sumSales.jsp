@@ -7,11 +7,13 @@
 <title>Insert title here</title>
 <style>
 	
+	
 	#page-wrap {
 	 width: 1000px; 			
 	 margin-top: 250px; 
-	 margin-left: 400px;
+	 margin-left: 300px;
 	 height: 500px;
+	 
 	}
 </style>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -44,7 +46,7 @@
 
 <div id="Barchart" style="width: 1000px; height: 700px;"></div>
    
-  <div style="background-color: white;">
+ <!--  <div style="background-color: white;"> -->
   	
   </div>
   </div>

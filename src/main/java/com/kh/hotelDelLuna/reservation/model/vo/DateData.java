@@ -11,6 +11,15 @@ public class DateData {
 	private String month = "";
 	private String date = "";
 	private String value = "";
+	private int emptyRoom;
+	private int superiorCount;
+	private int deluxeCount;
+	private int suiteCount;
+	private int superiorRes;
+	private int deluxeRes;
+	private int suiteRes;
+	
+	
 	//스케쥴 추가시 아래처럼 
 	//		1. 변수 추가
 	//		2. getter/setter 추가
@@ -20,7 +29,7 @@ public class DateData {
 	String schedule_detail = "";
 
 	// 스케줄 사용시 사용될 생성자
-	public DateData(String year, String month, String date, String value, String schedule, String schedule_detail) {
+	public DateData(String year, String month, String date, String value, String schedule, String schedule_detail,int emptyRoom) {
 
 		this.year = year;
 		this.month = month;
@@ -28,9 +37,54 @@ public class DateData {
 		this.value = value;
 		this.schedule = schedule;
 		this.schedule_detail = schedule_detail;
+		this.emptyRoom = emptyRoom;
 
 	}
+	
+	public DateData(String year, String month, String date, String value, int emptyRoom, int superiorCount,
+			int deluxeCount, int suiteCount, int superiorRes, int deluxeRes, int suiteRes) {
+		if ((month != null && month != "") && (date != null && date != "")) {		
+			this.year = year;
+			this.month = month;
+			this.date = date;
+			this.value = value;
+			this.emptyRoom = emptyRoom;
+			this.superiorCount = superiorCount;
+			this.deluxeCount = deluxeCount;
+			this.suiteCount = suiteCount;
+			this.superiorRes = superiorRes;
+			this.deluxeRes = deluxeRes;
+			this.suiteRes = suiteRes;
+		}
+	}
 
+	public DateData(String year, String month, String date, String value, int emptyRoom, int superiorCount,
+			int deluxeCount, int suiteCount) {
+		if ((month != null && month != "") && (date != null && date != "")) {
+			this.year = year;
+			this.month = month;
+			this.date = date;
+			this.value = value;
+			this.emptyRoom = emptyRoom;
+			this.superiorCount = superiorCount;
+			this.deluxeCount = deluxeCount;
+			this.suiteCount = suiteCount;
+		}
+	}
+
+
+
+	// 달력만 사용시 사용될 생성자
+	public DateData(String year, String month, String date, String value,int emptyRoom) {
+		if ((month != null && month != "") && (date != null && date != "")) {
+			this.year = year;
+			this.month = month;
+			this.date = date;
+			this.value = value;
+			this.emptyRoom = emptyRoom;
+		}
+	}
+	
 	// 달력만 사용시 사용될 생성자
 	public DateData(String year, String month, String date, String value) {
 		if ((month != null && month != "") && (date != null && date != "")) {
@@ -39,6 +93,31 @@ public class DateData {
 			this.date = date;
 			this.value = value;
 		}
+	}
+
+
+	public int getSuperiorRes() {
+		return superiorRes;
+	}
+
+	public void setSuperiorRes(int superiorRes) {
+		this.superiorRes = superiorRes;
+	}
+
+	public int getDeluxeRes() {
+		return deluxeRes;
+	}
+
+	public void setDeluxeRes(int deluxeRes) {
+		this.deluxeRes = deluxeRes;
+	}
+
+	public int getSuiteRes() {
+		return suiteRes;
+	}
+
+	public void setSuiteRes(int suiteRes) {
+		this.suiteRes = suiteRes;
 	}
 
 	public DateData() {
@@ -76,7 +155,39 @@ public class DateData {
 	public void setValue(String value) {
 		this.value = value;
 	}
+	
+	public int getEmptyRoom() {
+		return emptyRoom;
+	}
+	
+	public void setEmptyRoom(int emptyRoom) {
+		this.emptyRoom = emptyRoom;
+	}
+	
+	public int getSuperiorCount() {
+		return superiorCount;
+	}
 
+	public void setSuperiorCount(int superiorCount) {
+		this.superiorCount = superiorCount;
+	}
+
+	public int getDeluxeCount() {
+		return deluxeCount;
+	}
+
+	public void setDeluxeCount(int deluxeCount) {
+		this.deluxeCount = deluxeCount;
+	}
+
+	public int getSuiteCount() {
+		return suiteCount;
+	}
+
+	public void setSuiteCount(int suiteCount) {
+		this.suiteCount = suiteCount;
+	}
+	
 	public String getSchedule() {
 		return schedule;
 	}
@@ -175,7 +286,10 @@ public class DateData {
 
 	@Override
 	public String toString() {
-		return "DateData [year=" + year + ", month=" + month + ", date=" + date + ", value=" + value + "]";
+		return "DateData [year=" + year + ", month=" + month + ", date=" + date + ", value=" + value + ", emptyRoom="
+				+ emptyRoom + ", superiorCount=" + superiorCount + ", deluxeCount=" + deluxeCount + ", suiteCount="
+				+ suiteCount + ", superiorRes=" + superiorRes + ", deluxeRes=" + deluxeRes + ", suiteRes=" + suiteRes
+				+ "]";
 	}
 
 }

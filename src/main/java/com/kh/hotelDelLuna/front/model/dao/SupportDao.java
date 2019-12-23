@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.front.model.vo.Notice;
+import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
+import com.kh.hotelDelLuna.room.model.vo.RoomType;
 
 @Repository("sDao")
 public class SupportDao {
@@ -49,6 +51,8 @@ public class SupportDao {
 	}
 
 
+
+	
 	public int getAListcount() {
 		
 		return sqlSession.selectOne("noticeMapper.getAListCount");
@@ -62,6 +66,11 @@ public class SupportDao {
 		return (ArrayList)sqlSession.selectList("noticeMapper.selectAList", null, rowBounds);
 	}
 
+	
+
+	public ArrayList<RoomType> selectReservationGst(Reservation res) {
+		return (ArrayList)sqlSession.selectList("reservationMapper.guestSelectList");
+	}
 
 	
 }

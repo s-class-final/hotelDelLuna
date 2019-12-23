@@ -44,7 +44,7 @@ body.hidden { overflow:hidden;}
 
 .radioBox { display:inline-block; position:relative; min-height:20px; padding-left:25px;}
 .radioBox input { position:absolute; top:0; left:0; z-index:1; opacity:0;}
-.radioBox label:after { content:''; display:block; position:absolute; top:50%; left:0; width:20px; height:20px; margin-top:-10px; background:url('/pcPub/static/images/common/icon/icon_radio.gif') no-repeat;}
+.radioBox label:after { content:''; display:block; position:absolute; top:50%; left:0; width:20px; height:20px; margin-top:-10px; background:url('/resources/pcPub/static/images/common/icon/icon_radio.gif') no-repeat;}
 .radioBox input:checked + label:after { background-position:0 -20px;}
 
 .ui-select-wrapper{ position:relative;display:inline-block; min-width:100px; user-select:none; vertical-align:middle; background:#fff;}
@@ -484,8 +484,8 @@ body.reservation #headerWrap .btnClose { display:block; position:absolute; top:2
 .roomSelectBox .swiperArrow { position:absolute; top:43px; right:0;}
 .roomSelectBox .swiperArrow [class*=btn] { width:19px; height:19px;}
 .roomSelectBox .swiperArrow [class*=btn].slick-disabled span { background-position:0 0;}
-.roomSelectBox .swiperArrow .btnLeft span { display:inline-block; width:6px; height:10px; font-size:0; vertical-align: middle; background:url('/pcPub/static/images/common/btn/btn_slick_arrow.png') no-repeat 0 -10px;}
-.roomSelectBox .swiperArrow .btnRight span { display:inline-block; width:6px; height:10px; font-size:0; vertical-align: middle; transform:rotate(180deg); background:url('/pcPub/static/images/common/btn/btn_slick_arrow.png') no-repeat 0 -10px;}
+.roomSelectBox .swiperArrow .btnLeft span { display:inline-block; width:6px; height:10px; font-size:0; vertical-align: middle; background:url('/resources/pcPub/static/images/common/btn/btn_slick_arrow.png') no-repeat 0 -10px;}
+.roomSelectBox .swiperArrow .btnRight span { display:inline-block; width:6px; height:10px; font-size:0; vertical-align: middle; transform:rotate(180deg); background:url('/resources/pcPub/static/images/common/btn/btn_slick_arrow.png') no-repeat 0 -10px;}
 .roomSelectBox .swiperArrow .number { display:inline-block; width:75px; text-align:center; vertical-align: middle; font-weight:300; color:#999;}
 .roomSelectBox .swiperArrow .number em { color:#9c836a;}
 
@@ -586,12 +586,12 @@ body.reservation #headerWrap .btnClose { display:block; position:absolute; top:2
 .reservationSection .casyBox .tooltipBox p { margin-bottom:0;}
 .reservationSection .casyBox .tooltipBox:after { left:88%;}
 
-.reservationSection .productFooter { padding:24px 0px 16px;}
+.reservationSection .productFooter { padding:10px 0px 16px;}
 .reservationSection .productFooter dl { overflow:hidden; font-size:14px; color:rgba(0,0,0,0.7);}
 .reservationSection .productFooter dl + dl { margin-top:5px;}
 .reservationSection .productFooter dt { float:left; width:70px;}
 .reservationSection .productFooter dd { float:right; width:170px; text-align:right;}
-.reservationSection .productTotal { padding:10px 0; border-top:1px solid #f4f2ef;}
+.reservationSection .productTotal { padding-bottom:20px; border-top:1px solid #f4f2ef;}
 .reservationSection .productTotal dl { overflow:hidden; color:#9c836a;}
 .reservationSection .productTotal dt { float:left; width:70px; line-height:33px;}
 .reservationSection .productTotal dd { float:right; width:170px; line-height:33px; font-weight:bold; text-align:right;}

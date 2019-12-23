@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>마이 페이지</title>
 <style>
 body {
     position: relative;
-    top: 130px;
+    top: 80px;
 }
 .btnChangePWD button{
 	cursor: pointer;
@@ -22,7 +22,7 @@ body {
 
 	<div class="loginWrap">
 			<div class="innerBox"> <!-- 가로값이 1280으로 설정되어진 아이 -->
-				<h1><span>회원정보 수정</span>호텔델루나 회원님의 개인 정보를 <br />수정 하실 수 있습니다.</h1>
+				<h1><span>마이 페이지</span>호텔델루나 회원님의 개인 정보를 <br />확인 및 수정 하실 수 있습니다.</h1>
 			</div>
 			
 			<div class="fullBg">
@@ -30,7 +30,7 @@ body {
 				<c:if test="${empty loginUser.kakao}">
 					<!-- 아이디 및 비밀번호 -->
 					<form name="form1" id="form1">
-					<div class="formJoin">
+					<div class="formJoin" onkeydown="javascript:confirmPwd();">
 						<h2>아이디 및 비밀번호</h2>
 						<dl class="id">
 							<dt><label for="userId">아이디 (이메일)</label></dt>
@@ -78,7 +78,7 @@ body {
 					<form id="form2" name="form2">
 					
 					<!-- 회원정보 -->
-					<div class="formInfo clearFixed">
+					<div class="formInfo clearFixed" onkeydown="javascript:confirmInfo();">
 						<h2>회원 정보</h2>
 						
 						<div class="left">
@@ -97,6 +97,15 @@ body {
 											</div>
 										</c:if>
 									</c:forTokens>
+								</dd>
+							</dl>
+							<dl class="namyType2" style="width:50%">
+								<dt><label for="point">나의 포인트</label></dt>
+								<dd>
+									<div class="inp">
+										<input type="text" id="point" name="point" value="${loginUser.point}" maxlength="50" readonly>
+									</div>
+									<span style="position:absolute; top:50%; right: 16px; transform: translateY(-50%); font-size: 14px; font-weight:600;">P	</span>
 								</dd>
 							</dl>
 						</div>
@@ -147,13 +156,13 @@ body {
 									</c:if>
 									<c:if test="${status.index eq 1}">
 									<div class="inp">
-										<input type="tel" id="userPhone2" name="userPhone2" value="${userPhone}" maxlength="4" oninput="nextPhone(); this.value=this.value.replace(/[^0-9]/g,'');" title="휴대 전화 가운데 번호">
+										<input type="tel" id="userPhone2" name="userPhone2" value="${userPhone}" maxlength="4" oninput="confirmInfo(); nextPhone(); this.value=this.value.replace(/[^0-9]/g,'');" title="휴대 전화 가운데 번호">
 									</div>
 									<span>-</span>
 									</c:if>
 									<c:if test="${status.index eq 2}">
 									<div class="inp">
-										<input type="tel" id="userPhone3" name="userPhone3" value="${userPhone}" maxlength="4" oninput="nextPhone(); this.value=this.value.replace(/[^0-9]/g,'');" title="휴대 전화 마지막 번호">
+										<input type="tel" id="userPhone3" name="userPhone3" value="${userPhone}" maxlength="4" oninput="confirmInfo(); nextPhone(); this.value=this.value.replace(/[^0-9]/g,'');" title="휴대 전화 마지막 번호">
 									</div>
 									</c:if>
 									</c:forTokens>
@@ -189,6 +198,13 @@ body {
 		<jsp:include page="../common/footer.jsp"/>
 		
 	<script>
+	function confirmPwd(){
+		var keyCode = window.event.keyCode;
+			if (keyCode == 13) {
+				$("#changePwd").click();
+			}
+	}
+	
 	// 비밀번호 함수 실행
 	$(function(){
 		$("#changePwd").click(function(){
@@ -254,30 +270,40 @@ body {
 		}
 		
 		// 유효성 검사 통과 시 비밀번호 변경
-		$.ajax({
-			url:"changepwd.do",
-			data:{userId:userId, userPwd:userPwd},
-			success:function(data){
-				if(data == "true"){
-					$("#userPwd").val("");
-					$("#checkPwd").val("");
-					var conPwd = confirm("비밀번호가 변경되었습니다. 메인으로 돌아가시겠습니까?");
-					if(conPwd == true){
-						location.href="index.jsp";
+		var conChange = confirm("비밀번호를 변경하시겠습니까?");
+		if(conChange){
+			$.ajax({
+				url:"changepwd.do",
+				data:{userId:userId, userPwd:userPwd},
+				success:function(data){
+					if(data == "true"){
+						$("#userPwd").val("");
+						$("#checkPwd").val("");
+						var conPwd = confirm("비밀번호가 변경되었습니다. 메인으로 돌아가시겠습니까?");
+						if(conPwd == true){
+							location.href="index.jsp";
+						}
+					}else{
+						$("userPwd").val("");
+						$("checkPwd").val("");
+						alert("비밀번호 변경에 실패했습니다.");
 					}
-				}else{
-					$("userPwd").val("");
-					$("checkPwd").val("");
-					alert("비밀번호 변경에 실패했습니다.");
+				},
+				error:function(request, status, errorData){
+					alert("error code: " + request.status + "\n"
+							+"message: " + request.responseText
+							+"error: " + errorData);
 				}
-			},
-			error:function(request, status, errorData){
-				alert("error code: " + request.status + "\n"
-						+"message: " + request.responseText
-						+"error: " + errorData);
-			}
-		});
+			});
+		}
 	};
+	
+	function confirmInfo(){
+		var keyCode = window.event.keyCode;
+			if (keyCode == 13) {
+				$("#changeInfo").click();
+			}
+	}
 	
 	// 회원정보 함수 실행
 	$(function(){
@@ -317,25 +343,28 @@ body {
         }
 		
 		// 유효성 검사 통과 시 회원정보 변경
-		$.ajax({
-			url:"changeInfo.do",
-			data:{userName:userName, userPhone:userPhone},
-			success:function(data){
-				if(data == "true"){
-					var conPwd = confirm("회원정보가 변경되었습니다. 메인으로 돌아가시겠습니까?");
-					if(conPwd == true){
-						location.href="index.jsp";
+		var conChange = confirm("회원정보를 변경하시겠습니까?");
+		if(conChange){
+			$.ajax({
+				url:"changeInfo.do",
+				data:{userName:userName, userPhone:userPhone},
+				success:function(data){
+					if(data == "true"){
+						var conPwd = confirm("회원정보가 변경되었습니다. 메인으로 돌아가시겠습니까?");
+						if(conPwd == true){
+							location.href="index.jsp";
+						}
+					}else{
+						alert("회원정보 변경에 실패했습니다.");
 					}
-				}else{
-					alert("회원정보 변경에 실패했습니다.");
+				},
+				error:function(request, status, errorData){
+					alert("error code: " + request.status + "\n"
+							+"message: " + request.responseText
+							+"error: " + errorData);
 				}
-			},
-			error:function(request, status, errorData){
-				alert("error code: " + request.status + "\n"
-						+"message: " + request.responseText
-						+"error: " + errorData);
-			}
-		});
+			});
+		}
 	}
 	
 	// 전화번호 4글자 입력 시 다음 칸 넘어가게
@@ -354,12 +383,12 @@ body {
 		jsSecessionLyInitialize();
 	})
 	
-	//회원 탈퇴 프로세스 실행
+	//카카오회원 탈퇴 프로세스 실행
 	function jsMemberDrop() {
 		//로딩바 활성화
 		fullLoding($("#container"));
 		
-		var userId = $("#userId").val();
+		var userId = "${loginUser.userId}";
 		
 		$.ajax({
 			url:"mdelete.do",
@@ -376,7 +405,7 @@ body {
 		})
 	}
 	
-	var cTxtIqr = "문의 <span class='fw500'>010-9979-4655</span> (월~금 03:30 ~ 22:00)";
+	var cTxtIqr = "문의 <span class='fw500'>1577-1577</span> (월~금 03:30 ~ 22:00)";
 
 	function jsSecessionLyInitialize() {
 		//레이어 팝업 초기화 설정값 변수 선언
@@ -396,9 +425,9 @@ body {
 					  ,"tc"              //6
 					  ,"fw500 fs16p tc"];//7
 		var btnObj  = new Object();
-		btnObj.leftBtnNm  = "취소";
+		btnObj.leftBtnNm  = "확인";
 		btnObj.leftBtnAct = "javascript:jsLeftBtnAction();";
-		btnObj.rightBtnNm = "확인";
+		btnObj.rightBtnNm = "취소";
 		btnObj.rightBtnAct= "javascript:jsRightBtnAction();";
 		btnObj.btnTrId    = "#btnTwoTr"; 
 		
@@ -406,18 +435,18 @@ body {
 		jsInitInfoPop(true, "#SECESSION_USER", title, ctxtArr, tClsArr, btnObj);
 	}
 
-	//레이어 팝업 좌측 버튼 클릭 이벤트 (취소)
+	//레이어 팝업 좌측 버튼 클릭 이벤트
 	function jsLeftBtnAction() {
-		//레이어 팝업 닫기
-		$(".btnPopClose").click();
-	}
-
-	//레이어 팝업 우측 버튼 클릭 이벤트
-	function jsRightBtnAction() {
 		//레이어 팝업 닫기
 		$(".btnPopClose").click();
 		//회원 탈퇴 프로세스 진행
 		jsMemberDrop();
+	}
+
+	//레이어 팝업 우측 버튼 클릭 이벤트 (취소)
+	function jsRightBtnAction() {
+		//레이어 팝업 닫기
+		$(".btnPopClose").click();
 	}
 	</script>
 	

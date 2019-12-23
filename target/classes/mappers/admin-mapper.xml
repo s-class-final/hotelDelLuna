@@ -10,7 +10,6 @@
  	<result property="userPhone" column="USER_PHONE"/>
  	<result property="rType" column="R_TYPE"/>
  	<result property="ckinDate" column="CKIN_DATE"/>
- 	<result property="price" column="PRICE"/>
  	<result property="rqDate" column="RQ_DATE"/>
  	<result property="quantity" column="QUANTITY"/>
  	<result property="totalPrice" column="TOTALPRICE"/>
@@ -45,7 +44,7 @@
  	SELECT *
  	FROM INVOICE
  	WHERE IVID = #{ivId}
- 	AND I_STATUS='N'
+ 
  	
  </select>
  

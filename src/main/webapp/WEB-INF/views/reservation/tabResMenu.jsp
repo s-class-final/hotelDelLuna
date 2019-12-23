@@ -84,7 +84,7 @@ body {
 				</li>
 				<li id="tab1" class="btnCon btn small"> 
 					<input type="radio" name="tabmenu" id="tabmenu2" onclick="tabMenuCheck()"> 
-					<label for="tabmenu2">달력</label> 
+					<label for="tabmenu2">달력</label>
 
 				</li>
 			</ul>
@@ -107,7 +107,6 @@ body {
 
 // 탭 메뉴 체크시 변경 기능
 function tabMenuCheck(){
-
 
 	for(var i=0;i<$("input[name=tabmenu]").length;i++){
 		console.log($("input[name=tabmenu]").eq(i).prop("checked"));
