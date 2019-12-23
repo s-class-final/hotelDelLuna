@@ -207,6 +207,7 @@ span{
 <div id="page-wrap">
 <c:url var="sumSales" value="sumSales.do"/>
 <c:url var="yearSales" value="yearSales.do"/>
+<c:url var="rTypeSales" value="rTypeSales.do"/>
 <div id="left">
 	<ul id="b">
 		<li>
@@ -215,11 +216,19 @@ span{
 			</div>
 				<a href="${sumSales}"><p>확인하러 가기</p></a>
 		</li>
+	
 		<li>
 			<div id="a">
 				<span>연간 매출</span>
 			</div>
 				<a href="${yearSales }"><p>확인하러 가기</p></a>
+		</li>
+		
+		<li>
+			<div id="a">
+				<span>룸 타입별 매출</span>
+			</div>
+			<a href="${rTypeSales }"><p>확인하러 가기</a>
 		</li>
 	</ul>
 </div>

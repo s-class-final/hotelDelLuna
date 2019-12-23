@@ -9,6 +9,9 @@
 
 <script type='text/javascript' src='resources/invoice/js/jquery-1.3.2.min.js'></script>
 <script type='text/javascript' src='resources/invoice/js/example.js'></script>
+
+<script src="https://cdn.rawgit.com/eligrey/FileSaver.js/5ed507ef8aa53d8ecfea96d96bc7214cd2476fd2/FileSaver.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
 <style >
 
 	@media print{
@@ -20,7 +23,9 @@
 	margin: 0; 
 	padding: 0; 
 	} 
-	#page-wrap { width: 1000px; margin: 0 auto; }
+	#page-wrap { width: 1000px; padding: 50px;
+		background-color:white;
+	 }
 	body { 
 	font: 14px/1.4 Georgia; 
 	font-family:sans-serif;
@@ -124,10 +129,10 @@
 	<h5>FROM</h5>
 	<p id="name">Hotel DELLUNA<br></p>
 	<p>
-		서울 특별시 강남구 역삼동<br>
-		남도빌딩 3층<br>
-		연락처 : 010-4827-4910<br>
-		hchh1016@gmail.com</p>
+		인천광역시 중구 영종해안남로<br>
+		321번길 186<br>
+		Tel. 1544-9970<br>
+		hoteldelluna1226@gmail.com</p>
 </div>
 
 <div id="customer">
@@ -206,18 +211,55 @@ Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${invoice.totalPrice }원
 </div>
 
 
-
-
-
-
-
-
 </div>
+
+
+
+
+
+
 
 
 <div id="noPrint">
 <input type="button" value="Print" onclick="window.print()" id="print"/>
+<div>
+
+   <button id="save">저장하기</button>
+
 </div>
+</div>
+
+
+<script type="text/javascript">
+
+$(function(){
+
+	   $("#save").click(function() { 
+
+	        html2canvas($("#page-wrap"), {
+
+	            onrendered: function(canvas) {
+
+	                canvas.toBlob(function(blob) {
+
+	                    saveAs(blob, 'image.png');
+
+	                });
+
+	            }
+
+	        });
+
+	    });
+
+	});
+
+
+
+
+
+
+</script>
 
 </body>
 </html>

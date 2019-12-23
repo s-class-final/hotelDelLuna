@@ -27,7 +27,9 @@ public interface AdminService {
 
 	public List<Sales> selectMonthSales();
 
-	public List<Sales> selectYearSales(); 
+	public List<Sales> selectYearSales();
+
+	public List<Sales> selectRtypeSales(); 
 
 
 

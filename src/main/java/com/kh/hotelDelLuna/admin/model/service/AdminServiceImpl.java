@@ -72,6 +72,12 @@ public class AdminServiceImpl implements AdminService{
 		
 		return aDao.selectYearSales();
 	}
+
+	@Override
+	public List<Sales> selectRtypeSales() {
+		
+		return aDao.selectRtypeSales();
+	}
 	 
 
 

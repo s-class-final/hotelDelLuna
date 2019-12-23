@@ -88,4 +88,13 @@
  
  </select>
  
+ <select id="selectRtypeSales" resultMap="salesResultSet">
+ SELECT R_TYPE,SUM(PRICE) AS PRICE
+ FROM SALES
+ WHERE CKIN_DATE BETWEEN '20190101' and '20191231'
+ GROUP BY R_TYPE
+ ORDER BY R_TYPE DESC
+
+ </select>
+ 
 </mapper>
