@@ -51,8 +51,6 @@
 
 <body>
    <jsp:include page="../../common/menubar.jsp"/> 
-   
-
 
    <!-- 컨텐츠 영역 -->
    <section id="container">
@@ -259,11 +257,11 @@
       //기존에 선택된 값이 다시 클릭된 경우라면 삭제해야 함
       // 체크여부 확인
       if($("input:checkbox[name=bed]").is(":checked") == true) {
-         $('#addbed').prop("checked", true);
          $('#res_addBed').text("베드 추가");
+         $('#addbed').val('Y');
       }else{
-         $('#addbed').prop("checked", false);
          $('#res_addBed').text("");
+         $('#addbed').val('');
       }
    }
    
@@ -336,13 +334,18 @@
       
       //기존에 선택된 값이 다시 클릭된 경우라면 삭제해야 함
       if(li.find("label").length){
-         li.find("label").remove();
-         //선택 후 summary에도 값 제거(사이드메뉴)
-      }else{
-         $('.swiperWrap').find("label").remove();
-         var label = $("<label>").attr({id : index}).text("선택");
-         //선택 후 summary에도 값 추가(사이드메뉴)
-      }
+          li.find("label").remove();
+          //선택 후 summary에도 값 제거(사이드메뉴)
+          li.attr({"style":"border:0;"});
+       }else{
+          $('.swiperWrap').find("label").remove();
+          $('.swiperWrap li').attr({"style":"border:0;"});
+          var label = $("<label>").attr({id : index});
+          
+          //선택 후 summary에도 값 추가(사이드메뉴)
+       }
+
+      li.attr({"style":"border-bottom:2px solid #9c836a"});
       
       var room = $("#inType"+index).val();
       $("#roomType").val(room);

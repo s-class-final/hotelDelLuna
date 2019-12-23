@@ -141,7 +141,8 @@
 		WHERE RES_USERID=#{res_userId}
 			AND RES_CHECKIN=#{res_checkIn}
 			AND RES_CHECKOUT=#{res_checkOut}
-	
+			AND ROWNUM =1
+			ORDER BY RES_NO DESC
 	</select>
 	
 	<!-- 날짜별 예약 정보 생성 -->
