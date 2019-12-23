@@ -30,6 +30,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.hotelDelLuna.admin.model.service.AdminService;
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.common.Pagination;
 import com.kh.hotelDelLuna.member.model.service.MemberService;
@@ -50,6 +51,8 @@ public class ReservationController {
 	@Autowired
 	MemberService mService;
 	
+	@Autowired
+	AdminService aService;
 	
 	/********** 처음 예약 페이지 뿌려줄 때 **********/
 	@RequestMapping(value = "entireResList.do", method = RequestMethod.GET)
@@ -652,24 +655,29 @@ public class ReservationController {
 	 * @throws IOException *********/
 		@RequestMapping(value = "payStatusCheck.do")
 		public void payStatusCheck(ModelAndView mv,HttpServletResponse response,
-				@RequestParam(value = "res_no", required = false) int res_no) throws IOException {
+				@RequestParam(value = "res_no", required = false) int res_no,
+				@RequestParam(value = "invoice", required = false) String invoice) throws IOException {
 			
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
-
+				
 			System.out.println("예약번호 : "+res_no);
 			
 			int result = rService.payStatusCheck(res_no);
 			
 			Reservation res = rService.selectResOne(res_no);
-			
+			res.setRes_invoice(invoice);
+			System.out.println("결제와 매출에 저장할 예약내역 : "+res);
+			res.setRes_adult(String.valueOf(Integer.valueOf(res.getRes_adult())+Integer.valueOf(res.getRes_child())));
 			// 해당 멤버에 포인트 적립해주자
 			int pResult = mService.plusPoint(res);
 			
 			// 결제 테이블에 내역 생성해주자
-			
-			
-			
+			// Invoice 테이블, 유저이름,유저폰,룸타입,체크인날짜 하나,인원수,총액,유저이메일, 인보이스 발행요청상태
+			int iResult = rService.insertInvoice(res);
+			// sales 테이블 룸타입, 총가격, 체크인날짜 하나
+			int sResult = rService.insertSales(res);
+				
 			if(result>0&&pResult>0) {
 				out.println("<script>alert('입금 완료 처리 되었습니다'); location.href='entireResList.do';</script>");
 

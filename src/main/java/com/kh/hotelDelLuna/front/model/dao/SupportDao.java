@@ -7,6 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.hotelDelLuna.admin.model.vo.Invoice;
+import com.kh.hotelDelLuna.admin.model.vo.Sales;
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.front.model.vo.Notice;
 import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
@@ -75,6 +77,16 @@ public class SupportDao {
 
 	public int insertReservationGst(Reservation r) {
 		return sqlSession.insert("reservationMapper.insertReservationGst", r);
+	}
+
+
+	public int insertInvoiceGst(Invoice i) {
+		return sqlSession.insert("reservationMapper.insertInvoiceGst", i);
+	}
+
+
+	public int insertSalesGst(Reservation r) {
+		return sqlSession.insert("reservationMapper.insertSalesGst", r);
 	}
 
 	

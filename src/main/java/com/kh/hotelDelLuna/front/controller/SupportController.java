@@ -1,7 +1,6 @@
 package com.kh.hotelDelLuna.front.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -10,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,11 +18,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.kh.hotelDelLuna.admin.model.vo.Invoice;
+import com.kh.hotelDelLuna.admin.model.vo.Sales;
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.common.Pagination;
 import com.kh.hotelDelLuna.front.model.exception.SupportException;
 import com.kh.hotelDelLuna.front.model.service.SupportService;
 import com.kh.hotelDelLuna.front.model.vo.Notice;
+import com.kh.hotelDelLuna.member.model.service.MemberService;
+import com.kh.hotelDelLuna.member.model.vo.Member;
 import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
 import com.kh.hotelDelLuna.room.model.vo.RoomType;
 
@@ -34,6 +35,9 @@ public class SupportController {
 	
 	@Autowired
 	private SupportService sService;
+	
+	@Autowired
+	MemberService mService;
 	
 	//사용자 예약페이지 이동
 	@RequestMapping(value="ReservationGuest.do", method = RequestMethod.GET)
@@ -145,24 +149,67 @@ public class SupportController {
 		System.out.println(USER_EMAIL);
 		System.out.println(USER_REQUIRE);
 		
+		r.setRes_userId(USER_EMAIL);
+		
 		//연락처
 		String tel = USER_TEL1 + "-" + USER_TEL2 + "-" + USER_TEL3;
 		System.out.println(tel);
 		
 		
-		//예약테이블에 입력할 값들
-		r.setRes_userId(USER_EMAIL);
-		r.setRes_require(USER_REQUIRE);
+		// 1_1. 예약자 아이디가 회원에 있는지 확인!
+		System.out.println(r.getRes_userId());
+		Member m = new Member(r.getRes_userId());
+		m.setUserName(USER_NM);
+		m.setUserPhone(tel);
+		Member member = mService.findMember(m);		
+
+		int mInsert=1;
 		
-		//예약 테이블에 예약 정보 입력
-		int result1 = sService.insertReservationGst(r);
+		// 2. 예약자 아이디가 회원,비회원에 없으면 비회원 테이블에 예약자 정보 삽입
+		if(member==null){
+			mInsert = mService.insertNonMember(m);
+		}
 		
-		//인보이스 테이블에 정보 입력
-		
-		//매출 테이블에 정보 입력
-		
-		if(result1 > 0) {
-			return "index";
+		//3. 
+		if(mInsert > 0) {
+			//예약테이블에 입력할 값들
+			r.setRes_userId(USER_EMAIL);
+			r.setRes_require(USER_REQUIRE);
+			
+			//예약 테이블에 예약 정보 입력
+			int result1 = sService.insertReservationGst(r);
+			
+			if(result1 > 0) {
+				//인보이스 객체에 정보 입력
+				Invoice i = new Invoice();
+				
+				i.setrType(r.getRes_roomType());
+				i.setCkinDate(r.getRes_checkIn());
+				i.setUserName(USER_NM);
+				i.setQuantity(Integer.valueOf(r.getRes_adult())+Integer.valueOf(r.getRes_child()));
+				i.setTotalPrice(r.getRes_allPay());
+				i.setUserEmail(USER_EMAIL);
+				i.setUserPhone(tel);
+				
+				//인보이스 테이블에 예약 정보 입력
+				int result2 = sService.insertInvoiceGst(i);
+				
+				if(result2 > 0) {
+					//매출 테이블에 예약 정보 입력
+					int result3 = sService.insertSalesGst(r);
+					
+					if(result3 > 0) {
+						return "../../main";
+					}else {
+						throw new SupportException("예약 실패");
+					}
+				}else {
+					throw new SupportException("예약 실패");
+				}
+				
+			}else {
+				throw new SupportException("예약 실패");
+			}
 		}else {
 			throw new SupportException("예약 실패");
 		}
@@ -229,9 +276,15 @@ public class SupportController {
 	
 	// 즐길거리 부대시설 이동
 	@RequestMapping(value="facility.do", method = RequestMethod.GET)
-	public String facility(Model model, String room) {
+	public ModelAndView facility(ModelAndView mv, String room
+			,@RequestParam (value="focus", required=false) Integer focus) {
 		System.out.println("facility서블릿 실행");
-		return "front/entertainment/facility";
+		
+		if(focus!=null) {
+			mv.addObject("focus", focus);			
+		}
+		mv.setViewName("front/entertainment/facility");
+		return mv;
 	}
 	
 	// 즐길거리 부대시설 이동
@@ -263,7 +316,7 @@ public class SupportController {
 	@RequestMapping(value="dining.do", method = RequestMethod.GET)
 	public String dining(String CATE) {
 		System.out.println("dining서블릿 실행 : "+ CATE);
-		
+			
 		if(CATE!=null) {
 			switch(CATE) {
 			case "dining" : return "front/dining/dining"; 

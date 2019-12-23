@@ -2,6 +2,8 @@ package com.kh.hotelDelLuna.front.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.hotelDelLuna.admin.model.vo.Invoice;
+import com.kh.hotelDelLuna.admin.model.vo.Sales;
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.front.model.vo.Notice;
 import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
@@ -36,6 +38,10 @@ public interface SupportService {
 	public ArrayList<RoomType> selectReservationGst(Reservation res);
 
 	public int insertReservationGst(Reservation r);
+
+	public int insertInvoiceGst(Invoice i);
+
+	public int insertSalesGst(Reservation r);
 
 
 	

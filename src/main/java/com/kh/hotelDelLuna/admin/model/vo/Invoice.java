@@ -4,11 +4,11 @@ import java.sql.Date;
 
 public class Invoice {
 
-	
+
 	private int ivId;
 	private String userName;
 	private String userPhone;
-	private int rType;
+	private String rType;
 	private Date ckinDate;
 	private int price;
 	private Date rqDate;
@@ -21,7 +21,7 @@ public class Invoice {
 		super();
 	}
 
-	public Invoice(int ivId, String userName, String userPhone, int rType, Date ckinDate, int price, Date rqDate,
+	public Invoice(int ivId, String userName, String userPhone, String rType, Date ckinDate, int price, Date rqDate,
 			int quantity, int totalPrice, String userEmail, String iStatus) {
 		super();
 		this.ivId = ivId;
@@ -61,11 +61,11 @@ public class Invoice {
 		this.userPhone = userPhone;
 	}
 
-	public int getrType() {
+	public String getrType() {
 		return rType;
 	}
 
-	public void setrType(int rType) {
+	public void setrType(String rType) {
 		this.rType = rType;
 	}
 

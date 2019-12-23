@@ -21,7 +21,9 @@ public class Reservation {
 	private String res_payStatus;
 	private String res_require;
 	private int res_allPay;
+	private String res_invoice;
 	
+
 	public Reservation() {
 		super();
 	}
@@ -47,12 +49,7 @@ public class Reservation {
 		this.res_payStatus = res_payStatus;
 		this.res_require = res_require;
 	}
-	public int getRes_allPay() {
-		return res_allPay;
-	}
-	public void setRes_allPay(int res_allPay) {
-		this.res_allPay = res_allPay;
-	}
+
 	public Reservation(int res_no, int res_roomNo, String res_roomType, String res_userId, String res_userName,
 			int res_breakfast, int res_dinner, String res_smoking, String res_addBed, String res_adult,
 			String res_child, Date res_checkIn, Date res_checkOut, String res_status, String res_payStatus,
@@ -172,6 +169,19 @@ public class Reservation {
 	public void setRes_require(String res_require) {
 		this.res_require = res_require;
 	}
+	public int getRes_allPay() {
+		return res_allPay;
+	}
+	public void setRes_allPay(int res_allPay) {
+		this.res_allPay = res_allPay;
+	}
+
+	public String getRes_invoice() {
+		return res_invoice;
+	}
+	public void setRes_invoice(String res_invoice) {
+		this.res_invoice = res_invoice;
+	}
 	@Override
 	public String toString() {
 		return "Reservation [res_no=" + res_no + ", res_roomNo=" + res_roomNo + ", res_roomType=" + res_roomType
@@ -179,10 +189,8 @@ public class Reservation {
 				+ ", res_dinner=" + res_dinner + ", res_smoking=" + res_smoking + ", res_addBed=" + res_addBed
 				+ ", res_adult=" + res_adult + ", res_child=" + res_child + ", res_checkIn=" + res_checkIn
 				+ ", res_checkOut=" + res_checkOut + ", res_status=" + res_status + ", res_payStatus=" + res_payStatus
-				+ ", res_require=" + res_require + ", res_allPay=" + res_allPay + "]";
+				+ ", res_require=" + res_require + ", res_allPay=" + res_allPay + ", res_invoice=" + res_invoice + "]";
 	}
-
-	
 	
 }
 
