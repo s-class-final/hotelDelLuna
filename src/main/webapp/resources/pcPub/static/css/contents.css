@@ -469,14 +469,14 @@ body.reservation #headerWrap .btnClose { display:block; position:absolute; top:2
 
 .roomSelectBox { position:relative; padding:40px 0; border-top:1px dotted #e6e3df;}
 .roomSelectBox h2 { font-size:16px;}
-.roomSelectBox .swiperWrap { overflow:hidden; height:280px; margin-bottom:32px;}
+.roomSelectBox .swiperWrap { overflow:hidden; height:260px; margin-bottom:32px;}
 .roomSelectBox .swiperWrap ul { overflow:hidden; margin-left:-16px;}
 .roomSelectBox .swiperWrap li { float:left; width:256px; margin-left:16px; outline:0;}
 .roomSelectBox .roomInfo {}
 .roomSelectBox .roomInfo .img { width:256px;}
 .roomSelectBox .roomInfo .img img { width:100%;}
 .roomSelectBox .roomInfo h3 { margin-top:20px; color:#9c836a;}
-.roomSelectBox .roomInfo p { margin-top:10px; color:#333; font-weight: 300;}
+.roomSelectBox .roomInfo p { margin-top:5px; color:#333; font-weight: 300;}
 .roomSelectBox .roomInfo .small { margin-top:3px; font-size:12px; color:#999; }
 .roomSelectBox .roomInfo .choice { margin-top:20px;}
 .roomSelectBox .roomInfo .choice > * + * { margin-left:25px;}
@@ -1859,7 +1859,7 @@ ul.diningTab li.on a{color: #9c836a; text-decoration: underline;}
 	.paymentOption .radioBox:last-child{float: right;}	
 	.paymentOption .radioBox input{top: 15px; left: 16px; cursor: pointer;}
 	.paymentOption .radioBox label{display: block; width: 100%; padding: 15px 16px 15px 54px; font-weight: 300; line-height: 24px; border: 1px solid #e6e3df; cursor: pointer; transition: 0.1s;}
-	.paymentOption .radioBox label:after{left: 16px; width: 24px; height: 24px; margin-top: -12px; background:url('/pcPub/static/images/common/icon/icon_radio2.png') no-repeat; cursor: pointer;}
+	.paymentOption .radioBox label:after{left: 16px; width: 24px; height: 24px; margin-top: -12px; background:url('/resources/pcPub/static/images/common/icon/icon_radio2.png') no-repeat; cursor: pointer;}
 	.paymentOption .radioBox input:checked + label{color: #9c836a; border: 1px solid #9c836a;}
 	.paymentOption .radioBox input:checked + label:after{background-position: 0 -24px;}
 	.paymentOption .textBox{margin-top: 24px; border: 1px solid #e6e3df;}
