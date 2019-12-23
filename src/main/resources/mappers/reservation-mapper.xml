@@ -245,6 +245,27 @@
 		WHERE ROOMTYPE=#{res_roomType}
 	</select>
 	
+	<!-- 인보이스 정보 생성 -->
+	<insert id="insertInvoice" parameterType="Reservation">
+	
+	INSERT INTO INVOICE VALUES (SEQ_IVID.NEXTVAL,(SELECT USERNAME
+    FROM MEMBER
+    WHERE USERID = #{res_userId}),(SELECT USERPHONE
+    FROM MEMBER
+    WHERE USERID = #{res_userId}),#{res_roomType},#{res_checkIn},
+    DEFAULT,#{res_adult},#{res_allPay},#{res_userId},#{res_invoice})
+	
+	</insert>
+	
+	
+	<!-- 매출 정보 생성 -->
+	<insert id="insertSales" parameterType="Reservation">
+	
+	INSERT INTO SALES
+	VALUES (#{res_roomType},#{res_allPay},#{res_checkIn})
+	
+	</insert>
+	
 	
 	<!-- 예약 가능한 날짜 검색
 		1.선택된 날짜에서 예약되지 않은 방 정보 불러오기 -->

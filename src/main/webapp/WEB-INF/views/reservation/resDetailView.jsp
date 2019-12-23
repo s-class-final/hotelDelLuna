@@ -258,7 +258,7 @@
 							<span style="display:inline">적립 예정 포인트 </span>
 							<input name="r_point" type="text" value="0" style="width:100px;border:0px;text-align:right;" readonly>p
 							<span style="display:inline;padding-left: 50px;padding-right: 15px;">인보이스 발행 </span>
-							<input name="r_invoice" type="checkBox" style="padding-left: 20px;width: 25px;height: 25px">	
+							<input name="r_invoice" class="check" type="checkBox" value="N" style="padding-left: 20px;width: 25px;height: 25px">	
 						</h1> 
 					</div>
 				<div class="popJoinBox">
@@ -349,7 +349,8 @@ $(function(){
 
 	function payStatusCheck(){
 		var res_no = ${res.res_no};
-		location.href="payStatusCheck.do?res_no="+res_no;
+		var invoice = $("input[name=r_invoice]").val()
+		location.href="payStatusCheck.do?&res_no="+res_no+"&invoice="+invoice;
 		
 	}
 	
