@@ -67,6 +67,11 @@ public class SupportServiceImpl implements SupportService{
 	public ArrayList<RoomType> selectReservationGst(Reservation res) {
 		return sDao.selectReservationGst(res);
 	}
+
+	@Override
+	public int insertReservationGst(Reservation r) {
+		return sDao.insertReservationGst(r);
+	}
 	
 
 }

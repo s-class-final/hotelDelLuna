@@ -145,13 +145,28 @@ public class SupportController {
 		System.out.println(USER_EMAIL);
 		System.out.println(USER_REQUIRE);
 		
+		//연락처
 		String tel = USER_TEL1 + "-" + USER_TEL2 + "-" + USER_TEL3;
-		
 		System.out.println(tel);
 		
+		
+		//예약테이블에 입력할 값들
+		r.setRes_userId(USER_EMAIL);
 		r.setRes_require(USER_REQUIRE);
 		
-		return "front/reservation/ReservationPayment";
+		//예약 테이블에 예약 정보 입력
+		int result1 = sService.insertReservationGst(r);
+		
+		//인보이스 테이블에 정보 입력
+		
+		//매출 테이블에 정보 입력
+		
+		if(result1 > 0) {
+			return "index";
+		}else {
+			throw new SupportException("예약 실패");
+		}
+		
 	}
 	
 	

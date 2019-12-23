@@ -72,5 +72,10 @@ public class SupportDao {
 		return (ArrayList)sqlSession.selectList("reservationMapper.guestSelectList");
 	}
 
+
+	public int insertReservationGst(Reservation r) {
+		return sqlSession.insert("reservationMapper.insertReservationGst", r);
+	}
+
 	
 }

@@ -224,8 +224,7 @@ body {
 	         $("#checkId").html('');
 
 	      } else {
-	         $("#userId3").val(
-	               $("#userId1").val() + '@' + $("#userId2").val());
+	         $("#userId3").val( $("#userId1").val() + '@' + $("#userId2").val());
 
 	         if (userId1.val().length <= 3) {
 	            $("#checkId").html('');

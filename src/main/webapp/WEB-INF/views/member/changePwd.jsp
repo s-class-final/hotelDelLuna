@@ -168,7 +168,7 @@ body {
 					$("#userPwd").val("");
 					$("#checkPwd").val("");
 					alert("비밀번호가 변경되었습니다.");
-					location.href="index.jsp";
+					location.href="main.jsp";
 					
 				}else{
 					$("userPwd").val("");

@@ -35,6 +35,8 @@ public interface SupportService {
 	//예약 페이지 이동 전에 3개월 내에 예약 가능한 방이 남아있는지 먼저 확인, 예약 가능한 방이 있는 일자만 뽑아냄.
 	public ArrayList<RoomType> selectReservationGst(Reservation res);
 
+	public int insertReservationGst(Reservation r);
+
 
 	
 	

@@ -272,7 +272,7 @@
 
 <!-- //컨텐츠 영역 -->
 
-
+<jsp:include page="WEB-INF/views/common/footer.jsp"/>
 <style>
 .pd0i{padding: 0px !important;}
 p.astBefore{color: #999; font-size: 12px !important; margin-left: 12px;}

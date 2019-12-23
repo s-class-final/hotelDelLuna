@@ -263,4 +263,11 @@
 		ON A.ROOMSRT = B.RSRT
 		WHERE A.ROOMSCNT - NVL(B.RSRN,0) > 0)
 	</select>
+	
+	<insert id="insertReservationGst" parameterType="Reservation">
+		INSERT INTO
+		RESERVATION
+		VALUES(SEQ_RESNO.NEXTVAL,DEFAULT,#{res_roomType},#{res_userId},#{res_breakfast},#{res_dinner},
+				#{res_smoking},#{res_addBed},#{res_adult},#{res_child},#{res_checkIn},#{res_checkOut},DEFAULT,'입금완료',#{res_require},#{res_allPay})
+	</insert>
 </mapper>

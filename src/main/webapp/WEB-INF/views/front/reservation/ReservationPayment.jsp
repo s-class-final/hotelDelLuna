@@ -59,10 +59,12 @@
 		<div class="reservationWrap">
 	
 			<!-- //우측메뉴 -->
-			<form id="resPayment" method="post" action="ReservationTest.do">
+
 			<div class="reservationBox">
 				<div class="paymentWrap">
 					<!-- 회원정보 -->
+					<c:if test="${ empty sessionScope.loginUser }">
+					<form id="resPayment" name="resPayment" method="post" action="ReservationTest.do">
 					<div class="paymentForm clearFixed" id="paymentForm">
 						<h2>회원 정보</h2>
 						<p class="sub">예약 정보 관리와 예약자 확인을 위하여 아래의 필수 항목을 입력해주세요.</p>
@@ -73,15 +75,14 @@
 								<dl class="nameType1">
 									<dt><label for="USER_NM">이름 <span class="color">*</span></label></dt>
 									<dd>
-										<div class="inp">
-											<input type="text" id="USER_NM" name="USER_NM" required value="" maxlength="20" title="이름">
-											<button class="btnDelete"></button>
+										<div class="inp" style="width:180px;">
+											<input type="text" id="lastName" name="lastName" value="" maxlength="50" placeholder="Last Name(성)" title="Last Name(성)" oninput="inputId();">
 										</div>
-										<select class="selectBox" id="USER_SEX" name="USER_SEX">
-											<option value="">선택</option>
-											<option value="male">Mr.</option>
-											<option value="female">Ms.</option>
-										</select>
+										<div class="inp" style="width:180px;">
+											<input type="text" id="firstName" name="firstName" value="" maxlength="50" placeholder="First Name(이름)" title="First Name(이름)" oninput="inputId();">
+										</div>
+										<input type="hidden" id="USER_NM" name="USER_NM" required value="" maxlength="20" title="이름">
+										
 										<div class="errorText"><!-- errorMsg --></div>
 									</dd>
 								</dl>
@@ -138,6 +139,127 @@
 						</div>
 					</div>
 					</form>
+					</c:if>
+					
+					<c:if test="${ !empty sessionScope.loginUser }">
+					<form id="form1" name="form1" method="post" action="ReservationTest.do">
+					<div class="paymentForm clearFixed" id="paymentForm">
+						<h2>회원 정보</h2>
+						<p class="sub">예약 정보 관리와 예약자 확인을 위하여 아래의 필수 항목을 입력해주세요.</p>
+						<p class="formImportant"><span class="color">*</span> 필수입력항목</p>
+						<div class="clearFixed">
+							<div class="left">
+								
+								<dl class="nameType1">
+									<dt><label for="USER_NM">이름 <span class="color">*</span></label></dt>
+									<dd>
+										<c:forTokens var="userName" items="${loginUser.userName}" delims=" " varStatus="status">
+											<c:if test="${status.index eq 0}">
+												<div class="inp" style="width:180px;">
+													<input type="text" id="lastName" name="lastName" value="${userName}" maxlength="50" placeholder="Last Name(성)" title="Last Name(성)">
+												</div>
+											</c:if>
+											<c:if test="${status.index eq 1}">
+												<div class="inp" style="width:180px;">
+													<input type="text" id="firstName" name="firstName" value="${userName}" maxlength="50" placeholder="First Name(이름)" title="First Name(이름)">
+												</div>
+											</c:if>
+										</c:forTokens>
+										<input type="hidden" id="USER_NM" name="USER_NM" required value="" maxlength="20" title="이름">
+										<div class="errorText"><!-- errorMsg --></div>
+									</dd>
+								</dl>
+							</div>
+							<div class="right">
+								<dl class="phone">
+									<dt><label for="Phone">휴대폰 번호<span class="color">*</span></label></dt>
+									<dd>
+										<c:forTokens var="userPhone" items="${loginUser.userPhone}" delims="-" varStatus="status">
+										<c:if test="${status.index eq 0}">
+										<select class="selectBox" id="USER_TEL1" name="USER_TEL1" required >
+											<c:if test="${userPhone eq 010}">
+												<option value = "010" selected>010</option>
+												<option value = "011">011</option>
+												<option value = "016">016</option>
+												<option value = "017">017</option>
+												<option value = "019">019</option>
+											</c:if>
+											<c:if test="${userPhone eq 011}">
+												<option value = "010">010</option>
+												<option value = "011" selected>011</option>
+												<option value = "016">016</option>
+												<option value = "017">017</option>
+												<option value = "019">019</option>
+											</c:if>
+											<c:if test="${userPhone eq 016}">
+												<option value = "010">010</option>
+												<option value = "011">011</option>
+												<option value = "016" selected>016</option>
+												<option value = "017">017</option>
+												<option value = "019">019</option>
+											</c:if>
+											<c:if test="${userPhone eq 017}">
+												<option value = "010">010</option>
+												<option value = "011">011</option>
+												<option value = "016">016</option>
+												<option value = "017" selected>017</option>
+												<option value = "019">019</option>
+											</c:if>
+											<c:if test="${userPhone eq 019}">
+												<option value = "010">010</option>
+												<option value = "011">011</option>
+												<option value = "016">016</option>
+												<option value = "017">017</option>
+												<option value = "019" selected>019</option>
+											</c:if>
+										</select>
+										</c:if>
+										<c:if test="${status.index eq 1}">
+											<div class="inp" style="width:122px;">
+												<input type="tel" id="USER_TEL2" name="USER_TEL2" value="${userPhone}" required maxlength="4" placeholder="" onkeydown="return inputNumCheck(event)" onkeyup="removeChar(event)" title="휴대폰 가운데 자리">
+												<button class="btnDelete"></button>
+											</div>
+											<span>-</span>
+										</c:if>
+										<c:if test="${status.index eq 2}">
+											<div class="inp" style="width:122px;">
+												<input type="tel" id="USER_TEL3" name="USER_TEL3" value="${userPhone}" required maxlength="4" placeholder="" onkeydown="return inputNumCheck(event)" onkeyup="removeChar(event)" title="휴대폰 끝 자리">
+												<button class="btnDelete"></button>
+											</div>
+											<div class="errorText"></div>
+										</c:if>
+										</c:forTokens>
+									</dd>
+								</dl>
+								
+							</div>
+						</div>
+						<div>
+							<dl class="email">
+								<dt><label for="USER_EMAIL">이메일 <span class="color">*</span></label></dt>
+								<dd>
+									<div class="inp">
+										<input type="text" id="USER_EMAIL" name="USER_EMAIL" required value="${loginUser.userId}" placeholder="" title="이메일">
+										<button class="btnDelete"></button>
+									</div>
+									<div class="errorText"></div>
+								</dd>
+							</dl>
+							
+							<dl class="request">
+								<dt><label>요청사항</label></dt>
+								<dd>
+									<div class="inp">
+										<textarea id="requireText" id="USER_REQUIRE" name="USER_REQUIRE" value="" placeholder="" title="요청사항" style="resize: none; width:100%; height:100%;"></textarea>
+										<button class="btnDelete"></button>
+									</div>
+									<div class="errorText"></div>
+								</dd>
+							</dl>
+						</div>
+					</div>
+					</form>
+					</c:if>
 					<!-- //회원정보 -->
 	
 					<!-- 보유 멤버십 + 할인정보 -->
@@ -539,7 +661,9 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 	});
 	
 	
-	
+	function inputId(){
+		$("#USER_NM").val( $("#lastName").val() + ' ' + $("#firstName").val());
+	}
 	
 
 </script>

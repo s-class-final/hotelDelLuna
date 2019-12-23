@@ -52,6 +52,8 @@
 </section>
 <!-- //컨텐츠 영역 -->
 
+<jsp:include page="../common/footer.jsp"/>
+
 <script>
 	function replyInquiry(){
 		if (confirm("답변을 수정하시겠습니까?")){
