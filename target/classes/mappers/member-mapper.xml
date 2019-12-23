@@ -115,7 +115,7 @@
 		SELECT *
 		FROM MEMBER
 		WHERE USERID=#{userId}
-		AND M_STATUS='Y'
+		AND M_STATUS='Y' OR M_STATUS='B'
 	</select>
 	
 	<update id="updateMember" parameterType="Member">

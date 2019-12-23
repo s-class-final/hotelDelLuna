@@ -389,8 +389,12 @@
 	var nowPage;   //현재 페이지를 담을 변수
 	var resNo;	   //예약 번호를 담을 변수
 	var totalNum=0;
-	$(function(){	
- 		 pagingAjax(1);
+ 		 
+
+
+	$(function(){
+
+		//pagingAjax(1);
 		
 		 $("#tabmenu1").prop('checked', true);
 		 $("#tabmenu1").parent().toggleClass("hovered");
@@ -481,6 +485,17 @@
 		
 		
 	});
+	
+	// 검색어 입력후 엔터시 자동 submit
+	$(document).ready(function(){
+	       $("#searchValue").keypress(function (e) {
+	        if (e.which == 13){
+	                   searchResList();  // 실행할 이벤트
+	        }
+	    });
+	});
+	
+	
 		/* 흡연여부 베드추가여부 체크 */
 		$(document).on("click",".check",function(){
 			if ($(this).is(":checked")){ 
@@ -669,7 +684,16 @@
 		// 초기화 
 		function init(){
 			$("#checkId").html('');
+			$("#email1").prop("readonly",false);
+			$("#email2").prop("readonly",false);								
+			$("#email").prop("disabled",false);
+			$("input[name=userName1]").prop("readonly",false);
+			$("input[name=userName2]").prop("readonly",false);
 			
+			$("select[name=phone1]").prop("disabled",false);
+			$("input[name=phone2]").prop("readonly",false);
+			$("input[name=phone3]").prop("readonly",false);
+
 		}
 		
 		// 전화번호 4자리 입력시 다음 입력칸으로 넘어가게
@@ -810,13 +834,16 @@
 								var afterName = beforeName.split(" ");
 								var beforePhone = data.userPhone;
 								var afterPhone = beforePhone.split("-");
-								
-								$("input[name=userName1]").val(afterName[0]);
-								$("input[name=userName2]").val(afterName[1]);
-								$("select[name=phone1]").val(afterPhone[0]).prop("selected", true);
+							
+								$("#email1").prop("readonly",true);
+								$("#email2").prop("readonly",true);								
+								$("#email").prop("disabled",true);
+								$("input[name=userName1]").val(afterName[0]).prop("readonly",true);
+								$("input[name=userName2]").val(afterName[1]).prop("readonly",true);
+								$("select[name=phone1]").val(afterPhone[0]).prop("selected", true).prop("disabled",true);
 
-								$("input[name=phone2]").val(afterPhone[1]);
-								$("input[name=phone3]").val(afterPhone[2]);
+								$("input[name=phone2]").val(afterPhone[1]).prop("readonly",true);
+								$("input[name=phone3]").val(afterPhone[2]).prop("readonly",true);
 
 							}
 						},

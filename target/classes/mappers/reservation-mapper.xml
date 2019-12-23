@@ -141,6 +141,8 @@
 		WHERE RES_USERID=#{res_userId}
 			AND RES_CHECKIN=#{res_checkIn}
 			AND RES_CHECKOUT=#{res_checkOut}
+			AND ROWNUM=1
+		ORDER BY RES_NO DESC
 	
 	</select>
 	
@@ -172,6 +174,7 @@
 		FROM ROOMSTATUS
 		WHERE RES_DATE = #{res_checkIn}
 		AND ROOMTYPE = #{res_roomType}
+		AND RES_NO != #{res_no}
 	</select>
 	
 	<!-- 원하는 룸 타입별 개수 구하기 -->
