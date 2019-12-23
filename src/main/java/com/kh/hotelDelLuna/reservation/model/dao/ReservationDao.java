@@ -137,5 +137,15 @@ public class ReservationDao {
 		return sqlSession.selectOne("reservationMapper.getRoomType",res_roomType);
 	}
 
+	public int insertInvoice(Reservation res) {
+
+		return sqlSession.insert("reservationMapper.insertInvoice",res);
+	}
+
+	public int insertSales(Reservation res) {
+
+		return sqlSession.insert("reservationMapper.insertSales",res);
+	}
+
 
 }

@@ -137,9 +137,15 @@ public class SupportController {
 	
 	// 즐길거리 부대시설 이동
 	@RequestMapping(value="facility.do", method = RequestMethod.GET)
-	public String facility(Model model, String room) {
+	public ModelAndView facility(ModelAndView mv, String room
+			,@RequestParam (value="focus", required=false) Integer focus) {
 		System.out.println("facility서블릿 실행");
-		return "front/entertainment/facility";
+		
+		if(focus!=null) {
+			mv.addObject("focus", focus);			
+		}
+		mv.setViewName("front/entertainment/facility");
+		return mv;
 	}
 	
 	// 즐길거리 부대시설 이동
@@ -171,7 +177,7 @@ public class SupportController {
 	@RequestMapping(value="dining.do", method = RequestMethod.GET)
 	public String dining(String CATE) {
 		System.out.println("dining서블릿 실행 : "+ CATE);
-		
+			
 		if(CATE!=null) {
 			switch(CATE) {
 			case "dining" : return "front/dining/dining"; 
