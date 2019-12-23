@@ -59,7 +59,7 @@
 		<div class="reservationWrap">
 	
 			<!-- //우측메뉴 -->
-			<form id="form1" name="form1" method="post" action="ReservationTest.do">
+			<form id="resPayment" method="post" action="ReservationTest.do">
 			<div class="reservationBox">
 				<div class="paymentWrap">
 					<!-- 회원정보 -->
@@ -335,13 +335,13 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 <script type="text/javascript">
 
 
-/* function setCookie(cname, cvalue, exdays) {
-    console.log("overiding setCookie Pc");
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+d.toUTCString();
-    document.cookie = cname + "=" + cvalue + "; " + expires;
-} */
+	function setCookie(cname, cvalue, exdays) {
+	    console.log("overiding setCookie Pc");
+	    var d = new Date();
+	    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+	    var expires = "expires="+d.toUTCString();
+	    document.cookie = cname + "=" + cvalue + "; " + expires;
+	}
 
 	//결제하기 버튼 클릭시 값 체크
 	function valueChecker() {
@@ -407,6 +407,16 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 			return false;
 		} 
 		
+		
+		payment();
+		
+		
+	}
+	
+	
+	//결제
+	function payment(){
+
 		//검증값 변수에 입력
 		var userName = $('#USER_NM').val();
 		var tel1 = $('#USER_TEL1').val();
@@ -440,13 +450,14 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 			    pay_method : 'card',
 			    merchant_uid : 'merchant_' + new Date().getTime(),
 			    name : '주문명:결제테스트',
-			    amount : ${r.res_allPay },
+			    amount : 1000,
+			    //amount : ${r.res_allPay },
 			    buyer_email : email,
 			    buyer_name : userName,
 			    buyer_tel : tel,
 			    buyer_addr : '서울특별시 강남구 삼성동',
 			    buyer_postcode : '123-456',
-			    m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+			    m_redirect_url : 'http://localhost:8881/hotelDelLuna/index.jsp'
 			}, function(rsp) {
 			    if ( rsp.success ) {
 			        var msg = '결제가 완료되었습니다.';
@@ -454,6 +465,8 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 			        msg += '상점 거래ID : ' + rsp.merchant_uid;
 			        msg += '결제 금액 : ' + rsp.paid_amount;
 			        msg += '카드 승인번호 : ' + rsp.apply_num;
+
+					$("#resPayment").submit();
 			    } else {
 			        var msg = '결제에 실패하였습니다.';
 			        msg += '에러내용 : ' + rsp.error_msg;
@@ -470,13 +483,14 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 			    pay_method : 'trans',
 			    merchant_uid : 'merchant_' + new Date().getTime(),
 			    name : '주문명:결제테스트',
-			    amount : 14000,
-			    buyer_email : 'iamport@siot.do',
-			    buyer_name : '구매자이름',
-			    buyer_tel : '010-1234-5678',
+			    amount : 1000,
+			  //amount : ${r.res_allPay },
+			    buyer_email : email,
+			    buyer_name : userName,
+			    buyer_tel : tel,
 			    buyer_addr : '서울특별시 강남구 삼성동',
 			    buyer_postcode : '123-456',
-			    m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+			    //m_redirect_url : 'http://localhost:8881/hotelDelLuna/index.jsp'
 			}, function(rsp) {
 			    if ( rsp.success ) {
 			        var msg = '결제가 완료되었습니다.';
@@ -484,6 +498,9 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 			        msg += '상점 거래ID : ' + rsp.merchant_uid;
 			        msg += '결제 금액 : ' + rsp.paid_amount;
 			        msg += '카드 승인번호 : ' + rsp.apply_num;
+			        
+					$("#resPayment").submit();
+					
 			    } else {
 			        var msg = '결제에 실패하였습니다.';
 			        msg += '에러내용 : ' + rsp.error_msg;
@@ -494,9 +511,10 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 			alert("결제 수단이 잘못되었습니다.");
 		}
 		
+		/* 
+		$("#form1").attr("action", "ReservationTest.do");
+		$("#form1").submit(); */
 		
-		
-		return true;
 	}
 	
 	

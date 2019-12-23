@@ -130,13 +130,29 @@ public class SupportController {
 	}
 	
 	//사용자 예약페이지 이동
-		@RequestMapping(value="ReservationTest.do", method = RequestMethod.POST)
-		public String ReservationTest(Locale locale, Model model) {
-			System.out.println("ReservationTest서블릿 실행");
-			
-			
-			return "front/reservation/ReservationPayment";
-		}
+	@RequestMapping(value="ReservationTest.do", method = RequestMethod.POST)
+	public String ReservationTest(HttpSession session,
+								String USER_NM, String USER_TEL1, String USER_TEL2, String USER_TEL3, String USER_EMAIL, String USER_REQUIRE) {
+		System.out.println("ReservationTest서블릿 실행");
+		
+		Reservation r = (Reservation) session.getAttribute("r");
+		
+		System.out.println(r);
+		System.out.println(USER_NM);
+		System.out.println(USER_TEL1);
+		System.out.println(USER_TEL2);
+		System.out.println(USER_TEL3);
+		System.out.println(USER_EMAIL);
+		System.out.println(USER_REQUIRE);
+		
+		String tel = USER_TEL1 + "-" + USER_TEL2 + "-" + USER_TEL3;
+		
+		System.out.println(tel);
+		
+		r.setRes_require(USER_REQUIRE);
+		
+		return "front/reservation/ReservationPayment";
+	}
 	
 	
 	
