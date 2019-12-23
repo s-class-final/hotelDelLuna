@@ -10,7 +10,6 @@
  	<result property="userPhone" column="USER_PHONE"/>
  	<result property="rType" column="R_TYPE"/>
  	<result property="ckinDate" column="CKIN_DATE"/>
- 	<result property="price" column="PRICE"/>
  	<result property="rqDate" column="RQ_DATE"/>
  	<result property="quantity" column="QUANTITY"/>
  	<result property="totalPrice" column="TOTALPRICE"/>
@@ -45,7 +44,7 @@
  	SELECT *
  	FROM INVOICE
  	WHERE IVID = #{ivId}
- 	AND I_STATUS='N'
+ 
  	
  </select>
  
@@ -86,6 +85,15 @@
  GROUP BY TO_DATE(EXTRACT(YEAR FROM CKIN_DATE),'YY')
  ORDER BY CKIN_DATE DESC
  
+ </select>
+ 
+ <select id="selectRtypeSales" resultMap="salesResultSet">
+ SELECT R_TYPE,SUM(PRICE) AS PRICE
+ FROM SALES
+ WHERE CKIN_DATE BETWEEN '20190101' and '20191231'
+ GROUP BY R_TYPE
+ ORDER BY R_TYPE DESC
+
  </select>
  
 </mapper>

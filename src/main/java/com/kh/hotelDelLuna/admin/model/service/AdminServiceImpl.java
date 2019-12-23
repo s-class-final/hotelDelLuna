@@ -49,12 +49,6 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	
-	  @Override 
-	  public Sales salesDetail(String ckDate) {
-	  
-		  return aDao.salesDetail(ckDate); }
-
-
 	@Override
 	public List<Sales> selectSalesList() {
 		
@@ -71,6 +65,12 @@ public class AdminServiceImpl implements AdminService{
 	public List<Sales> selectYearSales() {
 		
 		return aDao.selectYearSales();
+	}
+
+	@Override
+	public List<Sales> selectRtypeSales() {
+		
+		return aDao.selectRtypeSales();
 	}
 	 
 

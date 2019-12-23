@@ -15,7 +15,13 @@ body {
 }
 </style>
 </head>
-<body onkeydown="javascript:confirmPwd();">
+
+<script>
+window.history.forward();
+function noBack(){window.history.forward();}
+</script>
+
+<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onkeydown="javascript:confirmPwd();">
 <jsp:include page="../common/menubar.jsp"/>
 
 <script type="text/javascript">

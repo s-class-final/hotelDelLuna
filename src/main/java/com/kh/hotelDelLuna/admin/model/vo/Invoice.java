@@ -10,7 +10,6 @@ public class Invoice {
 	private String userPhone;
 	private String rType;
 	private Date ckinDate;
-	private int price;
 	private Date rqDate;
 	private int quantity;
 	private int totalPrice;
@@ -21,15 +20,15 @@ public class Invoice {
 		super();
 	}
 
-	public Invoice(int ivId, String userName, String userPhone, String rType, Date ckinDate, int price, Date rqDate,
-			int quantity, int totalPrice, String userEmail, String iStatus) {
+
+	public Invoice(int ivId, String userName, String userPhone, String rType, Date ckinDate, Date rqDate, int quantity,
+			int totalPrice, String userEmail, String iStatus) {
 		super();
 		this.ivId = ivId;
 		this.userName = userName;
 		this.userPhone = userPhone;
 		this.rType = rType;
 		this.ckinDate = ckinDate;
-		this.price = price;
 		this.rqDate = rqDate;
 		this.quantity = quantity;
 		this.totalPrice = totalPrice;
@@ -77,14 +76,6 @@ public class Invoice {
 		this.ckinDate = ckinDate;
 	}
 
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
-	}
-
 	public Date getRqDate() {
 		return rqDate;
 	}
@@ -128,9 +119,11 @@ public class Invoice {
 	@Override
 	public String toString() {
 		return "Invoice [ivId=" + ivId + ", userName=" + userName + ", userPhone=" + userPhone + ", rType=" + rType
-				+ ", ckinDate=" + ckinDate + ", price=" + price + ", rqDate=" + rqDate + ", quantity=" + quantity
-				+ ", totalPrice=" + totalPrice + ", userEmail=" + userEmail + ", iStatus=" + iStatus + "]";
+				+ ", ckinDate=" + ckinDate + ", rqDate=" + rqDate + ", quantity=" + quantity + ", totalPrice="
+				+ totalPrice + ", userEmail=" + userEmail + ", iStatus=" + iStatus + "]";
 	}
+
+	
 
 	
 	

@@ -17,7 +17,13 @@ body {
 </style>
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-<body>
+
+<script>
+window.history.forward();
+function noBack(){window.history.forward();}
+</script>
+
+<body onload="noBack();" onpageshow="if(event.persisted) noBack();">
 	<jsp:include page="../common/menubar.jsp"/>
 
 	<div class="loginWrap">

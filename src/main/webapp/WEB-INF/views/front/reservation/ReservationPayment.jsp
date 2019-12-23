@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>결제정보 입력하기</title>
 </head>
 	<script src="resources/pcPub/static/js/slick.min.js"></script>
 	
@@ -654,7 +654,11 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 	
 	
 	$(function(){
-		$("#USER_NM").keyup(function() {
+		$("#lastName").keyup(function() {
+			console.log("id 체크중");
+			$(this).val($(this).val().replace(/[^a-z|A-Z|가-힇]*/gi, ""));
+		});
+		$("#firstName").keyup(function() {
 			console.log("id 체크중");
 			$(this).val($(this).val().replace(/[^a-z|A-Z|가-힇]*/gi, ""));
 		});
@@ -663,7 +667,7 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 	
 	function inputId(){
 		$("#USER_NM").val( $("#lastName").val() + ' ' + $("#firstName").val());
-	}
+	};
 	
 
 </script>

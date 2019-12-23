@@ -476,7 +476,7 @@ body.reservation #headerWrap .btnClose { display:block; position:absolute; top:2
 .roomSelectBox .roomInfo .img { width:256px;}
 .roomSelectBox .roomInfo .img img { width:100%;}
 .roomSelectBox .roomInfo h3 { margin-top:20px; color:#9c836a;}
-.roomSelectBox .roomInfo p { margin-top:5px; color:#333; font-weight: 300;}
+.roomSelectBox .roomInfo p { margin-top:15px; color:#333; font-weight: 300;}
 .roomSelectBox .roomInfo .small { margin-top:3px; font-size:12px; color:#999; }
 .roomSelectBox .roomInfo .choice { margin-top:20px;}
 .roomSelectBox .roomInfo .choice > * + * { margin-left:25px;}
@@ -484,8 +484,8 @@ body.reservation #headerWrap .btnClose { display:block; position:absolute; top:2
 .roomSelectBox .swiperArrow { position:absolute; top:43px; right:0;}
 .roomSelectBox .swiperArrow [class*=btn] { width:19px; height:19px;}
 .roomSelectBox .swiperArrow [class*=btn].slick-disabled span { background-position:0 0;}
-.roomSelectBox .swiperArrow .btnLeft span { display:inline-block; width:6px; height:10px; font-size:0; vertical-align: middle; background:url('/resources/pcPub/static/images/common/btn/btn_slick_arrow.png') no-repeat 0 -10px;}
-.roomSelectBox .swiperArrow .btnRight span { display:inline-block; width:6px; height:10px; font-size:0; vertical-align: middle; transform:rotate(180deg); background:url('/resources/pcPub/static/images/common/btn/btn_slick_arrow.png') no-repeat 0 -10px;}
+.roomSelectBox .swiperArrow .btnLeft span { display:inline-block; width:6px; height:10px; font-size:0; vertical-align: middle; background:url('https://www.p-city.com/pcPub/static/images/common/btn/btn_slick_arrow.png') no-repeat 0 -10px;}
+.roomSelectBox .swiperArrow .btnRight span { display:inline-block; width:6px; height:10px; font-size:0; vertical-align: middle; transform:rotate(180deg); background:url('https://www.p-city.com/pcPub/static/images/common/btn/btn_slick_arrow.png') no-repeat 0 -10px;}
 .roomSelectBox .swiperArrow .number { display:inline-block; width:75px; text-align:center; vertical-align: middle; font-weight:300; color:#999;}
 .roomSelectBox .swiperArrow .number em { color:#9c836a;}
 
@@ -1859,7 +1859,7 @@ ul.diningTab li.on a{color: #9c836a; text-decoration: underline;}
 	.paymentOption .radioBox:last-child{float: right;}	
 	.paymentOption .radioBox input{top: 15px; left: 16px; cursor: pointer;}
 	.paymentOption .radioBox label{display: block; width: 100%; padding: 15px 16px 15px 54px; font-weight: 300; line-height: 24px; border: 1px solid #e6e3df; cursor: pointer; transition: 0.1s;}
-	.paymentOption .radioBox label:after{left: 16px; width: 24px; height: 24px; margin-top: -12px; background:url('/resources/pcPub/static/images/common/icon/icon_radio2.png') no-repeat; cursor: pointer;}
+	.paymentOption .radioBox label:after{left: 16px; width: 24px; height: 24px; margin-top: -12px; background:url('https://www.p-city.com//pcPub/static/images/common/icon/icon_radio2.png') no-repeat; cursor: pointer;}
 	.paymentOption .radioBox input:checked + label{color: #9c836a; border: 1px solid #9c836a;}
 	.paymentOption .radioBox input:checked + label:after{background-position: 0 -24px;}
 	.paymentOption .textBox{margin-top: 24px; border: 1px solid #e6e3df;}
