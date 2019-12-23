@@ -39,6 +39,9 @@ public interface RoomService {
 	public int selectSUCleaningCount();
 	public int selectSUStayingCount();
 	
+	//룸 카드 선택시 가져올 룸 vo
+	public Room selectRoomcard(int roomNum);
+	
 	
 	
 	

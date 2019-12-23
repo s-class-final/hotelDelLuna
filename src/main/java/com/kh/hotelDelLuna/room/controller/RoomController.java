@@ -186,11 +186,6 @@ public class RoomController {
 				
 				PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 				ArrayList<Reservation> rlist = rService.selectResList(pi);
-				
-		
-				System.out.println("listCount : " + listCount);
-				System.out.println("rlist : " + rlist);
-				System.out.println("pi : " + pi);
 
 				
 		if(RClist != null) {
@@ -227,16 +222,12 @@ public class RoomController {
 		ArrayList<Room> RClist = rmService.selectRoomCardList();
 		
 		if(roomType.equals("SUPERIOR")) {	
-			System.out.println(SUPlist);
 			gson.toJson(SUPlist , response.getWriter());
 		}else if(roomType.equals("DELUXE")) {
-			System.out.println(DUXlist);
 			gson.toJson(DUXlist , response.getWriter());
 		}else if(roomType.equals("SUITE")) {
-			System.out.println(SUIlist);
 			gson.toJson(SUIlist , response.getWriter());
 		}else if(roomType.equals("ALL")){
-			System.out.println(RClist);
 			gson.toJson(RClist , response.getWriter());
 		}
 	}
@@ -253,9 +244,26 @@ public class RoomController {
 	
 		Reservation rsinfo = rService.selectResOne(res_no);
 		
-		System.out.println("예약번호  : " + rsinfo);
+		System.out.println("예약번호로 뽑아온 데이터  : " + rsinfo);
+	
 		
-		gson.toJson(rsinfo , response.getWriter());
+		gson.toJson(rsinfo, response.getWriter());
+	}
+	
+	@RequestMapping("selectRoomcard.do")
+	public void selectRoomcard(HttpServletResponse response,
+									@RequestParam(value ="roomNum" , required = false) int roomNum) throws JsonIOException, IOException {
+		response.setContentType("application/json;charset=utf-8");
+		
+		System.out.println(roomNum);
+		
+		Gson gson = new Gson();
+		
+		Room rinfo = rmService.selectRoomcard(roomNum);
+		
+		System.out.println("클릭으로 뽑아온 card vo 객체" + rinfo);
+		
+		gson.toJson(rinfo,response.getWriter());
 		
 		
 	}

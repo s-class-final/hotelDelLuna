@@ -8,6 +8,7 @@
 		<result property="res_roomType" column="RES_ROOMTYPE"/>
 		<result property="res_userId" column="RES_USERID"/>
 		<result property="res_userName" column="USERNAME"/>
+		<result property="res_userPhone" column="USERPHONE"/>
 		<result property="res_breakfast" column="RES_BREAKFAST"/> 
 		<result property="res_dinner" column="RES_DINNER"/>
 		<result property="res_smoking" column="RES_SMOKING"/>

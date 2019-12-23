@@ -12,9 +12,20 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+ <script src="https://kit.fontawesome.com/95dca4cca1.js" crossorigin="anonymous"></script>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <title>Insert title here</title>
 	<style>
+	
+		#wrapboard{
+		
+		 margin : 15px auto;
+		 text-align :center;
+		 width : 1500px;
+		 height : 1230px;
+		
+		}
+	
 		#textinfo {
     	resize: none;
 		}
@@ -31,15 +42,14 @@
 		}
 		.roomDiv{
 		margin : 7px;
-		border : 1px solid black;
-		overflow:auto;
+		border : 1px solid #9c836a;
 		}
 		
 		.amountGraphDiv{
 		 margin :5px auto;
 		 width : 180px;
 		 height : 180px;
-		 
+		 border : 1px solid #9c836a;
 		}
 		.amountGraphDiv:hover{
 		 background : lightblue;
@@ -47,24 +57,31 @@
 		 transition : 0.5s;
 		}
 		.roomCard{ 
-			margin : 5px;
+			margin-left : 23px ;
+			margin-bottom : 15px;
 			float: left;
-			 border : 1px solid black;
-			 width : 150px;
-			 height : 170px;
+			border : 1px solid #9c836a;
+			 width : 215px;
+			 height : 215px;
 			 border-radius: 10px;
+		}
+		.roomcardDiv{
+		margin : 9px auto;
+		 border : 1px solid #9c836a;
+		 width  : 200px;  
+		 height : 30px;
+		 font-weight: bold;
+		 font-size: 12px;
+		 color : #575757;
+		 border-radius: 3px;
+		padding : 5px;
 		}
 		
 		.tdHeight{
 			height : 30px
 		}
 		
-		.cardStatus{
-			margin : 5px auto; 
-			border : 1px solid black; 
-			width  : 134px;  
-			height : 35px;
-		}
+	
 		.searchSel{
 			margin-left : 0px;
 			height:100%;
@@ -84,7 +101,7 @@
 			display: inline-block;
 			height : 40px;
 			width: 248px;
-			border: 1px solid #8a7057;
+			border : 1px solid #9c836a;
 			background: #ffffff
 		}
 		
@@ -101,70 +118,71 @@
 		  float:left;
 		}
 		
-		#wrapboard{
-		 margin : auto;
-		 text-align :center;
-		 width : 1500px;
-		 height : 1200px;
-		}
+		
+		
+		
 		#wrapCheckBoard{
 		 float: left;
 		 width : 230px;
-		 height : 750px;
-		}
-		
-		#wrapRoominfo{
-		 border : 1px soild white;
-		 float: left;
-		 width : 1240px;
-		 height : 750px;
+		 height : 730px;
 		}
 		
 		[id*='_']{
 		 width : 210px;
 		 height : 350px;
 		}
+				
+		
+		#wrapRoominfo{
+		 border : 1px soild white;
+		 float: left;
+		 width : 1240px;
+		 height : 730px;
+		}
+		
 		
 		#roomAmount{
+		margin-top: 7px;
+		border : 1px solid #9c836a;
 		 float: left;
 		 width : 190px;
-		 height : 730px;
+		 height : 707px;
 		}
 		
-		#roomBoard{
-		margin : 0px auto;
-		overflow:auto;
-		  height : 360px;
-		}
+		
 		#wrapInfo{
+		 margin :7px;
+		 border : 1px solid #9c836a;
 		 float: left;
 		 width : 1020px;
-		 height : 730px;
+		 height : 707px;
 		}
 		#checkHr{
 		 width :80%;
 		}
+		
 		#roomBoard{
-		 margin-top : 0px;
-		 margin-bottom : 0px;
+		 border : 1px solid #9c836a;
+		 margin : 0px auto;
 		 width : 1000px;
-		 height : 360px;
+		 height : 340px;
+		  overflow:auto;
 		}
 		#roomicon{
-		height : 85px;
+		height : 80px;
 	
 		}
 		#Infosearch{
 		 margin-top : 0px;
 		 margin-bottom : 0px;
 		 width : 1000px;
-		 height : 53px;
+		 height : 45px;
 		}
 		#reservationInfo{
-		 margin-top : 0px;
-		 margin-bottom : 0px;
+		border : 1px solid #9c836a;
+		 margin : 0px auto;
 		 width : 1000px;
-		 height : 240px;
+		 height : 260px;
 		}
 		
 		#pagediv{
@@ -181,9 +199,10 @@
 		color : white;
 		}
 		#allAmount{
+		border : 1px solid #9c836a;
 		margin : 5px auto;
 		width : 180px; 
-		height: 40px;
+		height: 80px;
 		}
 		#allAmount:hover{
 		 background : lightblue;
@@ -199,15 +218,38 @@
 		}
 		
 		#RSselectinfo{
+		 float:left;
 		width : 855px;
-		height : 430px;
+		height : 410px;
 			
 		}
 		#selectinfo{
 		width : 850px;
-		heght : 440px;
+	
 		}
 		
+		#selectinfo td{
+			height : 25px;
+		}
+		#roomStatus{
+		 float:left;
+		width : 330px;
+		height : 410px;
+		}
+		#enterInfo{
+		float:left;
+		 width : 227px;
+		 height : 410px;
+		}
+		
+		#selectRcTable{
+		margin : 0px auto;
+		width : 320px; 
+		}
+		
+		#selectRcTable td{
+			height : 27px;
+		}
 	</style>
 </head>
 <body>
@@ -243,7 +285,7 @@
 				
 				<div class="amountGraphDiv" id= "suiteAmount">
 				</div>
-				<div id ="allAmount" style=" "> 전체 방 상태</div>
+				<div id ="allAmount"><i class="fa fa-refresh fa-fw fa-3x" id='reicon'style ="margin-top : 20px;"></i>  </div>
 			</div>
 			<div  id = "wrapInfo">
 				<div  id="roomBoard">
@@ -252,19 +294,34 @@
 					
 					<c:forEach var="rl" items="${RClist }">
 						<div class ="roomCard" id ="${rl.roomNo }"> 
-							<div class="roomDiv" id="roomNumber"> ${rl.roomNo } </div>
-							<div class="roomDiv" id="roomicon" style = "height : 85px;"> 상태 아이콘 </div>
+							<div class="roomcardDiv" id="roomNumber"> ${rl.roomNo } </div>
+						
+							<div  class="roomcardDiv" id="roomType">${rl.roomType }</div>
+						
+						<c:choose>
+							<c:when test="${rl.condition eq 'WAITING'}">
+								<div class="roomcardDiv" id="roomicon"> <i class="fas fa-door-open fa-5x"></i> </div>
+							</c:when>
+							<c:when test="${rl.condition eq 'CLEANING'}">
+								<div class="roomcardDiv" id="roomicon"> <i class="fas fa-broom fa-5x"></i> </div>
+							</c:when>
+							<c:when test="${rl.condition eq 'STAYING'}">
+								<div class="roomcardDiv" id="roomicon"> <i class="fas fa-door-closed fa-5x"></i> </div>
+							</c:when>
+						</c:choose>
+							
+							
 							<c:choose>	
 								<c:when test="${rl.condition eq 'WAITING'}">
-									<div class="cardStatus">입실 대기 중</div>
+									<div class ="roomcardDiv" id="cardStatus">입실 대기 중</div>
 									<input type ="hidden" value= "WAITING" >
 								</c:when>
 								<c:when test="${rl.condition eq 'CLEANING'}">
-									<div class="cardStatus">청소 중</div>
+									<div class ="roomcardDiv" id="cardStatus">청소 중</div>
 									<input type ="hidden" value= "CLEANING" >
 								</c:when>
 								<c:when test="${rl.condition eq 'STAYING'}">
-									<div class="cardStatus">투숙 중</div>
+									<div class ="roomcardDiv" id="cardStatus">투숙 중</div>
 									<input type ="hidden" value= "STAYING" >
 								</c:when>
 							</c:choose>
@@ -329,7 +386,7 @@
 				</div>
 				<!-- 페이징 부분 -->	
 				<div class="pagingArea" align="center" style="margin : 0px auto;">
-					<ul class="pagination  justify-content-center">
+					<ul class="pagination  justify-content-center" >
 						<li class='page-item'>
 							<c:url var="rslistBack" value="/roomstatus.do">
 	 						<c:param name="page" value="${pi.startPage }"/>
@@ -366,67 +423,93 @@
 				</div>
 			</div>
 		</div>
-		
+		<!-- 하단 DIV -->
 		<div class= "roomDiv" id = "RSselectinfo">
 			<h3 class ="subTitle">Detailed information</h3>
+			
 			<hr id ="checkHr">
-		<form>
 			<table id ="selectinfo" border = "1px solid black" style= "margin : 0 auto; text-align : left;"> 
 			 <tr>
-			  	<td style="width : 90px;">예약 번호</td> <td>11</td> 
-			  	<td style="width : 120px;">성함</td> <td style="width : 130px;"><input type ="text" style="width : 120px;"></td> 
-			 	 <td style="width : 60px;">이메일 </td> <td style="width : 130px;"><input type="text" style="width : 120px;"></td> 
-			 	 <td style="width : 70px;">전화 번호 </td> <td><input type = "text" style="width : 120px;"></td> 
+			  	<td style="width : 80px;">예약 번호</td> <td>오프라인 체크인</td> 
+			  	<td style="width : 60px;">성함</td> <td style="width : 130px;"><input type ="text"style="width : 120px;" readonly></td> 
+			 	 <td style="width : 90px;">이메일 </td> <td style="width : 180px;"><input type="text"style="width : 175px;" readonly></td> 
+			 	 <td style="width : 70px;">전화 번호 </td> <td><input type = "text" name="userPhone" style="width : 116px;" readonly></td> 
 			  </tr>
 			 <tr>
-			 	<td>룸 타입 </td><td colspan ="2"> 
-			 	<select name = "manualCiry">
-			 			<optgroup label="슈페리어">
-							<option value="SUPERIOR">슈페리어</option>
-							<option value="SUPERIOR_TERRACE">슈페리어 테라스</option>
-						</optgroup>
-						<optgroup label="디럭스">
-							<option value="DELUXE">디럭스</option>
-							<option value="DELUXE_GRAND">그랜드 디럭스</option>
-							<option value="DELUXE_PREMIUM">프리미엄 디럭스</option>
-							<option value="DELUXE_PREMIUM_TERRACE">프리미엄 디럭스 테라스</option>
-						</optgroup>
-						<optgroup label="스위트">
-							<option value="SUITE_JUNIOR">주니어 스위트</option>
-							<option value="SUITE_DELUXE">디럭스 스위트</option>
-							<option value="SUITE_GRAND_DELUXE">그랜드 디럭스 스위트</option>
-							<option value="SUITE_ROYAL">로열 스위트</option>
-						</optgroup>
-					</select>
-					<td>
-			 		<td>인원</td> <td colspan="3"><input type ="number" min=1 max=10 value=2 name="capacity"></td>
-			 </tr>
-			  <tr>
-			   <td> 배드 추가 </td> <td ><input type="radio" name="addBed" value="Y">Y 
-					<input type="radio" name="addBed" value="N" checked="checked">N</td>
-					<td>조식 </td><td> <input type="number" min=0 max=10 value=0 > </td> 
-					<td>석식  </td><td colspan="3"> <input type="number" min=0 max=10 value=0> </td>
+			 	<td>룸 타입 </td><td colspan ="3"> 
+			 		<input type="text"style="width : 175px;" readonly>
+				</td>
+			 		<td>성인 인원</td> <td ><input type = 'text' style="width : 76px" readonly></td>
+			 		<td>유아 인원</td> <td ><input type = 'text' style="width : 76px" readonly></td>
 			  </tr>
 			  <tr>
-			  	<td >체크 인 날짜</td><td colspan="2"><input type="text" id="onSaleDate"  name="startDay" readonly></td>   
-			  	<td>체크 아웃 날짜</td><td colspan="4"><input type="text" id="offSaleDate"  name="endDay" readonly></td>
+			   <td > 배드 추가 </td><td colspan ="3"></td> 
+					<td>조식 </td><td> <input type = 'text'  style="width : 76px" readonly> </td> 
+					<td>석식  </td><td> <input  type = 'text'  style="width : 76px" readonly> </td>
 			  </tr>
 			  <tr>
-			  <td>요금 </td> <td colspan="7"><input type ="text">
+			  	<td>체크 인 날짜</td><td colspan="3"><input type="text" id="onSaleDate"  readonly></td>   
+			  	<td>체크 아웃 날짜</td><td colspan="3"><input type="text" id="offSaleDate"  readonly></td>
+			  </tr>
+			  <tr>
+			    <td>요금 </td> <td colspan="7"><input type ="text" >
 			  </tr>
 			  <tr>
 			  	<td colspan="8">요청사항</td> 
 			  </tr>
 			  <tr>
-			  	<td colspan="8"><textarea id ="textinfo" cols = "137" rows = "6" > </textArea> </td>
-			  </tr>
-			  <tr>
-			 	 <td colspan="8"> <input type="submit" id="submit" value="오프라인 체크 인" style= "float : right;"></td>
+			  	<td colspan="8"><textarea id ="textinfo" rows ="7"style ="width : 100%"> </textArea> </td>
 			  </tr>
 			</table>
-			
-		</form>
 		</div>
+		<div class="roomDiv" id = "roomStatus">
+			<h3 class ="subTitle">Select Room</h3>
+			<hr id ="checkHr">
+			<table id ="selectRcTable" border = '1px solid black'>
+				<tr>
+				 	<td>룸 넘버</td> 
+				 	<td id ="selRN">객실을 선택해주세요</td>
+				 
+				</tr>
+				<tr>
+					<td colspan='2'>룸 타입</td> 
+				</tr>
+				<tr>
+					<td colspan='2' id ="selRT"> 객실을 선택해주세요</td>
+				</tr>
+				<tr>
+					<td>컨디션</td> 	
+					<td id ="selRC"> 객실을 선택해주세요 </td>
+				</tr>
+				<tr>
+					<td>성함</td><td id ="eName"> 객실을 선택해주세요  </td>
+				</tr>
+				<tr>
+					<td colspan='2'>투숙 중 고객 요청 사항</td>
+				</tr>
+				<tr>
+				 	<td colspan='2'><textarea id ='enterRer' rows="7" style='width : 100%; resize : none;' readonly >객실을 선택해주세요</textarea></td> 
+				</tr>
+			</table>
+		</div>
+		
+		<div class="roomDiv" id = "enterInfo">
+			<h3 class ="subTitle">Enter Info</h3>
+			<hr id ="checkHr">
+			<table id ="enterInfoTable" border ="1px solid black">
+				 <tr>
+				   <th>입실 대기 중인 방 수</th>
+				 </tr>
+				 <tr>
+				   <th>청소 중인 방 수  </th>
+				 </tr>
+				 <tr>
+				   <th>고객 투숙 중인 방 수 </th>
+				 </tr>
+			</table>
+		
+		</div>
+		
 	</div>
 	
 <!-- 그래프용 스크립트 -->
@@ -776,28 +859,41 @@
 					for(var i in data) {
 						
 						var div = $("<div>").addClass("roomCard").attr('id',data[i].roomNo);
-						var roomNo = $("<div>").addClass("roomDiv").attr('id','roomNumber').text(data[i].roomNo);
-						var roomicon = 	$("<div>").addClass("roomDiv").attr('id','roomicon').text('상태 아이콘');	
+						var roomNo = $("<div>").addClass("roomcardDiv").attr('id','roomNumber').text(data[i].roomNo);
+						var roomType =$("<div>").addClass("roomcardDiv").attr('id','roomType').text(data[i].roomType);
 						
-						var cs1 = $("<div>").addClass("cardStatus").text('입실 대기 중');
-						var cs1hidden = $("<input>").attr('type','hidden').attr('value','WAITING');
+						var RoomiconDiv = $("<div>").addClass("roomcardDiv").attr('id','roomicon');	
 						
-						var cs2 = $("<div>").addClass("cardStatus").text('청소 중');
-						var cs2hidden = $("<input>").attr('type','hidden').attr('value',"CLEANING");
+						var cs1 = $("<div>").addClass("roomcardDiv").text('입실 대기 중');
+						var cs1hidden = $("<input>").attr('type','hidden').attr('id','cardStatus').attr('value','WAITING');
 						
-						var cs3 = $("<div>").addClass("cardStatus").text('투숙 중');
-						var cs3hidden = $("<input>").attr('type','hidden').attr('value',"STAYING");
+						var cs2 = $("<div>").addClass("roomcardDiv").text('청소 중');
+						var cs2hidden = $("<input>").attr('type','hidden').attr('id','cardStatus').attr('value',"CLEANING");
+						
+						var cs3 = $("<div>").addClass("roomcardDiv").text('투숙 중');
+						var cs3hidden = $("<input>").attr('type','hidden').attr('id','cardStatus').attr('value',"STAYING");
+						
+					    var wicon = $("<icon>").addClass('fas fa-door-open fa-5x');
+					    var cicon = $("<icon>").addClass('fas fa-broom fa-5x');
+					    var sicon = $("<icon>").addClass('fas fa-door-closed fa-5x');
 						
 					roomNo.appendTo(div);
-					roomicon.appendTo(div);
+					roomType.appendTo(div);
 					
 					if (data[i].condition == 'WAITING'){
+						wicon.appendTo(RoomiconDiv);
+						RoomiconDiv.appendTo(div);
 						cs1.appendTo(div);
 						cs1hidden.appendTo(div);
+						
 					}else if (data[i].condition == 'CLEANING'){
+						cicon.appendTo(RoomiconDiv);
+						RoomiconDiv.appendTo(div);
 						cs2.appendTo(div);
 						cs2hidden.appendTo(div);
 					}else if (data[i].condition == 'STAYING'){
+						sicon.appendTo(RoomiconDiv);
+						RoomiconDiv.appendTo(div);
 						cs3.appendTo(div);
 						cs3hidden.appendTo(div);
 					}
@@ -808,17 +904,33 @@
 						 <%for(int i=0; i< rns.size(); i++){%>
 							rn[<%=i%>] = <%=rns.get(i).getRoomNo()%>;
 						<%}%>
-											
+
+						
 						for(var i = 0 ; i < rn.length ; i ++ ) {
 							if($('#'+rn[i]).find('input').val() == "WAITING"){
-								$('#'+rn[i]).css("background","lightgreen");
+								$('#'+rn[i]).css("background","#8ff799");
 							}else if($('#'+rn[i]).find('input').val() == "CLEANING"){
-								$('#'+rn[i]).css("background","orange");
+								$('#'+rn[i]).css("background","#f4a66d");
 							}else if($('#'+rn[i]).find('input').val() == "STAYING"){
-								$('#'+rn[i]).css("background","red");
+								$('#'+rn[i]).css("background","#f2574e");
 							}
-							
 						}	
+					//룸 카드 hover 이벤트 
+						$('.roomCard').mouseover(function(){
+							
+							$(this).css("background", "lightblue");
+							
+						});
+						$('.roomCard').mouseleave(function(){
+							if($(this).find("input").val() == "WAITING"){
+								$(this).css("background", "#8ff799");
+							}else if($(this).find("input").val() == "CLEANING"){
+								$(this).css("background", "#f4a66d");
+							}else if($(this).find("input").val() == "STAYING"){
+								$(this).css("background", "#f2574e");
+							}
+						});
+					
 					
 					}
 					
@@ -851,48 +963,79 @@
 					for(var i in data) {
 						
 						var div = $("<div>").addClass("roomCard").attr('id',data[i].roomNo);
-						var roomNo = $("<div>").addClass("roomDiv").attr('id','roomNumber').text(data[i].roomNo);
-						var roomicon = 	$("<div>").addClass("roomDiv").attr('id','roomicon').text('상태 아이콘');	
+						var roomNo = $("<div>").addClass("roomcardDiv").attr('id','roomNumber').text(data[i].roomNo);
+						var roomType =$("<div>").addClass("roomcardDiv").attr('id','roomType').text(data[i].roomType);
 						
-						var cs1 = $("<div>").addClass("cardStatus").text('입실 대기 중');
-						var cs1hidden = $("<input>").attr('type','hidden').attr('value','WAITING');
+						var RoomiconDiv = $("<div>").addClass("roomcardDiv").attr('id','roomicon');	
 						
-						var cs2 = $("<div>").addClass("cardStatus").text('청소 중');
-						var cs2hidden = $("<input>").attr('type','hidden').attr('value',"CLEANING");
+						var cs1 = $("<div>").addClass("roomcardDiv").text('입실 대기 중');
+						var cs1hidden = $("<input>").attr('type','hidden').attr('id','cardStatus').attr('value','WAITING');
 						
-						var cs3 = $("<div>").addClass("cardStatus").text('투숙 중');
-						var cs3hidden = $("<input>").attr('type','hidden').attr('value',"STAYING");
+						var cs2 = $("<div>").addClass("roomcardDiv").text('청소 중');
+						var cs2hidden = $("<input>").attr('type','hidden').attr('id','cardStatus').attr('value',"CLEANING");
+						
+						var cs3 = $("<div>").addClass("roomcardDiv").text('투숙 중');
+						var cs3hidden = $("<input>").attr('type','hidden').attr('id','cardStatus').attr('value',"STAYING");
+						
+					    var wicon = $("<icon>").addClass('fas fa-door-open fa-5x');
+					    var cicon = $("<icon>").addClass('fas fa-broom fa-5x');
+					    var sicon = $("<icon>").addClass('fas fa-door-closed fa-5x');
 						
 					roomNo.appendTo(div);
-					roomicon.appendTo(div);
+					roomType.appendTo(div);
 					
 					if (data[i].condition == 'WAITING'){
+						wicon.appendTo(RoomiconDiv);
+						RoomiconDiv.appendTo(div);
 						cs1.appendTo(div);
 						cs1hidden.appendTo(div);
+						
 					}else if (data[i].condition == 'CLEANING'){
+						cicon.appendTo(RoomiconDiv);
+						RoomiconDiv.appendTo(div);
 						cs2.appendTo(div);
 						cs2hidden.appendTo(div);
 					}else if (data[i].condition == 'STAYING'){
+						sicon.appendTo(RoomiconDiv);
+						RoomiconDiv.appendTo(div);
 						cs3.appendTo(div);
 						cs3hidden.appendTo(div);
 					}
 						div.appendTo("#roomBoard");
 						
-						<%for(int i=0; i< rns.size(); i++){%>
+						var rn = [];
+						 <%for(int i=0; i< rns.size(); i++){%>
 							rn[<%=i%>] = <%=rns.get(i).getRoomNo()%>;
 						<%}%>
+
 						
 						for(var i = 0 ; i < rn.length ; i ++ ) {
 							if($('#'+rn[i]).find('input').val() == "WAITING"){
-								$('#'+rn[i]).css("background","lightgreen");
+								$('#'+rn[i]).css("background","#8ff799");
 							}else if($('#'+rn[i]).find('input').val() == "CLEANING"){
-								$('#'+rn[i]).css("background","orange");
+								$('#'+rn[i]).css("background","#f4a66d");
 							}else if($('#'+rn[i]).find('input').val() == "STAYING"){
-								$('#'+rn[i]).css("background","red");
+								$('#'+rn[i]).css("background","#f2574e");
 							}
 							
 						}	
-						}
+					
+						$('.roomCard').mouseover(function(){
+							
+							$(this).css("background", "lightblue");
+							
+						});
+						$('.roomCard').mouseleave(function(){
+							if($(this).find("input").val() == "WAITING"){
+								$(this).css("background", "#8ff799");
+							}else if($(this).find("input").val() == "CLEANING"){
+								$(this).css("background", "#f4a66d");
+							}else if($(this).find("input").val() == "STAYING"){
+								$(this).css("background", "#f2574e");
+							}
+						});
+					
+					}
 					
 				}
 			})
@@ -921,28 +1064,41 @@
 					for(var i in data) {
 						
 						var div = $("<div>").addClass("roomCard").attr('id',data[i].roomNo);
-						var roomNo = $("<div>").addClass("roomDiv").attr('id','roomNumber').text(data[i].roomNo);
-						var roomicon = 	$("<div>").addClass("roomDiv").attr('id','roomicon').text('상태 아이콘');	
+						var roomNo = $("<div>").addClass("roomcardDiv").attr('id','roomNumber').text(data[i].roomNo);
+						var roomType =$("<div>").addClass("roomcardDiv").attr('id','roomType').text(data[i].roomType);
 						
-						var cs1 = $("<div>").addClass("cardStatus").text('입실 대기 중');
-						var cs1hidden = $("<input>").attr('type','hidden').attr('value','WAITING');
+						var RoomiconDiv = $("<div>").addClass("roomcardDiv").attr('id','roomicon');	
 						
-						var cs2 = $("<div>").addClass("cardStatus").text('청소 중');
-						var cs2hidden = $("<input>").attr('type','hidden').attr('value',"CLEANING");
+						var cs1 = $("<div>").addClass("roomcardDiv").text('입실 대기 중');
+						var cs1hidden = $("<input>").attr('type','hidden').attr('id','cardStatus').attr('value','WAITING');
 						
-						var cs3 = $("<div>").addClass("cardStatus").text('투숙 중');
-						var cs3hidden = $("<input>").attr('type','hidden').attr('value',"STAYING");
+						var cs2 = $("<div>").addClass("roomcardDiv").text('청소 중');
+						var cs2hidden = $("<input>").attr('type','hidden').attr('id','cardStatus').attr('value',"CLEANING");
+						
+						var cs3 = $("<div>").addClass("roomcardDiv").text('투숙 중');
+						var cs3hidden = $("<input>").attr('type','hidden').attr('id','cardStatus').attr('value',"STAYING");
+						
+					    var wicon = $("<icon>").addClass('fas fa-door-open fa-5x');
+					    var cicon = $("<icon>").addClass('fas fa-broom fa-5x');
+					    var sicon = $("<icon>").addClass('fas fa-door-closed fa-5x');
 						
 					roomNo.appendTo(div);
-					roomicon.appendTo(div);
+					roomType.appendTo(div);
 					
 					if (data[i].condition == 'WAITING'){
+						wicon.appendTo(RoomiconDiv);
+						RoomiconDiv.appendTo(div);
 						cs1.appendTo(div);
 						cs1hidden.appendTo(div);
+						
 					}else if (data[i].condition == 'CLEANING'){
+						cicon.appendTo(RoomiconDiv);
+						RoomiconDiv.appendTo(div);
 						cs2.appendTo(div);
 						cs2hidden.appendTo(div);
 					}else if (data[i].condition == 'STAYING'){
+						sicon.appendTo(RoomiconDiv);
+						RoomiconDiv.appendTo(div);
 						cs3.appendTo(div);
 						cs3hidden.appendTo(div);
 					}
@@ -952,18 +1108,34 @@
 						 <%for(int i=0; i< rns.size(); i++){%>
 							rn[<%=i%>] = <%=rns.get(i).getRoomNo()%>;
 						<%}%>
-			
+
+						
 						for(var i = 0 ; i < rn.length ; i ++ ) {
 							if($('#'+rn[i]).find('input').val() == "WAITING"){
-								$('#'+rn[i]).css("background","lightgreen");
+								$('#'+rn[i]).css("background","#8ff799");
 							}else if($('#'+rn[i]).find('input').val() == "CLEANING"){
-								$('#'+rn[i]).css("background","orange");
+								$('#'+rn[i]).css("background","#f4a66d");
 							}else if($('#'+rn[i]).find('input').val() == "STAYING"){
-								$('#'+rn[i]).css("background","red");
+								$('#'+rn[i]).css("background","#f2574e");
 							}
 							
 						}	
+					
+						$('.roomCard').mouseover(function(){
 							
+							$(this).css("background", "lightblue");
+							
+						});
+						$('.roomCard').mouseleave(function(){
+							if($(this).find("input").val() == "WAITING"){
+								$(this).css("background", "#8ff799");
+							}else if($(this).find("input").val() == "CLEANING"){
+								$(this).css("background", "#f4a66d");
+							}else if($(this).find("input").val() == "STAYING"){
+								$(this).css("background", "#f2574e");
+							}
+						});
+						
 						}
 				}
 			})
@@ -971,7 +1143,6 @@
 	 //전체 방 보기 클릭
 		$('#allAmount').on('click',function(){
 			
-			$('#allAmount').css("background","lightblue");
 			$('#superiorAmount').css("background","white");
 			$('#deluxeAmount').css("background","white");
 			$('#suiteAmount').css("background","white");
@@ -991,28 +1162,41 @@
 					for(var i in data) {
 						
 						var div = $("<div>").addClass("roomCard").attr('id',data[i].roomNo);
-						var roomNo = $("<div>").addClass("roomDiv").attr('id','roomNumber').text(data[i].roomNo);
-						var roomicon = 	$("<div>").addClass("roomDiv").attr('id','roomicon').text('상태 아이콘');	
+						var roomNo = $("<div>").addClass("roomcardDiv").attr('id','roomNumber').text(data[i].roomNo);
+						var roomType =$("<div>").addClass("roomcardDiv").attr('id','roomType').text(data[i].roomType);
 						
-						var cs1 = $("<div>").addClass("cardStatus").text('입실 대기 중');
-						var cs1hidden = $("<input>").attr('type','hidden').attr('value','WAITING');
+						var RoomiconDiv = $("<div>").addClass("roomcardDiv").attr('id','roomicon');	
 						
-						var cs2 = $("<div>").addClass("cardStatus").text('청소 중');
-						var cs2hidden = $("<input>").attr('type','hidden').attr('value',"CLEANING");
+						var cs1 = $("<div>").addClass("roomcardDiv").text('입실 대기 중');
+						var cs1hidden = $("<input>").attr('type','hidden').attr('id','cardStatus').attr('value','WAITING');
 						
-						var cs3 = $("<div>").addClass("cardStatus").text('투숙 중');
-						var cs3hidden = $("<input>").attr('type','hidden').attr('value',"STAYING");
+						var cs2 = $("<div>").addClass("roomcardDiv").text('청소 중');
+						var cs2hidden = $("<input>").attr('type','hidden').attr('id','cardStatus').attr('value',"CLEANING");
+						
+						var cs3 = $("<div>").addClass("roomcardDiv").text('투숙 중');
+						var cs3hidden = $("<input>").attr('type','hidden').attr('id','cardStatus').attr('value',"STAYING");
+						
+					    var wicon = $("<icon>").addClass('fas fa-door-open fa-5x');
+					    var cicon = $("<icon>").addClass('fas fa-broom fa-5x');
+					    var sicon = $("<icon>").addClass('fas fa-door-closed fa-5x');
 						
 					roomNo.appendTo(div);
-					roomicon.appendTo(div);
+					roomType.appendTo(div);
 					
 					if (data[i].condition == 'WAITING'){
+						wicon.appendTo(RoomiconDiv);
+						RoomiconDiv.appendTo(div);
 						cs1.appendTo(div);
 						cs1hidden.appendTo(div);
+						
 					}else if (data[i].condition == 'CLEANING'){
+						cicon.appendTo(RoomiconDiv);
+						RoomiconDiv.appendTo(div);
 						cs2.appendTo(div);
 						cs2hidden.appendTo(div);
 					}else if (data[i].condition == 'STAYING'){
+						sicon.appendTo(RoomiconDiv);
+						RoomiconDiv.appendTo(div);
 						cs3.appendTo(div);
 						cs3hidden.appendTo(div);
 					}
@@ -1027,15 +1211,31 @@
 						
 						for(var i = 0 ; i < rn.length ; i ++ ) {
 							if($('#'+rn[i]).find('input').val() == "WAITING"){
-								$('#'+rn[i]).css("background","lightgreen");
+								$('#'+rn[i]).css("background","#8ff799");
 							}else if($('#'+rn[i]).find('input').val() == "CLEANING"){
-								$('#'+rn[i]).css("background","orange");
+								$('#'+rn[i]).css("background","#f4a66d");
 							}else if($('#'+rn[i]).find('input').val() == "STAYING"){
-								$('#'+rn[i]).css("background","red");
+								$('#'+rn[i]).css("background","#f2574e");
 							}
 							
 						}	
 							
+						$('.roomCard').mouseover(function(){
+							
+							$(this).css("background", "lightblue");
+							
+						});
+						$('.roomCard').mouseleave(function(){
+							if($(this).find("input").val() == "WAITING"){
+								$(this).css("background", "#8ff799");
+							}else if($(this).find("input").val() == "CLEANING"){
+								$(this).css("background", "#f4a66d");
+							}else if($(this).find("input").val() == "STAYING"){
+								$(this).css("background", "#f2574e");
+							}
+						});
+					
+						
 						}
 				}
 			})
@@ -1050,21 +1250,17 @@
 		
 		for(var i = 0 ; i < rn.length ; i ++ ) {
 			if($('#'+rn[i]).find('input').val() == "WAITING"){
-				$('#'+rn[i]).css("background","lightgreen");
+				$('#'+rn[i]).css("background","#8ff799");
 			}else if($('#'+rn[i]).find('input').val() == "CLEANING"){
-				$('#'+rn[i]).css("background","orange");
+				$('#'+rn[i]).css("background","#f4a66d");
 			}else if($('#'+rn[i]).find('input').val() == "STAYING"){
-				$('#'+rn[i]).css("background","red");
+				$('#'+rn[i]).css("background","#f2574e");
 			}
 			
 		}	
 		
  	});
-		//클릭시  룸넘버 가져오는 jquery
- 			$(document).on('click','.roomCard', function(){
- 					alert($(this).attr("id"));
- 				
- 			});
+	
 		//테이블 클릭시 백그라운드 변경 
  			$(document).ready(function () {
  	            $("#infoTable").on("click", "tr", function() {
@@ -1078,61 +1274,286 @@
 
 		
 		//클릭시 에약번호 가져오는 jquery
+		//그 후 예약번호로 예약정보 가져오기
+		var tbRt = '';
+		var tbps = '';
 		$(document).on('click', '#rdataTR', function(){
 			
 			var selectRS = $(this).find('input').val();
+			
+			
 			$.ajax({
 				url:"selectRs.do",
 				data:{rsNumber:selectRS},
 				datatype:"json",
 				success:function(data){
 					
+					var checkInday = data.res_checkIn;
+					var checkOutday = data.res_checkOut;
+					 tbRt = data.res_roomType;
+					 tbps = data.res_payStatus;
+					 
 					$('#RSselectinfo').html("");
+					$("<h3 class ='subTitle'>Detail Info</h3>"
+							+"<hr id ='checkHr'>").appendTo("#RSselectinfo");
+					$("<form action = 'checkIn.do' id ='detailForm'>").appendTo("#RSselectinfo");
+					$("<table id ='selectinfo' border = '1px solid black' style= 'margin : 0 auto; text-align : left;'>").appendTo("#detailForm");
+					// 테이블 젓번째 줄
+					$("<tr id = 'row1'>").appendTo("#selectinfo");
 					
 					
-				 
-				}
+					$("<td style='width : 80px;'>예약 번호</td>").appendTo("#row1");
+					$("<td>").html(data.res_no).appendTo("#row1");
+					
+					$("<td style='width : 70px;'>성함</td>").appendTo("#row1");
+					$("<td style='width : 130px;' id ='nameTd'>").appendTo("#row1");
+					$("<input>").attr('type','text').attr('value',data.res_userName).attr('name','userName').attr('readonly','true').attr('style',"width:120px").appendTo("#nameTd");
+					
+					$("<td style='width :  90px;'>이메일 </td>").appendTo("#row1");
+					$("<td style='width : 180px;' id ='idTd'>").appendTo("#row1");
+					$("<input>").attr('type','text').attr('value',data.res_userId).attr('name','userId').attr('readonly','true').attr('style',"width:175px;").appendTo("#idTd");
+					// 전화번호 뽑아와야댐 mapper 조정 예정 
+					$("<td style='width : 70px;'>전화 번호 </td>").appendTo("#row1");
+					$("<td style='width : 120px;' id ='phoneTd'>").appendTo("#row1");
+					$("<input>").attr('type','text').attr('value',data.res_userPhone).css('width','116px').appendTo('#phoneTd');
+					//테이블 두번째 줄
+					$("<tr id = 'row2'>").appendTo("#selectinfo");
+					
 		
- 			});
+					$("<td>룸 타입</td>").appendTo("#row2");
+					$("<td colspan ='3' id = 'rTypeTd'>").appendTo("#row2");
+					$("<input>").attr('id','rType').attr('name','rType').attr('value',data.res_roomType).attr('style',"width:220px;").attr('readonly','true').appendTo("#rTypeTd");
+				
+					$("<td>성인 인원</td>").appendTo("#row2");
+					$("<td id='adultTd'>").appendTo("#row2");
+					$("<input>").attr('type','number').attr('name','res_adult').attr('value',data.res_adult).attr('style',"width:76px;").attr('readonly','true').appendTo("#adultTd");
+					
+					$("<td>유아 인원</td>").appendTo("#row2");
+					$("<td id='childTd'>").appendTo("#row2");
+					$("<input>").attr('type','number').attr('name','res_child').attr('value',data.res_child).attr('style',"width:76px;").attr('readonly','true').appendTo("#childTd");
+					
+					//3번째 줄 
+					$("<tr id ='row3'>").appendTo("#selectinfo");
+			
+					$("<td>배드 추가</td>").appendTo('#row3');
+					$("<td>").html(data.res_addBed).appendTo('#row3');
+				
+					$("<td>조식 </td>").appendTo('#row3');
+					$("<td id='breakfirstTd'>").appendTo("#row3");
+					$("<input>").attr('type','number').attr('name','res_breakfast').attr('value',data.res_breakfast).attr('style',"width:76px;").attr('readonly','true').appendTo("#breakfirstTd");
+				
+					$("<td>석식 </td>").appendTo('#row3');
+					$("<td id ='dinner'>").appendTo("#row3");
+					$("<input>").attr('type','number').attr('name','res_dinner').attr('value',data.res_dinner).attr('style',"width:76px;").attr('readonly','true').appendTo("#dinner");
+					
+					//4번째 줄
+					$("<tr id ='row4'>").appendTo("#selectinfo");
+					
+					$("<td>체크 인 날찌</td>").appendTo("#row4");
+					$("<td colspan='3' id='checkInTd'>").appendTo("#row4");
+					$("<input>").attr('name','checkIndate').attr('value',data.res_checkIn).attr('readonly','true').appendTo("#checkInTd");
+					
+					$("<td>체크 아웃 날찌</td>").appendTo("#row4");
+					$("<td colspan='3' id='checkOutTd'>").appendTo("#row4");
+					$("<input>").attr('name','checkOutdate').attr('value',data.res_checkOut).attr('readonly','true').appendTo("#checkOutTd");
+					
+					//5번째 줄
+					$("<tr id='row5'>").appendTo("#selectinfo");
+					
+					$("<td>요금 </td>").appendTo("#row5");
+					$("<td  colspan='2' id ='payTd'></td>").appendTo("#row5");
+					$("<input>").attr('name','checkOutdate').attr('value','150000').attr('readonly','true').appendTo("#payTd");
+				
+					$("<td>입금 상태</td>").appendTo("#row5");
+					$("<td id = 'payStatus' colspan ='4'>").appendTo("#row5");
+					$("<input>").attr('name','payStatus').attr('value',data.res_payStatus).attr('readonly','true').appendTo("#payStatus");
+					
+					//6번쨎 줄 
+					$("<tr id='row6'>").appendTo("#selectinfo");
+					$("<td colspan = '8'>요청 사항</td>").appendTo("#row6");
+					//7번째 줄 
+					$("<tr id='row7'>").appendTo("#selectinfo");
+					$("<td colspan = '8' id='taTd'>").appendTo("#row7");
+					$("<textarea id ='require'>").html(data.res_require).appendTo("#taTd");
+					$('#require').attr('rows', '7').attr('readonly','true').css( 'resize', 'none').css('width','100%');
+					
+					
+					//8번째 줄
+					$("<tr id='row8'>").appendTo("#selectinfo");
+					$("<td colspan = '8' id = 'submitTd'>").appendTo("#row8");
+					$("<input>").addClass('searchBtn').attr('type','submit').attr('id','checksubmit').attr("onclick","return invalidJoin();").attr('value', '체크인').css('float','right').appendTo("#submitTd");
+				}
+			});
 		});
 		
-		//캘린더 DATEPICKER 사용
-	     $(function() {
-               //datepicker 한국어로 사용하기 위한 언어설정
-               $.datepicker.setDefaults($.datepicker.regional['ko']); 
-               // 시작일(onSaleDate)은 종료일(offSaleDate) 이후 날짜 선택 불가
-               // 종료일(offSaleDate)은 시작일(onSaleDate) 이전 날짜 선택 불가
-               //시작일.
-               $('#onSaleDate').datepicker({
-                   showOn: "both",                     // 달력을 표시할 타이밍 (both: focus or button)
-                   buttonImage: "resources/images/calendarIcon.png", // 버튼 이미지
-                   buttonImageOnly : true,             // 버튼 이미지만 표시할지 여부
-                   //buttonText: "날짜선택",             // 버튼의 대체 텍스트
-                   dateFormat: "yy-mm-dd",             // 날짜의 형식
-                   changeMonth: true,                  // 월을 이동하기 위한 선택상자 표시여부
-                   minDate: 0,                       // 선택할수있는 최소날짜, ( 0 : 오늘 이전 날짜 선택 불가)
-                   onClose: function( selectedDate ) {    
-                       // 시작일(onSaleDate) datepicker가 닫힐때
-                       // 종료일(offSaleDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
-                       $("#offSaleDate").datepicker( "option", "minDate", selectedDate );
-                   }                
-               });
-               //종료일
-               $('#offSaleDate').datepicker({
-                   showOn: "both", 
-                   buttonImage: "resources/images/calendarIcon.png", 
-                   buttonImageOnly : true,
-                   // buttonText: "날짜선택",
-                   dateFormat: "yy-mm-dd",
-                   changeMonth: true,
-                   //minDate: 0, // 오늘 이전 날짜 선택 불가
-                   onClose: function( selectedDate ) {
-                       // 종료일(offSaleDate) datepicker가 닫힐때
-                       // 시작일(onSaleDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 종료일로 지정 
-                       $("#onSaleDate").datepicker( "option", "maxDate", selectedDate );
-                   }                
-               });
-           });
+	// 마우스 호버시 색 변경 and 마우스 아웃시 원래 색으 돌리기
+		$('.roomCard').mouseover(function(){
+			$(this).css("background", "lightblue");
+		});
+		$('.roomCard').mouseleave(function(){
+			if($(this).find("input").val() == "WAITING"){
+				$(this).css("background", "#8ff799");
+			}else if($(this).find("input").val() == "CLEANING"){
+				$(this).css("background", "#f4a66d");
+			}else if($(this).find("input").val() == "STAYING"){
+				$(this).css("background", "#f2574e");
+			}
+		});
+	
+		
+		//room status 호버 아이콘 돌리기 
+		$('#allAmount').mouseover(function(){
+			$('#reicon').removeClass('fa fa-refresh fa-fw fa-3x');
+			$('#reicon').addClass('fa fa-refresh fa-spin fa-fw fa-3x');
+		});
+		
+		$('#allAmount').mouseleave(function(){
+			$('#reicon').removeClass('fa fa-refresh fa-spin fa-fw fa-3x');
+			$('#reicon').addClass('fa fa-refresh fa-fw fa-3x');
+		});
+		
+		
+		var clickcheck=false;
+		var roomNum = 0;
+		var roomCon = '';
+		var roomty = '';
+		
+		//클릭시  룸넘버 가져오는 jquery
+		$(document).on('click','.roomCard', function(){
+			clickcheck=true;
+			
+			roomNum = $(this).attr("id");
+			
+			
+			$(this).css("background" ,"lightblue");
+			
+			$.ajax({
+				url:'selectRoomcard.do',
+				data : { roomNum : roomNum},
+				dataType : 'json',
+				success:function(data){
+					
+					roomCon = data.condition;
+					roomty = data.roomType;
+					
+					
+					$('#roomStatus').html("");
+					$("<h3 class ='subTitle'>Select Room</h3>"
+							+"<hr id ='checkHr'>").appendTo("#roomStatus");
+					
+					var table = $('<table id="selectRcTable" border = "1px solid black" >');
+					var tr1 = $('<tr>');
+					var td1 = $('<td>').text('룸 넘버');;
+					var td2 = $('<td>').text(data.roomNo);
+					
+					var tr2 = $('<tr>');
+					var td3 = $('<td colspan="2">').html('룸 타입');
+					
+					var tr3 = $('<tr>');
+					var td4 = $('<td colspan="2">').html(data.roomType);
+					
+					var tr4 = $('<tr>');
+					var td5 = $('<td>').html('컨디션');
+					
+					if(data.condition == 'WAITING'){
+					
+						var td6	= $('<td>').html('입실 대기중');
+					
+					}else if(data.condition == 'CLEANING'){
+						var td6	= $('<td>').html('청소 중');
+					}else if(data.condition == 'STAYING'){
+						var td6	= $('<td>').html('투숙 중');
+					}
+					
+					var tr5 = $('<tr>');
+					var td7 = $('<td>').html('성함');
+					var td8 = $('<td>').html('더미 값 없음 오류방지');
+					
+					var tr6 = $('<tr>');
+					var td9 = $('<td colspan="2">').html('투숙 중 고객 요청 사항');
+					
+					var tr7 = $('<tr>');
+					var td10 = $('<td colspan="2">')
+					var textarea = $('<textarea id ="enterRer" rows="7" style="width : 100%; resize : none;" >밸류</textarea>');
+					
+					td1.appendTo(tr1);
+					td2.appendTo(tr1);
+					tr1.appendTo(table);
+					
+					td3.appendTo(tr2);
+					tr2.appendTo(table);
+					
+					td4.appendTo(tr3);
+					tr3.appendTo(table);
+					
+					td5.appendTo(tr4);
+					td6.appendTo(tr4);
+					tr4.appendTo(table);
+					
+					td7.appendTo(tr5);
+					td8.appendTo(tr5);
+					tr5.appendTo(table);
+					
+					td9.appendTo(tr6);
+					tr6.appendTo(table);
+					
+					textarea.appendTo(td10);
+					td10.appendTo(tr7);
+					tr7.appendTo(table);
+					
+					
+					table.appendTo("#roomStatus");
+					
+				}
+			});
+		});
+				
+		function invalidJoin(){
+			
+			
+			
+			if(clickcheck==false){
+				alert('객실을 선택해주세요');
+				
+				
+				return false;
+			}else {
+				if(roomCon == 'CLEANING'){
+					
+					alert('청소 중인 객실입니다.');
+					
+					return false;
+				}else if (roomCon == 'STAYING'){
+					
+					alert('투숙 중인 객실입니다.');
+					
+					return false;
+					
+				}else {
+					
+					if(tbRt != roomty){
+						alert("예약한 방 타입과 선택한 룸 카드 방타입이 같지 않습니다 .");
+						return false;
+							//확인
+					}else{
+							if (tbps == '입금대기'){
+								if (confirm("입금 대기 상태입니다. 결제 후 체크인을 진행 해주세요.")){
+									return true;
+								}else{
+									return false;
+								}
+								
+							}
+					
+				}
+				
+			}
+			}
+		}
+		
+			
+
+		
 </script>
 </body>
 </html>
