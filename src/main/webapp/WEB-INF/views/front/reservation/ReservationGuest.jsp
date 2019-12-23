@@ -355,7 +355,7 @@
 			
 			//slide paging
 			var swiperArrow = $("<div>").addClass("swiperArrow");
-			var btnLeft     = $("<button>").addClass("btnLeft").append($("<span>"));
+			var btnLeft     = $("<button>").addClass("btnLeft").append($("<span>").attr({"style" : "background:url('/resources/pcPub/static/images/common/btn/btn_slick_arrow.png') no-repeat 0 -10px"}));
 			var pNumber     = $("<p>").addClass("number").append($("<em>").text("1")).append($("<span>"));
 			var btnRight    = $("<button>").addClass("btnRight").append($("<span>"));
 			$(".reservationBox").find(".roomSelectBox").find("ul").after(swiperArrow.append(btnLeft).append(pNumber).append(btnRight));
