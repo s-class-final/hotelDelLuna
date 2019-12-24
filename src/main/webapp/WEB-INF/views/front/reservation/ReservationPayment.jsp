@@ -301,6 +301,7 @@ function noBack(){window.history.forward();}
 						</div>
 						
 						<!-- 포인트 -->
+						<c:if test="${ !empty sessionScope.loginUser }">
 						<dl class="request" style="margin-top: 20px;">
 							<dt><label>요청사항</label></dt>
 								<dd><div class="inp" >
@@ -311,13 +312,14 @@ function noBack(){window.history.forward();}
 								</dd>
 							</dl>
 						</div>
+						</c:if>
 						<!-- //포인트 -->
 							
 					</div>
 					<!-- //결제방법 -->
 	
 					<!-- 약관동의 -->
-					<div class="paymentTerm clearFixed" style="margin-top:55px;">
+					<div class="paymentTerm clearFixed" style="margin-top:55px;padding-top: 0px;">
 						<h2>약관 동의</h2>
 						<div class="termArea">
 							<div>
@@ -444,7 +446,9 @@ function noBack(){window.history.forward();}
 										<p id="room">${r.res_roomType }</p>	
 										<p id="mealtext">조식 ${r.res_breakfast } / 석식 ${r.res_dinner }</p>
 										<p id="res_addBed"><c:if test="${ 'Y' eq r.res_addBed }">베드 추가</c:if></p>
+										<c:if test="${ !empty sessionScope.loginUser }">
 										<p id="use_point">0 포인트 사용</p>
+										</c:if>
 										
 									</div>
 								</article>
