@@ -14,6 +14,7 @@ public class RoomStatusDao {
 	
 	@Autowired
 	SqlSessionTemplate sqlSession;
+	
 	//룸 상태 카드 리스트
 	public ArrayList selectRoomCardList() {
 		//System.out.println("DAO : " + (ArrayList)sqlSession.selectList("roomMapper.selectRcList"));
@@ -66,6 +67,10 @@ public class RoomStatusDao {
 	}
 	public int selectSUStayingCount() {
 		return sqlSession.selectOne("roomMapper.selectSUStayingCount");
+	}
+	
+	public Room selectRoomcard(int roomNum) {
+		return sqlSession.selectOne("roomMapper.selectClickRoomcard",roomNum);
 	}
 	
 
