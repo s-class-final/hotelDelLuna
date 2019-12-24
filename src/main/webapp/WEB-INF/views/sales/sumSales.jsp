@@ -6,10 +6,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	.outer{
-	width: 800px;
-	height:800px;
-	margin-top : 100px;
+	
+	
+	#page-wrap {
+	 width: 1000px; 			
+	 margin-top: 250px; 
+	 margin-left: 300px;
+	 height: 500px;
+	 
 	}
 </style>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -27,7 +31,6 @@
 
         var options = {
           title: '호텔 매출 그래프'
-          
         };
 
         var chart = new google.visualization.BarChart(document.getElementById('Barchart'));
@@ -39,11 +42,11 @@
 <body>
 <jsp:include page="../common/menubar.jsp"/> 
 
-<div id="outer">
+<div id="page-wrap">
 
-<div id="Barchart" style="width: 900px; height: 500px;"></div>
+<div id="Barchart" style="width: 1000px; height: 700px;"></div>
    
-  <div style="background-color: white;">
+ <!--  <div style="background-color: white;"> -->
   	
   </div>
   </div>

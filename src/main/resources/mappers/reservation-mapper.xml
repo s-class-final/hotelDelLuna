@@ -141,7 +141,8 @@
 		WHERE RES_USERID=#{res_userId}
 			AND RES_CHECKIN=#{res_checkIn}
 			AND RES_CHECKOUT=#{res_checkOut}
-	
+			AND ROWNUM =1
+			ORDER BY RES_NO DESC
 	</select>
 	
 	<!-- 날짜별 예약 정보 생성 -->
@@ -172,6 +173,7 @@
 		FROM ROOMSTATUS
 		WHERE RES_DATE = #{res_checkIn}
 		AND ROOMTYPE = #{res_roomType}
+		AND RES_NO != #{res_no}
 	</select>
 	
 	<!-- 원하는 룸 타입별 개수 구하기 -->
@@ -284,4 +286,26 @@
 		ON A.ROOMSRT = B.RSRT
 		WHERE A.ROOMSCNT - NVL(B.RSRN,0) > 0)
 	</select>
+	
+	<!-- 사용자 결제 후 예약정보 생성 -->
+	<insert id="insertReservationGst" parameterType="Reservation">
+		INSERT INTO
+		RESERVATION
+		VALUES(SEQ_RESNO.NEXTVAL,DEFAULT,#{res_roomType},#{res_userId},#{res_breakfast},#{res_dinner},
+				#{res_smoking},#{res_addBed},#{res_adult},#{res_child},#{res_checkIn},#{res_checkOut},DEFAULT,'입금완료',#{res_require},#{res_allPay})
+	</insert>
+	
+	<!-- 사용자 결제 후 인보이스 정보 생성 -->
+	<insert id="insertInvoiceGst" parameterType="Invoice">
+		INSERT INTO INVOICE VALUES (SEQ_IVID.NEXTVAL,#{userName},#{userPhone},#{rType},#{ckinDate},
+	    DEFAULT,#{quantity},#{totalPrice},#{userEmail},'Y')
+	</insert>
+	
+	<!-- 매출 정보 생성 -->
+	<insert id="insertSalesGst" parameterType="Reservation">
+		INSERT INTO SALES
+		VALUES (#{res_roomType},#{res_allPay},#{res_checkIn})
+	</insert>
+	
+	
 </mapper>

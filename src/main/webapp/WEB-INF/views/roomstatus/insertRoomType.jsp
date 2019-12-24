@@ -84,7 +84,7 @@
 			  <td class="nameTd" >판매 시작일</td>
 			  <td class="tdsize"><input type="text" id="onSaleDate"  name="startDay" readonly>  </td>
 			  <td class="nameTd" >판매 종료일</td>
-			  <td colspan ="3"><input type="text" id="offSaleDate"  name="endDay" readonly></td>
+			  <td class="tdsize"><input type="text" id="offSaleDate"  name="endDay" readonly></td>
 			</tr>
 			<tr class = "trH">
 				<td class="nameTd" >주중가</td><td class="tdsize"><input type="text" id="payment" name ="weekDay">원</td>

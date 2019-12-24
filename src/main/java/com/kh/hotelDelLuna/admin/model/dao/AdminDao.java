@@ -72,6 +72,11 @@ public class AdminDao {
 		
 		return sqlSession.selectList("adminMapper.selectYearSales");
 	}
+
+	public List<Sales> selectRtypeSales() {
+		
+		return sqlSession.selectList("adminMapper.selectRtypeSales");
+	}
 	 
 	
 	

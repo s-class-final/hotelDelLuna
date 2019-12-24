@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.hotelDelLuna.admin.model.vo.Invoice;
+import com.kh.hotelDelLuna.admin.model.vo.Sales;
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.front.model.dao.SupportDao;
 import com.kh.hotelDelLuna.front.model.vo.Notice;
@@ -66,6 +68,21 @@ public class SupportServiceImpl implements SupportService{
 	@Override
 	public ArrayList<RoomType> selectReservationGst(Reservation res) {
 		return sDao.selectReservationGst(res);
+	}
+
+	@Override
+	public int insertReservationGst(Reservation r) {
+		return sDao.insertReservationGst(r);
+	}
+
+	@Override
+	public int insertInvoiceGst(Invoice i) {
+		return sDao.insertInvoiceGst(i);
+	}
+
+	@Override
+	public int insertSalesGst(Reservation r) {
+		return sDao.insertSalesGst(r);
 	}
 	
 

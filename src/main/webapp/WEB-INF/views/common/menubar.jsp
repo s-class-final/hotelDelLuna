@@ -187,7 +187,12 @@
 	               	<h2>&nbsp;<span>&nbsp;</span>&nbsp;&nbsp;</h2>
 		               <ul>
 	                     <li><a href="entireResList.do">예약 내역 관리</a></li>
+	                      <c:url var="pList" value="pList.do"/>
+	                     <c:url var="rqlist" value="rqlist.do"/>
+	                     <li><a href="${pList }">매출 그래프 확인</a></li>
+	                     <li><a href="${rqList }">인보이스 요청 확인</a></li>
 	                  </ul>	
+		              
 	               </div>
 				</div>
 			</li>

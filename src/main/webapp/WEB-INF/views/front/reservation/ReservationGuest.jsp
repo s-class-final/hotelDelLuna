@@ -51,8 +51,6 @@
 
 <body>
    <jsp:include page="../../common/menubar.jsp"/> 
-   
-
 
    <!-- 컨텐츠 영역 -->
    <section id="container">
@@ -143,7 +141,7 @@
             <br>
             <div class="cautionBox">
                <h2 class="cautionH2">유의사항</h2>
-               <ul>
+               <ul style="padding:0 20px 20px 20px;">
                   <li class="fontWe">홈페이지에서 예약결제한 상품을 취소할 경우, 홈페이지에서 직접 취소해야 신속한 처리가 가능합니다. 전화문의 시 처리가 지연되거나 제한될 수 있습니다.</li>
                   <li>부가세 10%가 별도 부과됩니다.</li>
                   <li>본 상품은 성인 2인 &amp; 어린이 2인 기준 상품입니다.
@@ -259,11 +257,11 @@
       //기존에 선택된 값이 다시 클릭된 경우라면 삭제해야 함
       // 체크여부 확인
       if($("input:checkbox[name=bed]").is(":checked") == true) {
-         $('#addbed').prop("checked", true);
          $('#res_addBed').text("베드 추가");
+         $('#addbed').val('Y');
       }else{
-         $('#addbed').prop("checked", false);
          $('#res_addBed').text("");
+         $('#addbed').val('');
       }
    }
    
@@ -336,13 +334,18 @@
       
       //기존에 선택된 값이 다시 클릭된 경우라면 삭제해야 함
       if(li.find("label").length){
-         li.find("label").remove();
-         //선택 후 summary에도 값 제거(사이드메뉴)
-      }else{
-         $('.swiperWrap').find("label").remove();
-         var label = $("<label>").attr({id : index}).text("선택");
-         //선택 후 summary에도 값 추가(사이드메뉴)
-      }
+          li.find("label").remove();
+          //선택 후 summary에도 값 제거(사이드메뉴)
+          li.attr({"style":"border:0;"});
+       }else{
+          $('.swiperWrap').find("label").remove();
+          $('.swiperWrap li').attr({"style":"border:0;"});
+          var label = $("<label>").attr({id : index});
+          
+          //선택 후 summary에도 값 추가(사이드메뉴)
+       }
+
+      li.attr({"style":"border-bottom:2px solid #9c836a"});
       
       var room = $("#inType"+index).val();
       $("#roomType").val(room);

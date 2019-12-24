@@ -2,6 +2,8 @@ package com.kh.hotelDelLuna.front.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.hotelDelLuna.admin.model.vo.Invoice;
+import com.kh.hotelDelLuna.admin.model.vo.Sales;
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.front.model.vo.Notice;
 import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
@@ -34,6 +36,12 @@ public interface SupportService {
 	//////////////////////////////////////////////////////////////////////
 	//예약 페이지 이동 전에 3개월 내에 예약 가능한 방이 남아있는지 먼저 확인, 예약 가능한 방이 있는 일자만 뽑아냄.
 	public ArrayList<RoomType> selectReservationGst(Reservation res);
+
+	public int insertReservationGst(Reservation r);
+
+	public int insertInvoiceGst(Invoice i);
+
+	public int insertSalesGst(Reservation r);
 
 
 	
