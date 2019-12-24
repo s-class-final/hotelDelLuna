@@ -47,11 +47,10 @@
 	#page-wrap {
 	 width: 1000px; 			
 	 margin-top: 350px; 
-	 margin-left: 200px;
+	 margin-left: 400px;
 	 height: 500px;
 	}
 	
-	/* Button styles */
 
 	
 	

@@ -12,6 +12,9 @@
 
 <script src="https://cdn.rawgit.com/eligrey/FileSaver.js/5ed507ef8aa53d8ecfea96d96bc7214cd2476fd2/FileSaver.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+
+	
+
 <style >
 
 	@media print{
@@ -111,6 +114,36 @@
 	margin-top:30px;
 	font-size:21px;
 	}
+	
+	/* button */
+.btn { display:inline-block; min-width:192px; height:56px; padding:0 32px; border:1px solid #9c836a; line-height:56px; font-size:18px; vertical-align:middle; font-weight:300; color:#9c836a; text-align:center; background:#fff; transition: all .3s ease;}
+.btn span { color:#9c836a; font-weight: 300;}
+.btn.btnFull { color:#fff; background:#9c836a;}
+.btn.btnFull span { color:#fff; font-weight: 300;}
+
+.btn.btnLine2 { border-color:#fff; color:#fff; background:none;}
+.btn.btnLine2 span { color:#fff;}
+
+.btn.small { min-width:auto; padding:0 24px; font-size:14px; height:48px; line-height:48px;}
+.btn.small2 { min-width:auto; padding:0 24px; font-size:14px; height:40px; line-height:40px;}
+
+.btn.full { width:100%;}
+
+.btn:hover { color:#fff; border-color:#8a7057; background:#8a7057;}
+
+.btn:hover span { color:#fff;}
+.btn.btnFull:hover { background:#8a7057;}
+.btn.btnLine2:hover { border-color:#fff; color:#000; background:#fff;}
+.btn.btnLine2:hover span { color:#000;}
+.btn.btnLine2:disabled { border-color:#fff; color:#fff; opacity:0.4; background:none;}
+
+.btn:disabled,
+.btn:disabled:hover,
+.btn.disabled,
+.btn.disabled:hover { border:1px solid #c4bfbb; color:rgba(255,255,255,0.65); cursor:inherit; background:#c4bfbb;}
+.btn.disabled span,
+.btn.disabled:hover span { color:rgba(255,255,255,0.65);}
+	
 	
 </style>
 </head>
@@ -221,11 +254,11 @@ Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${invoice.totalPrice }원
 
 
 
-<div id="noPrint">
-<input type="button" value="Print" onclick="window.print()" id="print"/>
-<div>
+<div id="noPrint" style="margin-left:50px;">
+<input type="button" value="Print" onclick="window.print()" id="print" class="btn small"/>
+<div style="display:inline-block;">
 
-   <button id="save">저장하기</button>
+   <button id="save" class="btn small">저장하기</button>
 
 </div>
 </div>
