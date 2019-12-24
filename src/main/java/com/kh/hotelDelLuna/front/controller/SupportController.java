@@ -1,6 +1,7 @@
 package com.kh.hotelDelLuna.front.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -117,22 +118,7 @@ public class SupportController {
 		r.setRes_breakfast(Integer.valueOf(breakfast));
 		r.setRes_dinner(Integer.valueOf(dinner));
 		r.setRes_addBed(addbed);
-//		r.setRes_require(require);
 		r.setRes_allPay(Integer.valueOf(allpay));
-		
-		System.out.println(roomType);
-		System.out.println(checkIn);
-		System.out.println(checkOut);
-		System.out.println(adult);
-		System.out.println(child);
-		System.out.println(breakfast);
-		System.out.println(dinner);
-		System.out.println(addbed);
-//		System.out.println(require);
-		System.out.println(allpay);
-		
-		System.out.println(r);
-		
 		
 		session.setAttribute("r", r);
 		
@@ -141,29 +127,18 @@ public class SupportController {
 	
 	//사용자 예약페이지 이동
 	@RequestMapping(value="ReservationTest.do", method = RequestMethod.POST)
-	public String ReservationTest(HttpSession session,
-								String USER_NM, String USER_TEL1, String USER_TEL2, String USER_TEL3, String USER_EMAIL, String USER_REQUIRE) {
+	public String ReservationTest(HttpSession session, HttpServletResponse response,
+								String USER_NM, String USER_TEL1, String USER_TEL2, String USER_TEL3, String USER_EMAIL, String USER_REQUIRE) throws IOException {
 		System.out.println("ReservationTest서블릿 실행");
 		
 		Reservation r = (Reservation) session.getAttribute("r");
-		
-		System.out.println(r);
-		System.out.println(USER_NM);
-		System.out.println(USER_TEL1);
-		System.out.println(USER_TEL2);
-		System.out.println(USER_TEL3);
-		System.out.println(USER_EMAIL);
-		System.out.println(USER_REQUIRE);
 		
 		r.setRes_userId(USER_EMAIL);
 		
 		//연락처
 		String tel = USER_TEL1 + "-" + USER_TEL2 + "-" + USER_TEL3;
-		System.out.println(tel);
-		
 		
 		// 1_1. 예약자 아이디가 회원에 있는지 확인!
-		System.out.println(r.getRes_userId());
 		Member m = new Member(r.getRes_userId());
 		m.setUserName(USER_NM);
 		m.setUserPhone(tel);
@@ -211,7 +186,6 @@ public class SupportController {
 		
 			for(int i=0;i<diffDay;i++) {
     			checkIn = addDate(startDate,i);
-    			System.out.println(checkIn);
 	            r.setRes_checkIn(checkIn);
 	            int result= rService.resRoomStatusInsert(r);
     		}
@@ -236,6 +210,14 @@ public class SupportController {
 					int result3 = sService.insertSalesGst(r);
 					
 					if(result3 > 0) {
+						response.setContentType("text/html; charset=UTF-8");
+						 
+						PrintWriter out = response.getWriter();
+						 
+						out.println("<script>alert('예약이 정상적으로 완료되었습니다.');</script>");
+						 
+						out.flush();
+
 						return "../../main";
 					}else {
 						throw new SupportException("예약 실패");

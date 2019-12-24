@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>hotel Delluna</title>
+<title>Admin || resDetailView</title>
 </head>
 <style>
 #calTotal{

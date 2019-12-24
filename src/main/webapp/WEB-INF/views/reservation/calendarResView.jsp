@@ -6,7 +6,7 @@
 <html lang="ko">
 
 <head>
-    <title>FullCalendar Example</title>
+    <title>Admin || calendarResView</title>
  <script src="https://d3js.org/d3.v4.min.js"></script>
  
 <style TYPE="text/css">

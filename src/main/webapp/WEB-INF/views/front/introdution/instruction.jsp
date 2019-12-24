@@ -8,6 +8,11 @@
 <title>호텔 소개</title>
 </head>
 <style>
+body {
+    position: relative;
+    top: 45px;
+}
+
 /* reset */
 button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:transparent; overflow:visible; cursor:pointer; line-height:1; }
 
