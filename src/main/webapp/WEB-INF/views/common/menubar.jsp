@@ -144,7 +144,7 @@
                         <c:url var="dining" value="dining.do">
 	                  	<c:param name="CATE" value="cafe"/>
 	                  </c:url>
-                     <li><a href="${dining }">DRINK &amp; BAR</a></li>
+                     <li><a href="${dining }">CAFÉ &amp; BAR</a></li>
                   </ul>
                </div>
             </div>

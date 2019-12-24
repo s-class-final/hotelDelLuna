@@ -449,7 +449,6 @@ function noBack(){window.history.forward();}
                               reservationSlick($('.reservationBox'));
                            }
                               //조식석식
-                              
                            }else {
                            //객실 목록이 없으면, 해당 날짜 초기화
                            alert("해당 투숙 일정에 예약 가능한 객실이 없습니다.");
@@ -474,7 +473,7 @@ function noBack(){window.history.forward();}
       
       //객실 목록 생성
       function jsMakeRoomList(list) {   //list는 DB에서 받아온 룸타입이 들어가있는 data[i] 리스트
-         
+    	 
          //현재 노출 중인 객실 목록이 존재하면, 초기화(기존것을 없앤다)
          $(".roomSelectBox").remove();
       

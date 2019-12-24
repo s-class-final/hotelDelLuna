@@ -351,7 +351,7 @@ function noBack(){window.history.forward();}
 										</select>
 					                    <input type="text" name="findPhone2" id="findPhone2" class="inpt" required="required" maxlength="4" oninput="nextPhone(); this.value=this.value.replace(/[^0-9]/g,'');" style="width:33%; display:inline-block;">
                						    <label for="findPhone2">Your phone</label>
-               						    <input type="text" name="findPhone3" id="findPhone3" class="inpt" required="required" maxlength="4" this.value=this.value.replace(/[^0-9]/g,'');" style="width:33%; display:inline-block;">
+               						    <input type="text" name="findPhone3" id="findPhone3" class="inpt" required="required" maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'');" style="width:33%; display:inline-block;">
                						    <label for="findPhone3">Your phone</label>
 					                    <div class="submit-wrap finding">
 					                        <input type="button" id="findBtn" value="view reservation" class="submit">

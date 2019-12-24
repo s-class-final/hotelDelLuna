@@ -76,7 +76,7 @@
 						<p class="text">미슐랭 스타의 프리미엄 레스토랑<br />다양한 파인 다이닝을 만나보세요. </p>
 					</a>
 					<a href="dining.do?CATE=cafe">
-						<h2>DRINK & BAR</h2>
+						<h2>CAFÉ & BAR</h2>
 						<p class="text">품격있는 서비스와 럭셔리한 바<br />델루나에서 행복한 시간을 보내세요.</p>
 					</a>
 				</div>

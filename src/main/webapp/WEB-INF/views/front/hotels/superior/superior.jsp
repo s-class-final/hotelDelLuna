@@ -101,7 +101,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 			</section>
 			
 			<div class="detailTextBox">
-				<h2>DELUXE</h2>
+				<h2>SUPERIOR</h2>
 				<p class="subTit">모던하면서도 아늑한 인테리어의 슈페리어 룸</p>
 				<p class="text">편안한 분위기와 세련된 실내 디자인의 슈페리어 룸은 45평방미터의 공간으로 안락하고 편안한 휴식을 제공합니다. <br />룸서비스 이용은 24시간 가능하며, 와이파이 서비스는 무료로 이용하실 수 있습니다. </p>
 				<div class="btnGroup">

@@ -661,11 +661,11 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 	$(function(){
 		$("#lastName").keyup(function() {
 			console.log("id 체크중");
-			$(this).val($(this).val().replace(/[^a-z|A-Z|가-힇]*/gi, ""));
+			$(this).val($(this).val().replace(/[^a-z|A-Z|가-힇|ㄱ-ㅎ]*/gi, ""));
 		});
 		$("#firstName").keyup(function() {
 			console.log("id 체크중");
-			$(this).val($(this).val().replace(/[^a-z|A-Z|가-힇]*/gi, ""));
+			$(this).val($(this).val().replace(/[^a-z|A-Z|가-힇|ㄱ-ㅎ]*/gi, ""));
 		});
 	});
 	
