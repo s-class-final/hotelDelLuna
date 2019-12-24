@@ -99,7 +99,6 @@ public class ReservationController {
 		 
 		 }
 		 
-
 		Reservation res = rService.selectResOne(res_no);
 
 		/****** 객실 타입에 해당하는 사진 가져오기 ******/

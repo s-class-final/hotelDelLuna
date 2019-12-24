@@ -287,7 +287,7 @@
 	<div class="layerPopWrap" id="loginPop3">
 		<div class="bg"></div>
 		<!-- layerPopCont -->
-		<div class="layerPopCont" style="width:42%;left:45%">
+		<div class="layerPopCont" style="width:650px;left:45%">
 			<div class="loginWrap">
 				<h1><span>예약 정보</span></h1>
 				<label style="width:32%;text-align:center;">디럭스</label>
