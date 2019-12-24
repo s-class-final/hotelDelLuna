@@ -90,6 +90,30 @@ public class SupportController {
 		}
 	}
 	
+	
+	//예약 가능한 방 목록 조회하기
+		@RequestMapping(value="roomAttachment.do", method = RequestMethod.POST)
+		public void roomAttachment(HttpServletResponse response, String roomt) throws IOException {
+			response.setContentType("application/json;charset=utf-8");
+			
+			System.out.println("roomt : " + roomt);
+			//받은 타입에 대한 이미지 하나씩 가져오기
+			String img = sService.selectAttachment(roomt);
+			
+			System.out.println("roomAttachment.do서블릿 img : " + img);
+			if(img != null) {
+
+				Gson gson = new Gson();
+				gson.toJson(img, response.getWriter());
+				
+			}else {
+				throw new SupportException("빈 객실 정보 불러오기 실패");
+			}
+		}
+	
+	
+	
+	
 	//결제정보 입력 페이지
 	@RequestMapping(value="ReservationPayment.do", method = RequestMethod.POST)
 	public String ReservationPayment(String roomType, String checkIn, String checkOut,

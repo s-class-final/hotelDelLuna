@@ -47,6 +47,11 @@
     margin-left: 6px;
     }
     
+.roomInfo:hover {
+	border-bottom:2px solid #999966;
+	}
+    
+    
 </style>
 
 <script>
@@ -442,9 +447,11 @@ function noBack(){window.history.forward();}
                            var roomSelectBox = $("<div>").addClass("roomSelectBox typeInfo");
                            
                            if(data !=null){
-                                        //객실 목록 생성
+                        	   
+                        	  
+                              //객실 목록 생성
                               jsMakeRoomList(data);
-                                        
+                              
                                         //slick
                               reservationSlick($('.reservationBox'));
                            }
@@ -489,7 +496,26 @@ function noBack(){window.history.forward();}
          var rrRoomType     = "";
          
          for(var i in list) {
-            
+        	 
+         	var roomImg ="";
+        	 //사진 정보 불러오기
+        	 var roomt = list[i].type;
+   		   $.ajax({
+                  url : "roomAttachment.do",
+                  method : "post",
+                  data : {roomt:roomt},
+                  dataType: "json",
+                  success : function(data, status) {
+               	   	roomImg=data;
+                  },
+                  error:function(request, status, errorData){
+               	   
+                  }
+   		   });
+        	 console.log("roomImg");
+        	 console.log(roomImg);
+        	 
+      		   
             //객실 유형별 요소 작성   (객실 사진, 소개내용, 1박에 얼마인지 가격)
             if(rrRoomType != list[i].type) {
                
@@ -510,8 +536,8 @@ function noBack(){window.history.forward();}
                var inWeekEnd = $("<input>").attr({type:"hidden"
                                        , value:list[i].weekEnd
                                        , id:"inWeekEnd"+i});
-               var roomInfo = $("<div>").addClass("roomInfo");
-               var img      = $("<p>").addClass("img").append($("<img>").attr({src     : "resources/pcPub/static/images/room/list/room_list1.jpg"}));
+               var roomInfo = $("<div>").addClass("roomInfo");list[i].image
+               var img      = $("<p>").addClass("img").append($("<img>").attr({src     : "resources/pcPub/static/images/room/list/"+roomImg}));
                var h3       = $("<h3>").text(list[i].type);
                var pAmt1    = $("<p>").attr({style:"font-size : 13px;"}).text("주중 : " + list[i].weekDay + "~" + " / " + "박(" + list[i].capacity+"인 기준)");
                var pAmt2    = $("<p>").attr({style:"font-size : 13px;"}).text("주말 : " + list[i].weekEnd + "~" + " / " + "박(" + list[i].capacity+"인 기준)");   //주중 주말가 따로 보여줘야됨.

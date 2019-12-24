@@ -287,6 +287,13 @@
 		WHERE A.ROOMSCNT - NVL(B.RSRN,0) > 0)
 	</select>
 	
+	<select id="selectAttachment" parameterType="String" resultType="_int">
+		SELECT CHANGENAME
+		FROM ATTACHMENT
+		WHERE ROOMTYPE = #{type}
+			AND IMGLV=0
+	</select>
+	
 	<!-- 사용자 결제 후 예약정보 생성 -->
 	<insert id="insertReservationGst" parameterType="Reservation">
 		INSERT INTO

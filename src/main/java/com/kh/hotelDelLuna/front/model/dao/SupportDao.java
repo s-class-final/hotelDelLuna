@@ -89,5 +89,10 @@ public class SupportDao {
 		return sqlSession.insert("reservationMapper.insertSalesGst", r);
 	}
 
+
+	public String selectAttachment(String type) {
+		return sqlSession.selectOne("reservationMapper.selectAttachment", type);
+	}
+
 	
 }

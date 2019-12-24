@@ -84,6 +84,11 @@ public class SupportServiceImpl implements SupportService{
 	public int insertSalesGst(Reservation r) {
 		return sDao.insertSalesGst(r);
 	}
+
+	@Override
+	public String selectAttachment(String type) {
+		return sDao.selectAttachment(type);
+	}
 	
 
 }
