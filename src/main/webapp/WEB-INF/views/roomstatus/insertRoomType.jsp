@@ -39,7 +39,7 @@
 </head>
 <body>
 	<jsp:include page="../common/menubar.jsp"/>
-<h1 id ="rtInsertTitle">Insert Room</h1>
+<h1 id ="rtInsertTitle">Update Room</h1>
 <hr>
 	<form action="Roomtypeinsert.do" id="insertForm" method="post" enctype="multipart/form-data">
 		<table class= "rtTable" border = "1px solid black;">
@@ -47,12 +47,15 @@
 				<td class="nameTd">룸 타입</td>
 				<td class="tdsize"><select name="type">
 						<optgroup label="슈페리어">
-							<option value="SUPERIOR">슈페리어</option>
-							<option value="SUPERIOR_TERRACE">슈페리어 테라스</option>
+							<option value="SUPERIOR_DOUBLE">슈페리어 더블</option>
+							<option value="SUPERIOR_TWIN">슈페리어 트윈</option>
+							<option value="SUPERIOR_TERRACE_DOUBLE">슈페리어 테라스 더블</option>
+							<option value="SUPERIOR_TERRACE_TWIN">슈페리어 테라스 트윈</option>
 						</optgroup>
 						<optgroup label="디럭스">
 							<option value="DELUXE">디럭스</option>
-							<option value="DELUXE_GRAND">그랜드 디럭스</option>
+							<option value="DELUXE_GRAND_DOUBLE">그랜드 디럭스 더블</option>
+							<option value="DELUXE_GRAND_TWIN">그랜드 디럭스 트윈</option>
 							<option value="DELUXE_PREMIUM">프리미엄 디럭스</option>
 							<option value="DELUXE_PREMIUM_TERRACE">프리미엄 디럭스 테라스</option>
 						</optgroup>
@@ -73,12 +76,8 @@
 				<td class="nameTd" >싱글배드 수</td>
 				<td><input type="number" min=0 max=4 value=1 name="singleBed"></td>
 				<td class="nameTd" >더블배드 수</td>
-				<td><input type="number" min=0 max=4 value=1 name="doubleBed"></td>
-				<td class="nameTd" >흡연 가능 여부</td>
-				<td class="tdsize">
-				<input type="radio" name="smoking" value="Y">Y 
-				<input type="radio" name="smoking" value="N" checked="checked">N
-				</td>
+				<td colspan = "3"><input type="number" min=0 max=4 value=1 name="doubleBed"></td>
+				
 			</tr>
 			<tr class = "trH">
 			  <td class="nameTd" >판매 시작일</td>
@@ -99,46 +98,17 @@
 				<td class="nameTd" >첨부파일</td>
 				<td colspan="5" class="tdsize"><input type="File" name = "file" id = "mainImg" onchange="fileTypeCheck(this)"></td>
 			</tr>
-			<tr class = "trH">
-				<td class="nameTd" colspan ="1">상세 사진</td>
-				<td  colspan ="5" class="tdsize"><button type="button"onclick="button1_click();">상세 사진 추가</button></td>
-			</tr>
-			<tr class = "trH">
-				<td class="nameTd" >첨부파일</td>
-			<td colspan="5" id ="filetd" class="tdsize"> 
-				<input type="File" name= "file" id = "subImg_1" onchange="fileTypeCheck(this)"><br> 
-			</td>
+			
 			</tr>
 			<tr >
-				<td colspan="5" class="tdsize"></td><td colspan="1"> <input type="submit" id="submit" value="룸 등록하기" style= "float : right;"></td>
+				<td colspan="5" class="tdsize"></td><td colspan="1"> <input type="submit" id="submit" value="룸 업데이트" style= "float : right;"></td>
 			</tr>
 			
 		</table>
 	</form>
 
 	<script>
-		var BtnCount = 2;
 		
-		function button1_click(e){
-			//상세 사진 인풋 태그 추가
-			//대표 사진이 1번 기본 태그가 2번이이라고 생각하고 3~ 12번까지 
-			BtnCount++
-			if(BtnCount >= 10){
-				alert("상세사진은 8장까지 추가가능합니다");
-				BtnCount--
-			}else{
-			//동적 스크립트로 태그추가
-			var addtag = "<p id ='addinput'><input type='file' name='file' onchange='fileTypeCheck(this)'>"+"<button type='button' onclick='delBtn(this);'>삭제하기</button><br></p>"
-			
-			$("#filetd").append(addtag);
-			}
-		}
-		//추가된 상세 사진 인풋 태그 삭제
-		function delBtn(e){
-			e.parentNode.remove();
-			//삭제시 file_번호 카운트 내려주기
-			BtnCount--
-		}
 		//주중가로 주말가 어린이 요금 계싼
 		$( "#payment" ).keyup(function() {
 			//weekendPay 주중가의 120% 가격 후 1의 자리 반올림 
@@ -208,9 +178,6 @@
 					alert("대표사진을 등록해주세요.")
 					return false;
 				//주중가 입력
-				}else if($('#subImg_1').val() == ""){
-					alert("상세사진을 1개이상 등록해주세요.")
-					return false;
 				}
 			
 			});

@@ -22,7 +22,7 @@ body {
 	<form id="findForm" action="scmyres.do">
 		<div class="loginWrap">
 			<div class="innerBox"> <!-- 가로값이 1280으로 설정되어진 아이 -->
-				<h1><span>예약 내역 조회</span>호텔 델루나에 오신 것을 환영합니다.<br />예약 내역을 조회하실 수 있습니다</h1>
+				<h1><span>예약 내역 조회</span>호텔 델루나에 오신 것을 환영합니다!<br />예약 내역을 조회하실 수 있습니다.</h1>
 			</div>
 			<div class="fullBg">
 				<div class="innerBox bg"> <!-- 가로값이 1280으로 설정되어진 아이 -->
@@ -74,8 +74,6 @@ body {
 	<jsp:include page="../common/footer.jsp"/>
 	
 	<script>
-		// 예약된 정보가 있는지 확인
-		var searchRes = false;
 	   
 		// 전화번호 4글자 입력 시 다음 칸 넘어가게
 		function nextPhone() {
@@ -85,7 +83,6 @@ body {
 		};
 
       $(function(){
-      	 // 비밀번호 찾기 버튼 클릭했을 때 유효성 검사 함수 실행
          $("#findBtn").click(function(){
             return find();
          });

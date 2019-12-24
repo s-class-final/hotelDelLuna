@@ -223,6 +223,9 @@ body .container .content .submit-wrap {
   text-align: center;
   line-height: 0.5em;
 }
+body .container .content .finding{
+	height: 30%;
+}
 body .container .content .submit-wrap a {
   font-size: 12px;
   display: inline-block;
@@ -297,7 +300,7 @@ body .container .content .signup-cont {
 }
 </style>
 </head>
-<body onkeydown="javascript:onEnterLogin();">
+<body>
 	<jsp:include page="../common/menubar.jsp"/>
 
 <section class="container">
@@ -305,10 +308,10 @@ body .container .content .signup-cont {
 		        <h1>Hotel del luna</h1>
 		        <div class="tabs">
 			            <span class="tab signin active"><a href="#signin">로그인</a></span>
-			            <span class="tab signup"><a href="#signup">비회원(예약 확인)</a></span>
+			            <span class="tab signup"><a href="#signup">비회원 (예약 확인)</a></span>
 		        </div>
 		        <div class="content">
-			            <div class="signin-cont cont">
+			            <div class="signin-cont cont" onkeydown="javascript:onEnterLogin();">
 				                <form id="loginForm" action="login.do" method="post">
 					                    <input type="text" name="userId" id="userId" class="inpt" required="required" placeholder="Your email">
 					                    <label for="email">Your email</label>
@@ -324,14 +327,15 @@ body .container .content .signup-cont {
 					                    </div>
        					        </form>
    				        </div>
-   				        <div class="signup-cont cont">
-              					 <form action="scmyres.do">
+   				        <div class="signup-cont cont" onkeydown="javascript:onEnterConfirm();">
+              					 <form id="findForm" action="scmyres.do">
                    						<input type="email" name="findMail" id="findMail" class="inpt" required="required" placeholder="Your email">
 					                    <label for="email">Your email</label>
 					                    <input type="text" name="findName1" id="findName1" class="inpt" required="required" placeholder="Last name" style="width:49%; display:inline-block;">
 					                    <label for="name">Last name</label>
 					                    <input type="text" name="findName2" id="findName2" class="inpt" required="required" placeholder="First name" style="width:49%; display:inline-block;">
 					                    <label for="name">First name</label>
+					                    <br>
 					                    <select class="selectB" id = "findPhone1" name = "findPhone1">
 											<option value="010">010</option>
 											<option value="011">011</option>
@@ -340,12 +344,12 @@ body .container .content .signup-cont {
 											<option value="018">018</option>
 											<option value="019">019</option>
 										</select>
-					                    <input type="text" name="findPhone2" id="findPhone2" class="inpt" required="required" style="width:33%; display:inline-block;">
+					                    <input type="text" name="findPhone2" id="findPhone2" class="inpt" required="required" maxlength="4" oninput="nextPhone(); this.value=this.value.replace(/[^0-9]/g,'');" style="width:33%; display:inline-block;">
                						    <label for="findPhone2">Your phone</label>
-               						    <input type="text" name="findPhone3" id="findPhone3" class="inpt" required="required" style="width:33%; display:inline-block;">
+               						    <input type="text" name="findPhone3" id="findPhone3" class="inpt" required="required" maxlength="4" this.value=this.value.replace(/[^0-9]/g,'');" style="width:33%; display:inline-block;">
                						    <label for="findPhone3">Your phone</label>
-					                    <div class="submit-wrap">
-					                        <input type="submit" value="confirm" class="submit">
+					                    <div class="submit-wrap finding">
+					                        <input type="button" id="findBtn" value="view reservation" class="submit">
 					                    </div>
        					        </form>
            </div>
@@ -469,6 +473,15 @@ function onEnterLogin(){
    }
 }
 
+// 엔터 입력 시 예약 내역 조회
+function onEnterConfirm(){
+	   var keyCode = window.event.keyCode;
+	   if (keyCode == 13) {
+	      $("#findBtn").click();
+	   }
+	}
+
+
 // 로그인 버튼 클릭 시 아이디, 비번 체크
 function checkLogin(){
 	var userId = $("#userId").val();
@@ -510,7 +523,7 @@ function checkLogin(){
 	               }
 	            });
 	         }else if(data == "nope"){
-	            alert("회원 정보를 불러올 수 없습니다");
+	        	 alert("이미 탈퇴한 회원입니다. 동일한 아이디로 재가입을 원하시면 고객센터에 문의해주세요.");
 	         }else{
 	            alert("아이디를 확인해 주세요");
 	            $("#userId").focus();
@@ -523,12 +536,105 @@ function checkLogin(){
 	      }
 	   })
 }
+
+$(function(){
+    $("#findBtn").click(function(){
+       return find();
+    });
+ 	
+    if($("#userId").val().length == 0){
+ 		$("#userId").focus();
+	}else{
+		$("#userPwd").focus();
+	}
+ });
+ 
+ // 유효성 검사
+ function find(){
+	var userId = $("#findMail");
+	var lastName = $("#findName1");
+		var firstName = $("#findName2");
+		var userPhone = $("#findPhone1").val() + "-" + $("#findPhone2").val() + "-" + $("#findPhone3").val();
+	  
+	  if($("#findMail").val().length == 0){
+         alert("이메일을 입력하세요");
+         $("#findMail").focus();
+         return false;
+      }
+	  
+	  if ($("#findMail").val().indexOf("@") == -1) {
+			alert("이메일을 정확히 입력해 주세요");
+			$("#findMail").focus();
+           return false;
+		}
+	  
+	  if ($("#findMail").val().indexOf(".") == -1) {
+			alert("이메일을 정확히 입력해 주세요");
+			$("#findMail").focus();
+           return false;
+		}
+	  
+	  if($("#findName1").val().length == 0){
+         alert("성을 입력하세요");
+         $("#findName1").focus();
+         return false;
+      }
+	  
+	  if($("#findName2").val().length == 0){
+         alert("이름을 입력하세요");
+         $("#findName2").focus();
+         return false;
+      }
+	  
+	  if($("#findPhone2").val().length == 0){
+         alert("전화번호를 입력하세요");
+         $("#findPhone2").focus();
+         return false;
+      }
+	  
+	  if($("#findPhone3").val().length == 0){
+         alert("전화번호를 입력하세요");
+         $("#findPhone3").focus();
+         return false;
+      }
+	
+	  $.ajax({
+		  url : "searchRes.do",
+         data:{
+         	userId:userId.val(),
+         	lastName:lastName.val(),
+         	firstName:firstName.val(),
+         	userPhone:userPhone
+         },
+         success:function(data){
+              if(data == "true"){
+                $("#findForm").submit();
+              }else{
+             	 alert("예약 정보가 존재하지 않습니다.");
+             	 return false;
+              }
+           },
+           error:function(request, status, errorData){
+					alert("error code: " + request.status + "\n"
+							+"message: " + request.responseText
+							+"error: " + errorData);
+			 }
+       });
+    
+ }
+
+// 전화번호 4글자 입력 시 다음 칸 넘어가게
+function nextPhone() {
+	if ($("#findPhone2").val().length >= 4) {
+		$("#findPhone3").focus();
+	}
+};
 </script>
 
 <script type='text/javascript'>	// 카카오 로그인
 	$(function(){
+		Kakao.init('de55ce2e9e0330e7281dfe9da45b537b');
 		$("#kakao").click(function(){
-		   Kakao.init('de55ce2e9e0330e7281dfe9da45b537b');
 		   Kakao.Auth.login({
 		      success: function(authObj) {
 		      // 로그인 성공시, API를 호출합니다.
@@ -544,8 +650,10 @@ function checkLogin(){
 		               success:function(data){
 		                  if(data == "true"){
 		                     location.href = "kakaologin.do?" + kakaoId;
+		                  }else if(data == "nope"){
+		                	  alert("이미 탈퇴한 회원입니다. 동일한 아이디로 재가입을 원하시면 고객센터에 문의해주세요");
 		                  }else{
-		                     location.href = "kakaojoin.do?" + kakaoId;
+		                	 location.href = "kakaojoin.do?" + kakaoId; 
 		                  }
 		               },
 		               error:function(data){
@@ -567,7 +675,7 @@ function checkLogin(){
 		});
 	});
    
-   </script>
+</script>
 
 </body>
 </html>

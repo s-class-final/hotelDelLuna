@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>호텔 소개</title>
 </head>
 <style>
 /* reset */
@@ -86,7 +86,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 				<div style="background-image:url('resources/pcPub/static/images/instruction/img_visual.jpg');"></div>
 			</div>
 			<div class="textBox">
-				<h1 data-animation="fadeInDown">Paradise<br />Hotel &amp; Resort</h1>
+				<h1 data-animation="fadeInDown">HOTEL<br />DEL LUNA</h1>
 				<p data-animation="fadeInUp">고급스럽고 넓은 객실, <br />파인다이닝 레스토랑, 품격 있는 클럽 라운지를 보유한, <br />예술적 감성과 여유를 느낄 수 있는 컨템포러리 럭셔리 호텔입니다.</p>
 			</div>
 			<a href="#" class="btnArrowLeft">이전이미지</a>
@@ -99,7 +99,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 				<span class="bgbar"></span>
 				<div class="sectionH">
 					<h1 data-animation="fadeInUp">객실</h1>
-					<p data-animation="fadeInUp">호텔 파라다이스만의 예술적 품격을 갖춘 객실에서 격이 다른<br />휴식과 여유를 경험해 보세요.</p>
+					<p data-animation="fadeInUp">호텔 델루나만의 예술적 품격을 갖춘 객실에서 격이 다른<br />휴식과 여유를 경험해 보세요.</p>
 					<a href="overView.do" class="link" data-animation="fadeInUp">전체 보기</a>
 				</div>
 				
@@ -145,8 +145,8 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 				<span class="bgbar"></span>
 				<div class="sectionH">
 					<h1 data-animation="fadeInUp">다이닝</h1>
-					<p data-animation="fadeInUp">미슐랭 스타 레스토랑부터 트렌디한 Bar까지, <br />호텔 파라다이스에서 펼쳐지는 미식의 세계로 초대합니다.</p>
-					<a href="dining.do" class="link" data-animation="fadeInUp">전체 보기</a>
+					<p data-animation="fadeInUp">미슐랭 스타 레스토랑부터 트렌디한 Bar까지, <br />호텔 델루나에서 펼쳐지는 미식의 세계로 초대합니다.</p>
+					<a href="dining.do?CATE=dining" class="link" data-animation="fadeInUp">전체 보기</a>
 				</div>
 				
 				<section class="mainSwiperMotion">
@@ -214,7 +214,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 							<p class="text">밀라노의 감성으로 이탈리아 본연의 맛을 추구하는 Italian Gourmet Restaurant</p>
 						</div>
 						<div>
-							<p class="title">LOUNGE PARADISE</p>
+							<p class="title">LOUNGE DELLUNA</p>
 							<p class="text">음악이 흐르는 로비라운지</p>
 						</div>
 						<div>
@@ -239,8 +239,8 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 				<span class="bgbar"></span>
 				<div class="sectionH">
 					<h1 data-animation="fadeInUp">부대시설</h1>
-					<p data-animation="fadeInUp">다채로운 액티비티와 휴식을 함께 즐길 수 있는 <br />호텔 파라다이스의 시설을 즐겨보세요.</p>
-					<a href="#" class="link" data-animation="fadeInUp">전체 보기</a>
+					<p data-animation="fadeInUp">다채로운 액티비티와 휴식을 함께 즐길 수 있는 <br />호텔 델루나의 시설을 즐겨보세요.</p>
+					<a href="facility.do" class="link" data-animation="fadeInUp">전체 보기</a>
 				</div>
 				
 				<section class="mainSwiperMotion">
@@ -248,9 +248,6 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 						<ul>
 							<li>
 								<p class="img"><img src="resources/pcPub/static/images/instruction/img_facilities1.jpg" alt="" /></p>
-							</li>
-							<li>
-								<p class="img"><img src="resources/pcPub/static/images/instruction/img_facilities2.jpg" alt="" /></p>
 							</li>
 							<li>
 								<p class="img"><img src="resources/pcPub/static/images/instruction/img_facilities3.jpg" alt="" /></p>
@@ -267,10 +264,6 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 							<p class="text">하늘과 마주한 로맨틱한 Outdoor Pool</p>
 						</div>
 						<div>
-							<p class="title">사파리파크</p>
-							<p class="text">재미와 짜릿함이 공존하는 엔터테인먼트 공간</p>
-						</div>
-						<div>
 							<p class="title">키즈존 </p>
 							<p class="text">아이가 자라는 시간, Kids Zone</p>
 						</div>
@@ -282,7 +275,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 	<%-- </c:url> --%>
 </section>
 <!-- //컨텐츠 영역 -->
-
+<jsp:include page="../../common/footer.jsp"/>
 
 <form id="form_evt" name="form_evt">
 	<input type="hidden" id="SBU_CD" name="SBU_CD" value="000001"/>

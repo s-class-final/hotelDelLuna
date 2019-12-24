@@ -6,6 +6,7 @@ public class Inquiry {
 	private int iId;
 	private String iTitle;
 	private String iWriter;
+	private String iUserName;
 	private String iContent;
 	private Date iCreateDate;
 	private Date iModifyDate;
@@ -17,12 +18,13 @@ public class Inquiry {
 		super();
 	}
 
-	public Inquiry(int iId, String iTitle, String iWriter, String iContent, Date iCreateDate, Date iModifyDate,
-			String iStatus, String reContent, String reStatus) {
+	public Inquiry(int iId, String iTitle, String iWriter, String iUserName, String iContent, Date iCreateDate,
+			Date iModifyDate, String iStatus, String reContent, String reStatus) {
 		super();
 		this.iId = iId;
 		this.iTitle = iTitle;
 		this.iWriter = iWriter;
+		this.iUserName = iUserName;
 		this.iContent = iContent;
 		this.iCreateDate = iCreateDate;
 		this.iModifyDate = iModifyDate;
@@ -53,6 +55,14 @@ public class Inquiry {
 
 	public void setiWriter(String iWriter) {
 		this.iWriter = iWriter;
+	}
+
+	public String getiUserName() {
+		return iUserName;
+	}
+
+	public void setiUserName(String iUserName) {
+		this.iUserName = iUserName;
 	}
 
 	public String getiContent() {
@@ -105,10 +115,11 @@ public class Inquiry {
 
 	@Override
 	public String toString() {
-		return "Inquiry [iId=" + iId + ", iTitle=" + iTitle + ", iWriter=" + iWriter + ", iContent=" + iContent
-				+ ", iCreateDate=" + iCreateDate + ", iModifyDate=" + iModifyDate + ", iStatus=" + iStatus
-				+ ", reContent=" + reContent + ", reStatus=" + reStatus + "]";
+		return "Inquiry [iId=" + iId + ", iTitle=" + iTitle + ", iWriter=" + iWriter + ", iUserName=" + iUserName
+				+ ", iContent=" + iContent + ", iCreateDate=" + iCreateDate + ", iModifyDate=" + iModifyDate
+				+ ", iStatus=" + iStatus + ", reContent=" + reContent + ", reStatus=" + reStatus + "]";
 	}
+	
 	
 	
 

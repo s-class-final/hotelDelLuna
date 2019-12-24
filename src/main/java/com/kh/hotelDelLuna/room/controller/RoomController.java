@@ -67,7 +67,6 @@ public class RoomController {
 		if(mf.size() == 0 && mf.get(0).getOriginalFilename().equals("")) {
 			
 		}else {
-			String genId = UUID.randomUUID().toString();
 			
 			//저장될 위치
 			String root = mpsr.getSession().getServletContext().getRealPath("resources");
@@ -91,14 +90,19 @@ public class RoomController {
 				if(originFileName == "") {
 					//걍 넘기고
 				}else {
-					
-					//바뀔 파일 네임
-					String saveFileName = genId + "." + originFileName.substring(originFileName.lastIndexOf(".")+1);
-					String savePath = realFolder + saveFileName;
+				
 					//파일 저장
-					mf.get(i).transferTo(new File(savePath));
 					
 					if(i == 0) {
+						
+						//바뀔 파일 네임
+						String genId = UUID.randomUUID().toString();
+						String saveFileName = genId + "." + originFileName.substring(originFileName.lastIndexOf(".")+1);
+						String savePath = realFolder + saveFileName;
+						mf.get(i).transferTo(new File(savePath));
+					
+						
+						
 						at.setOriginalName(originFileName);
 						at.setChangeName(saveFileName);
 						at.setPath(savePath);
@@ -107,14 +111,7 @@ public class RoomController {
 						
 						resultImg = rmService.insertImgs(at);
 						
-					}else {
-						at.setOriginalName(originFileName);
-						at.setChangeName(saveFileName);
-						at.setPath(savePath);
-						at.setRoomType(mpsr.getParameter("type"));
-						at.setImgLv(1);
 						
-						resultImg = rmService.insertImgs(at);
 					}
 				}
 				
@@ -125,7 +122,7 @@ public class RoomController {
 			
 			
 			if(resultRt == 1 && resultImg == 1) {
-				System.out.println("룸 타입 등록 성공");
+				System.out.println("룸 타입 업데이트 성공");
 			}
 			
 		}	
@@ -268,7 +265,18 @@ public class RoomController {
 		
 	}
 
-
+	@RequestMapping("checkIn.do")
+	public void checkIn(HttpServletResponse response, Reservation rs, Room rm){
+		System.out.println("체크인 클릭으로 뽑아온 rs" + rs);
+		
+		System.out.println("체크인 클릭으로 받아온 룸 넘버 " + rm);
+		
+		int resultUpdateCheckIn = 0;
+		int resultUpdatePayStatus = 0;
+		
+		
+	}
+	
 }
 	
 	

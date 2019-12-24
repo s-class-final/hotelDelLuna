@@ -1272,6 +1272,102 @@
  	            });
  	        });
 
+ 			var clickcheck=false;
+ 			var roomNum = 0;
+ 			var roomCon = '';
+ 			var roomty = '';
+ 			
+ 			//클릭시  룸넘버 가져오는 jquery
+ 			$(document).on('click','.roomCard', function(){
+ 				clickcheck=true;
+ 				
+ 				roomNum = $(this).attr("id");
+ 				
+ 				$("input[name=roomNo]").val(roomNum);
+ 				$(this).css("background" ,"lightblue");
+ 				
+ 				$.ajax({
+ 					url:'selectRoomcard.do',
+ 					data : { roomNum : roomNum},
+ 					dataType : 'json',
+ 					success:function(data){
+ 						
+ 						roomCon = data.condition;
+ 						roomty = data.roomType;
+ 						
+ 						
+ 						$('#roomStatus').html("");
+ 						$("<h3 class ='subTitle'>Select Room</h3>"
+ 								+"<hr id ='checkHr'>").appendTo("#roomStatus");
+ 						
+ 						var table = $('<table id="selectRcTable" border = "1px solid black" >');
+ 						var tr1 = $('<tr>');
+ 						var td1 = $('<td>').text('룸 넘버');;
+ 						var td2 = $('<td>').text(data.roomNo);
+ 						
+ 						var tr2 = $('<tr>');
+ 						var td3 = $('<td colspan="2">').html('룸 타입');
+ 						
+ 						var tr3 = $('<tr>');
+ 						var td4 = $('<td colspan="2">').html(data.roomType);
+ 						
+ 						var tr4 = $('<tr>');
+ 						var td5 = $('<td>').html('컨디션');
+ 						
+ 						if(data.condition == 'WAITING'){
+ 						
+ 							var td6	= $('<td>').html('입실 대기중');
+ 						
+ 						}else if(data.condition == 'CLEANING'){
+ 							var td6	= $('<td>').html('청소 중');
+ 						}else if(data.condition == 'STAYING'){
+ 							var td6	= $('<td>').html('투숙 중');
+ 						}
+ 						
+ 						var tr5 = $('<tr>');
+ 						var td7 = $('<td>').html('성함');
+ 						var td8 = $('<td>').html('더미 값 없음 오류방지');
+ 						
+ 						var tr6 = $('<tr>');
+ 						var td9 = $('<td colspan="2">').html('투숙 중 고객 요청 사항');
+ 						
+ 						var tr7 = $('<tr>');
+ 						var td10 = $('<td colspan="2">')
+ 						var textarea = $('<textarea id ="enterRer" rows="7" style="width : 100%; resize : none;" >밸류</textarea>');
+ 						
+ 						td1.appendTo(tr1);
+ 						td2.appendTo(tr1);
+ 						tr1.appendTo(table);
+ 						
+ 						td3.appendTo(tr2);
+ 						tr2.appendTo(table);
+ 						
+ 						td4.appendTo(tr3);
+ 						tr3.appendTo(table);
+ 						
+ 						td5.appendTo(tr4);
+ 						td6.appendTo(tr4);
+ 						tr4.appendTo(table);
+ 						
+ 						td7.appendTo(tr5);
+ 						td8.appendTo(tr5);
+ 						tr5.appendTo(table);
+ 						
+ 						td9.appendTo(tr6);
+ 						tr6.appendTo(table);
+ 						
+ 						textarea.appendTo(td10);
+ 						td10.appendTo(tr7);
+ 						tr7.appendTo(table);
+ 						
+ 						
+ 						table.appendTo("#roomStatus");
+ 						
+ 					}
+ 				});
+ 			});
+ 					
+		
 		
 		//클릭시 에약번호 가져오는 jquery
 		//그 후 예약번호로 예약정보 가져오기
@@ -1281,7 +1377,7 @@
 			
 			var selectRS = $(this).find('input').val();
 			
-			
+		
 			$.ajax({
 				url:"selectRs.do",
 				data:{rsNumber:selectRS},
@@ -1292,8 +1388,8 @@
 					var checkOutday = data.res_checkOut;
 					 tbRt = data.res_roomType;
 					 tbps = data.res_payStatus;
-					 
-					$('#RSselectinfo').html("");
+					
+					 $('#RSselectinfo').html("");
 					$("<h3 class ='subTitle'>Detail Info</h3>"
 							+"<hr id ='checkHr'>").appendTo("#RSselectinfo");
 					$("<form action = 'checkIn.do' id ='detailForm'>").appendTo("#RSselectinfo");
@@ -1301,9 +1397,11 @@
 					// 테이블 젓번째 줄
 					$("<tr id = 'row1'>").appendTo("#selectinfo");
 					
+					$('<input>').attr('type','hidden').attr('name', 'roomNo').attr('value', '0').appendTo("#selectinfo");
+					
 					
 					$("<td style='width : 80px;'>예약 번호</td>").appendTo("#row1");
-					$("<td>").html(data.res_no).appendTo("#row1");
+					$("<td id ='rsNo'>").html(data.res_no).appendTo("#row1");
 					
 					$("<td style='width : 70px;'>성함</td>").appendTo("#row1");
 					$("<td style='width : 130px;' id ='nameTd'>").appendTo("#row1");
@@ -1322,7 +1420,7 @@
 		
 					$("<td>룸 타입</td>").appendTo("#row2");
 					$("<td colspan ='3' id = 'rTypeTd'>").appendTo("#row2");
-					$("<input>").attr('id','rType').attr('name','rType').attr('value',data.res_roomType).attr('style',"width:220px;").attr('readonly','true').appendTo("#rTypeTd");
+					$("<input>").attr('id','rType').attr('name','res_roomType').attr('value',data.res_roomType).attr('style',"width:220px;").attr('readonly','true').appendTo("#rTypeTd");
 				
 					$("<td>성인 인원</td>").appendTo("#row2");
 					$("<td id='adultTd'>").appendTo("#row2");
@@ -1362,11 +1460,11 @@
 					
 					$("<td>요금 </td>").appendTo("#row5");
 					$("<td  colspan='2' id ='payTd'></td>").appendTo("#row5");
-					$("<input>").attr('name','checkOutdate').attr('value','150000').attr('readonly','true').appendTo("#payTd");
+					$("<input>").attr('name','checkOutdate').attr('value',data.res_allPay).attr('readonly','true').appendTo("#payTd");
 				
 					$("<td>입금 상태</td>").appendTo("#row5");
 					$("<td id = 'payStatus' colspan ='4'>").appendTo("#row5");
-					$("<input>").attr('name','payStatus').attr('value',data.res_payStatus).attr('readonly','true').appendTo("#payStatus");
+					$("<input>").attr('name','res_payStatus').attr('value',data.res_payStatus).attr('readonly','true').appendTo("#payStatus");
 					
 					//6번쨎 줄 
 					$("<tr id='row6'>").appendTo("#selectinfo");
@@ -1376,7 +1474,7 @@
 					$("<td colspan = '8' id='taTd'>").appendTo("#row7");
 					$("<textarea id ='require'>").html(data.res_require).appendTo("#taTd");
 					$('#require').attr('rows', '7').attr('readonly','true').css( 'resize', 'none').css('width','100%');
-					
+					$('<input>').attr('type', 'hidden').attr('name', 'res_require').attr('value',data.res_require).appendTo("#taTd");
 					
 					//8번째 줄
 					$("<tr id='row8'>").appendTo("#selectinfo");
@@ -1413,105 +1511,9 @@
 		});
 		
 		
-		var clickcheck=false;
-		var roomNum = 0;
-		var roomCon = '';
-		var roomty = '';
 		
-		//클릭시  룸넘버 가져오는 jquery
-		$(document).on('click','.roomCard', function(){
-			clickcheck=true;
-			
-			roomNum = $(this).attr("id");
-			
-			
-			$(this).css("background" ,"lightblue");
-			
-			$.ajax({
-				url:'selectRoomcard.do',
-				data : { roomNum : roomNum},
-				dataType : 'json',
-				success:function(data){
-					
-					roomCon = data.condition;
-					roomty = data.roomType;
-					
-					
-					$('#roomStatus').html("");
-					$("<h3 class ='subTitle'>Select Room</h3>"
-							+"<hr id ='checkHr'>").appendTo("#roomStatus");
-					
-					var table = $('<table id="selectRcTable" border = "1px solid black" >');
-					var tr1 = $('<tr>');
-					var td1 = $('<td>').text('룸 넘버');;
-					var td2 = $('<td>').text(data.roomNo);
-					
-					var tr2 = $('<tr>');
-					var td3 = $('<td colspan="2">').html('룸 타입');
-					
-					var tr3 = $('<tr>');
-					var td4 = $('<td colspan="2">').html(data.roomType);
-					
-					var tr4 = $('<tr>');
-					var td5 = $('<td>').html('컨디션');
-					
-					if(data.condition == 'WAITING'){
-					
-						var td6	= $('<td>').html('입실 대기중');
-					
-					}else if(data.condition == 'CLEANING'){
-						var td6	= $('<td>').html('청소 중');
-					}else if(data.condition == 'STAYING'){
-						var td6	= $('<td>').html('투숙 중');
-					}
-					
-					var tr5 = $('<tr>');
-					var td7 = $('<td>').html('성함');
-					var td8 = $('<td>').html('더미 값 없음 오류방지');
-					
-					var tr6 = $('<tr>');
-					var td9 = $('<td colspan="2">').html('투숙 중 고객 요청 사항');
-					
-					var tr7 = $('<tr>');
-					var td10 = $('<td colspan="2">')
-					var textarea = $('<textarea id ="enterRer" rows="7" style="width : 100%; resize : none;" >밸류</textarea>');
-					
-					td1.appendTo(tr1);
-					td2.appendTo(tr1);
-					tr1.appendTo(table);
-					
-					td3.appendTo(tr2);
-					tr2.appendTo(table);
-					
-					td4.appendTo(tr3);
-					tr3.appendTo(table);
-					
-					td5.appendTo(tr4);
-					td6.appendTo(tr4);
-					tr4.appendTo(table);
-					
-					td7.appendTo(tr5);
-					td8.appendTo(tr5);
-					tr5.appendTo(table);
-					
-					td9.appendTo(tr6);
-					tr6.appendTo(table);
-					
-					textarea.appendTo(td10);
-					td10.appendTo(tr7);
-					tr7.appendTo(table);
-					
-					
-					table.appendTo("#roomStatus");
-					
-				}
-			});
-		});
-				
 		function invalidJoin(){
-			
-			
-			
+
 			if(clickcheck==false){
 				alert('객실을 선택해주세요');
 				

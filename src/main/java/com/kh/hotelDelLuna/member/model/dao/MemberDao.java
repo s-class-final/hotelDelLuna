@@ -32,7 +32,7 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.idCheck", userId);
 	}
 
-	public int kakaoIdCheck(String kakaoId) {
+	public Member kakaoIdCheck(String kakaoId) {
 		
 		return sqlSession.selectOne("memberMapper.kakaoIdCheck", kakaoId);
 	}
@@ -168,6 +168,11 @@ public class MemberDao {
 	public int insertNKMember(Member m) {
 		
 		return sqlSession.update("memberMapper.insertNKMember", m);
+	}
+
+	public int plusPoint(Reservation res) {
+
+		return sqlSession.update("memberMapper.plusPoint", res);
 	}
 	
 }

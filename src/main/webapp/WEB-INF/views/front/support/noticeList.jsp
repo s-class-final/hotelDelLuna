@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>공지사항</title>
 </head>
 <body>
 	<jsp:include page="../../common/menubar.jsp"/>
@@ -100,7 +100,7 @@ function jsViewDtl(nId, currentPage) {		//게시글 번호를 가지고 디테�
 	</div>
 </section>
 
-
+<jsp:include page="../../common/footer.jsp"/>
 
 
 

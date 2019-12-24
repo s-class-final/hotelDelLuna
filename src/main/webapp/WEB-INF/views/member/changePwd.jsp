@@ -73,7 +73,7 @@ body {
 		</div>
 		
 	</div>
-	
+	<jsp:include page="../common/footer.jsp"/>
 	<%-- 
 	임시비번 다시 바꾸는 곳
 	<form>
@@ -168,7 +168,7 @@ body {
 					$("#userPwd").val("");
 					$("#checkPwd").val("");
 					alert("비밀번호가 변경되었습니다.");
-					location.href="index.jsp";
+					location.href="main.jsp";
 					
 				}else{
 					$("userPwd").val("");

@@ -74,7 +74,7 @@ function jsMemberDrop() {
 		data:{userId:userId},
 		success:function(data){
 			alert("회원탈퇴 되었습니다.");
-			location.href="index.jsp";
+			location.href="main.jsp";
 		},
 		error : function(request, status, errorData) {
 			alert("error code: " + request.status + "\n"
@@ -88,7 +88,7 @@ function jsMemberDrop() {
 
 
 
-var cTxtIqr = "문의 <span class='fw500'>010-9979-4655</span> (월~금 03:30 ~ 22:00)";
+var cTxtIqr = "문의 <span class='fw500'>1577-1577</span> (월~금 03:30 ~ 22:00)";
 
 function jsSecessionLyInitialize() {
 	//레이어 팝업 초기화 설정값 변수 선언
@@ -118,7 +118,7 @@ function jsSecessionLyInitialize() {
 	jsInitInfoPop(true, "#SECESSION_USER", title, ctxtArr, tClsArr, btnObj);
 }
 
-//레이어 팝업 좌측 버튼 클릭 이벤트 (취소)
+//레이어 팝업 좌측 버튼 클릭 이벤트
 function jsLeftBtnAction() {
 	//레이어 팝업 닫기
 	$(".btnPopClose").click();
@@ -126,7 +126,7 @@ function jsLeftBtnAction() {
 	jsMemberDrop();
 }
 
-//레이어 팝업 우측 버튼 클릭 이벤트
+//레이어 팝업 우측 버튼 클릭 이벤트 (취소)
 function jsRightBtnAction() {
 	//레이어 팝업 닫기
 	$(".btnPopClose").click();

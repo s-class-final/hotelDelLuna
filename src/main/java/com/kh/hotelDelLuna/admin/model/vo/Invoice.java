@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Invoice {
 
-	
+
 	private int ivId;
 	private String userName;
 	private String userPhone;

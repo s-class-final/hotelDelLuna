@@ -66,7 +66,7 @@ public class MemberController {
 			}else {
 				throw new MemberException("로그인 실패!!");
 			}
-			return "../../index";
+			return "../../main";
 		}
 		
 	}
@@ -81,7 +81,7 @@ public class MemberController {
 		// 로그아웃은 되는데 간혹 로그아웃 버튼을 두 번 눌러야 로그아웃 되는 경우가 있는데
 		// 그럴 때는 로그인 부분에서 미리 setComplete를 실행하고 로그아웃 해 주면 잘 됨
 
-		return "../../index";
+		return "../../main";
 		// 다 되는 거 확인 됐으면 menubar.jsp 가서 회원가입 만들자(a 태그에 urlmapping 경로 추가)
 	}
 	
@@ -137,7 +137,7 @@ public class MemberController {
 				throw new MemberException("회원 가입 실패!!");
 			}
 		}
-		return "../../index";
+		return "../../main";
 	}
 	
 	@RequestMapping("mdrop.do")
@@ -149,7 +149,7 @@ public class MemberController {
 	@RequestMapping("mdelete.do")
 	public String deleteMember(HttpSession session, String userId) {
 		int result = mService.deleteMember(userId);
-		
+		System.out.println(userId);
 		if(result > 0) {
 			return "redirect:logout.do";
 			// 알아서 로그아웃을 해 주는 메소드를 활용하자
@@ -160,22 +160,22 @@ public class MemberController {
 	}
 	
 	@RequestMapping("idcheck.do")
-	   @ResponseBody
-	   public String idCheck(HttpServletResponse response, String userId) throws IOException {
-	      
-	      Member m = mService.idCheck(userId);
-	      
-	      if(m == null) {
-	         return "false";
-	      }else if(m.getmStatus().equals("B")) {
-	         return "false1";
-	      }else if(m.getmStatus().equals("N")) {
-	         return "nope";
-	      }else {
-	         return "true";
-	      }
-	      
-	   }
+	@ResponseBody
+	public String idCheck(HttpServletResponse response, String userId) throws IOException {
+		      
+		Member m = mService.idCheck(userId);
+	
+		if(m == null) {
+			return "false";
+		}else if(m.getmStatus().equals("B")) {
+			return "false1";
+		}else if(m.getmStatus().equals("N")) {
+			return "nope";
+		}else {
+			return "true";
+		}
+			
+	}
 	
 	@RequestMapping(value="pwdcheck.do", method=RequestMethod.POST)
 	@ResponseBody
@@ -195,11 +195,19 @@ public class MemberController {
 	}
 	
 	@RequestMapping("kakaocheck.do")
-	public void kakaoIdCheck(HttpServletResponse response, String kakaoId) throws IOException {
+	@ResponseBody
+	public String kakaoIdCheck(HttpServletResponse response, String kakaoId) throws IOException {
 		
-		boolean isUsable = mService.kakaoIdCheck(kakaoId) == 0 ? false : true;
+		Member m = mService.kakaoIdCheck(kakaoId);
 		
-		response.getWriter().print(isUsable);
+		if(m == null) {
+			return "false";
+		}else if(m.getmStatus().equals("N")) {
+			return "nope";
+		}else {
+			return "true";
+		}
+		
 	}
 	
 	@RequestMapping("kakaojoin.do")
@@ -255,7 +263,7 @@ public class MemberController {
 				throw new MemberException("회원 가입 실패!!");
 			}
 		}
-		return "../../index";
+		return "../../main";
 	}
 	
 	@RequestMapping("kakaologin.do")
@@ -267,7 +275,7 @@ public class MemberController {
 			session.setAttribute("loginUser", loginUser);
 		}
 		
-		return "../../index";
+		return "../../main";
 	}
 	
 	@RequestMapping("findpwd.do")
@@ -281,8 +289,26 @@ public class MemberController {
 		
 		String setfrom = "hoteldelluna1226@gmail.com";
 		String tomail = request.getParameter("findMail"); // 받는 사람 이메일
-		String title = "호텔 델루나 임시 비번"; // 제목
-		String content = request.getParameter("randomPwd"); // 내용
+		String title = "호텔 델루나 임시 비밀번호입니다."; // 제목
+		String content =						// 내용
+				"<table style='border:1px solid #9c836a; border-collapse:collapse;'>"
+				+ "<tr>"
+				+ "<td style='background:url(https://i.imgur.com//JgOp9Sw.png)'>"
+				+ "<table width='620' height='218'>"
+				+ "<tr><td height='40' align='center' style='padding:65px 0 0 0; font-size:30px; font-weight:600; color:#fff;'>임시 비밀번호 발급</td></tr>"
+				+ "<tr><td align='center' style='color:#fff; font-size:18px;'>호텔 델루나 임시 비밀번호 발급 안내드립니다</td></tr>"
+				+ "<tr><td align='center' style='padding:5px;'></td></tr>"
+				+ "</table>"
+				+ "</td>"
+				+ "</tr>"
+				+ "<tr><td style='padding:50px;'></td></tr>"
+				+ "<tr><td align='center' style='padding:20px; border-top:1px solid #9c836a; border-bottom:1px solid #9c836a; color: #b28634; font-weight:600; font-size:20px;'>" + "고객님의 임시 비밀번호 : " + request.getParameter("randomPwd") + "</td>" + "</tr>"
+				+ "<tr><td align='center' style='font-size:14px; padding:20px;'>* 위의 임시 비밀번호로 로그인 후 비밀번호를 변경해주시기 바랍니다." + "</td>" + "</tr>"
+				+ "<tr><td style='padding:50px;'>" + "</td>" + "</tr>"
+				+ "<tr style='background-color:#443e39;'><td align='center' style='padding:10px 0 0 0; font-size:14px; color:#8d8a88;'>고객센터 : 1577-1577</td></tr>"
+				+ "<tr style='background-color:#443e39;'><td align='center' style='padding:5px; font-size:14px; color:#8d8a88;'>E-mail : hoteldelluna1226@gmail.com</td></tr>"
+				+ "<tr style='background-color:#443e39;'><td align='center' style='padding:0 0 10px 0; font-size:14px; color:#8d8a88;'>Copyright ⓒ 2019 HOTEL DELLUNA Co. Ltd. All rights reserved.</td></tr>"
+				+ "</table>";
 
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
@@ -305,7 +331,7 @@ public class MemberController {
 		int result = mService.changePwd(m);
 		
 		if(result > 0) {
-			return "../../index";
+			return "../../main";
 		}else {
 			throw new MemberException("임시 비밀번호 변경 실패!");
 		}
@@ -487,7 +513,26 @@ public class MemberController {
 		String setfrom = "hoteldelluna1226@gmail.com";
 		String tomail = userId; // 받는 사람 이메일
 		String title = "호텔 델루나 가입 인증 코드"; // 제목
-		String content = emailCode; // 내용
+		String content =  // 내용
+		"<table style='border:1px solid #9c836a; border-collapse:collapse;'>"
+		+ "<tr>"
+		+ "<td style='background:url(https://i.imgur.com//JgOp9Sw.png)'>"
+		+ "<table width='620' height='218'>"
+		+ "<tr><td height='40' align='center' style='padding:65px 0 0 0; font-size:30px; font-weight:600; color:#fff;'>이메일 인증번호 발급</td></tr>"
+		+ "<tr><td align='center' style='color:#fff; font-size:18px;'>호텔 델루나 인증번호 발급 안내드립니다</td></tr>"
+		+ "<tr><td align='center' style='padding:5px;'></td></tr>"
+		+ "</table>"
+		+ "</td>"
+		+ "</tr>"
+		+ "<tr><td style='padding:50px;'></td></tr>"
+		+ "<tr><td align='center' style='padding:20px; border-top:1px solid #9c836a; border-bottom:1px solid #9c836a; color: #b28634; font-weight:600; font-size:20px;'>" + "이메일 인증번호 : " + emailCode + "</td>" + "</tr>"
+		+ "<tr><td align='center' style='font-size:14px; padding:20px;'>* 위의 인증번호를 인증번호 입력 창에 입력 후 회원가입을 진행해주시기 바랍니다." + "</td>" + "</tr>"
+		+ "<tr><td style='padding:50px;'>" + "</td>" + "</tr>"
+		+ "<tr style='background-color:#443e39;'><td align='center' style='padding:10px 0 0 0; font-size:14px; color:#8d8a88;'>고객센터 : 1577-1577</td></tr>"
+		+ "<tr style='background-color:#443e39;'><td align='center' style='padding:5px; font-size:14px; color:#8d8a88;'>E-mail : hoteldelluna1226@gmail.com</td></tr>"
+		+ "<tr style='background-color:#443e39;'><td align='center' style='padding:0 0 10px 0; font-size:14px; color:#8d8a88;'>Copyright ⓒ 2019 HOTEL DELLUNA Co. Ltd. All rights reserved.</td></tr>"
+		+ "</table>";
+						
 
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
@@ -496,7 +541,7 @@ public class MemberController {
 			messageHelper.setFrom(setfrom); // 보내는사람 생략하면 정상작동을 안함
 			messageHelper.setTo(tomail); // 받는사람 이메일
 			messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
-			messageHelper.setText(content); // 메일 내용
+			messageHelper.setText(content, true); // 메일 내용
 
 			mailSender.send(message);
 		} catch (Exception e) {
@@ -569,7 +614,7 @@ public class MemberController {
 		int result = mService.updateInquiry(i);
 		
 		if(result > 0) {
-			mv.addObject("page", page).setViewName("redirect:noreply.do");
+			mv.addObject("page", page).setViewName("redirect:allinquiry.do");
 		}else {
 			throw new MemberException("문의글 답변 실패!!");
 		}
@@ -623,7 +668,7 @@ public class MemberController {
 			System.out.println(e);
 		}
 		
-		return "../../index";
+		return "../../main";
 	}
 	
 	@RequestMapping("noreply.do")
@@ -727,7 +772,7 @@ public class MemberController {
 		
 		if(m1 != null) {
 			mv.addObject("m1", m1);
-			mv.setViewName("member/nonMemberMyRes");
+			mv.setViewName("member/noLoginMyRes");
 		}
 		return mv;
 	}

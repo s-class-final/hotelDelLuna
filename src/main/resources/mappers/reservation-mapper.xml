@@ -20,6 +20,7 @@
 		<result property="res_status" column="RES_STATUS"/>
 		<result property="res_payStatus" column="RES_PAYSTATUS"/>
 		<result property="res_require" column="RES_REQUIRE"/>
+		<result property="res_allPay" column="RES_ALLPAY"/>
 	</resultMap>
 	
 	<resultMap type ="RoomType" id="RoomTypeResultSet">
@@ -131,7 +132,7 @@
 		INSERT INTO
 		RESERVATION
 		VALUES(SEQ_RESNO.NEXTVAL,DEFAULT,#{res_roomType},#{res_userId},#{res_breakfast},#{res_dinner},
-				#{res_smoking},#{res_addBed},#{res_adult},#{res_child},#{res_checkIn},#{res_checkOut},DEFAULT,DEFAULT,#{res_require})
+				#{res_smoking},#{res_addBed},#{res_adult},#{res_child},#{res_checkIn},#{res_checkOut},DEFAULT,DEFAULT,#{res_require},#{res_allPay})
 		
 	</insert>
 	
@@ -162,7 +163,7 @@
 	<!-- 예약 내역 수정 -->
 	<update id="resModify" parameterType="Reservation">
 		UPDATE RESERVATION
-		SET RES_ADULT=#{res_adult}, RES_CHILD=#{res_child}, RES_CHECKIN=#{res_checkIn}, RES_CHECKOUT=#{res_checkOut}
+		SET RES_ADULT=#{res_adult}, RES_CHILD=#{res_child}, RES_CHECKIN=#{res_checkIn},RES_ADDBED=#{res_addBed}, RES_CHECKOUT=#{res_checkOut}, RES_ALLPAY=#{res_allPay}
 		WHERE RES_NO = #{res_no}
 	</update>
 	
@@ -202,21 +203,6 @@
 		AND ROOMTYPE LIKE 'SUITE'||'%'
 	</select>
 	
-	<!-- 룸 타입 이름들 가져오기 -->
-	<select id="selectRoomTypeList" resultType="java.lang.String">
-		SELECT DISTINCT ROOMTYPE
-		FROM ROOM
-		ORDER BY ROOMTYPE ASC
-	</select>
-	
-	<!-- 룸 타입별 총 개수 구해오기 -->
-	<select id="selectRoomTypeCount" resultType="java.lang.Integer">
-		SELECT COUNT(*)
-		FROM ROOM
-		GROUP BY ROOMTYPE
-		ORDER BY ROOMTYPE ASC
-	</select>
-	
 	<select id="getRoomList" resultType="map">
 		SELECT ROOMTYPE,COUNT(*) AS COUNT
 		FROM ROOM
@@ -254,6 +240,32 @@
 		ORDER BY ROOMTYPE
 	</select>
 	
+	<select id="getRoomType" resultMap="RoomTypeResultSet" parameterType="String">
+		SELECT *
+		FROM ROOMTYPE
+		WHERE ROOMTYPE=#{res_roomType}
+	</select>
+	
+	<!-- 인보이스 정보 생성 -->
+	<insert id="insertInvoice" parameterType="Reservation">
+	
+	INSERT INTO INVOICE VALUES (SEQ_IVID.NEXTVAL,(SELECT USERNAME
+    FROM MEMBER
+    WHERE USERID = #{res_userId}),(SELECT USERPHONE
+    FROM MEMBER
+    WHERE USERID = #{res_userId}),#{res_roomType},#{res_checkIn},
+    DEFAULT,#{res_adult},#{res_allPay},#{res_userId},#{res_invoice})
+	
+	</insert>
+	
+	
+	<!-- 매출 정보 생성 -->
+	<insert id="insertSales" parameterType="Reservation">
+	
+	INSERT INTO SALES
+	VALUES (#{res_roomType},#{res_allPay},#{res_checkIn})
+	
+	</insert>
 	
 	
 	<!-- 예약 가능한 날짜 검색

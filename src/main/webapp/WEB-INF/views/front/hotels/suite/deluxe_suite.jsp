@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>디럭스 스위트</title>
 <style>
 /* reset */
 button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:transparent; overflow:visible; cursor:pointer; line-height:1; }
@@ -123,7 +123,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 			
 			<div class="detailTextBox">
 				<h2>DELUXE SUITE</h2>
-				<p class="subTit">호텔 파라다이스만의 예술적 감성이 묻어나는 호텔 델루나의 대표 스위트 객실, 디럭스 스위트</p>
+				<p class="subTit">호텔 델루나만의 예술적 감성이 묻어나는 호텔 델루나의 대표 스위트 객실, 디럭스 스위트</p>
 				<p class="text">예술적인 감각에 럭셔리한 감성과 격조를 더한 프레지덴셜 스위트는 2개의 침실, 거실, 집무실, 응접실, 다이닝 공간, 회의실 등 세계 최고 VIP만을 위한 모든 시설을 갖추고 있습니다. <br />프레지덴셜 스위트 투숙 고객의 편의를 위하여 객실 내 다양한 어메니티를 구비하고 있으며, 24시간 룸서비스는 물론 프레지덴셜 스위트 투숙 고객만을 위한 버틀러 서비스가 제공됩니다. </p>
 				<div class="btnGroup">
 					<a href="#map" class="btn small layerPopOpen"><span>도면보기</span></a>
@@ -321,7 +321,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 									<a href="${roomView }">
 										<p class="img"><img src="resources/pcPub/static/images/room/list/room_list10.jpg" alt="" /></p>
 										<h4>DELUXE SUITE</h4>
-										<p class="text">호텔 파라다이스만의 예술적 감성이 묻어나는 호텔 델루나의 대표 스위트 객실, 디럭스 스위트</p>
+										<p class="text">호텔 델루나만의 예술적 감성이 묻어나는 호텔 델루나의 대표 스위트 객실, 디럭스 스위트</p>
 									</a>
 								</li>
 								<li>
@@ -362,7 +362,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 
 </section>
 <!-- //컨텐츠 영역 -->
-
+<jsp:include page="../../../common/footer.jsp"/>
 <!-- 도면보기 -->
 <div class="layerPopWrap normalLayer" id="map">
 	<div class="bg"></div>

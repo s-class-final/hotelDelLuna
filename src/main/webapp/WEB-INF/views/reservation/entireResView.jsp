@@ -154,7 +154,7 @@
 .resSearchArea{
 	display: inline-block;
 	height : 40px;
-	width: 248px;
+	width: 255px;
 	border: 1px solid #8a7057;
 	background: #ffffff
 }
@@ -347,9 +347,8 @@
 		<div class="layerPopCont">
 			<div class="loginWrap">
 				<h1><span>예약 정보</span></h1>
-				<img src="#" style="width:100%;height:300px">
-				<br><br>
-
+				<p class="pb15i fw500 pd0i tc"> 해당 예약 내역은 삭제되지만 해당 회원의 정보는  </p>
+				<p class="pb15i fw500 pd0i tc"> 호텔 델루나에 그대로 남아있을 것입니다.</p>
 				<div class="popJoinBox">
 					<div class="wrap">
 						<p>삭제 버튼을 누르면 <br />해당 예약 내역이 삭제됩니다. </p>
@@ -364,6 +363,27 @@
 	</div>
 	</form>
 	<!-------------------- //팝업창  ---------------------->
+	
+	<!-------------------- 취소된 내역 팝업  ---------------------->
+	<form>
+	<div class="layerPopWrap" id="cancelResStatus">
+		<div class="bg"></div>
+		<!-- layerPopCont -->
+		<div class="layerPopCont" style="width:25%">
+			<div class="loginWrap">
+			<br>
+				<h1 style="text-align:center"><span>해당 예약은 취소된 내역입니다.</span></h1>
+				<div class="popJoinBox">
+					<div class="wrap">
+						<a href="javascript:void(0);" class="btnPopClose btn small2" style="display:inline;top:-20px;"><span>확인</span></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //layerPopCont -->
+	</div>
+	</form>
+	<!-------------------- //취소된 내역 팝업  ---------------------->
 	<!-- //섹션 영역 -->
 	<script>
 	var nowPage;   //현재 페이지를 담을 변수
@@ -474,8 +494,13 @@
 		/* 상세 정보 가져오기 */
 		$(document).on("click",".text-left",function(){
 			var res_no=$(this).parents().children("td").eq(0).text();
-			console.log(res_no);
-			location.href="resDetail.do?res_no="+res_no;
+			var res_status = $(this).parents().children("td").eq(6).text();
+			console.log(res_status);
+			if(res_status!= '예약취소'){
+				location.href="resDetail.do?res_no="+res_no;				
+			}else{
+				cancelPopModal();
+			}
 		});
 		
 		
@@ -672,7 +697,7 @@
 					maxCap = list[i+1];
 				}
 			}
-		
+			
 			// 이름 체크
 			if ($("#userName1").val().length == 0) {
 				alert("성(last name)을 입력하세요");
@@ -805,7 +830,11 @@
 			
 		}
 		
-		
+		/** 취소된 내역 클릭했을 때 창 **/
+		function cancelPopModal(){
+			$(".loginWrap h1 span").text("해당 예약은 취소된 내역입니다.");
+			layerPopOpen("#cancelResStatus");
+		}
 		
 		/** 예약 삭제 확인창 띄우기 **/
 		function deletePopModal(res_no,res_userName){

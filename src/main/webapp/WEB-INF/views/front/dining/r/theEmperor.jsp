@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>THE EMPEROR</title>
 <style>
 /* reset */
 button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:transparent; overflow:visible; cursor:pointer; line-height:1; }
@@ -97,7 +97,7 @@ function jsDownImg(F_SEQ){
 	
 	<div class="hotelParadiseWrap pb0">
 		<div class="innerBox">
-			<h1 class="contTitle"><span>다이닝</span>미슐랭 스타 레스토랑부터 트렌디한 Bar까지, <br />호텔 파라다이스에서 펼쳐지는 미식의 세계로 초대합니다.</h1>
+			<h1 class="contTitle"><span>다이닝</span>미슐랭 스타 레스토랑부터 트렌디한 Bar까지, <br />호텔 델루나에서 펼쳐지는 미식의 세계로 초대합니다.</h1>
 			
 			<section class="jsSwiperMotion">
 				<div class="swiperWrap">
@@ -141,7 +141,7 @@ function jsDownImg(F_SEQ){
                     </dl>
                     <dl>
                         <dt>위치</dt>
-                        <dd>Paradise Casino</dd>
+                        <dd>Hotel Delluna</dd>
                     </dl>
                     <dl>
                         <dt>연락처</dt>
@@ -265,7 +265,7 @@ function jsDownImg(F_SEQ){
 							</c:url>
 							<a href="${diningView }">
 								<p class="img"><img src="resources/pcPub/static/images/dining/list/dining_list6.jpg" alt="" /></p>
-								<h4>LOUNGE PARADISE</h4>
+								<h4>LOUNGE DELLUNA</h4>
 								<p class="text">음악이 흐르는 로비라운지</p>
 							</a>
 						</li>
@@ -312,7 +312,7 @@ function jsDownImg(F_SEQ){
 <!-- 1:1 문의 (레이어 팝업) -->
 
 
-
+<jsp:include page="../../../common/footer.jsp"/>
 
 
 

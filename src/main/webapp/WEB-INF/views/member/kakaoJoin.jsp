@@ -231,16 +231,21 @@ body {
                   success:function(data){
                 	  if (data == "false"){
  	                     $("#checkId").html('');
- 	                     $("#checkId").html("아이디 사용 가능합니다").css("color","green");
+ 	                     $("#checkId").html("이메일 사용 가능합니다").css("color","green");
  	                     idUsable = true;
  	                  }else if(data == "false1"){
  	                     $("#checkId").html('');
- 	                     $("#checkId").html("아이디 사용 가능합니다 (예약 내역 존재)").css("color","green");
+ 	                     $("#checkId").html("이메일 사용 가능합니다 (예약 내역 존재)").css("color","green");
  	                     idUsable = true;
  	                  }else if(data == "nope"){
  	                     $("#checkId").html('');
- 	                     $("#checkId").html("이미 탈퇴한 이메일입니다. 다른 이메일을 이용해주세요").css("color","red");
- 	                  }
+ 	                     $("#checkId").html("이미 탈퇴한 회원입니다. 동일한 이메일로 재가입을 원하시면 고객센터에 문의해주세요.").css("color","red");
+ 	                     idUsable = false;
+ 	                  }else{
+	 	   				  $("#checkId").html('');
+	                      $("#checkId").html("이미 가입된 이메일입니다").css("color", "#e66045");
+	                      idUsable = false;
+	 			  	  }
                   },
                   error:function(request, status, errorData){
 						alert("error code: " + request.status + "\n"
@@ -307,7 +312,7 @@ body {
 			}
 
 			if (idUsable == false) {
-				alert("이미 가입된 이메일입니다.");
+				alert("사용할 수 없는 이메일입니다.");
 				$("#userId1").focus();
 				return false;
 			}

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>공지사항</title>
 </head>
 <body>
 	<jsp:include page="../../common/menubar.jsp"/>
@@ -56,7 +56,7 @@ function jsDelete(nId) {
 			<c:if test="${ !empty sessionScope.loginUser and loginUser.userT eq 2}">
 				<a href="javascript:jsList();" class="btn btnFull"><span>목록</span></a>
 				<a href="#pop1" class="btn btnFull layerPopOpen"><span>수정</span></a>
-				<a href="javascript:jsDelete('${notice.nId }');" class="btn btnFull"><span>삭제</span></a>
+				<a href="javascript:jsDelete('${notice.nId }');" onclick="return confirm('공지사항을 삭제하시겠습니까?')" class="btn btnFull"><span>삭제</span></a>
 			</c:if>
 		</div>
 	</div>
@@ -191,7 +191,7 @@ function jsSave() {
 </section>
 <!-- //컨텐츠 영역 -->
 
-
+<jsp:include page="../../common/footer.jsp"/>
 		
 </body>
 </html>

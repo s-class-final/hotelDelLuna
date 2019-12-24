@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Dining</title>
 </head>
 <body>
 	<jsp:include page="../../common/menubar.jsp"/>
@@ -74,7 +74,7 @@ function jsList(CATE) {
 		
 		<div class="DDfindList" style="visibility:hidden;">
 			
-			<div class="findDiningItem" data-animation="fadeInUp">
+			<div id="focus2"class="findDiningItem" data-animation="fadeInUp">
 				<p class="img">
 				<c:url var="diningView" value="diningView.do">
 					<c:param name="type" value="OnThePlate"/>
@@ -146,7 +146,7 @@ function jsList(CATE) {
 			</div>
 			
 			
-			<div class="findDiningItem" data-animation="fadeInUp">
+			<div id="focus3" class="findDiningItem" data-animation="fadeInUp">
 				<p class="img">
 				<c:url var="diningView" value="diningView.do">
 					<c:param name="type" value="Rubik"/>
@@ -160,7 +160,7 @@ function jsList(CATE) {
 			</div>
 			
 			
-			<div class="findDiningItem" data-animation="fadeInUp">
+			<div id="focus4" class="findDiningItem" data-animation="fadeInUp">
 				<p class="img">
 				<c:url var="diningView" value="diningView.do">
 					<c:param name="type" value="LoungeParadise"/>
@@ -168,13 +168,13 @@ function jsList(CATE) {
 				<a href="${diningView }">
 				<img src="resources/pcPub/static/images/dining/dining6.jpg" alt="" /></a></p>
 				<div class="textBox">
-					<h2>LOUNGE PARADISE</h2>
+					<h2>LOUNGE DELLUNA</h2>
 					<p class="text">음악이 흐르는 로비라운지</p>
 				</div>
 			</div>
 			
 			
-			<div class="findDiningItem" data-animation="fadeInUp">
+			<div id="focus1" class="findDiningItem" data-animation="fadeInUp">
 				<p class="img">
 				<c:url var="diningView" value="diningView.do">
 					<c:param name="type" value="GardenCafe"/>
@@ -261,6 +261,11 @@ var emailFormat = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2
 var blank_pattern = /[\s]/g;
 
 var multiLangSelect = "선택";
+
+$(function(){
+		
+});
+
 $(document).ready(function() {
 	initPop();
 	/* F_SEQ를 동적으로 넘기는 경우, 이전 페이지의 예약하기 버튼에서 initPop() 실행 후에 레이어팝업 함수 호출 필요 (FineDiningVm.jsp 참고) */
@@ -935,7 +940,7 @@ function jsSingleDayFilter(date, obj) {
 
 
 
-
+<jsp:include page="../../common/footer.jsp"/>
 
 
 
