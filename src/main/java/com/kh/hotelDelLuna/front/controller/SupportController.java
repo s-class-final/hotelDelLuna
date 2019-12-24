@@ -3,15 +3,16 @@ package com.kh.hotelDelLuna.front.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,11 +22,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.kh.hotelDelLuna.admin.model.vo.Invoice;
+import com.kh.hotelDelLuna.admin.model.vo.Sales;
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.common.Pagination;
 import com.kh.hotelDelLuna.front.model.exception.SupportException;
 import com.kh.hotelDelLuna.front.model.service.SupportService;
 import com.kh.hotelDelLuna.front.model.vo.Notice;
+import com.kh.hotelDelLuna.member.model.service.MemberService;
+import com.kh.hotelDelLuna.member.model.vo.Member;
+import com.kh.hotelDelLuna.reservation.model.exception.ReservationException;
+import com.kh.hotelDelLuna.reservation.model.service.ReservationService;
 import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
 import com.kh.hotelDelLuna.room.model.vo.RoomType;
 
@@ -33,13 +40,18 @@ import com.kh.hotelDelLuna.room.model.vo.RoomType;
 public class SupportController {
 	
 	@Autowired
+	ReservationService rService;
+	
+	@Autowired
 	private SupportService sService;
+	
+	@Autowired
+	MemberService mService;
 	
 	//사용자 예약페이지 이동
 	@RequestMapping(value="ReservationGuest.do", method = RequestMethod.GET)
 	public String ReservationGuest(Locale locale, Model model) {
 		System.out.println("ReservationGuest서블릿 실행");
-		
 		
 		return "front/reservation/ReservationGuest";
 	}
@@ -78,16 +90,14 @@ public class SupportController {
 		}
 	}
 	
-	//소개 메인 이동
+	//결제정보 입력 페이지
 	@RequestMapping(value="ReservationPayment.do", method = RequestMethod.POST)
 	public String ReservationPayment(String roomType, String checkIn, String checkOut,
 									String adult, String child, String breakfast, String dinner,
 									String addbed, String allpay,
-									HttpSession session,
+									HttpSession session,HttpServletResponse response, 
 									Model model, String room) {
-		System.out.println("ReservationPayment서블릿 실행");
 		
-
 		String[] arrin = checkIn.split("\\.");
 		String[] arrout = checkOut.split("\\.");
 		
@@ -97,6 +107,7 @@ public class SupportController {
 		Date res_checkIn = Date.valueOf(checkIn);
 		Date res_checkOut = Date.valueOf(checkOut);
 		
+		System.out.println("addbed" + addbed);
 		
 		Reservation r = new Reservation();
 		r.setRes_roomType(roomType);
@@ -107,22 +118,7 @@ public class SupportController {
 		r.setRes_breakfast(Integer.valueOf(breakfast));
 		r.setRes_dinner(Integer.valueOf(dinner));
 		r.setRes_addBed(addbed);
-//		r.setRes_require(require);
 		r.setRes_allPay(Integer.valueOf(allpay));
-		
-		System.out.println(roomType);
-		System.out.println(checkIn);
-		System.out.println(checkOut);
-		System.out.println(adult);
-		System.out.println(child);
-		System.out.println(breakfast);
-		System.out.println(dinner);
-		System.out.println(addbed);
-//		System.out.println(require);
-		System.out.println(allpay);
-		
-		System.out.println(r);
-		
 		
 		session.setAttribute("r", r);
 		
@@ -130,15 +126,114 @@ public class SupportController {
 	}
 	
 	//사용자 예약페이지 이동
-		@RequestMapping(value="ReservationTest.do", method = RequestMethod.POST)
-		public String ReservationTest(Locale locale, Model model) {
-			System.out.println("ReservationTest서블릿 실행");
-			
-			
-			return "front/reservation/ReservationPayment";
+	@RequestMapping(value="ReservationTest.do", method = RequestMethod.POST)
+	public String ReservationTest(HttpSession session, HttpServletResponse response,
+								String USER_NM, String USER_TEL1, String USER_TEL2, String USER_TEL3, String USER_EMAIL, String USER_REQUIRE) throws IOException {
+		System.out.println("ReservationTest서블릿 실행");
+		
+		Reservation r = (Reservation) session.getAttribute("r");
+		
+		r.setRes_userId(USER_EMAIL);
+		
+		//연락처
+		String tel = USER_TEL1 + "-" + USER_TEL2 + "-" + USER_TEL3;
+		
+		// 1_1. 예약자 아이디가 회원에 있는지 확인!
+		Member m = new Member(r.getRes_userId());
+		m.setUserName(USER_NM);
+		m.setUserPhone(tel);
+		Member member = mService.findMember(m);		
+
+		int mInsert=1;
+		
+		// 2. 예약자 아이디가 회원,비회원에 없으면 비회원 테이블에 예약자 정보 등록
+		if(member==null){
+			mInsert = mService.insertNonMember(m);
 		}
-	
-	
+		//비회원 정보 정상적으로 등록된 경우
+		if(mInsert>0) {
+			//숙박일수 계산
+			String strFormat = "yyyy-MM-dd"; // strStartDate 와 strEndDate 의 format
+			long diffDay = 0;
+			java.util.Date startDate = new java.util.Date();
+			// SimpleDateFormat 을 이용하여 startDate와 endDate의 Date 객체를 생성한다.
+			SimpleDateFormat sdf = new SimpleDateFormat(strFormat);
+			try {
+				startDate = sdf.parse(r.getRes_checkIn().toString());
+				java.util.Date endDate = sdf.parse(r.getRes_checkOut().toString());
+
+				// 두날짜 사이의 시간 차이(ms)를 하루 동안의 ms(24시*60분*60초*1000밀리초) 로 나눈다.
+				diffDay = (endDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000);
+				System.out.println(diffDay + "일");
+
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			//3. 예약 테이블에 값 입력 / 룸상태 테이블에 값 입력 / 인보이스에 값 입력 / 매출에 값 입력
+			//예약테이블에 입력할 값들
+			r.setRes_userId(USER_EMAIL);
+			r.setRes_require(USER_REQUIRE);
+			
+			//예약 테이블에 예약 정보 입력
+			int result1 = sService.insertReservationGst(r);
+			
+			//등록된 예약번호 가져오기
+			int reservationNo = rService.getResNo(r);
+			r.setRes_no(reservationNo);
+			
+			java.sql.Date checkIn = new java.sql.Date(4); // 의미없는 초기화
+		
+			for(int i=0;i<diffDay;i++) {
+    			checkIn = addDate(startDate,i);
+	            r.setRes_checkIn(checkIn);
+	            int result= rService.resRoomStatusInsert(r);
+    		}
+			
+			if(result1 > 0) {
+				//인보이스 객체에 정보 입력
+				Invoice i = new Invoice();
+				
+				i.setrType(r.getRes_roomType());
+				i.setCkinDate(r.getRes_checkIn());
+				i.setUserName(USER_NM);
+				i.setQuantity(Integer.valueOf(r.getRes_adult())+Integer.valueOf(r.getRes_child()));
+				i.setTotalPrice(r.getRes_allPay());
+				i.setUserEmail(USER_EMAIL);
+				i.setUserPhone(tel);
+				
+				//인보이스 테이블에 예약 정보 입력
+				int result2 = sService.insertInvoiceGst(i);
+			
+				if(result2 > 0) {
+					//매출 테이블에 예약 정보 입력
+					int result3 = sService.insertSalesGst(r);
+					
+					if(result3 > 0) {
+						response.setContentType("text/html; charset=UTF-8");
+						 
+						PrintWriter out = response.getWriter();
+						 
+						out.println("<script>alert('예약이 정상적으로 완료되었습니다.');</script>");
+						 
+						out.flush();
+
+						return "../../main";
+					}else {
+						throw new SupportException("예약 실패");
+					}
+				}else {
+					throw new SupportException("예약 실패");
+				}
+			
+			}else {
+				throw new SupportException("예약 실패");
+			}
+		}else {
+			throw new SupportException("비회원 예약 실패");
+		}
+		
+	}
 	
 	//소개 메인 이동
 	@RequestMapping(value="hotelDelLunar.do", method = RequestMethod.GET)
@@ -481,5 +576,22 @@ public class SupportController {
 	public String facility7(Model model, String room) {
 		
 		return "front/entertainment/facilities/facilities7";
+	}
+	
+	/**** 날짜 더해서 반환 ****/
+	private Date addDate(java.util.Date startDate, int i) {
+    
+    String strFormat = "yyyy-MM-dd";
+	SimpleDateFormat sdf = new SimpleDateFormat(strFormat);
+
+	Calendar cal = Calendar.getInstance();
+    
+    cal.setTime(startDate);
+    cal.add(Calendar.DATE, i);
+
+    String strResult = sdf.format(cal.getTime());
+    java.sql.Date checkIn = new java.sql.Date(Date.valueOf(strResult).getTime());
+    
+    return checkIn;
 	}
 }

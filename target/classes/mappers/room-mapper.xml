@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="roomMapper">
 	<resultMap id="RRS" type = "Room">
-		<id property = "roomNo" column= "ROOMNO"/>
+		<id property = "roomNo" column= "ROOMNO"/>  
 		<result property = "roomType" column= "ROOMTYPE"/> 
 		<result property = "res_No" column= "RES_NO"/>
 		<result property = "condition" column= "CONDITION"/>
@@ -17,7 +17,18 @@
 		FROM ROOM
 		ORDER BY ROOMNO
 	</select>
+		
+	
 	<!-- ajax용 sql문 -->
+		
+		<select id="selectClickRoomcard" resultMap="RRS" parameterType="_int">
+		SELECT * 
+		FROM ROOM
+		WHERE ROOMNO = #{roomNum}
+		</select>
+		
+	<!-- 룸카드 셀렉트 -->
+	
 	<!-- 슈페리어 룸 카드 리스트 -->
 	<select id="selectSURcList" resultMap="RRS">
 		SELECT * 

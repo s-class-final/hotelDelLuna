@@ -20,6 +20,7 @@ public class Invoice {
 		super();
 	}
 
+
 	public Invoice(int ivId, String userName, String userPhone, String rType, Date ckinDate, Date rqDate, int quantity,
 			int totalPrice, String userEmail, String iStatus) {
 		super();

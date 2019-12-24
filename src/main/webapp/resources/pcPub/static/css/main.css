@@ -59,12 +59,12 @@
 .mainVisual .visualView { font-size:0;}
 .mainVisual .visualView > div { position:absolute; top:0; min-height:840px;}
 .mainVisual .visualView > div span { visibility:hidden; opacity:0; position:absolute; top:0; left:0; bottom:0; transition:opacity .1s ease, transform 5s ease 1s;}
-.mainVisual .visualView > .bg1 { background:url('../images/main/PC_main_fold_01_jenny.png') no-repeat center bottom; background-size:cover;}
+.mainVisual .visualView > .bg1 { background:url('../images/main/index1.jpg') no-repeat center bottom; background-size:cover;}
 .mainVisual .visualView > .bg2 { background:url('../images/main/PC_main_fold_02_rose.png') no-repeat center bottom; background-size:cover;}
 .mainVisual .visualView > .bg3 { background:url('../images/main/img_main_visual3.jpg') no-repeat center bottom; background-size:cover;}
 .mainVisual .visualView > .bg4 { background:url('../images/main/img_main_visual4.jpg') no-repeat center bottom; background-size:cover;}
 .mainVisual .visualView > .bg5 { background:url('../images/main/img_main_visual5.jpg') no-repeat center bottom; background-size:cover;}
-.mainVisual .visualView > .bg1 span { background:url('../images/main/PC_main_open_01_jenny.jpg') no-repeat center bottom; background-size:cover; background-position:50% 50%;}
+.mainVisual .visualView > .bg1 span { background:url('../images/main/index2.jpg') no-repeat center bottom; background-size:cover; background-position:50% 50%;}
 .mainVisual .visualView > .bg2 span { background:url('../images/main/PC_main_open_02_rose.jpg') no-repeat center bottom; background-size:cover; background-position:50% 50%;}
 .mainVisual .visualView > .bg3 span { background:url('../images/main/img_main_visual3_view.jpg') no-repeat center bottom; background-size:cover; background-position:50% 50%;}
 .mainVisual .visualView > .bg4 span { background:url('../images/main/img_main_visual4_view.jpg') no-repeat center bottom; background-size:cover; background-position:50% 50%;}

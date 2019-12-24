@@ -94,6 +94,10 @@ public class RoomServiceImpl implements RoomService {
 	public int selectSUStayingCount() {
 		return rsDao.selectSUStayingCount();
 	}
+	@Override
+	public Room selectRoomcard(int roomNum) {
+		return rsDao.selectRoomcard(roomNum);
+	}
 	
 	
 

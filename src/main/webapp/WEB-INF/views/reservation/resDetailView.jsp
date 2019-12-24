@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Admin || resDetailView</title>
 </head>
 <style>
 #calTotal{
@@ -33,7 +33,6 @@
 	
 	<!---------------------------- reservationWrap ---------------------------->
 	<div class="reservationWrap">
-	
 		<div class="reservationBox">
 			<h1 style="margin-bottom:10px;color: #9c836a;font-size: 30px;font-weight: 100" >${res.res_userName}님의 예약 내역</h1>
 			<c:if test="${empty fileName }">
@@ -253,7 +252,7 @@
 		<div class="layerPopCont">
 			<div class="loginWrap">
 					<div>
-						<h1 style="padding-bottom:0px;text-align:center;"><span style="display:inline">입금 총액 </span><input name="r_total" type="text" value="0" style="width:100px;border:0px;text-align:right;" readonly>원</h1>
+						<h1 style="padding-bottom:0px;text-align:center;"><span style="display:inline">입금 총액 </span><input name="r_total" type="text" value="0" style="width:120px;border:0px;text-align:right;" readonly>원</h1>
 						<h1 style="padding-bottom:0px">
 							<span style="display:inline">적립 예정 포인트 </span>
 							<input name="r_point" type="text" value="0" style="width:100px;border:0px;text-align:right;" readonly>p
@@ -277,6 +276,8 @@
 <!-------------------- //팝업창  ---------------------->
 
 <script>
+
+
 var maxCap = ${roomType.capacity};
 console.log(maxCap);
 $(function(){
@@ -395,19 +396,22 @@ $(function(){
 			},
 			dataType:"json",
 			success:function(data){
-				console.log(data);
-				
-				$("#checkInOut").html(data.res_checkIn+" ~ "+data.res_checkOut);
-				$("#total").html("성인 "+data.res_adult+" / 어린이 "+data.res_child);
-				$("#meal").html("조식 "+data.res_breakfast+"회 / 디너 "+data.res_dinner+"회");
-				
-				$("#totalAmt").text((data.res_allPay).toLocaleString()+"원");
-				$("#f_total").html((data.res_allPay).toLocaleString()+"원");
-				$("#f_point").html(Number(data.res_allPay*0.01)+"p");
-				$("#f_final").html("");
-				$span = $("<span>").text((data.res_allPay).toLocaleString());
-				$("#f_final").prepend($span).append("원");
-				
+				if(data!=null){
+					console.log(data);
+					
+					$("#checkInOut").html(data.res_checkIn+" ~ "+data.res_checkOut);
+					$("#total").html("성인 "+data.res_adult+" / 어린이 "+data.res_child);
+					$("#meal").html("조식 "+data.res_breakfast+"회 / 디너 "+data.res_dinner+"회");
+					
+					$("#totalAmt").text((data.res_allPay).toLocaleString()+"원");
+					$("#f_total").html((data.res_allPay).toLocaleString()+"원");
+					$("#f_point").html(Number(data.res_allPay*0.01)+"p");
+					$("#f_final").html("");
+					$span = $("<span>").text((data.res_allPay).toLocaleString());
+					$("#f_final").prepend($span).append("원");
+				}else{
+					alert("해당 날짜에 방이 가득 찼습니다.");
+				}
 				
 			},error:function(request, status, errorData){
 				alert("error code: " + request.status + "\n"

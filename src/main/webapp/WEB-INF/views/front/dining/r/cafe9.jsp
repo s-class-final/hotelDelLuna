@@ -117,13 +117,6 @@ function jsDownImg(F_SEQ){
 			</section>
 			
 			<div class="detailTextBox">
-				<h2>On the Plate</h2>
-				<p class="subTit">유럽, 뉴욕, 상해의 최신 Trend를 반영, 다섯가지 Station으로 구성된 Premium Buffet Restaurant</p>
-				<p class="text">다섯개의 Station으로 구성된 프리미엄 뷔페 레스토랑 On The Plate 에서는 신선하면서도 질 좋은 식재료를 선별하여 요리 하나하나가<br />최고의 맛을 자랑합니다.  광동식 오리를 포함한 다채로운 전채요리에서부터 화려한 디저트 코너까지 세계 각국 동 ·서양 음식을<br />한자리에서 만끽할 수 있습니다. </p>
-				
-			</div>
-			
-			<div class="detailTextBox">
                 <h2>Café 9</h2>
                 <p class="subTit">게임 속 오아시스, 미식의 즐거움을 경험하는 곳</p>
                 <p class="text">긴장감 넘치는 게이밍 중 잠시 쉬어갈 수 있는 편안한 공간인 카페 9은 한식, 중식, 일식 등 세계의 다양한 요리를 제공합니다.<br/>캐주얼하게 즐길 수 있는 간단한 메뉴부터 특별함을 맛볼 수 있는 이국적인 메뉴까지 신선한 재료를 사용한 다양한 요리를 만나보시기 바랍니다.</p>
