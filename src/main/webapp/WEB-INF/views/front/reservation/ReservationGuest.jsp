@@ -49,7 +49,12 @@
     
 </style>
 
-<body>
+<script>
+window.history.forward();
+function noBack(){window.history.forward();}
+</script>
+
+<body onload="noBack();" onpageshow="if(event.persisted) noBack();">
    <jsp:include page="../../common/menubar.jsp"/> 
 
    <!-- 컨텐츠 영역 -->
@@ -711,7 +716,6 @@
       $('#checkIn').val(cIn);
       $('#checkOut').val(cOut);
       
-      alert("비회원 결제 이동");
       $("#reservationGuest").attr("action", "ReservationPayment.do");
       $("#reservationGuest").submit();
    }
