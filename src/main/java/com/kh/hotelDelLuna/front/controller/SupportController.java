@@ -141,6 +141,8 @@ public class SupportController {
 		r.setRes_addBed(addbed);
 		r.setRes_allPay(Integer.valueOf(allpay));
 		
+		System.out.println(r.getRes_addBed());
+		
 		session.setAttribute("r", r);
 		
 		return "front/reservation/ReservationPayment";

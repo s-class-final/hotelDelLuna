@@ -112,16 +112,32 @@ function noBack(){window.history.forward();}
                </dl>
             </div>
             
-            <br><br>
             <div class="meal">
                <h2>식사선택
                   <span class="info" style="font-size: 12px; color: #666666; margin-left: 6px;">투숙객에게 제공되는 조식/석식 이용 여부를 선택합니다.</span>
                </h2>
                <br>
-               <label>조식 : </label>
-               <input class="bf" type="number" id="bf" name="bf" min="0" max="10"/>
-               <label>디너 : </label>
-               <input class="dn" type="number" id="dn" name="dn" min="0" max="10"/>
+               <label style="margin-bottom: 5px;
+						    font-size: 14px;
+						    color: #9c836a;">조식 : </label>
+               <input class="bf" type="number" id="bf" name="bf" min="0" max="10" style="display: inline-block;
+																					    width: 140px;
+																					    height: 46px;
+																					    border: 1px solid #e6e3df;
+																					    padding: 0 0px 0 15px;
+																					    line-height: 48px;
+																					    font-size: 15px;"/>
+               <label	style="margin-bottom: 5px;
+						    font-size: 14px;
+						    color: #9c836a;
+						    margin-left: 50px;">디너 : </label>
+               <input class="dn" type="number" id="dn" name="dn" min="0" max="10" style="display: inline-block;
+																					    width: 140px;
+																					    height: 46px;
+																					    border: 1px solid #e6e3df;
+																					    padding: 0 0px 0 15px;
+																					    line-height: 48px;
+																					    font-size: 15px;"/>
             </div>
             
             <div class="bed">
@@ -129,7 +145,9 @@ function noBack(){window.history.forward();}
                   <span class="info" style="font-size: 12px; color: #666666; margin-left: 6px;">객실에 간이 침대 추가 여부를 선택합니다.</span>
                </h2>
                <br>
-               <label>간이 침대 추가 : </label>
+               <label style="margin-bottom: 5px;
+						    font-size: 14px;
+						    color: #9c836a;">간이 침대 추가 : </label>
                <input class="bed" type="checkbox" id="bed" name="bed" onclick="javascript:bedCheck();"/>
             </div>
             
