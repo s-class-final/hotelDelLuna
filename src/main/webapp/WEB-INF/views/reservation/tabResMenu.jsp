@@ -106,6 +106,20 @@ body {
 
 
 // 탭 메뉴 체크시 변경 기능
+$(function(){
+	// 백캐시때문에 쓴다..
+	window.onpageshow = function(event) {
+	    if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+	    	pagingAjax(1,null,null,0,false);
+	    }
+	    else{
+	    	pagingAjax(1,null,null,0,false);
+
+	    }
+	}
+});
+
+
 function tabMenuCheck(){
 
 	for(var i=0;i<$("input[name=tabmenu]").length;i++){
@@ -128,7 +142,7 @@ function tabMenuCheck(){
 			 $("#calendarRes").prop("hidden",true); 
 			 $(".sortHead").children("button").css("background-position-y",0);
 			 $(".sortHead").children("button").prop('class','toggle off');
-			 pagingAjax(1,null,null,0,true);
+			 //pagingAjax(1,null,null,0,true);
 		 }
 		}else{
 		 $("input[name=tabmenu]").eq(i).parent().removeClass("hovered");

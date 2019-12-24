@@ -300,7 +300,12 @@ body .container .content .signup-cont {
 }
 </style>
 </head>
-<body>
+<script>
+window.history.forward();
+function noBack(){window.history.forward();}
+</script>
+
+<body onload="noBack();" onpageshow="if(event.persisted) noBack();">
 	<jsp:include page="../common/menubar.jsp"/>
 
 <section class="container">

@@ -1,22 +1,26 @@
 package com.kh.hotelDelLuna.admin.controller;
 
+import java.io.FileOutputStream;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.hotelDelLuna.admin.model.exception.AdminException;
 import com.kh.hotelDelLuna.admin.model.service.AdminService;
 import com.kh.hotelDelLuna.admin.model.vo.Invoice;
-import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.admin.model.vo.Sales;
+import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.common.Pagination;
 
 @Controller
@@ -102,38 +106,7 @@ public class AdminController {
 		return mv;
 	}
 	
-	@RequestMapping("salesDetail.do")
-	public ModelAndView salesDetail(ModelAndView mv,Date ckinDate) {
-		
-		
-		
-		SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMMdd");
-
-		String ckDate = transFormat.format(ckinDate);
-		
-		
-		
-		Sales sales = aService.salesDetail(ckDate);
-		
-		
-		
 	
-		/* Sales sales = (Sales)aService.salesDetail(ckDate); */
-		
-		
-		
-		System.out.println("날짜 : " + sales);
-		System.out.println("inDate 변환 : " + ckDate);
-		
-		if(sales != null) {
-			mv.addObject("sales",sales).setViewName("sales/salesDetail");
-			
-		}else {
-			throw new AdminException("매출 조회 실패");
-		}
-		
-		return mv;
-	}
 	
 	@RequestMapping(value="sumSales.do")
 	public ModelAndView sumsales(ModelAndView mv,Date ckinDate) {
@@ -144,14 +117,17 @@ public class AdminController {
 		mv.addObject("list", list);
 		mv.setViewName("sales/sumSales");
 		
+		SimpleDateFormat format;
+		format = new SimpleDateFormat("yyyy년 MM월");
+		
 		System.out.println(" 리스트 사이즈  : " + list.size());
 		
 		String str ="[";
-		str +="['날짜' ,'가격'] ,";
+		str +="['월' ,'매출'] ,";
 		int num =0;
 		for(Sales dto : list){
 			str +="['";
-			str  += dto.getCkinDate();
+			str  += format.format(dto.getCkinDate());
 			str +="' , ";
 			str += dto.getPrice();
 			str +=" ]";
@@ -174,14 +150,17 @@ public class AdminController {
 		mv.addObject("list", list);
 		mv.setViewName("sales/sumSales");
 		
+		SimpleDateFormat format;
+		format = new SimpleDateFormat("yyyy년");
+		
 		System.out.println(" 리스트 사이즈  : " + list.size());
 		
 		String str ="[";
-		str +="['날짜' ,'가격'] ,";
+		str +="['날짜' ,'매출'] ,";
 		int num =0;
 		for(Sales dto : list){
 			str +="['";
-			str  += dto.getCkinDate();
+			str  += format.format(dto.getCkinDate());
 			str +="' , ";
 			str += dto.getPrice();
 			str +=" ]";
@@ -198,25 +177,21 @@ public class AdminController {
 		
 	}
 	
-	@RequestMapping(value="sales.do", method=RequestMethod.GET)
-	public ModelAndView json_get(){
-			
-		ModelAndView mv=new ModelAndView();
+	@RequestMapping(value="rTypeSales.do")
+	public ModelAndView rTypeSales(ModelAndView mv) {
 		
-		
-		List<Sales>  list=  aService.selectSalesList();
+		List<Sales>  list=  aService.selectRtypeSales();
 		mv.addObject("list", list);
-		mv.setViewName("sales/salesDetail");
+		mv.setViewName("sales/sumSales");
 		
 		System.out.println(" 리스트 사이즈  : " + list.size());
 		
 		String str ="[";
-		str +="['상품명' , '가격'] ,";
+		str +="['룸타입' ,'매출'] ,";
 		int num =0;
 		for(Sales dto : list){
-			
 			str +="['";
-			str  += dto.getCkinDate();
+			str  += dto.getrType();
 			str +="' , ";
 			str += dto.getPrice();
 			str +=" ]";
@@ -228,12 +203,13 @@ public class AdminController {
 		}
 		str += "]";
 		mv.addObject("str", str);
+		
 		return mv;
-				
+		
+		
+		
+		
 	}
-	
-	
-	
 	
 	
 	

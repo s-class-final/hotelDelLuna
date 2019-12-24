@@ -160,7 +160,7 @@ body {
 			
 		</div>
 	</div>
-	
+	<br><br><br><br><br><br><br><br><br><br>
 	<jsp:include page="../common/footer.jsp"/>
 	
 	<!-------------------- 팝업창  ---------------------->
@@ -342,7 +342,7 @@ body {
 						}	
 					}else{
 						$tr=$("<tr>");
-						$td=$("<td colspan='7' height='40px' style='text-align:center; font-size:17px, cursor:default'>").text("예약 내역이 없습니다.");
+						$td=$("<td colspan='7' height='40px' style='text-align:center; font-size:17px; cursor:default;'>").text("예약 내역이 없습니다.");
 						$tr.append($td);
 						$tableBody.append($tr);
 					}
