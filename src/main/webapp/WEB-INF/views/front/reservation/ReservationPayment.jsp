@@ -49,7 +49,12 @@
     
 </style>
 
-<body>
+<script>
+window.history.forward();
+function noBack(){window.history.forward();}
+</script>
+
+<body onload="noBack();" onpageshow="if(event.persisted) noBack();">
 	<jsp:include page="../../common/menubar.jsp"/> 
 	
 
@@ -593,7 +598,7 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 			        var msg = '결제에 실패하였습니다.';
 			        msg += '에러내용 : ' + rsp.error_msg;
 			    }
-			    alert(msg);
+			    /* alert(msg); */
 			});
 		}else if(payment == 21){
 			//무통장입금 결제 체크시 신용카드 결제 실행
