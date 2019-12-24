@@ -23,7 +23,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.hotelDelLuna.admin.model.vo.Invoice;
-import com.kh.hotelDelLuna.admin.model.vo.Sales;
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.common.Pagination;
 import com.kh.hotelDelLuna.front.model.exception.SupportException;
@@ -31,7 +30,6 @@ import com.kh.hotelDelLuna.front.model.service.SupportService;
 import com.kh.hotelDelLuna.front.model.vo.Notice;
 import com.kh.hotelDelLuna.member.model.service.MemberService;
 import com.kh.hotelDelLuna.member.model.vo.Member;
-import com.kh.hotelDelLuna.reservation.model.exception.ReservationException;
 import com.kh.hotelDelLuna.reservation.model.service.ReservationService;
 import com.kh.hotelDelLuna.reservation.model.vo.Reservation;
 import com.kh.hotelDelLuna.room.model.vo.RoomType;
@@ -91,25 +89,24 @@ public class SupportController {
 	}
 	
 	
-	//예약 가능한 방 목록 조회하기
-		@RequestMapping(value="roomAttachment.do", method = RequestMethod.POST)
-		public void roomAttachment(HttpServletResponse response, String roomt) throws IOException {
-			response.setContentType("application/json;charset=utf-8");
-			
-			System.out.println("roomt : " + roomt);
-			//받은 타입에 대한 이미지 하나씩 가져오기
-			String img = sService.selectAttachment(roomt);
-			
-			System.out.println("roomAttachment.do서블릿 img : " + img);
-			if(img != null) {
-
-				Gson gson = new Gson();
-				gson.toJson(img, response.getWriter());
-				
-			}else {
-				throw new SupportException("빈 객실 정보 불러오기 실패");
-			}
-		}
+	//방 사진 불러오기
+	/*
+	 * @RequestMapping(value="roomAttachment.do", method = RequestMethod.POST)
+	 * public void roomAttachment(HttpServletResponse response, String roomt) throws
+	 * IOException, org.json.simple.parser.ParseException {
+	 * response.setContentType("application/json;charset=utf-8");
+	 * System.out.println("roomt : " + roomt);
+	 * 
+	 * //받은 타입에 대한 이미지 하나씩
+	 * 가져오기-------------------------------------------------------------------------
+	 * ---------------- String img = sService.selectAttachment(roomt);
+	 * 
+	 * System.out.println("roomAttachment.do서블릿 img : " + img); if(img != null) {
+	 * 
+	 * Gson gson = new Gson(); gson.toJson(img, response.getWriter());
+	 * 
+	 * }else { Gson gson = new Gson(); gson.toJson(img, response.getWriter()); } }
+	 */
 	
 	
 	

@@ -85,10 +85,7 @@ public class SupportServiceImpl implements SupportService{
 		return sDao.insertSalesGst(r);
 	}
 
-	@Override
-	public String selectAttachment(String type) {
-		return sDao.selectAttachment(type);
-	}
+	
 	
 
 }

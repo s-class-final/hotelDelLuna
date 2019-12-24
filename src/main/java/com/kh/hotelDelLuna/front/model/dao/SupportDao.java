@@ -71,7 +71,7 @@ public class SupportDao {
 	
 
 	public ArrayList<RoomType> selectReservationGst(Reservation res) {
-		return (ArrayList)sqlSession.selectList("reservationMapper.guestSelectList");
+		return (ArrayList)sqlSession.selectList("reservationMapper.guestSelectList",res);
 	}
 
 
@@ -89,10 +89,6 @@ public class SupportDao {
 		return sqlSession.insert("reservationMapper.insertSalesGst", r);
 	}
 
-
-	public String selectAttachment(String type) {
-		return sqlSession.selectOne("reservationMapper.selectAttachment", type);
-	}
 
 	
 }

@@ -43,7 +43,6 @@ public interface SupportService {
 
 	public int insertSalesGst(Reservation r);
 
-	public String selectAttachment(String type);
 
 
 	

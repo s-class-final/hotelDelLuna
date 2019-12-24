@@ -47,11 +47,6 @@
     margin-left: 6px;
     }
     
-.roomInfo:hover {
-	border-bottom:2px solid #999966;
-	}
-    
-    
 </style>
 
 <script>
@@ -429,6 +424,13 @@ function noBack(){window.history.forward();}
             if($('.end-day').text()!="..."){
                var cIn = $('.start-day').text();
                var cOut = $('.end-day').text();
+               
+               if(cIn==cOut){
+            	   alert("체크인 날짜와 체크아웃 날짜가 동일합니다.");
+            	   $('#checkInOut').text("~");
+            	   return false;
+               }
+               
                $('#checkInOut').text(cIn+ "~" +cOut);
                
                //평일과 주말 수 구하기, 평일 * 평일요금 + 주말*주말요금 + 조식 신청 수*조식 금액 + 석식 신청 수 *석식 금액
@@ -447,16 +449,17 @@ function noBack(){window.history.forward();}
                            var roomSelectBox = $("<div>").addClass("roomSelectBox typeInfo");
                            
                            if(data !=null){
-                        	   
-                        	  
+                        	  console.log("data"); 
+                           		console.log(data);
                               //객실 목록 생성
                               jsMakeRoomList(data);
-                              
+                                        
                                         //slick
                               reservationSlick($('.reservationBox'));
                            }
                               //조식석식
-                              
+                           $(".btnFull").attr("disabled", true);
+                           
                            }else {
                            //객실 목록이 없으면, 해당 날짜 초기화
                            alert("해당 투숙 일정에 예약 가능한 객실이 없습니다.");
@@ -478,10 +481,48 @@ function noBack(){window.history.forward();}
          }
       });
       
+     /*  
+      function test(list){
+    	  
+    	  var arr = new Array();
+    	  
+    	  for(var i=0; i<list.length; i++){
+    		  arr[i] = list[i];
+    		  console.log("i는 " + i);
+    		  console.log(list[i]);
+    		  console.log(arr[i]);
+    	  }
+    	  
+    	  for(var i=0; i<list.length; i++){
+    		  var roomt = arr[i].type;
+    		  console.log("i가 " + i);
+    		  console.log("roomt :" + roomt);
+	    	  $.ajax({
+	              url : "roomAttachment.do",
+	              method : "post",
+	              data : {roomt:roomt},
+	              async : false,
+	              //dataType: "json",
+	              success : function(data, status) {
+	            	  arr[i]=data;
+	            	  console.log("data : " + data);
+	            	  console.log("roomt[i] : " + arr[i]);
+	            	  console.log("i는 = " + i);
+	              },
+	            error:function(request, status, errorData){
+	               alert("error code: " + request.status + "\n"
+	                     +"message: " + request.responseText
+	                     +"error: " + errorData);
+	            }
+	          }); 
+    	  }
+    	  return arr;
+      } */
       
       //객실 목록 생성
-      function jsMakeRoomList(list) {   //list는 DB에서 받아온 룸타입이 들어가있는 data[i] 리스트
-         
+      function jsMakeRoomList(list,img) {   //list는 DB에서 받아온 룸타입이 들어가있는 data[i] 리스트
+        
+    	  console.log(img);
          //현재 노출 중인 객실 목록이 존재하면, 초기화(기존것을 없앤다)
          $(".roomSelectBox").remove();
       
@@ -497,25 +538,6 @@ function noBack(){window.history.forward();}
          
          for(var i in list) {
         	 
-         	var roomImg ="";
-        	 //사진 정보 불러오기
-        	 var roomt = list[i].type;
-   		   $.ajax({
-                  url : "roomAttachment.do",
-                  method : "post",
-                  data : {roomt:roomt},
-                  dataType: "json",
-                  success : function(data, status) {
-               	   	roomImg=data;
-                  },
-                  error:function(request, status, errorData){
-               	   
-                  }
-   		   });
-        	 console.log("roomImg");
-        	 console.log(roomImg);
-        	 
-      		   
             //객실 유형별 요소 작성   (객실 사진, 소개내용, 1박에 얼마인지 가격)
             if(rrRoomType != list[i].type) {
                
@@ -536,8 +558,8 @@ function noBack(){window.history.forward();}
                var inWeekEnd = $("<input>").attr({type:"hidden"
                                        , value:list[i].weekEnd
                                        , id:"inWeekEnd"+i});
-               var roomInfo = $("<div>").addClass("roomInfo");list[i].image
-               var img      = $("<p>").addClass("img").append($("<img>").attr({src     : "resources/pcPub/static/images/room/list/"+roomImg}));
+               var roomInfo = $("<div>").addClass("roomInfo");
+               var img      = $("<p>").addClass("img").append($("<img>").attr({src     : "resources/pcPub/static/images/room/" + list[i].changename}));
                var h3       = $("<h3>").text(list[i].type);
                var pAmt1    = $("<p>").attr({style:"font-size : 13px;"}).text("주중 : " + list[i].weekDay + "~" + " / " + "박(" + list[i].capacity+"인 기준)");
                var pAmt2    = $("<p>").attr({style:"font-size : 13px;"}).text("주말 : " + list[i].weekEnd + "~" + " / " + "박(" + list[i].capacity+"인 기준)");   //주중 주말가 따로 보여줘야됨.
