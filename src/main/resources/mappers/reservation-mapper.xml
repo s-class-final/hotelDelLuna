@@ -173,6 +173,7 @@
 		FROM ROOMSTATUS
 		WHERE RES_DATE = #{res_checkIn}
 		AND ROOMTYPE = #{res_roomType}
+		AND RES_NO != #{res_no}
 	</select>
 	
 	<!-- 원하는 룸 타입별 개수 구하기 -->
