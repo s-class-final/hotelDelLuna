@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<title>Insert title here</title>
+<title>Hotel DelLuna</title>
 
 </head>
 		<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -36,7 +37,7 @@
 <c:set var="fullURL" value="${pageContext.request.requestURL}"></c:set>
 
 <!-- 메인페이지가 아닐때만 상단, 사이드메뉴 표시 -->
-<c:if test="${fullURL ne 'http://localhost:8881/hotelDelLuna/index.jsp' }">
+<c:if test="${!fn:contains(fullURL,'index.jsp')}">
 
 <div id="main">
 <header id="headerWrap">

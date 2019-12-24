@@ -151,7 +151,7 @@ function noBack(){window.history.forward();}
             <br>
             <div class="cautionBox">
                <h2 class="cautionH2">유의사항</h2>
-               <ul>
+               <ul style="padding:0 20px 20px 20px;">
                   <li class="fontWe">홈페이지에서 예약결제한 상품을 취소할 경우, 홈페이지에서 직접 취소해야 신속한 처리가 가능합니다. 전화문의 시 처리가 지연되거나 제한될 수 있습니다.</li>
                   <li>부가세 10%가 별도 부과됩니다.</li>
                   <li>본 상품은 성인 2인 &amp; 어린이 2인 기준 상품입니다.
