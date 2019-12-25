@@ -90,6 +90,7 @@ function allPointUse(){
 	    $('.totalAmt').text('');
 	    $('.totalAmt').text((Number(allPay)-Number(point))+"원");
 	    $('#ALL_PAY').val((Number(allPay)-Number(point)));
+	    $('#POINT').val(Number(point));
 	}
 }
 </script>
@@ -109,14 +110,13 @@ function allPointUse(){
 				<div class="paymentWrap">
 					<!-- 회원정보 -->
 					<c:if test="${ empty sessionScope.loginUser }">
-					<form id="resPayment1" name="resPayment1" method="post" action="ReservationTest.do">
+					<form id="resPayment1" name="resPayment1" method="post" action="ReservationTestGst.do">
 					<div class="paymentForm clearFixed" id="paymentForm">
 						<h2>회원 정보</h2>
 						<p class="sub">예약 정보 관리와 예약자 확인을 위하여 아래의 필수 항목을 입력해주세요.</p>
 						<p class="formImportant"><span class="color">*</span> 필수입력항목</p>
 						<div class="clearFixed">
 							<div class="left">
-								
 								<dl class="nameType1">
 									<dt><label for="USER_NM">이름 <span class="color">*</span></label></dt>
 									<dd>
@@ -188,13 +188,15 @@ function allPointUse(){
 					</c:if>
 					
 					<c:if test="${ !empty sessionScope.loginUser }">
-					<form id="resPayment2" name="resPayment2" method="post" action="ReservationTest.do">
+					<form id="resPayment2" name="resPayment2" method="post" action="ReservationTestMem.do">
 					<div class="paymentForm clearFixed" id="paymentForm">
 						<h2>회원 정보</h2>
 						<p class="sub">예약 정보 관리와 예약자 확인을 위하여 아래의 필수 항목을 입력해주세요.</p>
 						<p class="formImportant"><span class="color">*</span> 필수입력항목</p>
 						<div class="clearFixed">
 							<div class="left">
+								
+								<input type="hidden" class="POINT" id="POINT" name="POINT" value="0">
 								
 								<dl class="nameType1">
 									<dt><label for="USER_NM">이름 <span class="color">*</span></label></dt>
@@ -612,7 +614,11 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 		var allPay = ${r.res_allPay};
 		var point = $('#POINT1').val();
 		
+		$('#POINT').val(Number(point));
+
+		alert("usePoint = " + $('#POINT').val());
 		if(point){
+			alert("point는" + point);
 			allPay = Number(allPay)-Number(point);
 		}
 		
@@ -688,33 +694,21 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 			        msg += '결제 금액 : ' + rsp.paid_amount;
 			        msg += '카드 승인번호 : ' + rsp.apply_num;
 			        
-			        console.log("1포인트");
 			        <c:if test="${ empty sessionScope.loginUser }">
 						$("#resPayment1").submit();
-						console.log("2포인트");
 					</c:if>
 					<c:if test="${ !empty sessionScope.loginUser }">
 						$("#resPayment2").submit();
-						console.log("3포인트");
 					</c:if>
 			    } else {
 			        var msg = '결제에 실패하였습니다.';
 			        msg += '에러내용 : ' + rsp.error_msg;
-			        console.log("4포인트");
 			    }
 			    alert(msg);
-			    console.log("5포인트");
 			});
-			console.log("6포인트");
 		}else{
 			alert("결제 수단이 잘못되었습니다.");
-			console.log("7포인트");
 		}
-		console.log("8포인트");
-		
-		/* 
-		$("#form1").attr("action", "ReservationTest.do");
-		$("#form1").submit(); */
 		
 	}
 	
@@ -756,9 +750,6 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 				var maxPoint = ${loginUser.point};
 			    var allPay = ${r.res_allPay};
 			</c:if>
-			console.log("point1 입력 동작");
-			console.log(maxPoint);
-			console.log(point);
 		    
 		    $( 'input[name="ALL_POINT"]' ).attr( 'checked', false );
 		    
@@ -770,12 +761,14 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 			    $('.totalAmt').text('');
 			    $('.totalAmt').text((Number(allPay)-Number(maxPoint))+"원");
 			    $('#ALL_PAY').val((Number(allPay)-Number(maxPoint)));
+			    $('#POINT').val(Number(maxPoint));
 		    }else{
 		    	$('#use_point').text('');
 			    $('#use_point').text(Number(point) + "포인트 사용");
 			    $('.totalAmt').text('');
 			    $('.totalAmt').text((Number(allPay)-Number(point))+"원");
 			    $('#ALL_PAY').val((Number(allPay)-Number(point)));
+			    $('#POINT').val(Number(point));
 		    }
 		    
 		    

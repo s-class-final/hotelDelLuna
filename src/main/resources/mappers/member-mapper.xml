@@ -260,4 +260,11 @@
 		WHERE USERID=#{res_userId}
 	</update>
 	
+	<!-- 사용한 포인트 금액만큼 회원 포인트 감소 -->
+	<update id="minusPoint" parameterType="Member">
+		UPDATE MEMBER SET
+		POINT = (SELECT POINT FROM MEMBER WHERE USERID=#{userId}) - #{point}
+		WHERE USERID=#{userId}
+	</update>
+	
 </mapper>
