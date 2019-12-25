@@ -2519,7 +2519,7 @@ ul.diningTab li.on a{color: #9c836a; text-decoration: underline;}
 
 	ul.helpMenu{margin: 0 -8px;}
 	ul.helpMenu li{float: left; text-align: center; border: 1px solid #e6e3df; width: 268px; padding: 48px 40px 40px; margin: 0 8px; transition: .15s;}
-	ul.helpMenu li > span{display: block; width: 88px; height: 88px; margin: 0 auto 40px; background: url(/pcPub/static/images/casino/casino_help.png); transition: .15s;}
+	ul.helpMenu li > span{display: block; width: 88px; height: 88px; margin: 0 auto 40px; background: url(../images/common/casino_help.png); transition: .15s;}
 	ul.helpMenu li > p{min-height: 92px; font-weight: 200; color: #666; line-height: 22px; vertical-align: top; word-break: keep-all;}
 	ul.helpMenu li > p span{display: block; margin-bottom: 10px; font-weight: 450; color: #333; font-size: 16px; line-height: 1;}
 	ul.helpMenu li > a{margin-top: 30px;}

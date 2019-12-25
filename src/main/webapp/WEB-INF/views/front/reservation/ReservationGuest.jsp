@@ -576,7 +576,7 @@ function noBack(){window.history.forward();}
                var inWeekEnd = $("<input>").attr({type:"hidden"
                                        , value:list[i].weekEnd
                                        , id:"inWeekEnd"+i});
-               var roomInfo = $("<div>").addClass("roomInfo");
+               var roomInfo = $("<div>").addClass("roomInfo").attr({"style":"cursor:pointer;"});
                var img      = $("<p>").addClass("img").append($("<img>").attr({src     : "resources/pcPub/static/images/room/" + list[i].changename}));
                var h3       = $("<h3>").text(list[i].type);
                var pAmt1    = $("<p>").attr({style:"font-size : 13px;"}).text("주중 : " + list[i].weekDay + "~" + " / " + "박(" + list[i].capacity+"인 기준)");
@@ -721,7 +721,7 @@ function noBack(){window.history.forward();}
       
       $(".bf").on("propertychange focusout change onchange click keyup paste input", function() {
          var breakfast = $(this).val();
-         var dinner = $(".bf").val();
+         var dinner = $(".dn").val();
          
          $("#breakfast").val(breakfast);
          $('#mealtext').text("조식" + Number(breakfast)+" / 석식" + Number(dinner));

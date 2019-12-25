@@ -150,13 +150,14 @@ public class SupportController {
 	
 	//사용자 예약페이지 이동
 	@RequestMapping(value="ReservationTest.do", method = RequestMethod.POST)
-	public String ReservationTest(HttpSession session, HttpServletResponse response,
+	public String ReservationTest(HttpSession session, HttpServletResponse response, String ALL_PAY,
 								String USER_NM, String USER_TEL1, String USER_TEL2, String USER_TEL3, String USER_EMAIL, String USER_REQUIRE) throws IOException {
 		System.out.println("ReservationTest서블릿 실행");
 		
 		Reservation r = (Reservation) session.getAttribute("r");
 		
 		r.setRes_userId(USER_EMAIL);
+		r.setRes_allPay(Integer.valueOf(ALL_PAY));
 		
 		//연락처
 		String tel = USER_TEL1 + "-" + USER_TEL2 + "-" + USER_TEL3;
@@ -168,7 +169,7 @@ public class SupportController {
 		Member member = mService.findMember(m);		
 
 		int mInsert=1;
-		
+		System.out.println("r은 ?? " + r);
 		// 2. 예약자 아이디가 회원,비회원에 없으면 비회원 테이블에 예약자 정보 등록
 		if(member==null){
 			mInsert = mService.insertNonMember(m);
@@ -233,15 +234,25 @@ public class SupportController {
 					int result3 = sService.insertSalesGst(r);
 					
 					if(result3 > 0) {
-						response.setContentType("text/html; charset=UTF-8");
-						 
-						PrintWriter out = response.getWriter();
-						 
-						out.println("<script>alert('예약이 정상적으로 완료되었습니다.');</script>");
-						 
-						out.flush();
-
-						return "../../main";
+						
+						// 해당 멤버에 포인트 적립해주자
+						int pResult = mService.plusPoint(r);
+						
+						if(pResult > 0) {
+						
+							response.setContentType("text/html; charset=UTF-8");
+							 
+							PrintWriter out = response.getWriter();
+							 
+							out.println("<script>alert('예약이 정상적으로 완료되었습니다.');</script>");
+							 
+							out.flush();
+	
+							return "../../main";
+						}else {
+							throw new SupportException("예약 실패");
+						}
+						
 					}else {
 						throw new SupportException("예약 실패");
 					}
