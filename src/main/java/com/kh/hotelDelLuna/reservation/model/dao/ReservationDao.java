@@ -147,5 +147,25 @@ public class ReservationDao {
 		return sqlSession.insert("reservationMapper.insertSales",res);
 	}
 
+	public int updatePs(Reservation rs) {
+		return sqlSession.update("reservationMapper.updatePs",rs);
+	}
+
+	public ArrayList<Reservation> selectSysdateResList(PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage()-1)* pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("reservationMapper.selectSysdateResList",null,rowBounds);
+
+		
+	}
+
+	public int getSysdateListCount() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("reservationMapper.getSysdateListCount");
+	}
+
+
 
 }

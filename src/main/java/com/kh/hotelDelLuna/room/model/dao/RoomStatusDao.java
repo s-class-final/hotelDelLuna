@@ -72,8 +72,26 @@ public class RoomStatusDao {
 	public Room selectRoomcard(int roomNum) {
 		return sqlSession.selectOne("roomMapper.selectClickRoomcard",roomNum);
 	}
-	
-
-
-	
+	public int updateR(Room rm) {
+		return sqlSession.update("roomMapper.updateR" , rm);
+	}
+	public int updateCon(Room rm) {
+		return sqlSession.update("roomMapper.updateCon" , rm);
+	}
+	public int updateReq(Room rm) {
+		return sqlSession.update("roomMapper.updateReq" , rm);
+	}
+	public int checkOut(Room rm) {
+		return  sqlSession.update("roomMapper.checkOut" , rm);
+	}
+	public ArrayList checkInlist() {
+		return (ArrayList)sqlSession.selectList("roomMapper.checkInlist");
+	}
+	public ArrayList checkOutist() {
+		return (ArrayList)sqlSession.selectList("roomMapper.checkOutist");
+	}
 }
+	
+
+
+	

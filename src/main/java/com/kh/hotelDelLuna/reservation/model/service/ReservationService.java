@@ -14,7 +14,9 @@ public interface ReservationService {
 	
 	/* 전체 예약 리스트 갯수 불러오기 */
 	int getListCount();
-
+	/* 당일 예약 리스트 갯수 불러오기 */
+	int getSysdateListCount();
+	
 	/* 전체 예약 리스트 불러오기 */
 	ArrayList<Reservation> selectEntireResList();
 
@@ -82,6 +84,14 @@ public interface ReservationService {
 	/* 매출 정보 생성 */
 	int insertSales(Reservation res);
 
+	//체크인 입금 상태 업데이트 
+	int updatePS(Reservation rs);
+
+	ArrayList<Reservation> selectSysdateResList(PageInfo pi);
+
+
+	
+	
 
 	
 }
