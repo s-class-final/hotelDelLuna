@@ -46,6 +46,12 @@
 		FROM RESERVATION
 	</select>
 	
+	<select id ="getSysdateListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM RESERVATION
+		where to_char(res_checkin,'YYYYMMDD')
+		= to_char(SYSDATE,'YYYYMMDD')
+	</select>
 	<!-- 한 페이지에 뿌려줄 예약 리스트 -->
 	<select id="selectResList" resultMap="ResListResultSet">
 		<!-- SELECT *
@@ -325,5 +331,29 @@
 		VALUES (#{res_roomType},#{res_allPay},#{res_checkIn})
 	</insert>
 	
+	<!-- 입금 상태 업데이트 -->
+	<update id = "updatePs" parameterType="Reservation">
+		UPDATE RESERVATION
+		SET RES_PAYSTATUS = '입금완료'
+		WHERE RES_NO = #{res_no}
+	</update>
+	
+	<select id= "selectcheckinDate" parameterType="Reservation" resultMap="ResListResultSet">
+		SELECT M.USERNAME, R.INTIME
+		FROM ROOM R
+		JOIN RESERVATION B ON (B.RES_NO = R.RES_NO)
+		JOIN MEMBER M ON (M.USERID = B.RES_USERID)
+		WHERE B.RES_NO = #{res_no}
+	</select>
+	
+	
+	
+	<select id="selectSysdateResList" resultMap="ResListResultSet">
+		select *
+		from reservation r
+		join member m on ( m.userid = r.res_userid) 
+		where to_char(res_checkin,'YYYYMMDD')
+		= to_char(SYSDATE,'YYYYMMDD')
+	</select>
 	
 </mapper>

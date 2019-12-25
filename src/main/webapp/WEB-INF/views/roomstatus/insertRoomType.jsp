@@ -99,7 +99,6 @@
 				<td colspan="5" class="tdsize"><input type="File" name = "file" id = "mainImg" onchange="fileTypeCheck(this)"></td>
 			</tr>
 			
-			</tr>
 			<tr >
 				<td colspan="5" class="tdsize"></td><td colspan="1"> <input type="submit" id="submit" value="룸 업데이트" style= "float : right;"></td>
 			</tr>
