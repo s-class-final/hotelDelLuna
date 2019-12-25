@@ -6,7 +6,7 @@
 <html lang="ko">
 
 <head>
-    <title>FullCalendar Example</title>
+    <title>Admin || calendarResView</title>
  <script src="https://d3js.org/d3.v4.min.js"></script>
  
 <style TYPE="text/css">
@@ -287,7 +287,7 @@
 	<div class="layerPopWrap" id="loginPop3">
 		<div class="bg"></div>
 		<!-- layerPopCont -->
-		<div class="layerPopCont" style="width:42%;left:45%">
+		<div class="layerPopCont" style="width:650px;left:45%">
 			<div class="loginWrap">
 				<h1><span>예약 정보</span></h1>
 				<label style="width:32%;text-align:center;">디럭스</label>

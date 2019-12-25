@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>hotel Delluna</title>
+<title>Admin || resDetailView</title>
 </head>
 <style>
 #calTotal{
@@ -33,7 +33,6 @@
 	
 	<!---------------------------- reservationWrap ---------------------------->
 	<div class="reservationWrap">
-	
 		<div class="reservationBox">
 			<h1 style="margin-bottom:10px;color: #9c836a;font-size: 30px;font-weight: 100" >${res.res_userName}님의 예약 내역</h1>
 			<c:if test="${empty fileName }">
@@ -253,7 +252,7 @@
 		<div class="layerPopCont">
 			<div class="loginWrap">
 					<div>
-						<h1 style="padding-bottom:0px;text-align:center;"><span style="display:inline">입금 총액 </span><input name="r_total" type="text" value="0" style="width:100px;border:0px;text-align:right;" readonly>원</h1>
+						<h1 style="padding-bottom:0px;text-align:center;"><span style="display:inline">입금 총액 </span><input name="r_total" type="text" value="0" style="width:120px;border:0px;text-align:right;" readonly>원</h1>
 						<h1 style="padding-bottom:0px">
 							<span style="display:inline">적립 예정 포인트 </span>
 							<input name="r_point" type="text" value="0" style="width:100px;border:0px;text-align:right;" readonly>p

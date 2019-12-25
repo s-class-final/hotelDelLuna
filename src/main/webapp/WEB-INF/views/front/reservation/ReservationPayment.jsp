@@ -47,6 +47,24 @@
     margin-left: 6px;
     }
     
+#point {
+	margin-top: 20px;
+}
+    
+.point input{
+	margin-top: 20px;
+    width: 100%;
+    height: 48px;
+    border: 1px solid #e6e3df;
+    padding: 0 12px;
+    padding-right: 46px;
+    line-height: 3;
+    font-size: 14px;
+    font-weight: 200;
+    outline: 0;
+    transition: all .3s ease;
+}
+    
 </style>
 
 <script>
@@ -269,11 +287,6 @@ function noBack(){window.history.forward();}
 	
 					<!-- 보유 멤버십 + 할인정보 -->
 					
-	
-					<!-- 포인트 -->
-					
-					<!-- //포인트 -->
-	
 					<!-- 결제방법 -->
 					<div class="paymentOption clearFixed" id="paymentOption">
 						
@@ -287,12 +300,26 @@ function noBack(){window.history.forward();}
 							</div>
 						</div>
 						
-						
+						<!-- 포인트 -->
+						<c:if test="${ !empty sessionScope.loginUser }">
+						<dl class="request" style="margin-top: 20px;">
+							<dt><label>포인트 사용</label></dt>
+								<dd><div class="inp" >
+										<input type="text" id="POINT" name="POINT" value="0" placeholder="0" title="포인트" style="width:50%;">포인트 사용 / 총 ${loginUser.point}원 사용 가능<br>
+										<input class="ALL_POINT" type="checkbox" id="ALL_POINT" name="ALL_POINT" onclick="javascript:allPointUse();" style="width:12px;height:12px;"/>포인트 전액 사용하기
+										<!-- <button class="btnDelete"></button> -->
+									<!-- <div class="errorText"></div> -->
+								</dd>
+							</dl>
+						</div>
+						</c:if>
+						<!-- //포인트 -->
+							
 					</div>
 					<!-- //결제방법 -->
 	
 					<!-- 약관동의 -->
-					<div class="paymentTerm clearFixed">
+					<div class="paymentTerm clearFixed" style="margin-top:55px;padding-top: 0px;">
 						<h2>약관 동의</h2>
 						<div class="termArea">
 							<div>
@@ -418,7 +445,10 @@ function noBack(){window.history.forward();}
 										<p id="total">성인 ${r.res_adult } / 어린이 ${r.res_child }</p>			
 										<p id="room">${r.res_roomType }</p>	
 										<p id="mealtext">조식 ${r.res_breakfast } / 석식 ${r.res_dinner }</p>
-										<p id="res_addBed"></p>
+										<p id="res_addBed"><c:if test="${ 'Y' eq r.res_addBed }">베드 추가</c:if></p>
+										<c:if test="${ !empty sessionScope.loginUser }">
+										<p id="use_point">0 포인트 사용</p>
+										</c:if>
 										
 									</div>
 								</article>
@@ -469,6 +499,21 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 	    var expires = "expires="+d.toUTCString();
 	    document.cookie = cname + "=" + cvalue + "; " + expires;
 	}
+	
+	//포인트 전부 사용 체크 시
+	function allPointUse(){
+		if($("input[name='ALL_POINT']").prop("checked")){
+			var point = ${loginUser.point};
+			var allPay = ${r.res_allPay};
+			$('#POINT').val(Number(point));
+			$('#use_point').text('');
+		    $('#use_point').text(Number(point) + "포인트 사용");
+		    $('.totalAmt').text('');
+		    $('.totalAmt').text((Number(allPay)-Number(point))+"원");
+		}
+	}
+	
+	
 
 	//결제하기 버튼 클릭시 값 체크
 	function valueChecker() {
@@ -560,6 +605,11 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 		console.log(email);
 		console.log(${r.res_allPay });
 		
+		var allPay = ${r.res_allPay};
+		var point = $('#POINT').val();
+		
+		allPay = Number(allPay)-Number(point);
+		
 		//확인 끝나면 결제팝업 띄워주기
 		//alert("결제팝업 띄우기");
 		
@@ -577,8 +627,8 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 			    pay_method : 'card',
 			    merchant_uid : 'merchant_' + new Date().getTime(),
 			    name : '주문명:결제테스트',
-			    amount : 1000,
-			    //amount : ${r.res_allPay },
+			    //amount : 1000,
+			    amount : allPay,
 			    buyer_email : email,
 			    buyer_name : userName,
 			    buyer_tel : tel,
@@ -610,8 +660,8 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 			    pay_method : 'trans',
 			    merchant_uid : 'merchant_' + new Date().getTime(),
 			    name : '주문명:결제테스트',
-			    amount : 1000,
-			  //amount : ${r.res_allPay },
+			    //amount : 1000,
+			  	amount : allPay,
 			    buyer_email : email,
 			    buyer_name : userName,
 			    buyer_tel : tel,
@@ -666,6 +716,34 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 		$("#firstName").keyup(function() {
 			console.log("id 체크중");
 			$(this).val($(this).val().replace(/[^a-z|A-Z|가-힇]*/gi, ""));
+		});
+		
+		//포인트 사용 금액 입력되면 
+		//1. 사용자가 보유한 포인트보다 금액이 적거나 같은지(많으면 알림으로 안된다고 알려주기), 
+		//2.사용 가능한 금액이면 우측 메뉴에 사용 포인트 금액 명시해주고 총액 변경해주기
+		$("#POINT").on("propertychange change keyup paste input", function() {
+			$(this).val($(this).val().replace(/[^0-9]*/gi, ""));
+		    var point = $(this).val();
+		    var maxPoint = ${loginUser.point};
+		    var allPay = ${r.res_allPay};
+		    $( 'input[name="ALL_POINT"]' ).attr( 'checked', false );
+		    
+		    if(Number(point) > Number(maxPoint)){
+		    	alert("사용 가능한 포인트는 "+maxPoint+"입니다.");
+		    	$('#POINT').val(Number(maxPoint));
+		    	$('#use_point').text('');
+			    $('#use_point').text(Number(maxPoint) + "포인트 사용");
+			    $('.totalAmt').text('');
+			    $('.totalAmt').text((Number(allPay)-Number(maxPoint))+"원");
+		    }else{
+		    	$('#use_point').text('');
+			    $('#use_point').text(Number(point) + "포인트 사용");
+			    $('.totalAmt').text('');
+			    $('.totalAmt').text((Number(allPay)-Number(point))+"원");
+		    }
+		    
+		    
+		    
 		});
 	});
 	

@@ -21,6 +21,7 @@
 		<result property="res_payStatus" column="RES_PAYSTATUS"/>
 		<result property="res_require" column="RES_REQUIRE"/>
 		<result property="res_allPay" column="RES_ALLPAY"/>
+		
 	</resultMap>
 	
 	<resultMap type ="RoomType" id="RoomTypeResultSet">
@@ -35,6 +36,8 @@
 		<result property="startDay" column="STARTDAY"/>
 		<result property="endDay" column="ENDDAY"/>
 		<result property="childRate" column="CHILDRATE"/>
+		<result property="changename" column="CHANGENAME"/>
+		<result property="roomType2" column="ROOMTYPE_1"/>
 	</resultMap>
 	
 	<!-- 예약 리스트 갯수 -->
@@ -280,10 +283,11 @@
 		1.선택된 날짜에서 예약되지 않은 방 정보 불러오기 -->
 		
 	<select id="guestSelectList" parameterType="Reservation" resultMap="RoomTypeResultSet">
-		SELECT * FROM ROOMTYPE
+		SELECT * 
+		FROM (SELECT * FROM ROOMTYPE
 		WHERE ROOMTYPE IN(
 		SELECT A.ROOMSRT ROOMTYPE
-		FROM   
+		FROM
 		(SELECT ROOMTYPE ROOMSRT, COUNT(*) ROOMSCNT FROM ROOM
 		GROUP BY ROOMTYPE) A
 		FULL JOIN
@@ -291,8 +295,21 @@
 		WHERE RES_DATE BETWEEN #{res_checkIn} AND #{res_checkOut}
 		GROUP BY ROOMTYPE) B
 		ON A.ROOMSRT = B.RSRT
-		WHERE A.ROOMSCNT - NVL(B.RSRN,0) > 0)
+		WHERE A.ROOMSCNT - NVL(B.RSRN,0) > 0)) R1
+    	LEFT JOIN (SELECT CHANGENAME, ROOMTYPE
+            FROM ATTACHMENT
+            WHERE IMGLV=0) R2
+    	ON R1.ROOMTYPE = R2.ROOMTYPE
 	</select>
+	
+	
+	<!-- 
+	<select id="selectAttachment" parameterType="String" resultType="String">
+		SELECT CHANGENAME
+		FROM ATTACHMENT
+		WHERE ROOMTYPE = #{type}
+			AND IMGLV=0
+	</select> -->
 	
 	<!-- 사용자 결제 후 예약정보 생성 -->
 	<insert id="insertReservationGst" parameterType="Reservation">
