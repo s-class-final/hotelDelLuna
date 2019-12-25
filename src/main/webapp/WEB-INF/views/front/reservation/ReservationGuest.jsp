@@ -271,7 +271,7 @@ function noBack(){window.history.forward();}
       
       var allPay = Number(stayPay) + Number(bfPay) + Number(dnPay);
       
-      $('.totalAmt').text(allPay+' 원');
+      $('.totalAmt').text(Number(allPay)+' 원');
       
       $("#allpay").val(allPay);
    }
@@ -696,7 +696,7 @@ function noBack(){window.history.forward();}
          
          $("#adult").val(adult);
          $("#pTotal").val(total+"명");
-         $('#total').text("성인 "+adult+" / 어린이 " + child);
+         $('#total').text("성인 "+Number(adult)+" / 어린이 " + Number(child));
          
          addBed(total);
          
@@ -710,7 +710,7 @@ function noBack(){window.history.forward();}
          
          $("#child").val(child);
          $("#pTotal").val(total+"명");
-         $('#total').text("성인 "+adult+" / 어린이 " + child);
+         $('#total').text("성인 "+Number(adult)+" / 어린이 " + Number(child));
 
          addBed(total);
       });
@@ -724,7 +724,7 @@ function noBack(){window.history.forward();}
          var dinner = $(".bf").val();
          
          $("#breakfast").val(breakfast);
-         $('#mealtext').text("조식" + breakfast+" / 석식" + dinner);
+         $('#mealtext').text("조식" + Number(breakfast)+" / 석식" + Number(dinner));
          
          totalPay();
           
@@ -735,7 +735,7 @@ function noBack(){window.history.forward();}
          var dinner = $(this).val();
          
          $("#dinner").val(dinner);
-         $('#mealtext').text("조식" + breakfast+" / 석식" + dinner);
+         $('#mealtext').text("조식" + Number(breakfast)+" / 석식" + Number(dinner));
          
          totalPay();
       });

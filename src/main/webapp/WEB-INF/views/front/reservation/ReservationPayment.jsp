@@ -303,7 +303,7 @@ function noBack(){window.history.forward();}
 						<!-- 포인트 -->
 						<c:if test="${ !empty sessionScope.loginUser }">
 						<dl class="request" style="margin-top: 20px;">
-							<dt><label>요청사항</label></dt>
+							<dt><label>포인트 사용</label></dt>
 								<dd><div class="inp" >
 										<input type="text" id="POINT" name="POINT" value="0" placeholder="0" title="포인트" style="width:50%;">포인트 사용 / 총 ${loginUser.point}원 사용 가능<br>
 										<input class="ALL_POINT" type="checkbox" id="ALL_POINT" name="ALL_POINT" onclick="javascript:allPointUse();" style="width:12px;height:12px;"/>포인트 전액 사용하기
@@ -726,6 +726,7 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 		    var point = $(this).val();
 		    var maxPoint = ${loginUser.point};
 		    var allPay = ${r.res_allPay};
+		    $( 'input[name="ALL_POINT"]' ).attr( 'checked', false );
 		    
 		    if(Number(point) > Number(maxPoint)){
 		    	alert("사용 가능한 포인트는 "+maxPoint+"입니다.");
