@@ -761,7 +761,7 @@ function noBack(){window.history.forward();}
          //현재 로그인되어있는지?
          <c:if test="${!empty loginUser }">
             //로그인 유저면 상품 결제화면으로 이동
-            alert("로그인");
+            alert("로그인 상태로 결제를 진행합니다.");
             jsGoPayment();
          </c:if>
          <c:if test="${empty loginUser }">

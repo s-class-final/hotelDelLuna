@@ -596,6 +596,7 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 	function payment(){
 
 		//검증값 변수에 입력
+		inputId();
 		var userName = $('#USER_NM').val();
 		var tel1 = $('#USER_TEL1').val();
 		var tel2 = $('#USER_TEL2').val();
@@ -616,9 +617,7 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 		
 		$('#POINT').val(Number(point));
 
-		alert("usePoint = " + $('#POINT').val());
 		if(point){
-			alert("point는" + point);
 			allPay = Number(allPay)-Number(point);
 		}
 		
@@ -641,8 +640,8 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 			    pay_method : 'card',
 			    merchant_uid : 'merchant_' + new Date().getTime(),
 			    name : '주문명:결제테스트',
-			    //amount : 1000,
-			    amount : Number(allPay),
+			    amount : 100,
+			    //amount : Number(allPay),
 			    buyer_email : email,
 			    buyer_name : userName,
 			    buyer_tel : tel,
@@ -786,7 +785,6 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 	{
 	    if (event.keyCode == 116) 
 	    {
-	        alert("새로고침을 할 수 없습니다.");
 	        event.keyCode = 2;
 	        return false;
 	    } 

@@ -280,6 +280,7 @@ public class SupportController {
 			
 			// 1_1. 예약자 아이디가 회원에 있는지 확인!
 			Member m = new Member(r.getRes_userId());
+			System.out.println("User_NM은 " + USER_NM);
 			m.setUserName(USER_NM);
 			m.setUserPhone(tel);
 			Member member = mService.findMember(m);		
@@ -341,6 +342,8 @@ public class SupportController {
 					i.setTotalPrice(r.getRes_allPay());
 					i.setUserEmail(USER_EMAIL);
 					i.setUserPhone(tel);
+					
+					System.out.println("i는 = " + i);
 					
 					//인보이스 테이블에 예약 정보 입력
 					int result2 = sService.insertInvoiceGst(i);
