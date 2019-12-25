@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,7 +37,12 @@
 					<li>
 						<span></span>
 						<p><span>이용문의</span>궁금하신 점은 무엇이든 물어보세요.</p>
-						<a href="voc.do" class="btn small2"><span>바로가기</span></a>
+						<c:if test="${ empty sessionScope.loginUser }">
+							<a href="#poppop" class="layerPopOpen btn small2"><span>바로가기</span></a>
+						</c:if>
+						<c:if test="${ !empty sessionScope.loginUser }">
+							<a href="minquiry.do" class="btn small2"><span>바로가기</span></a>
+						</c:if>
 					</li>
 				</ul>
 			</div>
