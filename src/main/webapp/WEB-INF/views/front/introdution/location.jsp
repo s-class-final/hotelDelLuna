@@ -247,7 +247,7 @@ $(document).ready(function(){
                                 </dl>
                                 <dl>
                                     <dt>호텔 델루나 승차 위치</dt>
-                                    <dd>호텔 파라다이스 B1F 출입구 앞 버스 스테이션</dd>
+                                    <dd>호텔 델루나 B1F 출입구 앞 버스 스테이션</dd>
                                 </dl>
                             </div>
                         </div>
@@ -1518,7 +1518,7 @@ $(document).ready(function(){
                             <div class="box on" data-animation="fadeInUp">
                                 <p class="img"><img src="/pcPub/static/images/map/img_hotelparadise_view1F_12.jpg" alt="" /></p>
                                 <h2><span>FACILITY</span>Paradise Boutique</h2>
-                                <p class="text">호텔 파라다이스의 시그니처 아이템을 만나는 공간</p>
+                                <p class="text">호텔 델루나의 시그니처 아이템을 만나는 공간</p>
                                 
                                 
                                 <p class="link">
@@ -1542,7 +1542,7 @@ $(document).ready(function(){
                         <div class="mapViewInfo">
                             <div class="box">
                                 <h2><span>FACILITY</span>Paradise Boutique</h2>
-                                <p class="text">호텔 파라다이스의 시그니처 아이템을 만나는 공간</p>
+                                <p class="text">호텔 델루나의 시그니처 아이템을 만나는 공간</p>
                                 
                                 <p class="link">
                                     <a href="/front/hotel/facility/view?FACILITY_NM=FacilityParadiseBoutique">자세히 보기</a>
@@ -3812,7 +3812,7 @@ $(document).ready(function(){
                                 </ul>
                                 <p class="text">네비게이션 검색어</p>
                                 <ul class="dotList">
-                                    <li>파라다이스 플라자 원더박스 고객주차장</li>
+                                    <li>델루나 플라자 원더박스 고객주차장</li>
                                 </ul>
                             </div>
                         </div>
@@ -3859,7 +3859,7 @@ $(document).ready(function(){
                                 </ul>
                                 <p class="text">네비게이션 검색어</p>
                                 <ul class="dotList">
-                                    <li>파라다이스 플라자 원더박스 고객주차장</li>
+                                    <li>델루나 플라자 원더박스 고객주차장</li>
                                 </ul>
                             </div>
                         </div>
