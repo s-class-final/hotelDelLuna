@@ -256,8 +256,15 @@
 	<!-- 회원에게 포인트 적립 -->
 	<update id="plusPoint" parameterType="Reservation">
 		UPDATE MEMBER SET
-		POINT = #{res_allPay}*0.01
+		POINT = (SELECT POINT FROM MEMBER WHERE USERID=#{res_userId}) + #{res_allPay}*0.01 
 		WHERE USERID=#{res_userId}
+	</update>
+	
+	<!-- 사용한 포인트 금액만큼 회원 포인트 감소 -->
+	<update id="minusPoint" parameterType="Member">
+		UPDATE MEMBER SET
+		POINT = (SELECT POINT FROM MEMBER WHERE USERID=#{userId}) - #{point}
+		WHERE USERID=#{userId}
 	</update>
 	
 </mapper>

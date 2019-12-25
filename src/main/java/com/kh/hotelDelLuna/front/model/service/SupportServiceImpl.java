@@ -84,6 +84,8 @@ public class SupportServiceImpl implements SupportService{
 	public int insertSalesGst(Reservation r) {
 		return sDao.insertSalesGst(r);
 	}
+
+	
 	
 
 }

@@ -15,6 +15,9 @@ public class RoomType {
 	private Date endDay;		//판매종료일
 	private int childRate;	//아동요금
 	
+	private String changename;
+	private String roomType2;
+	
 	public RoomType() {
 	}
 
@@ -31,6 +34,42 @@ public class RoomType {
 		this.startDay = startDay;
 		this.endDay = endDay;
 		this.childRate = childRate;
+	}
+
+	
+	
+	public String getChangename() {
+		return changename;
+	}
+
+	public void setChangename(String changename) {
+		this.changename = changename;
+	}
+
+	public String getRoomType2() {
+		return roomType2;
+	}
+
+	public void setRoomType2(String roomType2) {
+		this.roomType2 = roomType2;
+	}
+
+	public RoomType(String type, int capacity, String addBed, int singleBed, int doubleBed, String smoking, int weekDay,
+			int weekEnd, Date startDay, Date endDay, int childRate, String changename, String roomType2) {
+		super();
+		this.type = type;
+		this.capacity = capacity;
+		this.addBed = addBed;
+		this.singleBed = singleBed;
+		this.doubleBed = doubleBed;
+		this.smoking = smoking;
+		this.weekDay = weekDay;
+		this.weekEnd = weekEnd;
+		this.startDay = startDay;
+		this.endDay = endDay;
+		this.childRate = childRate;
+		this.changename = changename;
+		this.roomType2 = roomType2;
 	}
 
 	public String getType() {

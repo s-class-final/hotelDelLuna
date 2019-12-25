@@ -174,5 +174,10 @@ public class MemberDao {
 
 		return sqlSession.update("memberMapper.plusPoint", res);
 	}
+
+	public int minusPoint(Member m) {
+		
+		return sqlSession.update("memberMapper.minusPoint", m);
+	}
 	
 }
