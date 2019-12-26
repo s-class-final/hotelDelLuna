@@ -279,10 +279,11 @@
 			<div  class="roomDiv" id ='Check_inDiv'>
 				<h3 class ="subTitle">Welcome</h3>
 				<hr id ="checkHr">
-				
-				<c:forEach var="ci" items="${checkInlist}">
-				<h2>${ci.m_userName} <br> ${ci.inTime } ${ci.roomNo}호 입실</h2>
-				<hr id ="checkHr">
+					<c:forEach var="ci" items="${checkInlist}">
+					<c:if test = "${!empty ci }"> 
+						<h2>${ci.m_userName} <br> ${ci.inTime } ${ci.roomNo}호 입실</h2>
+						<hr id ="checkHr">
+					</c:if>
 				</c:forEach>
 			</div>
 			<div  class="roomDiv" id ="Check_outDiv">
@@ -290,8 +291,10 @@
 				<hr id = "checkHr">
 			
 				<c:forEach var="ci" items="${checkOutlist}">
-				<h2>${ci.m_userName} <br> ${ci.outTime } ${ci.roomNo}호 퇴실</h2>
-				<hr id ="checkHr">
+					<c:if test = "${!empty ci }"> 
+					<h2>${ci.m_userName} <br> ${ci.outTime } ${ci.roomNo}호 퇴실</h2>
+					<hr id ="checkHr">
+					</c:if>
 				</c:forEach>
 			
 			</div>

@@ -1,6 +1,7 @@
 package com.kh.hotelDelLuna.room.controller;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -294,6 +295,7 @@ public class RoomController {
 		
 		//입금 상태 업데이트 용
 		rs.setRes_no(rs.getRes_no());
+		rs.setRes_roomNo(rm.getRoomNo());
 		
 		
 		//룸 업데이트 
