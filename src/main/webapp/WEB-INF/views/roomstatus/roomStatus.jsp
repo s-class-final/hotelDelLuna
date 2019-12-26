@@ -36,7 +36,8 @@
 		 font-size : 30px;
 		}
 		.subTitle{
-		font-size :17px;
+		font-size :20px;
+		font-weight : 500 ;
 		margin : 8px auto;
 		text-align : center;
 		}
@@ -158,6 +159,8 @@
 		 height : 707px;
 		}
 		#checkHr{
+		margin-top : 10px;
+		margin-bottom : 10px;
 		 width :80%;
 		}
 		
@@ -180,7 +183,7 @@
 		}
 		#reservationInfo{
 		border : 1px solid #9c836a;
-		 margin : 0px auto;
+		 margin : 30px auto;
 		 width : 1000px;
 		 height : 260px;
 		}
@@ -250,6 +253,21 @@
 		#selectRcTable td{
 			height : 27px;
 		}
+		
+		#enterInfoTable{
+		margin : 0px auto;
+		width : 160px; 
+		}
+		
+		#enterInfoTable th{
+			
+			height : 23px;
+		} 
+		
+		#enterInfoTable td{
+			
+			height : 85px;
+		}
 	</style>
 </head>
 <body>
@@ -261,12 +279,23 @@
 			<div  class="roomDiv" id ='Check_inDiv'>
 				<h3 class ="subTitle">Welcome</h3>
 				<hr id ="checkHr">
-			
-				
+					<c:forEach var="ci" items="${checkInlist}">
+					<c:if test = "${!empty ci }"> 
+						<h2>${ci.m_userName} <br> ${ci.inTime } ${ci.roomNo}호 입실</h2>
+						<hr id ="checkHr">
+					</c:if>
+				</c:forEach>
 			</div>
 			<div  class="roomDiv" id ="Check_outDiv">
 				<h3 class ="subTitle">See Off</h3>
 				<hr id = "checkHr">
+			
+				<c:forEach var="ci" items="${checkOutlist}">
+					<c:if test = "${!empty ci }"> 
+					<h2>${ci.m_userName} <br> ${ci.outTime } ${ci.roomNo}호 퇴실</h2>
+					<hr id ="checkHr">
+					</c:if>
+				</c:forEach>
 			
 			</div>
 		</div>
@@ -329,21 +358,7 @@
 					</c:forEach>
 				
 				</div>
-				<div id="Infosearch">
-					<div align="right" style="margin-top:5px; margin-right:10px">
-					<div class="resSearchArea"  align="center" >
-					<select id="searchCondition" class="searchSel" name="category"  style="min-height:10px;display:inline">
-						<option value="none">-----</option>
-						<option value="userName">예약자</option>
-						<option value="userId">아이디</option>
-						<option value="userPhone">이메일</option>		
-					</select>
-					<input type="text" name="searchValue" id="searchValue" style="display:inline">
-
-					<button class="searchBtn" onclick="searchResList()">검색</button>
-					</div>
-					</div> 
-				</div>
+				
 				<div id="reservationInfo">
 					<h3 class ="subTitle">Reservation Info</h3>
 					<hr id ="checkHr">
@@ -394,6 +409,7 @@
 						 		<a class='page-link' href="${ rslistBack}">&lt;&lt;</a>
 						</li>
 						<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+
 									<c:if test="${p eq pi.currentPage }">
 										<li class='page-item active'>
 											<a class='page-link' class='page-link'>${p} </a>
@@ -430,7 +446,7 @@
 			<hr id ="checkHr">
 			<table id ="selectinfo" border = "1px solid black" style= "margin : 0 auto; text-align : left;"> 
 			 <tr>
-			  	<td style="width : 80px;">예약 번호</td> <td>오프라인 체크인</td> 
+			  	<td style="width : 80px;">예약 번호</td> <td></td> 
 			  	<td style="width : 60px;">성함</td> <td style="width : 130px;"><input type ="text"style="width : 120px;" readonly></td> 
 			 	 <td style="width : 90px;">이메일 </td> <td style="width : 180px;"><input type="text"style="width : 175px;" readonly></td> 
 			 	 <td style="width : 70px;">전화 번호 </td> <td><input type = "text" name="userPhone" style="width : 116px;" readonly></td> 
@@ -501,10 +517,26 @@
 				   <th>입실 대기 중인 방 수</th>
 				 </tr>
 				 <tr>
+				 
+				 	<td style =" font-size : 45px; font-weight : 900;"> 
+				 		${awCC} 
+				 	</td>
+				 </tr>
+				 <tr>
 				   <th>청소 중인 방 수  </th>
 				 </tr>
 				 <tr>
+					 <td td style =" font-size : 45px; font-weight : 900;">
+				 		${acCC}
+					 </td>
+				 </tr>
+				 <tr>
 				   <th>고객 투숙 중인 방 수 </th>
+				 </tr>
+				 <tr>
+				 	<td td style =" font-size : 45px; font-weight : 900;">
+				 		${asCC}
+				 	</td>
 				 </tr>
 			</table>
 		
@@ -1276,7 +1308,7 @@
  			var roomNum = 0;
  			var roomCon = '';
  			var roomty = '';
- 			
+ 		
  			//클릭시  룸넘버 가져오는 jquery
  			$(document).on('click','.roomCard', function(){
  				clickcheck=true;
@@ -1297,8 +1329,13 @@
  						
  						
  						$('#roomStatus').html("");
+ 						
  						$("<h3 class ='subTitle'>Select Room</h3>"
  								+"<hr id ='checkHr'>").appendTo("#roomStatus");
+ 						
+ 					
+ 						var form = $('<form id ="updateForm">');
+ 			 			
  						
  						var table = $('<table id="selectRcTable" border = "1px solid black" >');
  						var tr1 = $('<tr>');
@@ -1326,14 +1363,36 @@
  						
  						var tr5 = $('<tr>');
  						var td7 = $('<td>').html('성함');
- 						var td8 = $('<td>').html('더미 값 없음 오류방지');
+ 						
+ 						if(data.condition == 'CLEANING'){
+							var td8	= $('<td>');
+						}else if(data.condition == 'STAYING'){
+							var td8 = $('<td>').html(data.M_userName);
+						}else if (data.condition == 'WAITING'){
+							
+							var td8 = $('<td>');
+						}
+ 					
  						
  						var tr6 = $('<tr>');
  						var td9 = $('<td colspan="2">').html('투숙 중 고객 요청 사항');
  						
  						var tr7 = $('<tr>');
- 						var td10 = $('<td colspan="2">')
- 						var textarea = $('<textarea id ="enterRer" rows="7" style="width : 100%; resize : none;" >밸류</textarea>');
+ 						var td10 = $('<td colspan="2">');
+ 						var textarea = $('<textarea id ="enterRer" rows="7" style="width : 100%; resize : none;" readonly></textarea>');
+ 						var moditextarea = $('<textarea id ="enterRer" name ="requirement" rows="7" style="width : 100%; resize : none;" ></textarea>');
+ 						
+ 						var tr8 = $('<tr>');
+ 						var td11 = $('<td>');
+ 						var td12 = $('<td>');
+ 					
+ 							var wcbutton  = $("<input>").addClass('searchBtn').attr('type','submit').attr("onclick","waitingChange();").attr('value', '청소 완료').css('float','right').css('width' , '80px');
+ 					
+ 							var cobutton  = $("<input>").addClass('searchBtn').attr('type','submit').attr("onclick","CheckOut();").attr('value', '체크아웃').css('float','right').css('width' , '80px');
+ 							
+ 							var modiReri = $("<input>").addClass('searchBtn').attr('type','submit').attr("onclick","modireri();").attr('value', '요청사항 업데이트').css('float','right').css('width' , '120px');
+ 						
+ 						var roomNo = $('<input>').attr('type','hidden').attr('name','roomNo').attr('value',data.roomNo);
  						
  						td1.appendTo(tr1);
  						td2.appendTo(tr1);
@@ -1356,18 +1415,46 @@
  						td9.appendTo(tr6);
  						tr6.appendTo(table);
  						
+ 						if(data.condition == 'STAYING'){
+ 							moditextarea.html(data.requirement).appendTo(td10);
+ 						}else{
  						textarea.appendTo(td10);
+ 						}
  						td10.appendTo(tr7);
  						tr7.appendTo(table);
  						
+ 						if(data.condition == 'CLEANING'){
+ 							wcbutton.appendTo(td12);
+ 						}else if (data.condition == 'STAYING'){
+ 							modiReri.appendTo(td11);
+ 							cobutton.appendTo(td12);
+ 						}
  						
- 						table.appendTo("#roomStatus");
+ 						td11.appendTo(tr8);
+ 						td12.appendTo(tr8);
  						
+ 						tr8.appendTo(table);
+ 						
+ 						roomNo.appendTo(table);
+ 						
+ 						table.appendTo(form);
+ 						form.appendTo("#roomStatus");
  					}
  				});
  			});
  					
+		function CheckOut(){
+			$("#updateForm").attr('action', 'CheckOut.do');
+		}
 		
+		function waitingChange(){
+			$("#updateForm").attr('action', 'watingChange.do');
+		
+		}
+		
+		function modireri(){
+			$("#updateForm").attr('action', 'modireri.do');
+		}
 		
 		//클릭시 에약번호 가져오는 jquery
 		//그 후 예약번호로 예약정보 가져오기
@@ -1396,14 +1483,17 @@
 					$("<table id ='selectinfo' border = '1px solid black' style= 'margin : 0 auto; text-align : left;'>").appendTo("#detailForm");
 					// 테이블 젓번째 줄
 					$("<tr id = 'row1'>").appendTo("#selectinfo");
-					
-					$('<input>').attr('type','hidden').attr('name', 'roomNo').attr('value', '0').appendTo("#selectinfo");
+					// 방 번호
+					$('<input>').attr('type','hidden').attr('name', 'roomNo').attr('value', roomNum).appendTo("#selectinfo");
 					
 					
 					$("<td style='width : 80px;'>예약 번호</td>").appendTo("#row1");
 					$("<td id ='rsNo'>").html(data.res_no).appendTo("#row1");
+					//예약번호
+					$('<input>').attr('type','hidden').attr('name', 'res_no').attr('value', data.res_no).appendTo("#rsNo");
 					
-					$("<td style='width : 70px;'>성함</td>").appendTo("#row1");
+					$("<td style='width : 70px;' id = 'userName'>성함</td> ").appendTo("#row1");
+					$('<input>').attr('type','hidden').attr('name', 'res_userName').attr('value', data.res_userName ).appendTo("#selectinfo");
 					$("<td style='width : 130px;' id ='nameTd'>").appendTo("#row1");
 					$("<input>").attr('type','text').attr('value',data.res_userName).attr('name','userName').attr('readonly','true').attr('style',"width:120px").appendTo("#nameTd");
 					
@@ -1479,7 +1569,8 @@
 					//8번째 줄
 					$("<tr id='row8'>").appendTo("#selectinfo");
 					$("<td colspan = '8' id = 'submitTd'>").appendTo("#row8");
-					$("<input>").addClass('searchBtn').attr('type','submit').attr('id','checksubmit').attr("onclick","return invalidJoin();").attr('value', '체크인').css('float','right').appendTo("#submitTd");
+					$("<input>").addClass('searchBtn').attr('type','submit').attr('id','checksubmit').attr("onclick","return invalidJoin();").attr('value', '체크인').css('float','right').css('width' , '80px').appendTo("#submitTd");
+				
 				}
 			});
 		});
@@ -1554,7 +1645,11 @@
 		}
 		
 			
+		
+		
+	
 
+		
 		
 </script>
 </body>

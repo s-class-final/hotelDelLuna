@@ -115,7 +115,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 			<div class="detailTextBox">
 				<h2>GRAND DELUXE</h2>
 				<p class="subTit">침실과 거실이 하나로 이어지는 특별한 공간 구성과 모던한 감각, 그랜드 디럭스</p>
-				<p class="text">넓은 공간을 자랑하는 디럭스 스위트는 호텔 파라다이스의 대표적 스위트급 객실로 여가, 비즈니스 등 다양한 목적을 충족시킬 수 있는 공간 설계에 심미적 감성을 더한 품격있는 객실입니다. <br />90평방미터의 객실 공간은 Full HD TV, 캡슐 커피머신, 다양한 어메니티를 갖추고 있으며, 무료 와이파이 서비스는 호텔 투숙을 더욱 편안하게 만들어 줄 것입니다. </p>
+				<p class="text">넓은 공간을 자랑하는 그랜드 디럭스는 호텔 델루나의 대표적 디럭스급 객실로 여가, 비즈니스 등 다양한 목적을 충족시킬 수 있는 공간 설계에 심미적 감성을 더한 품격있는 객실입니다. <br />90평방미터의 객실 공간은 Full HD TV, 캡슐 커피머신, 다양한 어메니티를 갖추고 있으며, 무료 와이파이 서비스는 호텔 투숙을 더욱 편안하게 만들어 줄 것입니다. </p>
 				<div class="btnGroup">
 					<a href="#map" class="btn small layerPopOpen"><span>도면보기</span></a>
 					<!-- 2018.07.09 수정 -->

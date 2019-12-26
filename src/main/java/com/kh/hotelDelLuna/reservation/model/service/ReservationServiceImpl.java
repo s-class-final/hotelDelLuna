@@ -164,5 +164,21 @@ public class ReservationServiceImpl implements ReservationService{
 		return rDao.insertSales(res);
 	}
 
+	@Override
+	public int updatePS(Reservation rs) {
+		return rDao.updatePs(rs);
+	}
+
+	@Override
+	public ArrayList<Reservation> selectSysdateResList(PageInfo pi) {
+		return rDao.selectSysdateResList(pi);
+	}
+
+	@Override
+	public int getSysdateListCount() {
+		return rDao.getSysdateListCount();
+	}
+
+	
 
 }

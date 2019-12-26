@@ -15,17 +15,17 @@ public class RoomTypeDao {
 
 
 
-	public int insertRtype(RoomType rt) {
+	public int updateRtype(RoomType rt) {
 	
 		System.out.println("DAO rt : " + rt);
-		return sqlSession.insert("roomtypeMapper.insertRtype",rt);
+		return sqlSession.update("roomtypeMapper.updateRtype",rt);
 	
 	}
 
 
-	public int insertRimgs(Attachment at) {
+	public int updateImgs(Attachment at) {
 		System.out.println("DAO at : " + at);
-		return sqlSession.insert("roomtypeMapper.insertRimgs",at);
+		return sqlSession.update("roomtypeMapper.updateImgs",at);
 	}
 	
 

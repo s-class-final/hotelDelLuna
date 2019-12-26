@@ -2,19 +2,17 @@ package com.kh.hotelDelLuna.room.controller;
 
 import java.io.File;
 
-
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +20,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.hotelDelLuna.common.PageInfo;
 import com.kh.hotelDelLuna.common.Pagination;
@@ -109,7 +106,7 @@ public class RoomController {
 						at.setRoomType(mpsr.getParameter("type"));
 						at.setImgLv(0);
 						
-						resultImg = rmService.insertImgs(at);
+						resultImg = rmService.updateImgs(at);
 						
 						
 					}
@@ -118,15 +115,16 @@ public class RoomController {
 				 				 
 			}
 				
-			int resultRt = rmService.insertRtype(rt); 
+			int resultRt = rmService.updateRtype(rt); 
 			
 			
 			if(resultRt == 1 && resultImg == 1) {
 				System.out.println("룸 타입 업데이트 성공");
+				return "redirect:iRoomtypeView.do";
 			}
 			
-		}	
-			return null; 
+		}
+		return null;	
 	}
 	
 	
@@ -141,8 +139,13 @@ public class RoomController {
 		
 		ArrayList<Room> RClist = rmService.selectRoomCardList();
 		ArrayList<StatusCount> sclist = new ArrayList<StatusCount>();
+		ArrayList<Room> checkInlist = rmService.checkInlist();
+		ArrayList<Room> checkOutlist = rmService.checkoutist();
 		
-			
+		int awCC = 0; 
+		int acCC = 0;
+		int asCC = 0;
+		
 				//슈페리어 룸 컨디션 별 카운트
 				int SPW = rmService.selectSPWaitingCount();
 				int SPC = rmService.selectSPCleaningCount();
@@ -156,9 +159,15 @@ public class RoomController {
 				int SUC = rmService.selectSUCleaningCount();
 				int SUS = rmService.selectSUStayingCount();
 				
+				awCC = SPW+DW+SUW;
+				acCC = SPC+DC+SUC;
+				asCC = SPS+DS+SUS;
+				
+				
 				StatusCount sc1 = new StatusCount();
 				StatusCount sc2 = new StatusCount();
 				StatusCount sc3 = new StatusCount();
+				
 				sc1.setRoomType("SUPERIOR");
 				sc1.setWaitingCount(SPW);
 				sc1.setCleaningCount(SPC);
@@ -179,11 +188,14 @@ public class RoomController {
 				sclist.add(sc3);
 				
 				//예약 테이블 가져오기
-				int listCount = rService.getListCount();
+				int listCount = rService.getSysdateListCount();
 				
 				PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-				ArrayList<Reservation> rlist = rService.selectResList(pi);
+				ArrayList<Reservation> rlist = rService.selectSysdateResList(pi);
 
+				
+				
+				
 				
 		if(RClist != null) {
 			//룸 카드 리스트
@@ -192,8 +204,14 @@ public class RoomController {
 			mv.addObject("SClist", sclist);
 			//예약 리스트
 			mv.addObject("rlist", rlist);
+			mv.addObject("checkInlist", checkInlist);
+			mv.addObject("checkOutlist", checkOutlist);
 			//페에지 인포
 			mv.addObject("pi", pi);
+			
+			mv.addObject("awCC",awCC);
+			mv.addObject("acCC",acCC);
+			mv.addObject("asCC",asCC);
 			
 			mv.setViewName("roomstatus/roomStatus");
 			
@@ -266,14 +284,101 @@ public class RoomController {
 	}
 
 	@RequestMapping("checkIn.do")
-	public void checkIn(HttpServletResponse response, Reservation rs, Room rm){
+	public String checkIn(HttpServletResponse response, Reservation rs, Room rm){
 		System.out.println("체크인 클릭으로 뽑아온 rs" + rs);
 		
 		System.out.println("체크인 클릭으로 받아온 룸 넘버 " + rm);
 		
 		int resultUpdateCheckIn = 0;
-		int resultUpdatePayStatus = 0;
 		
+		int resultUpdatePs = 0;
+		
+		//입금 상태 업데이트 용
+		rs.setRes_no(rs.getRes_no());
+		rs.setRes_roomNo(rm.getRoomNo());
+		
+		
+		//룸 업데이트 
+		rm.setRes_No(rs.getRes_no());
+		rm.setM_userName(rs.getRes_userName());
+		rm.setRoomNo(rm.getRoomNo());
+	
+		
+		
+		
+		resultUpdateCheckIn = rmService.updateR(rm);
+		
+		resultUpdatePs = rService.updatePS(rs);
+		
+		System.out.println("체크인 관련 업데이트 " + resultUpdateCheckIn);
+		
+		System.out.println("입금 대기 상태  업데이트 " + resultUpdatePs);
+		
+		if(resultUpdateCheckIn == 1 && resultUpdatePs == 1) {
+			
+			System.out.println("체크인 완료");
+			return "redirect:roomstatus.do";
+		}else {
+			System.out.println("체크인 실패 ");
+			
+			
+		}
+		return null;
+	
+		
+		
+	}
+	
+	@RequestMapping("CheckOut.do")
+	public String CheckOut(HttpServletResponse response, Room rm) {
+		System.out.println("체크 아웃 버튼 "+rm);
+		
+		rm.setRoomNo(rm.getRoomNo());
+		
+		int CheckOut = rmService.checkOut(rm);
+		
+		if (CheckOut == 1) {
+			System.out.println("체크아웃 완료");
+			
+			return "redirect:roomstatus.do";
+		}
+		
+		return null;
+		
+	}
+	@RequestMapping("watingChange.do")
+	public String watingChange(HttpServletResponse response, Room rm) {
+		System.out.println("청소 종료 버튼 "+rm);
+		
+		rm.setRoomNo(rm.getRoomNo());
+		
+		int waitingChange = rmService.changeCon(rm);
+		
+		if (waitingChange == 1) {
+			System.out.println("청소 완료");
+			
+			return "redirect:roomstatus.do";
+		}else {
+			System.out.println("청소 완료 실패");
+		}
+		return null;
+	}
+	
+	@RequestMapping("modireri.do")
+	public String modireri(HttpServletResponse response, Room rm) {
+		System.out.println("요청 사항 수정버튼 "+rm);
+		rm.setRoomNo(rm.getRoomNo());
+		rm.setRequirement(rm.getRequirement());
+		
+		int modireri = rmService.modireq(rm);
+		
+		if(modireri == 1) {
+			System.out.println("요청사항 수정 완료");
+			
+			return "redirect:roomstatus.do";
+		}
+		
+		return null;
 		
 	}
 	

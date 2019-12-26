@@ -1,5 +1,6 @@
 package com.kh.hotelDelLuna.room.model.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
@@ -20,16 +21,16 @@ public class RoomServiceImpl implements RoomService {
 	RoomTypeDao rtDao;
 	@Resource
 	RoomStatusDao rsDao;
-
+	
 	//룸 타입 텍스트 등록
 	@Override
-	public int insertRtype(RoomType rt) {
-		return rtDao.insertRtype(rt);
+	public int updateRtype(RoomType rt) {
+		return rtDao.updateRtype(rt);
 	}
 	//룸 타입 사진등록
 	@Override
-	public int insertImgs(Attachment at) {
-		return rtDao.insertRimgs(at);
+	public int updateImgs(Attachment at) {
+		return rtDao.updateImgs(at);
 	}
 	//룸 상태 카드 리스트
 	@Override
@@ -97,6 +98,36 @@ public class RoomServiceImpl implements RoomService {
 	@Override
 	public Room selectRoomcard(int roomNum) {
 		return rsDao.selectRoomcard(roomNum);
+	}
+	@Override
+	public int updateR(Room rm) {
+		return rsDao.updateR(rm);
+	}
+	@Override
+	public Date selectcheckinDate(Room rm) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public int changeCon(Room rm) {
+		return rsDao.updateCon(rm);
+	}
+	@Override
+	public int modireq(Room rm) {
+		return rsDao.updateReq(rm);
+	}
+	@Override
+	public int checkOut(Room rm) {
+		return rsDao.checkOut(rm);
+	}
+	@Override
+	public ArrayList checkInlist() {
+		return rsDao.checkInlist();
+	}
+	@Override
+	public ArrayList checkoutist() {
+	
+		return rsDao.checkOutist();
 	}
 	
 	

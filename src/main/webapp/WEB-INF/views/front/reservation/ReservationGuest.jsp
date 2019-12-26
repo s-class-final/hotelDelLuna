@@ -112,16 +112,32 @@ function noBack(){window.history.forward();}
                </dl>
             </div>
             
-            <br><br>
             <div class="meal">
                <h2>식사선택
                   <span class="info" style="font-size: 12px; color: #666666; margin-left: 6px;">투숙객에게 제공되는 조식/석식 이용 여부를 선택합니다.</span>
                </h2>
                <br>
-               <label>조식 : </label>
-               <input class="bf" type="number" id="bf" name="bf" min="0" max="10"/>
-               <label>디너 : </label>
-               <input class="dn" type="number" id="dn" name="dn" min="0" max="10"/>
+               <label style="margin-bottom: 5px;
+						    font-size: 14px;
+						    color: #9c836a;">조식 : </label>
+               <input class="bf" type="number" id="bf" name="bf" min="0" max="10" style="display: inline-block;
+																					    width: 140px;
+																					    height: 46px;
+																					    border: 1px solid #e6e3df;
+																					    padding: 0 0px 0 15px;
+																					    line-height: 48px;
+																					    font-size: 15px;"/>
+               <label	style="margin-bottom: 5px;
+						    font-size: 14px;
+						    color: #9c836a;
+						    margin-left: 50px;">디너 : </label>
+               <input class="dn" type="number" id="dn" name="dn" min="0" max="10" style="display: inline-block;
+																					    width: 140px;
+																					    height: 46px;
+																					    border: 1px solid #e6e3df;
+																					    padding: 0 0px 0 15px;
+																					    line-height: 48px;
+																					    font-size: 15px;"/>
             </div>
             
             <div class="bed">
@@ -129,7 +145,9 @@ function noBack(){window.history.forward();}
                   <span class="info" style="font-size: 12px; color: #666666; margin-left: 6px;">객실에 간이 침대 추가 여부를 선택합니다.</span>
                </h2>
                <br>
-               <label>간이 침대 추가 : </label>
+               <label style="margin-bottom: 5px;
+						    font-size: 14px;
+						    color: #9c836a;">간이 침대 추가 : </label>
                <input class="bed" type="checkbox" id="bed" name="bed" onclick="javascript:bedCheck();"/>
             </div>
             
@@ -147,15 +165,9 @@ function noBack(){window.history.forward();}
             <div class="cautionBox">
                <h2 class="cautionH2">유의사항</h2>
                <ul style="padding:0 20px 20px 20px;">
-                  <li class="fontWe">홈페이지에서 예약결제한 상품을 취소할 경우, 홈페이지에서 직접 취소해야 신속한 처리가 가능합니다. 전화문의 시 처리가 지연되거나 제한될 수 있습니다.</li>
-                  <li>부가세 10%가 별도 부과됩니다.</li>
-                  <li>본 상품은 성인 2인 &amp; 어린이 2인 기준 상품입니다.
-                     <ul class="minusList">
-                     <li><span class="standardSpan">-</span>단, 1객실 당 성인은 최대 3인까지만 투숙 가능하며 성인 3인 투숙 시 어린이(37개월~13세)는 1인까지만 투숙 가능합니다.</li>
-                     <li><span class="standardSpan">-</span>성인 추가인원 투숙 시 50,000원(부가세 별도)의 요금이 부과되며 수영장, 플레이스테이션 체험존, 피트니스 혜택이 함께 제공됩니다.</li>
-                     <li><span class="standardSpan">-</span>엑스트라베드 추가 시 70,000원(부가세 별도)의 요금이 부과되며 엑스트라베드, 수영장, 플레이스테이션 체험존, 피트니스 혜택이 함께 제공됩니다.</li>
-                  </ul>
-                  </li>
+                  <li class="fontWe">홈페이지에서 예약결제한 상품을 취소할 경우, 홈페이지에서 직접 취소해야 신속한 처리가 가능합니다. </li>
+                  <li class="fontWe">전화문의 시 처리가 지연되거나 제한될 수 있습니다.</li>
+                  <li>이미 입금을 한 경우 환불은 불가능 합니다.</li>
                   <li>유아용품 및 객실 대여품은 한정된 수량으로 선착순 대여 가능하며, 조기 마감될 수 있으므로 사전 예약을 권장드립니다.</li>
                   <li>체크인은 오후 3시부터, 체크아웃은 11시까지이며 얼리체크인 또는 레이트체크아웃의 경우 별도 요금이 부과될 수 있습니다.</li>
                </ul>
@@ -253,7 +265,7 @@ function noBack(){window.history.forward();}
       
       var allPay = Number(stayPay) + Number(bfPay) + Number(dnPay);
       
-      $('.totalAmt').text(allPay+' 원');
+      $('.totalAmt').text(Number(allPay)+' 원');
       
       $("#allpay").val(allPay);
    }
@@ -424,6 +436,13 @@ function noBack(){window.history.forward();}
             if($('.end-day').text()!="..."){
                var cIn = $('.start-day').text();
                var cOut = $('.end-day').text();
+               
+               if(cIn==cOut){
+            	   alert("체크인 날짜와 체크아웃 날짜가 동일합니다.");
+            	   $('#checkInOut').text("~");
+            	   return false;
+               }
+               
                $('#checkInOut').text(cIn+ "~" +cOut);
                
                //평일과 주말 수 구하기, 평일 * 평일요금 + 주말*주말요금 + 조식 신청 수*조식 금액 + 석식 신청 수 *석식 금액
@@ -442,7 +461,9 @@ function noBack(){window.history.forward();}
                            var roomSelectBox = $("<div>").addClass("roomSelectBox typeInfo");
                            
                            if(data !=null){
-                                        //객실 목록 생성
+                        	  console.log("data"); 
+                           		console.log(data);
+                              //객실 목록 생성
                               jsMakeRoomList(data);
                                         
                                         //slick
@@ -450,6 +471,11 @@ function noBack(){window.history.forward();}
                            }
                            $(".btnFull").attr("disabled", true);
                               //조식석식
+<<<<<<< HEAD
+=======
+                           $(".btnFull").attr("disabled", true);
+                           
+>>>>>>> refs/remotes/origin/master
                            }else {
                            //객실 목록이 없으면, 해당 날짜 초기화
                            alert("해당 투숙 일정에 예약 가능한 객실이 없습니다.");
@@ -471,10 +497,53 @@ function noBack(){window.history.forward();}
          }
       });
       
+     /*  
+      function test(list){
+    	  
+    	  var arr = new Array();
+    	  
+    	  for(var i=0; i<list.length; i++){
+    		  arr[i] = list[i];
+    		  console.log("i는 " + i);
+    		  console.log(list[i]);
+    		  console.log(arr[i]);
+    	  }
+    	  
+    	  for(var i=0; i<list.length; i++){
+    		  var roomt = arr[i].type;
+    		  console.log("i가 " + i);
+    		  console.log("roomt :" + roomt);
+	    	  $.ajax({
+	              url : "roomAttachment.do",
+	              method : "post",
+	              data : {roomt:roomt},
+	              async : false,
+	              //dataType: "json",
+	              success : function(data, status) {
+	            	  arr[i]=data;
+	            	  console.log("data : " + data);
+	            	  console.log("roomt[i] : " + arr[i]);
+	            	  console.log("i는 = " + i);
+	              },
+	            error:function(request, status, errorData){
+	               alert("error code: " + request.status + "\n"
+	                     +"message: " + request.responseText
+	                     +"error: " + errorData);
+	            }
+	          }); 
+    	  }
+    	  return arr;
+      } */
       
       //객실 목록 생성
+<<<<<<< HEAD
       function jsMakeRoomList(list) {   //list는 DB에서 받아온 룸타입이 들어가있는 data[i] 리스트
     	 
+=======
+      function jsMakeRoomList(list,img) {   //list는 DB에서 받아온 룸타입이 들어가있는 data[i] 리스트
+        
+    	  console.log(img);
+>>>>>>> refs/remotes/origin/master
          //현재 노출 중인 객실 목록이 존재하면, 초기화(기존것을 없앤다)
          $(".roomSelectBox").remove();
       
@@ -489,7 +558,7 @@ function noBack(){window.history.forward();}
          var rrRoomType     = "";
          
          for(var i in list) {
-            
+        	 
             //객실 유형별 요소 작성   (객실 사진, 소개내용, 1박에 얼마인지 가격)
             if(rrRoomType != list[i].type) {
                
@@ -510,8 +579,8 @@ function noBack(){window.history.forward();}
                var inWeekEnd = $("<input>").attr({type:"hidden"
                                        , value:list[i].weekEnd
                                        , id:"inWeekEnd"+i});
-               var roomInfo = $("<div>").addClass("roomInfo");
-               var img      = $("<p>").addClass("img").append($("<img>").attr({src     : "resources/pcPub/static/images/room/list/room_list1.jpg"}));
+               var roomInfo = $("<div>").addClass("roomInfo").attr({"style":"cursor:pointer;"});
+               var img      = $("<p>").addClass("img").append($("<img>").attr({src     : "resources/pcPub/static/images/room/" + list[i].changename}));
                var h3       = $("<h3>").text(list[i].type);
                var pAmt1    = $("<p>").attr({style:"font-size : 13px;"}).text("주중 : " + list[i].weekDay + "~" + " / " + "박(" + list[i].capacity+"인 기준)");
                var pAmt2    = $("<p>").attr({style:"font-size : 13px;"}).text("주말 : " + list[i].weekEnd + "~" + " / " + "박(" + list[i].capacity+"인 기준)");   //주중 주말가 따로 보여줘야됨.
@@ -630,7 +699,7 @@ function noBack(){window.history.forward();}
          
          $("#adult").val(adult);
          $("#pTotal").val(total+"명");
-         $('#total').text("성인 "+adult+" / 어린이 " + child);
+         $('#total').text("성인 "+Number(adult)+" / 어린이 " + Number(child));
          
          addBed(total);
          
@@ -644,7 +713,7 @@ function noBack(){window.history.forward();}
          
          $("#child").val(child);
          $("#pTotal").val(total+"명");
-         $('#total').text("성인 "+adult+" / 어린이 " + child);
+         $('#total').text("성인 "+Number(adult)+" / 어린이 " + Number(child));
 
          addBed(total);
       });
@@ -655,10 +724,10 @@ function noBack(){window.history.forward();}
       
       $(".bf").on("propertychange focusout change onchange click keyup paste input", function() {
          var breakfast = $(this).val();
-         var dinner = $(".bf").val();
+         var dinner = $(".dn").val();
          
          $("#breakfast").val(breakfast);
-         $('#mealtext').text("조식" + breakfast+" / 석식" + dinner);
+         $('#mealtext').text("조식" + Number(breakfast)+" / 석식" + Number(dinner));
          
          totalPay();
           
@@ -669,7 +738,7 @@ function noBack(){window.history.forward();}
          var dinner = $(this).val();
          
          $("#dinner").val(dinner);
-         $('#mealtext').text("조식" + breakfast+" / 석식" + dinner);
+         $('#mealtext').text("조식" + Number(breakfast)+" / 석식" + Number(dinner));
          
          totalPay();
       });
@@ -695,7 +764,7 @@ function noBack(){window.history.forward();}
          //현재 로그인되어있는지?
          <c:if test="${!empty loginUser }">
             //로그인 유저면 상품 결제화면으로 이동
-            alert("로그인");
+            alert("로그인 상태로 결제를 진행합니다.");
             jsGoPayment();
          </c:if>
          <c:if test="${empty loginUser }">

@@ -27,7 +27,6 @@
 <body>
  <jsp:include page="../common/menubar.jsp"/>
 	
-	
 	<!-------------------- 컨텐츠 영역-------------------->
 	<section id="container">
 	
@@ -255,7 +254,7 @@
 						<h1 style="padding-bottom:0px;text-align:center;"><span style="display:inline">입금 총액 </span><input name="r_total" type="text" value="0" style="width:120px;border:0px;text-align:right;" readonly>원</h1>
 						<h1 style="padding-bottom:0px">
 							<span style="display:inline">적립 예정 포인트 </span>
-							<input name="r_point" type="text" value="0" style="width:100px;border:0px;text-align:right;" readonly>p
+							<input class="counter" name="r_point" type="text" value="0" style="width:100px;border:0px;text-align:right;" readonly>p
 							<span style="display:inline;padding-left: 50px;padding-right: 15px;">인보이스 발행 </span>
 							<input name="r_invoice" class="check" type="checkBox" value="N" style="padding-left: 20px;width: 25px;height: 25px">	
 						</h1> 
@@ -429,7 +428,7 @@ $(function(){
 	function payPopModal(){
 		$("input[name=r_total]").val($("#f_final span").text());
 		$("input[name=r_point]").val(${res.res_allPay *0.01});
-
+        
 		layerPopOpen("#checkPay");
 	}
 

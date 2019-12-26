@@ -25,14 +25,18 @@
 		<result property="imgLv" column="IMGLV"/>
 	</resultMap>
 	
-	<insert id="insertRtype" parameterType="RoomType">
-		INSERT INTO ROOMTYPE
-		VALUES (#{type},#{capacity},#{addBed},#{singleBed},
-		#{doubleBed},#{smoking},#{weekDay},#{weekEnd},#{startDay},#{endDay},#{childRate})
-	</insert>
 	
-	<insert id="insertRimgs" parameterType="Attachment">
-		INSERT INTO ATTACHMENT 
-		VALUES (SEQ_IMGNO.NEXTVAL,#{roomType},#{path},#{originalName},#{changeName},#{imgLv})
-	</insert>
+	<update id="updateRtype" parameterType="RoomType">
+		UPDATE ROOMTYPE
+		SET CAPACITY = #{capacity},ADDBED = #{addBed},SINGLEBED = #{singleBed},
+		DOUBLEBED = #{doubleBed}, WEEKDAY = #{weekDay},WEEKEND = #{weekEnd},STARTDAY = #{startDay} , ENDDAY = #{endDay}
+		WHERE ROOMTYPE = #{type}
+	</update>
+	
+	<update id="updateImgs" parameterType="Attachment">
+		UPDATE ATTACHMENT 
+		SET PATH =  #{path} , CHANGENAME = #{changeName}, ORIGINALNAME = #{originalName}
+		WHERE ROOMTYPE = #{roomType}		
+	</update>
+
 </mapper>

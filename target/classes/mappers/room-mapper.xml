@@ -3,7 +3,8 @@
 <mapper namespace="roomMapper">
 	<resultMap id="RRS" type = "Room">
 		<id property = "roomNo" column= "ROOMNO"/>  
-		<result property = "roomType" column= "ROOMTYPE"/> 
+		<result property = "roomType" column= "ROOMTYPE"/>
+		<result property = "M_userName" column = "M_USERNAME"/>
 		<result property = "res_No" column= "RES_NO"/>
 		<result property = "condition" column= "CONDITION"/>
 		<result property = "inTime" column= "INTIME"/>
@@ -112,4 +113,47 @@
 	</select>
 	
 	<!-- 카운트용 sql문 끝 -->
+	
+	
+	<!-- room update용 -->
+	<update id ="updateR" parameterType="Room">
+		UPDATE ROOM
+		SET RES_NO = #{res_No} , CONDITION = 'STAYING' , INTIME = SYSDATE , M_USERNAME = #{M_userName }
+		WHERE ROOMNO = #{roomNo}
+	</update>
+	
+	<!-- 청소 완료 시  -->
+	<update id="updateCon" parameterType="Room">
+		UPDATE ROOM
+		SET RES_NO = NULL , CONDITION = 'WAITING', INTIME = NULL , OUTTIME = NULL , M_USERNAME = NULL
+		WHERE ROOMNO = #{roomNo}
+	</update>
+	
+	<!-- 요청사항 업데이트 -->
+	<update id ="updateReq" parameterType="Room">
+		UPDATE ROOM
+		SET REQUIRE = #{requirement}
+		WHERE ROOMNO = #{roomNo}
+	</update>
+	<!-- 체크 아웃  -->
+	<update id ="checkOut" parameterType="Room">
+		UPDATE ROOM
+		SET CONDITION = 'CLEANING' , OUTTIME = SYSDATE , REQUIRE = NULL
+		WHERE ROOMNO = #{roomNo}
+	</update>
+	
+	<select id="checkInlist" resultMap="RRS">
+	SELECT M_USERNAME, INTIME , ROOMNO 
+	FROM (SELECT M_USERNAME, INTIME , ROOMNO FROM ROOM
+	ORDER BY INTIME DESC NULLS LAST)
+	WHERE ROWNUM <![CDATA[<=]]>5
+	</select>
+	
+	<select id="checkOutist" resultMap="RRS">
+	SELECT M_USERNAME, OUTTIME , ROOMNO 
+	FROM (SELECT M_USERNAME, OUTTIME , ROOMNO FROM ROOM
+	ORDER BY OUTTIME DESC NULLS LAST)
+	WHERE ROWNUM <![CDATA[<=]]>5
+	</select>
+	
 </mapper>

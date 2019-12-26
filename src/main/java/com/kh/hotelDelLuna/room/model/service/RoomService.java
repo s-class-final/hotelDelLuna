@@ -1,5 +1,6 @@
 package com.kh.hotelDelLuna.room.model.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import com.kh.hotelDelLuna.room.model.vo.Attachment;
@@ -10,9 +11,9 @@ import com.kh.hotelDelLuna.room.model.vo.StatusCount;
 public interface RoomService {
 
 	//룸 타입 데이터
-	public int insertRtype(RoomType rt);
+	public int updateRtype(RoomType rt);
 	//룸타입 사진 등록
-	public int insertImgs(Attachment at);
+	public int updateImgs(Attachment at);
 
 	//룸 리스트
 	public ArrayList<Room> selectRoomCardList();
@@ -41,6 +42,26 @@ public interface RoomService {
 	
 	//룸 카드 선택시 가져올 룸 vo
 	public Room selectRoomcard(int roomNum);
+	
+	//체크 인 업데이트 
+	public int updateR(Room rm);
+	
+	
+	public Date selectcheckinDate(Room rm);
+	
+	//업데이트 컨디션 waiting으로
+	public int changeCon(Room rm);
+
+	
+	
+	public int modireq(Room rm);
+	
+	public int checkOut(Room rm);
+	
+	public ArrayList<Room> checkInlist();
+	
+	public ArrayList<Room> checkoutist();
+	
 	
 	
 	

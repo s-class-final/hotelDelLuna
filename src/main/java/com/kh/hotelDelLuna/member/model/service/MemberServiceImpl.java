@@ -195,6 +195,12 @@ public class MemberServiceImpl implements MemberService{
 		return mDao.plusPoint(res);
 	}
 
+	@Override
+	public int minusPoint(Member m) {
+		
+		return mDao.minusPoint(m);
+	}
+
 
 
 }

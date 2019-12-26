@@ -3,6 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+<%
+   response.setHeader("cache-control","no-cache");
+   response.setHeader("expires","0");
+   response.setHeader("pragma","no-cache");
+%>
 <head>
 <meta charset="UTF-8">
 <title>결제정보 입력하기</title>
@@ -47,11 +52,47 @@
     margin-left: 6px;
     }
     
+#point {
+	margin-top: 20px;
+}
+    
+.point input{
+	margin-top: 20px;
+    width: 100%;
+    height: 48px;
+    border: 1px solid #e6e3df;
+    padding: 0 12px;
+    padding-right: 46px;
+    line-height: 3;
+    font-size: 14px;
+    font-weight: 200;
+    outline: 0;
+    transition: all .3s ease;
+}
+    
 </style>
 
 <script>
 window.history.forward();
 function noBack(){window.history.forward();}
+
+//포인트 전부 사용 체크 시
+function allPointUse(){
+	if($("input[name='ALL_POINT']").prop("checked")){
+		<c:if test="${ !empty sessionScope.loginUser }">
+			var point = ${loginUser.point};
+		</c:if>
+		
+		var allPay = ${r.res_allPay};
+		$('#POINT1').val(Number(point));
+		$('#use_point').text('');
+	    $('#use_point').text(Number(point) + "포인트 사용");
+	    $('.totalAmt').text('');
+	    $('.totalAmt').text((Number(allPay)-Number(point))+"원");
+	    $('#ALL_PAY').val((Number(allPay)-Number(point)));
+	    $('#POINT').val(Number(point));
+	}
+}
 </script>
 
 <body onload="noBack();" onpageshow="if(event.persisted) noBack();">
@@ -69,14 +110,13 @@ function noBack(){window.history.forward();}
 				<div class="paymentWrap">
 					<!-- 회원정보 -->
 					<c:if test="${ empty sessionScope.loginUser }">
-					<form id="resPayment" name="resPayment" method="post" action="ReservationTest.do">
+					<form id="resPayment1" name="resPayment1" method="post" action="ReservationTestGst.do">
 					<div class="paymentForm clearFixed" id="paymentForm">
 						<h2>회원 정보</h2>
 						<p class="sub">예약 정보 관리와 예약자 확인을 위하여 아래의 필수 항목을 입력해주세요.</p>
 						<p class="formImportant"><span class="color">*</span> 필수입력항목</p>
 						<div class="clearFixed">
 							<div class="left">
-								
 								<dl class="nameType1">
 									<dt><label for="USER_NM">이름 <span class="color">*</span></label></dt>
 									<dd>
@@ -143,17 +183,20 @@ function noBack(){window.history.forward();}
 							</dl>
 						</div>
 					</div>
+					<input type="hidden" id="ALL_PAY" name="ALL_PAY" value="${r.res_allPay }"/>
 					</form>
 					</c:if>
 					
 					<c:if test="${ !empty sessionScope.loginUser }">
-					<form id="form1" name="form1" method="post" action="ReservationTest.do">
+					<form id="resPayment2" name="resPayment2" method="post" action="ReservationTestMem.do">
 					<div class="paymentForm clearFixed" id="paymentForm">
 						<h2>회원 정보</h2>
 						<p class="sub">예약 정보 관리와 예약자 확인을 위하여 아래의 필수 항목을 입력해주세요.</p>
 						<p class="formImportant"><span class="color">*</span> 필수입력항목</p>
 						<div class="clearFixed">
 							<div class="left">
+								
+								<input type="hidden" class="POINT" id="POINT" name="POINT" value="0">
 								
 								<dl class="nameType1">
 									<dt><label for="USER_NM">이름 <span class="color">*</span></label></dt>
@@ -263,17 +306,13 @@ function noBack(){window.history.forward();}
 							</dl>
 						</div>
 					</div>
+					<input type="hidden" id="ALL_PAY" name="ALL_PAY" value="${r.res_allPay }"/>
 					</form>
 					</c:if>
 					<!-- //회원정보 -->
 	
 					<!-- 보유 멤버십 + 할인정보 -->
 					
-	
-					<!-- 포인트 -->
-					
-					<!-- //포인트 -->
-	
 					<!-- 결제방법 -->
 					<div class="paymentOption clearFixed" id="paymentOption">
 						
@@ -287,12 +326,29 @@ function noBack(){window.history.forward();}
 							</div>
 						</div>
 						
-						
+						<!-- 포인트 -->
+						<c:if test="${ !empty sessionScope.loginUser }">
+						<dl class="point" style="margin-top: 20px;">
+							<dt><label style="color: #9c836a;">포인트 사용</label></dt>
+								<dd><div class="inp" style="width: 800px;    margin: 22px 0px 0;" >
+										<input type="text" id="POINT1" name="POINT1" value="0" placeholder="0" title="포인트" style="width:396px;">포인트 사용 / 총 ${loginUser.point}원 사용 가능<br>
+										<input class="ALL_POINT" type="checkbox" id="ALL_POINT" name="ALL_POINT" onclick="javascript:allPointUse();" style="width:12px;height:12px;"/>포인트 전액 사용하기
+										<!-- <button class="btnDelete"></button> -->
+									<!-- <div class="errorText"></div> -->
+								</dd>
+							</dl>
+						</div>
+						</c:if>
+						<c:if test="${ empty sessionScope.loginUser }">
+							<input type="hidden" id="POINT2" name="POINT2" value="0" placeholder="0">
+						</c:if>
+						<!-- //포인트 -->
+							
 					</div>
 					<!-- //결제방법 -->
 	
 					<!-- 약관동의 -->
-					<div class="paymentTerm clearFixed">
+					<div class="paymentTerm clearFixed" style="margin-top:55px;padding-top: 0px;">
 						<h2>약관 동의</h2>
 						<div class="termArea">
 							<div>
@@ -418,7 +474,10 @@ function noBack(){window.history.forward();}
 										<p id="total">성인 ${r.res_adult } / 어린이 ${r.res_child }</p>			
 										<p id="room">${r.res_roomType }</p>	
 										<p id="mealtext">조식 ${r.res_breakfast } / 석식 ${r.res_dinner }</p>
-										<p id="res_addBed"></p>
+										<p id="res_addBed"><c:if test="${ 'Y' eq r.res_addBed }">베드 추가</c:if></p>
+										<c:if test="${ !empty sessionScope.loginUser }">
+										<p id="use_point">0 포인트 사용</p>
+										</c:if>
 										
 									</div>
 								</article>
@@ -461,14 +520,6 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
 <script type="text/javascript">
 
-
-	function setCookie(cname, cvalue, exdays) {
-	    console.log("overiding setCookie Pc");
-	    var d = new Date();
-	    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-	    var expires = "expires="+d.toUTCString();
-	    document.cookie = cname + "=" + cvalue + "; " + expires;
-	}
 
 	//결제하기 버튼 클릭시 값 체크
 	function valueChecker() {
@@ -545,6 +596,7 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 	function payment(){
 
 		//검증값 변수에 입력
+		inputId();
 		var userName = $('#USER_NM').val();
 		var tel1 = $('#USER_TEL1').val();
 		var tel2 = $('#USER_TEL2').val();
@@ -559,6 +611,17 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 		console.log(tel);
 		console.log(email);
 		console.log(${r.res_allPay });
+		
+		var allPay = ${r.res_allPay};
+		var point = $('#POINT1').val();
+		
+		$('#POINT').val(Number(point));
+
+		if(point){
+			allPay = Number(allPay)-Number(point);
+		}
+		
+		console.log(allPay);
 		
 		//확인 끝나면 결제팝업 띄워주기
 		//alert("결제팝업 띄우기");
@@ -577,8 +640,8 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 			    pay_method : 'card',
 			    merchant_uid : 'merchant_' + new Date().getTime(),
 			    name : '주문명:결제테스트',
-			    amount : 1000,
-			    //amount : ${r.res_allPay },
+			    amount : 100,
+			    //amount : Number(allPay),
 			    buyer_email : email,
 			    buyer_name : userName,
 			    buyer_tel : tel,
@@ -592,8 +655,12 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 			        msg += '상점 거래ID : ' + rsp.merchant_uid;
 			        msg += '결제 금액 : ' + rsp.paid_amount;
 			        msg += '카드 승인번호 : ' + rsp.apply_num;
-
-					$("#resPayment").submit();
+			        <c:if test="${ empty sessionScope.loginUser }">
+						$("#resPayment1").submit();
+					</c:if>
+					<c:if test="${ !empty sessionScope.loginUser }">
+						$("#resPayment2").submit();
+					</c:if>
 			    } else {
 			        var msg = '결제에 실패하였습니다.';
 			        msg += '에러내용 : ' + rsp.error_msg;
@@ -610,8 +677,8 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 			    pay_method : 'trans',
 			    merchant_uid : 'merchant_' + new Date().getTime(),
 			    name : '주문명:결제테스트',
-			    amount : 1000,
-			  //amount : ${r.res_allPay },
+			    //amount : 1000,
+			  	amount : Number(allPay),
 			    buyer_email : email,
 			    buyer_name : userName,
 			    buyer_tel : tel,
@@ -626,8 +693,12 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 			        msg += '결제 금액 : ' + rsp.paid_amount;
 			        msg += '카드 승인번호 : ' + rsp.apply_num;
 			        
-					$("#resPayment").submit();
-					
+			        <c:if test="${ empty sessionScope.loginUser }">
+						$("#resPayment1").submit();
+					</c:if>
+					<c:if test="${ !empty sessionScope.loginUser }">
+						$("#resPayment2").submit();
+					</c:if>
 			    } else {
 			        var msg = '결제에 실패하였습니다.';
 			        msg += '에러내용 : ' + rsp.error_msg;
@@ -637,10 +708,6 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 		}else{
 			alert("결제 수단이 잘못되었습니다.");
 		}
-		
-		/* 
-		$("#form1").attr("action", "ReservationTest.do");
-		$("#form1").submit(); */
 		
 	}
 	
@@ -667,13 +734,66 @@ p.astBefore::before {content: "*"; left: 66px; position: absolute; top: 163px;}
 			console.log("id 체크중");
 			$(this).val($(this).val().replace(/[^a-z|A-Z|가-힇|ㄱ-ㅎ]*/gi, ""));
 		});
+		
+		//포인트 사용 금액 입력되면 
+		//1. 사용자가 보유한 포인트보다 금액이 적거나 같은지(많으면 알림으로 안된다고 알려주기), 
+		//2.사용 가능한 금액이면 우측 메뉴에 사용 포인트 금액 명시해주고 총액 변경해주기
+		$("#POINT1").on("propertychange change keyup paste input", function() {
+			$(this).val($(this).val().replace(/[^0-9]*/gi, ""));
+		    var point = $(this).val();
+		    <c:if test="${ empty sessionScope.loginUser }">
+			    var maxPoint = 0;
+			    var allPay = ${r.res_allPay};
+			</c:if>
+			<c:if test="${ !empty sessionScope.loginUser }">
+				var maxPoint = ${loginUser.point};
+			    var allPay = ${r.res_allPay};
+			</c:if>
+		    
+		    $( 'input[name="ALL_POINT"]' ).attr( 'checked', false );
+		    
+		    if(Number(point) > Number(maxPoint)){
+		    	alert("사용 가능한 포인트는 "+maxPoint+"입니다.");
+		    	$('#POINT1').val(Number(maxPoint));
+		    	$('#use_point').text('');
+			    $('#use_point').text(Number(maxPoint) + "포인트 사용");
+			    $('.totalAmt').text('');
+			    $('.totalAmt').text((Number(allPay)-Number(maxPoint))+"원");
+			    $('#ALL_PAY').val((Number(allPay)-Number(maxPoint)));
+			    $('#POINT').val(Number(maxPoint));
+		    }else{
+		    	$('#use_point').text('');
+			    $('#use_point').text(Number(point) + "포인트 사용");
+			    $('.totalAmt').text('');
+			    $('.totalAmt').text((Number(allPay)-Number(point))+"원");
+			    $('#ALL_PAY').val((Number(allPay)-Number(point)));
+			    $('#POINT').val(Number(point));
+		    }
+		    
+		    
+		    
+		});
 	});
 	
 	
 	function inputId(){
 		$("#USER_NM").val( $("#lastName").val() + ' ' + $("#firstName").val());
-	};
+	}
 	
+	// 새로고침 금지
+	function noRefresh()
+	{
+	    if (event.keyCode == 116) 
+	    {
+	        event.keyCode = 2;
+	        return false;
+	    } 
+	    else if(event.ctrlKey && (event.keyCode == 78 || event.keyCode == 82)) 
+	    {
+	        return false;
+	    }
+	}
+	document.onkeydown = noRefresh;
 
 </script>
 
