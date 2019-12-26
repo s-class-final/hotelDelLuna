@@ -19,7 +19,7 @@ $(document).ready(function() {
 
 
 function jsList() {
-	$("#form1").attr("action", "noticeList.do");
+	$("#form1").attr("action", "noticeListA.do");
 	$("#form1").attr("method", "post");
 	$("#form1").submit();
 }

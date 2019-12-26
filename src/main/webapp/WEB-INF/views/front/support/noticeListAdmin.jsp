@@ -76,7 +76,7 @@ function jsViewDtl(nId, currentPage) {		//게시글 번호를 가지고 디테�
 		<!-- 페이지네이션 -->
 		<div class='paginate'>
 				<c:if test="${pi.currentPage > 1}">
-					<c:url var="nlistBack" value="noticeList.do">
+					<c:url var="nlistBack" value="noticeListA.do">
 						<c:param name="page" value="${pi.currentPage -1 }"/>
 					</c:url>
 					<a href="${nlistBack }" style="width:60px;">&nbsp;[이전]</a>
@@ -89,7 +89,7 @@ function jsViewDtl(nId, currentPage) {		//게시글 번호를 가지고 디테�
 					</c:if>
 					
 					<c:if test="${p ne pi.currentPage }">
-						<c:url var="nlistCheck" value="noticeList.do">
+						<c:url var="nlistCheck" value="noticeListA.do">
 							<c:param name="page" value="${p }"/>
 						</c:url>
 						<a href="${nlistCheck }" class='num'>${p }</a>
@@ -98,7 +98,7 @@ function jsViewDtl(nId, currentPage) {		//게시글 번호를 가지고 디테�
 				
 				<!-- [다음] -->
 				<c:if test="${pi.currentPage < pi.maxPage }">
-					<c:url var="nlistEnd" value="noticeList.do">
+					<c:url var="nlistEnd" value="noticeListA.do">
 						<c:param name="page" value="${pi.currentPage + 1 }"/>
 					</c:url>
 					<a href="${nlistEnd }" style="width:60px;">&nbsp;[다음]</a>
@@ -171,7 +171,7 @@ function jsSave() {
         success : function(data, status, xhr) {
             if (status == "success") {
                alert("공지사항 작성 완료");
-               location.href="noticeList.do";
+               location.href="noticeListA.do";
             }
         },
 		error:function(request, status, errorData){
