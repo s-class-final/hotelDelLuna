@@ -28,7 +28,7 @@ body {
 }
 
 .table-fill  th {
-	width:155px;
+	width:140px;
 	color: WHITE;
 	background: #1b1e24;;
 	border-bottom: 4px solid #9ea7af;
@@ -109,13 +109,7 @@ body {
     margin-left: 5px;
     border : none;
 }
-.toggle.off {
-    background: url(resources/pcPub/static/images/common/bg_topArrow.png) no-repeat 0 0px;
-}
-.toggle.on{
-    background: url(resources/pcPub/static/images/common/bg_topArrow.png) no-repeat 0 -5px;
 
-}
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
@@ -134,9 +128,10 @@ body {
 					<thead>
 						<tr>
 							<th>이름</th>
-							<th>인원</th>
-							<th class="sortHead">체크인<button id="sort_checkIn" class="toggle off"></button></th>
-							<th class="sortHead">체크아웃<button id="sort_checkOut" class="toggle off"></button></th>
+							<th style="width:220px">객실타입</th>
+							<th style="width:50px">인원</th>
+							<th class="sortHead">체크인</th>
+							<th class="sortHead">체크아웃</th>
 							<th>입금상태</th>
 							<th>예약상태</th>
 							<th>요청사항</th>
@@ -231,56 +226,6 @@ body {
 		});
 		
 		
-		/******************* 정렬  ******************/
-		$(".sortHead").click(function(){
-			var sort_no;
-			var className = $(this).children("button").attr('class');
-			var btnId = $(this).children("button").attr('id');
-
-			/*** 내림차순 ***/
-			if(className == "toggle on"){
-				$(this).children("button").css("background-position-y",0);
-				$(this).children("button").prop('class','toggle off');
-				
-				switch(btnId){
-				case "sort_no":
-					sort_no=0;
-					break;
-				case "sort_name":
-					sort_no=2;
-					break;
-				case "sort_checkIn":
-					sort_no=4;
-					break;
-				case "sort_checkOut":
-					sort_no=6;
-					break;
-				}
-			/*** 오름차순 ***/
-			}else{
-				$(this).children("button").css("background-position-y",-5);
-				$(this).children("button").prop('class','toggle on');
-				
-				switch(btnId){
-				case "sort_no":
-					sort_no=1;
-					break;
-				case "sort_name":
-					sort_no=3;
-					break;
-				case "sort_checkIn":
-					sort_no=5;
-					break;
-				case "sort_checkOut":
-					sort_no=7;
-					break;
-				}
-
-			}
-			pagingAjax(nowPage,null,null,sort_no,false);
-		})
-		
-		
 	});
 		/* 흡연여부 베드추가여부 체크 */
 		$(document).on("click",".check",function(){
@@ -323,6 +268,7 @@ body {
 						for(var i in data){
 							$tr=$("<tr>");
 							$res_name = $("<td class='text-center' style='cursor:default'>").text(data[i].res_userName);
+							$res_roomType = $("<td class='text-center' style='cursor:default'>").text(data[i].res_roomType);
 							$res_adult = $("<td class='text-center' style='cursor:default'>").text(Number(data[i].res_adult)+Number(data[i].res_child));
 							$res_checkIn = $("<td class='text-center' style='cursor:default'>").text(data[i].res_checkIn);
 							$res_checkOut = $("<td class='text-center' style='cursor:default'>").text(data[i].res_checkOut);
@@ -332,6 +278,7 @@ body {
 							
 							
 							$tr.append($res_name);
+							$tr.append($res_roomType);
 							$tr.append($res_adult);
 							$tr.append($res_checkIn);
 							$tr.append($res_checkOut);
