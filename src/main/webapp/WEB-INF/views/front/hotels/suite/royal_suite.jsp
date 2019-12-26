@@ -124,7 +124,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 			<div class="detailTextBox">
 				<h2>ROYAL SUITE</h2>
 				<p class="subTit">왕실의 기품이 흐르는 고급스러운 로열 스위트</p>
-				<p class="text">로열 스위트는 델루나의 최상급 객실로 델루나의 예술적 감성을 집약적으로 표현한 시그니처 공간입니다. <br />전용 POOL을 비롯하여 스팀사우나 시설, 운동 공간, 다이닝룸, 응접실 등 시설 및 규모 면에서도 독보적이며, 객실 내 다양한 편의시설과 로열 스위트 고객 전용 서비스는 호텔 델루나만이 가진 격이 다른 서비스를 경험할 수 있는 기회가 될 것입니다. </p>
+				<p class="text">로열 스위트는 호텔 델루나의 최상급 객실로 호텔 델루나의 예술적 감성을 집약적으로 표현한 시그니처 공간입니다. <br />전용 POOL을 비롯하여 스팀사우나 시설, 운동 공간, 다이닝룸, 응접실 등 시설 및 규모 면에서도 독보적이며, 객실 내 다양한 편의시설과 로열 스위트 고객 전용 서비스는 호텔 델루나만이 가진 격이 다른 서비스를 경험할 수 있는 기회가 될 것입니다. </p>
 				<div class="btnGroup">
 					<a href="#map" class="btn small layerPopOpen"><span>도면보기</span></a>
 					<!-- 2018.07.09 수정 -->
