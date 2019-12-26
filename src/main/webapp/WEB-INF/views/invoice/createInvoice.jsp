@@ -241,7 +241,7 @@ Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${invoice.totalPrice }원
 
 <div id="note">
 	NOTES<br>
-	<textarea>환불은 예약일로부터 30 일 이내 90%, 15 일 이내 70%, 7 일 이내 60%, 체크인 전날까진 50%, 당일 환불은 불가능합니다 .</textarea>
+	<textarea>호텔 델루나는 입금을 진행했으면 환불이 불가합니다.</textarea>
 </div>
 
 

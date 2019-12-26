@@ -409,6 +409,7 @@
 						 		<a class='page-link' href="${ rslistBack}">&lt;&lt;</a>
 						</li>
 						<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+
 									<c:if test="${p eq pi.currentPage }">
 										<li class='page-item active'>
 											<a class='page-link' class='page-link'>${p} </a>
@@ -420,7 +421,7 @@
 	 								<c:param name="page" value="${p }"/>
 	 							</c:url>
 	 							<li class='page-item'>
-	 								<a class='page-link' href="${plistCheck }">${p }</a>
+	 								<a class='page-link' href="${blistCheck }">${p }</a>
 	 							</li>
 	 						</c:if>
 						</c:forEach>
