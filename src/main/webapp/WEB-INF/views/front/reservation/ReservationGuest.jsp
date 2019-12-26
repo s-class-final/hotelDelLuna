@@ -448,6 +448,7 @@ function noBack(){window.history.forward();}
                                         //slick
                               reservationSlick($('.reservationBox'));
                            }
+                           $(".btnFull").attr("disabled", true);
                               //조식석식
                            }else {
                            //객실 목록이 없으면, 해당 날짜 초기화
