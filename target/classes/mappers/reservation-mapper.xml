@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="reservationMapper">
 
+
 	<resultMap type="Reservation" id="ResListResultSet">
 		<id property="res_no" column="RES_NO"/>
 		<result property="res_roomNo" column="RES_ROOMNO"/>
@@ -334,7 +335,7 @@
 	<!-- 입금 상태 업데이트 -->
 	<update id = "updatePs" parameterType="Reservation">
 		UPDATE RESERVATION
-		SET RES_PAYSTATUS = '입금완료'
+		SET RES_PAYSTATUS = '입금완료', RES_ROOMNO = ${res_roomNo}
 		WHERE RES_NO = #{res_no}
 	</update>
 	
@@ -353,7 +354,8 @@
 		from reservation r
 		join member m on ( m.userid = r.res_userid) 
 		where to_char(res_checkin,'YYYYMMDD')
-		= to_char(SYSDATE,'YYYYMMDD')
+		= to_char(SYSDATE,'YYYYMMDD') and r.RES_ROOMNO is NULL
+        and RES_STATUS = '예약완료'
 	</select>
 	
 </mapper>
