@@ -342,6 +342,7 @@ button { margin:0; padding:0; border:0; font:inherit; color:inherit; background:
 	</div>
 	
 </section>
+		<jsp:include page="../../common/footer.jsp"/>
 	
 	
 	

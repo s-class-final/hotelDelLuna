@@ -79,7 +79,7 @@
 	}
 	.calendar_body .today{
 		border:1px solid black;
-		height:120px;
+		height:110px;
 		background-color:#c9c9c9;
 		text-align: left;
 		vertical-align: top;
@@ -92,7 +92,7 @@
 	}
 	.calendar_body .sat_day{
 		border:1px solid black;
-		height:120px;
+		height:110px;
 		background-color:#f9f9f9;
 		text-align:left;
 		vertical-align: top;
@@ -107,7 +107,7 @@
 
 	.calendar_body .sun_day{
 		border:1px solid black;
-		height:120px;
+		height:110px;
 		background-color:#f9f9f9;
 		text-align: left;
 		vertical-align: top;
@@ -121,7 +121,7 @@
 	}
 	.calendar_body .normal_day{
 		border:1px solid black;
-		height:120px;
+		height:110px;
 		background-color:#f9f9f9;
 		vertical-align: top;
 		text-align: left;
@@ -152,7 +152,7 @@
 	}
 	.before_date{
 		border:1px solid white;
-		height:120px;
+		height:110px;
 		background-color:grey;
 		vertical-align: top;
 		text-align: left;

@@ -165,15 +165,9 @@ function noBack(){window.history.forward();}
             <div class="cautionBox">
                <h2 class="cautionH2">유의사항</h2>
                <ul style="padding:0 20px 20px 20px;">
-                  <li class="fontWe">홈페이지에서 예약결제한 상품을 취소할 경우, 홈페이지에서 직접 취소해야 신속한 처리가 가능합니다. 전화문의 시 처리가 지연되거나 제한될 수 있습니다.</li>
-                  <li>부가세 10%가 별도 부과됩니다.</li>
-                  <li>본 상품은 성인 2인 &amp; 어린이 2인 기준 상품입니다.
-                     <ul class="minusList">
-                     <li><span class="standardSpan">-</span>단, 1객실 당 성인은 최대 3인까지만 투숙 가능하며 성인 3인 투숙 시 어린이(37개월~13세)는 1인까지만 투숙 가능합니다.</li>
-                     <li><span class="standardSpan">-</span>성인 추가인원 투숙 시 50,000원(부가세 별도)의 요금이 부과되며 수영장, 플레이스테이션 체험존, 피트니스 혜택이 함께 제공됩니다.</li>
-                     <li><span class="standardSpan">-</span>엑스트라베드 추가 시 70,000원(부가세 별도)의 요금이 부과되며 엑스트라베드, 수영장, 플레이스테이션 체험존, 피트니스 혜택이 함께 제공됩니다.</li>
-                  </ul>
-                  </li>
+                  <li class="fontWe">홈페이지에서 예약결제한 상품을 취소할 경우, 홈페이지에서 직접 취소해야 신속한 처리가 가능합니다. </li>
+                  <li class="fontWe">전화문의 시 처리가 지연되거나 제한될 수 있습니다.</li>
+                  <li>이미 입금을 한 경우 환불은 불가능 합니다.</li>
                   <li>유아용품 및 객실 대여품은 한정된 수량으로 선착순 대여 가능하며, 조기 마감될 수 있으므로 사전 예약을 권장드립니다.</li>
                   <li>체크인은 오후 3시부터, 체크아웃은 11시까지이며 얼리체크인 또는 레이트체크아웃의 경우 별도 요금이 부과될 수 있습니다.</li>
                </ul>
@@ -576,7 +570,7 @@ function noBack(){window.history.forward();}
                var inWeekEnd = $("<input>").attr({type:"hidden"
                                        , value:list[i].weekEnd
                                        , id:"inWeekEnd"+i});
-               var roomInfo = $("<div>").addClass("roomInfo");
+               var roomInfo = $("<div>").addClass("roomInfo").attr({"style":"cursor:pointer;"});
                var img      = $("<p>").addClass("img").append($("<img>").attr({src     : "resources/pcPub/static/images/room/" + list[i].changename}));
                var h3       = $("<h3>").text(list[i].type);
                var pAmt1    = $("<p>").attr({style:"font-size : 13px;"}).text("주중 : " + list[i].weekDay + "~" + " / " + "박(" + list[i].capacity+"인 기준)");
@@ -721,7 +715,7 @@ function noBack(){window.history.forward();}
       
       $(".bf").on("propertychange focusout change onchange click keyup paste input", function() {
          var breakfast = $(this).val();
-         var dinner = $(".bf").val();
+         var dinner = $(".dn").val();
          
          $("#breakfast").val(breakfast);
          $('#mealtext').text("조식" + Number(breakfast)+" / 석식" + Number(dinner));
@@ -761,7 +755,7 @@ function noBack(){window.history.forward();}
          //현재 로그인되어있는지?
          <c:if test="${!empty loginUser }">
             //로그인 유저면 상품 결제화면으로 이동
-            alert("로그인");
+            alert("로그인 상태로 결제를 진행합니다.");
             jsGoPayment();
          </c:if>
          <c:if test="${empty loginUser }">

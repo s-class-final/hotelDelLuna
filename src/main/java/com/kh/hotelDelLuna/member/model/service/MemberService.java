@@ -97,6 +97,8 @@ public interface MemberService {
 
 	// 회원의 해당 예약 내역 총액을 계산하여 포인트 적립
 	int plusPoint(Reservation res);
+
+	int minusPoint(Member m);
 	
 
 }

@@ -148,15 +148,16 @@ public class SupportController {
 		return "front/reservation/ReservationPayment";
 	}
 	
-	//사용자 예약페이지 이동
-	@RequestMapping(value="ReservationTest.do", method = RequestMethod.POST)
-	public String ReservationTest(HttpSession session, HttpServletResponse response,
+	//비회원 예약 (포인트 사용 불가)
+	@RequestMapping(value="ReservationTestGst.do", method = RequestMethod.POST)
+	public String ReservationTest(HttpSession session, HttpServletResponse response, String ALL_PAY,
 								String USER_NM, String USER_TEL1, String USER_TEL2, String USER_TEL3, String USER_EMAIL, String USER_REQUIRE) throws IOException {
 		System.out.println("ReservationTest서블릿 실행");
 		
 		Reservation r = (Reservation) session.getAttribute("r");
 		
 		r.setRes_userId(USER_EMAIL);
+		r.setRes_allPay(Integer.valueOf(ALL_PAY));
 		
 		//연락처
 		String tel = USER_TEL1 + "-" + USER_TEL2 + "-" + USER_TEL3;
@@ -168,7 +169,7 @@ public class SupportController {
 		Member member = mService.findMember(m);		
 
 		int mInsert=1;
-		
+		System.out.println("r은 ?? " + r);
 		// 2. 예약자 아이디가 회원,비회원에 없으면 비회원 테이블에 예약자 정보 등록
 		if(member==null){
 			mInsert = mService.insertNonMember(m);
@@ -233,6 +234,7 @@ public class SupportController {
 					int result3 = sService.insertSalesGst(r);
 					
 					if(result3 > 0) {
+						
 						response.setContentType("text/html; charset=UTF-8");
 						 
 						PrintWriter out = response.getWriter();
@@ -242,6 +244,7 @@ public class SupportController {
 						out.flush();
 
 						return "../../main";
+						
 					}else {
 						throw new SupportException("예약 실패");
 					}
@@ -257,6 +260,136 @@ public class SupportController {
 		}
 		
 	}
+	
+	
+	
+	//사용자 예약페이지 이동
+		@RequestMapping(value="ReservationTestMem.do", method = RequestMethod.POST)
+		public String ReservationTest(HttpSession session, HttpServletResponse response, String ALL_PAY, String POINT,
+									String USER_NM, String USER_TEL1, String USER_TEL2, String USER_TEL3, String USER_EMAIL, String USER_REQUIRE) throws IOException {
+			System.out.println("ReservationTest서블릿 실행");
+			
+			Reservation r = (Reservation) session.getAttribute("r");
+			
+			r.setRes_userId(USER_EMAIL);
+			r.setRes_allPay(Integer.valueOf(ALL_PAY));
+			int mPoint = Integer.valueOf(POINT);
+			
+			//연락처
+			String tel = USER_TEL1 + "-" + USER_TEL2 + "-" + USER_TEL3;
+			
+			// 1_1. 예약자 아이디가 회원에 있는지 확인!
+			Member m = new Member(r.getRes_userId());
+			System.out.println("User_NM은 " + USER_NM);
+			m.setUserName(USER_NM);
+			m.setUserPhone(tel);
+			Member member = mService.findMember(m);		
+
+			int mInsert=1;
+			System.out.println("r은 ?? " + r);
+			// 2. 예약자 아이디가 회원,비회원에 없으면 비회원 테이블에 예약자 정보 등록
+			if(member==null){
+				mInsert = mService.insertNonMember(m);
+			}
+			//비회원 정보 정상적으로 등록된 경우
+			if(mInsert>0) {
+				//숙박일수 계산
+				String strFormat = "yyyy-MM-dd"; // strStartDate 와 strEndDate 의 format
+				long diffDay = 0;
+				java.util.Date startDate = new java.util.Date();
+				// SimpleDateFormat 을 이용하여 startDate와 endDate의 Date 객체를 생성한다.
+				SimpleDateFormat sdf = new SimpleDateFormat(strFormat);
+				try {
+					startDate = sdf.parse(r.getRes_checkIn().toString());
+					java.util.Date endDate = sdf.parse(r.getRes_checkOut().toString());
+
+					// 두날짜 사이의 시간 차이(ms)를 하루 동안의 ms(24시*60분*60초*1000밀리초) 로 나눈다.
+					diffDay = (endDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000);
+					System.out.println(diffDay + "일");
+
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				
+				//3. 예약 테이블에 값 입력 / 룸상태 테이블에 값 입력 / 인보이스에 값 입력 / 매출에 값 입력
+				//예약테이블에 입력할 값들
+				r.setRes_userId(USER_EMAIL);
+				r.setRes_require(USER_REQUIRE);
+				
+				//예약 테이블에 예약 정보 입력
+				int result1 = sService.insertReservationGst(r);
+				
+				//등록된 예약번호 가져오기
+				int reservationNo = rService.getResNo(r);
+				r.setRes_no(reservationNo);
+				
+				java.sql.Date checkIn = new java.sql.Date(4); // 의미없는 초기화
+			
+				for(int i=0;i<diffDay;i++) {
+	    			checkIn = addDate(startDate,i);
+		            r.setRes_checkIn(checkIn);
+		            int result= rService.resRoomStatusInsert(r);
+	    		}
+				
+				if(result1 > 0) {
+					//인보이스 객체에 정보 입력
+					Invoice i = new Invoice();
+					
+					i.setrType(r.getRes_roomType());
+					i.setCkinDate(r.getRes_checkIn());
+					i.setUserName(USER_NM);
+					i.setQuantity(Integer.valueOf(r.getRes_adult())+Integer.valueOf(r.getRes_child()));
+					i.setTotalPrice(r.getRes_allPay());
+					i.setUserEmail(USER_EMAIL);
+					i.setUserPhone(tel);
+					
+					System.out.println("i는 = " + i);
+					
+					//인보이스 테이블에 예약 정보 입력
+					int result2 = sService.insertInvoiceGst(i);
+				
+					if(result2 > 0) {
+						//매출 테이블에 예약 정보 입력
+						int result3 = sService.insertSalesGst(r);
+						
+						if(result3 > 0) {
+							
+							// 해당 멤버에 포인트 적립해주자 + 사용한 포인트 까줘야함.
+							int pResult = mService.plusPoint(r);
+							m.setPoint(mPoint);
+							System.out.println("m 객체(포인트!!) = " + m);
+							int pResult2 = mService.minusPoint(m);
+							
+							if(pResult > 0) {
+							
+								response.setContentType("text/html; charset=UTF-8");
+								 
+								PrintWriter out = response.getWriter();
+								 
+								out.println("<script>alert('예약이 정상적으로 완료되었습니다.');</script>");
+								 
+								out.flush();
+		
+								return "../../main";
+							}else {
+								throw new SupportException("예약 실패");
+							}
+							
+						}else {
+							throw new SupportException("예약 실패");
+						}
+					}else {
+						throw new SupportException("예약 실패");
+					}
+				
+				}else {
+					throw new SupportException("예약 실패");
+				}
+			}else {
+				throw new SupportException("비회원 예약 실패");
+			}
+			
+		}
 	
 	//소개 메인 이동
 	@RequestMapping(value="hotelDelLunar.do", method = RequestMethod.GET)
